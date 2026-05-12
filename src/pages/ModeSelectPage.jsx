@@ -21,8 +21,8 @@ export default function ModeSelectPage({
   return (
     <>
       <Header title="Játékmód" onBack={onBack} compact />
-      <section className="flex flex-1 flex-col gap-4">
-        <div className="rounded-[2rem] border border-amber-200/20 bg-slate-950/54 p-4 shadow-card">
+      <section className="flex min-h-0 flex-1 flex-col gap-3">
+        <div className="shrink-0 rounded-[1.75rem] border border-amber-200/20 bg-slate-950/54 p-3 shadow-card min-[390px]:p-4">
           <p className="text-xs font-black uppercase tracking-[0.18em] text-amber-100/70">
             Aktív mód
           </p>
@@ -44,7 +44,7 @@ export default function ModeSelectPage({
           </p>
         </div>
 
-        <div className="space-y-3">
+        <div className="mobile-scroll min-h-0 flex-1 space-y-3 overflow-y-auto pb-1 pr-1">
           {modes.map((mode) => (
             <ModeCard
               key={mode.id}
@@ -53,21 +53,21 @@ export default function ModeSelectPage({
               onClick={() => onSelectMode(mode.id)}
             />
           ))}
+
+          {!hasEnoughPlayers ? (
+            <p className="rounded-3xl bg-amber-300/12 p-4 text-sm leading-6 text-amber-50 ring-1 ring-amber-200/20">
+              A kezdéshez legalább 2 játékos szükséges.
+            </p>
+          ) : null}
+
+          {customSelected && !customReady ? (
+            <p className="rounded-3xl bg-amber-300/12 p-4 text-sm leading-6 text-amber-50 ring-1 ring-amber-200/20">
+              A saját paklihoz hozz létre legalább egy saját feladatot.
+            </p>
+          ) : null}
         </div>
 
-        {!hasEnoughPlayers ? (
-          <p className="rounded-3xl bg-amber-300/12 p-4 text-sm leading-6 text-amber-50 ring-1 ring-amber-200/20">
-            A kezdéshez legalább 2 játékos szükséges.
-          </p>
-        ) : null}
-
-        {customSelected && !customReady ? (
-          <p className="rounded-3xl bg-amber-300/12 p-4 text-sm leading-6 text-amber-50 ring-1 ring-amber-200/20">
-            A saját paklihoz hozz létre legalább egy saját feladatot.
-          </p>
-        ) : null}
-
-        <PrimaryButton icon={Play} disabled={!canStart} onClick={onStartGame}>
+        <PrimaryButton className="shrink-0" icon={Play} disabled={!canStart} onClick={onStartGame}>
           Kezdés
         </PrimaryButton>
       </section>

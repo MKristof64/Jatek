@@ -46,7 +46,7 @@ function TimerControl({ durationSeconds, resetKey }) {
   const Icon = running ? Pause : Play;
 
   return (
-    <div className="relative z-10 mt-4 flex items-center justify-between gap-3 rounded-2xl bg-slate-950/54 p-3 ring-1 ring-white/10">
+    <div className="relative z-10 mt-3 flex items-center justify-between gap-3 rounded-2xl bg-slate-950/54 p-3 ring-1 ring-white/10">
       <div>
         <p className="text-[0.68rem] font-black uppercase tracking-[0.16em] text-white/52">
           Időzítő
@@ -103,13 +103,13 @@ export default function GameCard({
           </p>
           <div className="mt-2 inline-flex max-w-full items-center gap-2 rounded-full bg-white/10 px-3 py-2 ring-1 ring-white/10">
             <ParticipantIcon className="h-4 w-4 shrink-0 text-lime-200" />
-            <h2 className="truncate text-xl font-black text-white">
+            <h2 className="truncate text-lg font-black text-white min-[390px]:text-xl">
               {participantText}
             </h2>
           </div>
         </div>
-        <div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-amber-300 via-orange-400 to-pink-500 text-slate-950 shadow-lg">
-          <Sparkles className="h-7 w-7" />
+        <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-amber-300 via-orange-400 to-pink-500 text-slate-950 shadow-lg min-[390px]:h-14 min-[390px]:w-14">
+          <Sparkles className="h-6 w-6 min-[390px]:h-7 min-[390px]:w-7" />
         </div>
       </div>
 
@@ -123,7 +123,7 @@ export default function GameCard({
         <TimerControl durationSeconds={durationSeconds} resetKey={card?.id} />
       ) : null}
 
-      <div className="relative z-10 mt-5">
+      <div className="relative z-10 mt-4 min-[390px]:mt-5">
         <div className="mb-3 flex items-center justify-between gap-3">
           <p className="text-xs font-black uppercase tracking-[0.2em] text-pink-100/70">
             Kérdés

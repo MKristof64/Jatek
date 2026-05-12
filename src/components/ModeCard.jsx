@@ -27,7 +27,7 @@ export default function ModeCard({ mode, selected, disabled, onClick }) {
       disabled={disabled}
       onClick={onClick}
       className={[
-        'group w-full rounded-3xl border p-4 text-left shadow-card transition',
+        'group w-full touch-manipulation rounded-3xl border p-3 text-left shadow-card transition min-[390px]:p-4',
         selected
           ? 'border-amber-200/80 bg-white/20'
           : 'border-white/10 bg-white/10 hover:bg-white/15',
@@ -37,7 +37,7 @@ export default function ModeCard({ mode, selected, disabled, onClick }) {
       <span className="flex items-center gap-4">
         <span
           className={[
-            'grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br text-slate-950 shadow-lg',
+            'grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br text-slate-950 shadow-lg min-[390px]:h-14 min-[390px]:w-14',
             mode.accent,
           ].join(' ')}
         >
@@ -45,7 +45,7 @@ export default function ModeCard({ mode, selected, disabled, onClick }) {
         </span>
         <span className="min-w-0 flex-1">
           <span className="flex flex-wrap items-center gap-2">
-            <span className="text-lg font-black text-white">{mode.name}</span>
+            <span className="text-base font-black text-white min-[390px]:text-lg">{mode.name}</span>
             <span className="rounded-full bg-slate-950/34 px-2.5 py-1 text-[0.68rem] font-black uppercase tracking-[0.12em] text-amber-100">
               {mode.level}
             </span>

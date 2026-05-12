@@ -22,10 +22,10 @@ export default function CustomCardsPage({
   return (
     <>
       <Header title="Saját pakli" onBack={onBack} compact />
-      <section className="flex flex-1 flex-col gap-4">
+      <section className="flex min-h-0 flex-1 flex-col gap-4">
         <form
           onSubmit={handleSubmit}
-          className="rounded-[2rem] border border-white/10 bg-white/10 p-4"
+          className="shrink-0 rounded-[1.75rem] border border-white/10 bg-white/10 p-4"
         >
           <label
             htmlFor="custom-card"
@@ -40,7 +40,7 @@ export default function CustomCardsPage({
             placeholder="Példa: {player}, találj ki egy közös csapatnevet {target} segítségével."
             maxLength={180}
             rows={4}
-            className="party-field w-full resize-none rounded-3xl p-4 text-base font-bold leading-6 outline-none transition"
+            className="party-field w-full resize-none rounded-3xl p-4 text-[16px] font-bold leading-6 outline-none transition"
           />
           <p className="mt-2 text-xs leading-5 text-white/48">
             Használható: {'{player}'} az aktuális játékoshoz, {'{target}'} egy
@@ -51,7 +51,7 @@ export default function CustomCardsPage({
           </PrimaryButton>
         </form>
 
-        <div className="min-h-0 flex-1 space-y-2 overflow-auto pr-1">
+        <div className="mobile-scroll min-h-0 flex-1 space-y-2 overflow-y-auto pb-1 pr-1">
           {customCards.length === 0 ? (
             <p className="rounded-3xl bg-white/8 p-5 text-center text-sm leading-6 text-white/58">
               Nincs még saját feladat. Hozz létre egyet, és megjelenik a saját

@@ -27,14 +27,14 @@ export default function PrimaryButton({
       type={type}
       disabled={disabled}
       className={[
-        'inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl px-5 py-3 text-center text-base font-extrabold tracking-normal transition focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-200 disabled:pointer-events-none disabled:opacity-45',
+        'inline-flex min-h-[3.35rem] w-full touch-manipulation select-none items-center justify-center gap-2.5 rounded-[1.35rem] px-4 py-3 text-center text-[1rem] font-extrabold leading-tight tracking-normal transition focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-200 disabled:pointer-events-none disabled:opacity-45',
         variants[variant],
         className,
       ].join(' ')}
       {...props}
     >
       {Icon ? <Icon aria-hidden="true" className="h-5 w-5 shrink-0" /> : null}
-      <span className="min-w-0">{children}</span>
+      <span className="min-w-0 max-w-full break-words">{children}</span>
     </button>
   );
 }

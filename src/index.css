@@ -7,6 +7,8 @@
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 * {
@@ -14,17 +16,76 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html {
+  background: #090018;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
   background: #090018;
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
 }
 
 button,
 input,
 textarea {
   font: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font-size: 16px;
+}
+
+button,
+[role="button"] {
+  touch-action: manipulation;
+}
+
+.app-shell {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+}
+
+.phone-frame {
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  padding-block-start: max(0.875rem, env(safe-area-inset-top));
+  padding-block-end: max(1rem, env(safe-area-inset-bottom));
+  padding-inline-start: max(1rem, env(safe-area-inset-left));
+  padding-inline-end: max(1rem, env(safe-area-inset-right));
+}
+
+.mobile-scroll {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+.mobile-scroll::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .party-field {
@@ -60,7 +121,7 @@ textarea {
 .question-spotlight {
   position: relative;
   overflow: hidden;
-  min-height: 420px;
+  min-height: 390px;
   border-radius: 2rem;
   border: 1px solid rgba(255, 255, 255, 0.16);
   padding: 1.25rem;
@@ -101,6 +162,10 @@ textarea {
 
 .question-copy {
   position: relative;
+  display: flex;
+  min-height: 15rem;
+  flex-direction: column;
+  justify-content: center;
   border-radius: 1.5rem;
   padding: 1.25rem;
   background:
@@ -137,7 +202,7 @@ textarea {
 .question-sentence {
   margin-top: 0.7rem;
   color: #ffffff;
-  font-size: 2.15rem;
+  font-size: 1.9rem;
   font-weight: 950;
   line-height: 1.04;
   letter-spacing: 0;
@@ -267,4 +332,74 @@ textarea {
 
 .safe-bottom {
   padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+@media (min-width: 390px) and (min-height: 740px) {
+  .question-spotlight {
+    min-height: 420px;
+  }
+
+  .question-copy {
+    min-height: 16rem;
+  }
+
+  .question-sentence {
+    font-size: 2.15rem;
+  }
+}
+
+@media (max-width: 374px), (max-height: 700px) {
+  .phone-frame {
+    padding-block-start: max(0.75rem, env(safe-area-inset-top));
+    padding-block-end: max(0.75rem, env(safe-area-inset-bottom));
+    padding-inline-start: max(0.75rem, env(safe-area-inset-left));
+    padding-inline-end: max(0.75rem, env(safe-area-inset-right));
+  }
+
+  .question-spotlight {
+    min-height: 0;
+    border-radius: 1.5rem;
+    padding: 1rem;
+  }
+
+  .question-copy {
+    min-height: 11.5rem;
+    border-radius: 1.25rem;
+    padding: 1rem;
+  }
+
+  .question-copy::before {
+    left: 1rem;
+    right: 1rem;
+  }
+
+  .question-prefix {
+    font-size: 1rem;
+  }
+
+  .question-sentence {
+    font-size: 1.65rem;
+    line-height: 1.08;
+  }
+}
+
+@media (max-height: 640px) {
+  .question-copy {
+    min-height: 9.75rem;
+  }
+
+  .question-sentence {
+    font-size: 1.45rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

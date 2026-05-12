@@ -8,12 +8,12 @@ export default function Layout({ children, darkMode = true }) {
     <div className={themeClass}>
       <main
         className={[
-          'party-bg min-h-screen bg-gradient-to-br transition-colors',
+          'party-bg app-shell overflow-x-hidden bg-gradient-to-br transition-colors',
           background,
           darkMode ? 'text-white' : 'text-[#20112d]',
         ].join(' ')}
       >
-        <div className="mx-auto flex min-h-screen w-full max-w-[430px] flex-col px-4 py-5 safe-bottom">
+        <div className="phone-frame mx-auto flex w-full max-w-[430px] flex-col">
           {children}
         </div>
       </main>

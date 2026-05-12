@@ -13,13 +13,13 @@ export default function SettingsToggle({
       aria-label={`${label}: ${checked ? 'bekapcsolva' : 'kikapcsolva'}`}
       onClick={() => onChange(!checked)}
       className={[
-        'flex w-full items-center gap-3 rounded-3xl border p-4 text-left shadow-card transition focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-200',
+        'flex w-full touch-manipulation items-center gap-3 rounded-3xl border p-3 text-left shadow-card transition focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-200 min-[390px]:p-4',
         checked
           ? 'border-amber-200/22 bg-white/12'
           : 'border-white/10 bg-slate-950/44',
       ].join(' ')}
     >
-      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-white/12 text-amber-100">
+      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-white/12 text-amber-100 min-[390px]:h-11 min-[390px]:w-11">
         {Icon ? <Icon className="h-5 w-5" /> : null}
       </span>
       <span className="min-w-0 flex-1">

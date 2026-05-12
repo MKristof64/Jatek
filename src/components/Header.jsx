@@ -8,12 +8,12 @@ export default function Header({
   compact = false,
 }) {
   return (
-    <header className="mb-5 flex items-center gap-3 pt-1">
+    <header className="mb-4 flex shrink-0 items-center gap-3 pt-1">
       {onBack ? (
         <button
           type="button"
           onClick={onBack}
-          className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-white/12 text-white ring-1 ring-white/15 transition hover:bg-white/18"
+          className="grid h-12 w-12 shrink-0 touch-manipulation place-items-center rounded-[1.35rem] bg-white/12 text-white ring-1 ring-white/15 transition hover:bg-white/18 active:scale-[0.98]"
           aria-label="Vissza"
         >
           <ChevronLeft className="h-6 w-6" />
@@ -28,7 +28,7 @@ export default function Header({
         <h1
           className={[
             'truncate font-black tracking-normal text-white',
-            compact ? 'text-2xl' : 'text-3xl',
+            compact ? 'text-2xl' : 'text-2xl min-[390px]:text-3xl',
           ].join(' ')}
         >
           {title}
@@ -38,7 +38,7 @@ export default function Header({
         <button
           type="button"
           onClick={onSettings}
-          className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-white/12 text-white ring-1 ring-white/15 transition hover:bg-white/18"
+          className="grid h-12 w-12 shrink-0 touch-manipulation place-items-center rounded-[1.35rem] bg-white/12 text-white ring-1 ring-white/15 transition hover:bg-white/18 active:scale-[0.98]"
           aria-label="Beállítások"
         >
           <Settings className="h-5 w-5" />
