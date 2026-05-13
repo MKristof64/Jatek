@@ -27,7 +27,7 @@ export default function ModeCard({ mode, selected, disabled, onClick }) {
       disabled={disabled}
       onClick={onClick}
       className={[
-        'group w-full touch-manipulation rounded-3xl border p-3 text-left shadow-card transition min-[390px]:p-4',
+        'mode-card-dynamic group w-full touch-manipulation rounded-3xl border p-3 text-left shadow-card transition min-[390px]:p-4',
         selected
           ? 'border-amber-200/80 bg-white/20'
           : 'border-white/10 bg-white/10 hover:bg-white/15',

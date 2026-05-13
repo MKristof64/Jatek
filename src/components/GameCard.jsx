@@ -46,7 +46,7 @@ function TimerControl({ durationSeconds, resetKey }) {
   const Icon = running ? Pause : Play;
 
   return (
-    <div className="relative z-10 mt-3 flex items-center justify-between gap-3 rounded-2xl bg-slate-950/54 p-3 ring-1 ring-white/10">
+    <div className="timer-control relative z-10 mt-3 flex items-center justify-between gap-3 rounded-2xl bg-slate-950/54 p-3 ring-1 ring-white/10">
       <div>
         <p className="text-[0.68rem] font-black uppercase tracking-[0.16em] text-white/52">
           Időzítő
@@ -58,7 +58,7 @@ function TimerControl({ durationSeconds, resetKey }) {
       <button
         type="button"
         onClick={toggleTimer}
-        className="inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl bg-amber-300 px-4 py-2 text-sm font-black text-slate-950 transition active:scale-[0.98]"
+        className="party-mini-button inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl bg-amber-300 px-4 py-2 text-sm font-black text-slate-950 transition active:scale-[0.98]"
       >
         <Icon className="h-4 w-4" />
         {running ? 'Pause' : 'Indítás'}
@@ -95,26 +95,26 @@ export default function GameCard({
   const ParticipantIcon = isRoundtable || isDuel ? UsersRound : UserRound;
 
   return (
-    <section className="question-spotlight animate-pop">
-      <div className="relative z-10 flex items-center justify-between gap-3">
+    <section className="question-spotlight game-card-dynamic animate-pop">
+      <div className="game-card-top relative z-10 flex items-center justify-between gap-3">
         <div className="min-w-0">
           <p className="text-[0.68rem] font-black uppercase tracking-[0.18em] text-amber-100/75">
             {participantLabel}
           </p>
-          <div className="mt-2 inline-flex max-w-full items-center gap-2 rounded-full bg-white/10 px-3 py-2 ring-1 ring-white/10">
+          <div className="player-chip mt-2 inline-flex max-w-full items-center gap-2 rounded-full bg-white/10 px-3 py-2 ring-1 ring-white/10">
             <ParticipantIcon className="h-4 w-4 shrink-0 text-lime-200" />
             <h2 className="truncate text-lg font-black text-white min-[390px]:text-xl">
               {participantText}
             </h2>
           </div>
         </div>
-        <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-amber-300 via-orange-400 to-pink-500 text-slate-950 shadow-lg min-[390px]:h-14 min-[390px]:w-14">
+        <div className="spark-tile grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-amber-300 via-orange-400 to-pink-500 text-slate-950 shadow-lg min-[390px]:h-14 min-[390px]:w-14">
           <Sparkles className="h-6 w-6 min-[390px]:h-7 min-[390px]:w-7" />
         </div>
       </div>
 
       {currentTeam ? (
-        <p className="relative z-10 mt-4 rounded-2xl bg-lime-300/10 px-3 py-2 text-sm font-black text-lime-50 ring-1 ring-lime-200/15">
+        <p className="team-ribbon relative z-10 mt-4 rounded-2xl bg-lime-300/10 px-3 py-2 text-sm font-black text-lime-50 ring-1 ring-lime-200/15">
           {currentTeam.name} közös feladata
         </p>
       ) : null}
@@ -123,8 +123,8 @@ export default function GameCard({
         <TimerControl durationSeconds={durationSeconds} resetKey={card?.id} />
       ) : null}
 
-      <div className="relative z-10 mt-4 min-[390px]:mt-5">
-        <div className="mb-3 flex items-center justify-between gap-3">
+      <div className="question-stage relative z-10 mt-4 min-[390px]:mt-5">
+        <div className="question-meta mb-3 flex items-center justify-between gap-3">
           <p className="text-xs font-black uppercase tracking-[0.2em] text-pink-100/70">
             Kérdés
           </p>
@@ -132,7 +132,7 @@ export default function GameCard({
             {mode.type}
           </span>
         </div>
-        <div className="question-copy">
+        <div className="question-copy game-question-copy">
           <p className="question-prefix">{cardTitle}</p>
           <p className="question-sentence">{text}</p>
         </div>

@@ -13,7 +13,7 @@ export default function Header({
         <button
           type="button"
           onClick={onBack}
-          className="grid h-12 w-12 shrink-0 touch-manipulation place-items-center rounded-[1.35rem] bg-white/12 text-white ring-1 ring-white/15 transition hover:bg-white/18 active:scale-[0.98]"
+          className="icon-button-dynamic grid h-12 w-12 shrink-0 touch-manipulation place-items-center rounded-[1.35rem] bg-white/12 text-white ring-1 ring-white/15 transition hover:bg-white/18 active:scale-[0.98]"
           aria-label="Vissza"
         >
           <ChevronLeft className="h-6 w-6" />
@@ -38,7 +38,7 @@ export default function Header({
         <button
           type="button"
           onClick={onSettings}
-          className="grid h-12 w-12 shrink-0 touch-manipulation place-items-center rounded-[1.35rem] bg-white/12 text-white ring-1 ring-white/15 transition hover:bg-white/18 active:scale-[0.98]"
+          className="icon-button-dynamic grid h-12 w-12 shrink-0 touch-manipulation place-items-center rounded-[1.35rem] bg-white/12 text-white ring-1 ring-white/15 transition hover:bg-white/18 active:scale-[0.98]"
           aria-label="Beállítások"
         >
           <Settings className="h-5 w-5" />

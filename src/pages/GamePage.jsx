@@ -17,7 +17,7 @@ export default function GamePage({
   return (
     <section className="flex min-h-0 flex-1 flex-col gap-3">
       <div className="mobile-scroll min-h-0 flex-1 space-y-3 overflow-y-auto pb-1 pr-1">
-        <div className="flex items-center justify-between gap-3 rounded-[1.5rem] border border-white/10 bg-slate-950/60 px-4 py-3 shadow-card backdrop-blur">
+        <div className="game-topic-bar flex items-center justify-between gap-3 rounded-[1.5rem] border border-white/10 bg-slate-950/60 px-4 py-3 shadow-card backdrop-blur">
           <div className="min-w-0">
             <p className="text-[0.68rem] font-black uppercase tracking-[0.18em] text-amber-100/70">
               Téma
@@ -42,12 +42,17 @@ export default function GamePage({
         />
       </div>
 
-      <div className="shrink-0 space-y-2">
+      <div className="game-action-panel shrink-0 space-y-2">
         <div className="grid grid-cols-2 gap-2">
           <PrimaryButton variant="secondary" icon={SkipForward} onClick={onSkip}>
             Kihagyás
           </PrimaryButton>
-          <PrimaryButton variant="warning" icon={Shuffle} onClick={onNext}>
+          <PrimaryButton
+            variant="warning"
+            icon={Shuffle}
+            className="next-pulse"
+            onClick={onNext}
+          >
             Következő
           </PrimaryButton>
         </div>
