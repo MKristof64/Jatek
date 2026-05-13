@@ -1,4 +1,5 @@
 import { ChevronLeft, Settings } from 'lucide-react';
+import FullscreenButton from './FullscreenButton.jsx';
 
 export default function Header({
   title,
@@ -9,6 +10,7 @@ export default function Header({
 }) {
   return (
     <header className="mb-4 flex shrink-0 items-center gap-3 pt-1">
+      <FullscreenButton />
       {onBack ? (
         <button
           type="button"

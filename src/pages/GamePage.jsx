@@ -1,4 +1,5 @@
 import { Home, LogOut, Shuffle, SkipForward } from 'lucide-react';
+import FullscreenButton from '../components/FullscreenButton.jsx';
 import GameCard from '../components/GameCard.jsx';
 import PrimaryButton from '../components/PrimaryButton.jsx';
 
@@ -18,7 +19,8 @@ export default function GamePage({
     <section className="game-screen flex min-h-0 flex-1 flex-col gap-3">
       <div className="game-main mobile-scroll min-h-0 flex-1 space-y-3 overflow-y-auto pb-1 pr-1">
         <div className="game-topic-bar flex items-center justify-between gap-3 rounded-[1.5rem] border border-white/10 bg-slate-950/60 px-4 py-3 shadow-card backdrop-blur">
-          <div className="min-w-0">
+          <FullscreenButton className="game-fullscreen-button" />
+          <div className="min-w-0 flex-1">
             <p className="text-[0.68rem] font-black uppercase tracking-[0.18em] text-amber-100/70">
               Téma
             </p>
