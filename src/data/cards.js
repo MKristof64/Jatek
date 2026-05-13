@@ -1,7 +1,9 @@
+import { boldSpicyCards } from './boldSpicyCards.js';
 import { classicFunnyCards } from './classicFunnyCards.js';
 
 export const cards = [
   ...classicFunnyCards,
+  ...boldSpicyCards,
   { id: 'preparty-01', mode: 'preparty', text: '{player}, indíts egy 10 másodperces tapsritmust, a többiek kövessék.', safe: true },
   { id: 'preparty-02', mode: 'preparty', text: '{player}, válassz egy közös csapatkiáltást a következő két körre.', safe: true },
   { id: 'preparty-03', mode: 'preparty', text: '{player}, mindenki mondjon egy szót, ami leírja a mai estét.', safe: true },
@@ -14,12 +16,6 @@ export const cards = [
   { id: 'crazy-04', mode: 'crazy', text: '{player}, mondd el a neved úgy, mintha filmszereplő lennél egy trailerben.', safe: true },
   { id: 'crazy-05', mode: 'crazy', text: '{player}, válassz egy tárgyat, és mutasd be, mintha luxustermék lenne.', safe: true },
   { id: 'crazy-06', mode: 'crazy', text: '{player}, adj egy képzeletbeli díjat valakinek a társaságban.', safe: true },
-  { id: 'bold-01', mode: 'bold', text: '{player}, mondd meg, ki lenne a legjobb túlélő egy teljesen ártalmatlan kvízműsorban.', safe: true },
-  { id: 'bold-02', mode: 'bold', text: '{player}, vállalj be egy 15 másodperces táncmozdulatot, vagy mutass egy extra nagy mosolyt.', safe: true },
-  { id: 'bold-03', mode: 'bold', text: '{player}, árulj el egy apró szokást, amitől te egyedi vagy.', safe: true },
-  { id: 'bold-04', mode: 'bold', text: '{player}, dicsérj meg valakit konkrétan, ne csak általánosan.', safe: true },
-  { id: 'bold-05', mode: 'bold', text: '{player}, nevezz meg egy ártatlan guilty pleasure-t.', safe: true },
-  { id: 'bold-06', mode: 'bold', text: '{player}, kérdezz valakitől egy könnyű "inkább ez vagy az" kérdést.', safe: true },
   { id: 'hardcore-01', mode: 'hardcore', text: '{player}, vezess le egy 20 másodperces villámvitát arról, melyik nasi a legjobb.', safe: true },
   { id: 'hardcore-02', mode: 'hardcore', text: '{player}, mondj három dolgot, amit vinnél egy képzeletbeli fesztiválra.', safe: true },
   { id: 'hardcore-03', mode: 'hardcore', text: '{player}, válassz két embert, akik egy percig csak kérdésekkel beszélhetnek.', safe: true },
@@ -34,12 +30,10 @@ export const cards = [
   { id: 'team-06', mode: 'team', text: '{player}, kérj két önkéntest egy 15 másodperces némás jelenethez.', safe: true },
   { id: 'preparty-07', mode: 'preparty', text: '{player}, jelöld ki a következő kör hangulatfelelősét.', safe: true },
   { id: 'crazy-07', mode: 'crazy', text: '{player}, mondj egy hétköznapi mondatot operaénekes energiával.', safe: true },
-  { id: 'bold-07', mode: 'bold', text: '{player}, vállalj egy kedves igazságot: mi volt a hét legjobb pillanata?', safe: true },
   { id: 'hardcore-07', mode: 'hardcore', text: '{player}, 30 másodpercig te vagy a műsorvezető: kérdezz két gyorsat.', safe: true },
   { id: 'team-07', mode: 'team', text: '{player}, a társaság szavazzon: melyik két ember alkotná a legviccesebb kvízcsapatot?', safe: true },
   { id: 'preparty-08', mode: 'preparty', text: '{player} és {target} válasszanak egy közös bevonuló zenét.', safe: true },
   { id: 'crazy-08', mode: 'crazy', text: '{player}, adj {target} számára egy teljesen ártalmatlan szuperhősnevet.', safe: true },
-  { id: 'bold-08', mode: 'bold', text: '{player}, mondj egy kedves, konkrét bókot {target} stílusáról vagy energiájáról.', safe: true },
   { id: 'hardcore-08', mode: 'hardcore', text: '{player} és {target} 20 másodperc alatt találjanak ki egy új társasjáték-szabályt.', safe: true },
   { id: 'team-08', mode: 'team', text: '{player}, válaszd {target}-t csapattársnak egy villám asszociációs körre.', safe: true },
 ];
