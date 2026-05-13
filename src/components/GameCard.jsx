@@ -67,6 +67,15 @@ function TimerControl({ durationSeconds, resetKey }) {
   );
 }
 
+function getQuestionSizeClass(value) {
+  const length = String(value ?? '').trim().length;
+
+  if (length <= 58) return 'question-copy--short';
+  if (length <= 105) return 'question-copy--medium';
+  if (length <= 155) return 'question-copy--long';
+  return 'question-copy--dense';
+}
+
 export default function GameCard({
   playerName,
   participants = [],
@@ -79,6 +88,14 @@ export default function GameCard({
   const cardTitle = card?.title ?? 'Én még sosem...';
   const durationSeconds = card?.durationSeconds ?? 0;
   const hasTimer = durationSeconds > 0;
+  const questionSizeClass = getQuestionSizeClass(text);
+  const cardClasses = [
+    'question-spotlight game-card-dynamic animate-pop',
+    hasTimer ? 'game-card-dynamic--timed' : '',
+    currentTeam ? 'game-card-dynamic--team' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
   const participantNames = participants.map((participant) => participant.name);
   const isRoundtable = cardKind === 'roundtable';
   const isDuel = cardKind === 'duel';
@@ -95,7 +112,7 @@ export default function GameCard({
   const ParticipantIcon = isRoundtable || isDuel ? UsersRound : UserRound;
 
   return (
-    <section className="question-spotlight game-card-dynamic animate-pop">
+    <section className={cardClasses}>
       <div className="game-card-top relative z-10 flex items-center justify-between gap-3">
         <div className="min-w-0">
           <p className="text-[0.68rem] font-black uppercase tracking-[0.18em] text-amber-100/75">
@@ -132,7 +149,7 @@ export default function GameCard({
             {mode.type}
           </span>
         </div>
-        <div className="question-copy game-question-copy">
+        <div className={['question-copy game-question-copy', questionSizeClass].join(' ')}>
           <p className="question-prefix">{cardTitle}</p>
           <p className="question-sentence">{text}</p>
         </div>

@@ -274,16 +274,19 @@ button,
 .question-copy {
   position: relative;
   display: flex;
-  min-height: 15rem;
+  width: 100%;
+  min-height: 17.5rem;
+  flex: 1 1 auto;
   flex-direction: column;
   justify-content: center;
   border-radius: 1.5rem;
-  padding: 1.25rem;
+  padding: 1.35rem;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.04)),
     rgba(3, 7, 18, 0.7);
   color: #ffffff;
   overflow-wrap: break-word;
+  text-wrap: pretty;
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.12),
     0 18px 38px rgba(3, 7, 18, 0.26),
@@ -315,15 +318,75 @@ button,
 }
 
 .question-sentence {
+  width: 100%;
+  max-width: none;
   margin-top: 0.7rem;
   color: #ffffff;
-  font-size: 1.9rem;
+  font-size: 2.08rem;
   font-weight: 950;
-  line-height: 1.04;
+  line-height: 1.03;
   letter-spacing: 0;
+  text-wrap: pretty;
   text-shadow:
     0 1px 0 rgba(255, 255, 255, 0.08),
     0 18px 34px rgba(0, 0, 0, 0.34);
+}
+
+.question-copy--short .question-prefix {
+  font-size: 1.28rem;
+}
+
+.question-copy--short .question-sentence {
+  font-size: 2.45rem;
+  line-height: 1.02;
+}
+
+.question-copy--medium .question-sentence {
+  font-size: 2.12rem;
+  line-height: 1.03;
+}
+
+.question-copy--long .question-sentence {
+  font-size: 1.86rem;
+  line-height: 1.06;
+}
+
+.question-copy--dense .question-prefix {
+  font-size: 1.02rem;
+}
+
+.question-copy--dense .question-sentence {
+  font-size: 1.58rem;
+  line-height: 1.09;
+}
+
+.game-screen {
+  min-height: 0;
+}
+
+.game-main {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.game-main > * + * {
+  margin-top: 0 !important;
+}
+
+.game-card-dynamic {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.question-stage {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
 }
 
 .game-topic-bar {
@@ -387,6 +450,14 @@ button,
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.1),
     0 14px 26px rgba(0, 0, 0, 0.16);
+}
+
+.game-card-dynamic--timed .question-copy--short .question-sentence {
+  font-size: 2.2rem;
+}
+
+.game-card-dynamic--timed .question-copy--medium .question-sentence {
+  font-size: 1.96rem;
 }
 
 .question-meta span {
@@ -654,11 +725,29 @@ button,
   }
 
   .question-copy {
-    min-height: 16rem;
+    min-height: 20rem;
+    padding: 1.45rem;
   }
 
   .question-sentence {
-    font-size: 2.15rem;
+    font-size: 2.32rem;
+  }
+
+  .question-copy--short .question-sentence {
+    font-size: 2.86rem;
+  }
+
+  .question-copy--medium .question-sentence {
+    font-size: 2.42rem;
+  }
+
+  .question-copy--long .question-sentence {
+    font-size: 2.06rem;
+  }
+
+  .question-copy--dense .question-sentence {
+    font-size: 1.78rem;
+    line-height: 1.08;
   }
 }
 
@@ -695,6 +784,23 @@ button,
     font-size: 1.65rem;
     line-height: 1.08;
   }
+
+  .question-copy--short .question-sentence {
+    font-size: 1.95rem;
+  }
+
+  .question-copy--medium .question-sentence {
+    font-size: 1.68rem;
+  }
+
+  .question-copy--long .question-sentence {
+    font-size: 1.48rem;
+  }
+
+  .question-copy--dense .question-sentence {
+    font-size: 1.26rem;
+    line-height: 1.1;
+  }
 }
 
 @media (max-height: 640px) {
@@ -704,6 +810,23 @@ button,
 
   .question-sentence {
     font-size: 1.45rem;
+  }
+
+  .question-copy--short .question-sentence {
+    font-size: 1.78rem;
+  }
+
+  .question-copy--medium .question-sentence {
+    font-size: 1.5rem;
+  }
+
+  .question-copy--long .question-sentence {
+    font-size: 1.3rem;
+  }
+
+  .question-copy--dense .question-sentence {
+    font-size: 1.12rem;
+    line-height: 1.11;
   }
 
   .game-action-panel .party-button {
@@ -813,6 +936,33 @@ button,
     margin-top: 0.45rem;
     border-radius: 1rem;
     padding: 0.45rem 0.6rem;
+  }
+
+  .game-card-dynamic--timed .timer-control {
+    margin-top: 0.3rem;
+    padding: 0.32rem 0.45rem;
+  }
+
+  .game-card-dynamic--timed .timer-control p:first-child {
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  .game-card-dynamic--timed .timer-control p:last-child {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .game-card-dynamic--timed .party-mini-button {
+    min-height: 1.9rem;
+    border-radius: 0.8rem;
+    padding: 0.22rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .game-card-dynamic--timed .party-mini-button svg {
+    width: 0.85rem;
+    height: 0.85rem;
   }
 
   .question-stage {
@@ -1361,6 +1511,14 @@ button,
     padding: 0.85rem 0.95rem;
   }
 
+  .game-card-dynamic--timed .question-stage {
+    margin-top: 0.35rem !important;
+  }
+
+  .game-card-dynamic--timed .question-copy {
+    padding-top: 1.05rem;
+  }
+
   .question-copy::before {
     left: 0.95rem;
     right: 0.95rem;
@@ -1379,6 +1537,41 @@ button,
     margin-top: 0.45rem;
     font-size: 1.38rem;
     line-height: 1.07;
+  }
+
+  .question-copy--short .question-sentence {
+    font-size: 1.78rem;
+    line-height: 1.04;
+  }
+
+  .question-copy--medium .question-sentence {
+    font-size: 1.52rem;
+    line-height: 1.06;
+  }
+
+  .question-copy--long .question-sentence {
+    font-size: 1.3rem;
+    line-height: 1.08;
+  }
+
+  .question-copy--dense .question-sentence {
+    font-size: 1.12rem;
+    line-height: 1.1;
+  }
+
+  .game-card-dynamic--timed .question-copy--short .question-sentence {
+    font-size: 1.42rem;
+    line-height: 1.07;
+  }
+
+  .game-card-dynamic--timed .question-copy--medium .question-sentence {
+    font-size: 1.28rem;
+    line-height: 1.08;
+  }
+
+  .game-card-dynamic--timed .question-copy--long .question-sentence {
+    font-size: 1.14rem;
+    line-height: 1.1;
   }
 
   .game-question-copy::after {
@@ -1525,8 +1718,56 @@ button,
   }
 
   .question-sentence {
-    font-size: 1.85rem;
+    font-size: 2.1rem;
     line-height: 1.06;
+  }
+
+  .question-copy--short .question-sentence {
+    font-size: 2.6rem;
+    line-height: 1.02;
+  }
+
+  .question-copy--medium .question-sentence {
+    font-size: 2.2rem;
+    line-height: 1.04;
+  }
+
+  .question-copy--long .question-sentence {
+    font-size: 1.86rem;
+    line-height: 1.06;
+  }
+
+  .question-copy--dense .question-sentence {
+    font-size: 1.56rem;
+    line-height: 1.09;
+  }
+
+  .game-card-dynamic--timed .timer-control {
+    padding: 0.42rem 0.6rem;
+  }
+
+  .game-card-dynamic--timed .timer-control p:last-child {
+    font-size: 1.18rem;
+  }
+
+  .game-card-dynamic--timed .party-mini-button {
+    min-height: 2.15rem;
+    padding-inline: 0.7rem;
+  }
+
+  .game-card-dynamic--timed .question-copy--short .question-sentence {
+    font-size: 1.82rem;
+    line-height: 1.05;
+  }
+
+  .game-card-dynamic--timed .question-copy--medium .question-sentence {
+    font-size: 1.58rem;
+    line-height: 1.07;
+  }
+
+  .game-card-dynamic--timed .question-copy--long .question-sentence {
+    font-size: 1.38rem;
+    line-height: 1.09;
   }
 
   .game-action-panel {
@@ -1738,6 +1979,75 @@ button,
     margin-top: 0.28rem;
     font-size: 1.05rem;
     line-height: 1.08;
+  }
+
+  .question-copy--short .question-sentence {
+    font-size: 1.6rem;
+    line-height: 1.04;
+  }
+
+  .question-copy--medium .question-sentence {
+    font-size: 1.34rem;
+    line-height: 1.07;
+  }
+
+  .question-copy--long .question-sentence {
+    font-size: 1.12rem;
+    line-height: 1.09;
+  }
+
+  .question-copy--dense .question-sentence {
+    font-size: 0.92rem;
+    line-height: 1.12;
+  }
+
+  .game-card-dynamic--timed .timer-control {
+    margin-top: 0.24rem;
+    padding: 0.24rem 0.36rem;
+  }
+
+  .game-card-dynamic--timed .timer-control p:first-child {
+    display: none;
+  }
+
+  .game-card-dynamic--timed .timer-control p:last-child {
+    font-size: 0.9rem;
+  }
+
+  .game-card-dynamic--timed .party-mini-button {
+    min-height: 1.65rem;
+    border-radius: 0.65rem;
+    padding: 0.14rem 0.4rem;
+    font-size: 0.62rem;
+  }
+
+  .game-card-dynamic--timed .party-mini-button svg {
+    width: 0.72rem;
+    height: 0.72rem;
+  }
+
+  .game-card-dynamic--timed .question-stage {
+    margin-top: 0.24rem !important;
+  }
+
+  .game-card-dynamic--timed .question-copy {
+    padding-top: 0.82rem;
+  }
+
+  .game-card-dynamic--timed .question-copy--short .question-sentence {
+    font-size: 1.32rem;
+    line-height: 1.08;
+  }
+
+  .game-card-dynamic--timed .question-copy--medium .question-sentence {
+    font-size: 1.18rem;
+    line-height: 1.1;
+  }
+
+  .game-card-dynamic--timed .question-copy--long .question-sentence,
+  .game-card-dynamic--timed .question-copy--dense .question-sentence {
+    font-size: 0.96rem;
+    line-height: 1.12;
   }
 
   .game-action-panel {
