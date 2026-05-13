@@ -1028,6 +1028,214 @@ button,
     margin-bottom: 0.45rem;
   }
 
+  .home-screen {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(9rem, 12.25rem);
+    grid-template-rows: minmax(0, 1fr);
+    align-items: stretch;
+    gap: 0.7rem;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .home-hero-card {
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+    flex-direction: column;
+    border-radius: 1.35rem;
+  }
+
+  .home-hero-content {
+    display: grid;
+    min-height: 0;
+    flex: 1 1 auto;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem;
+  }
+
+  .home-logo-tile {
+    width: 4rem;
+    height: 4rem;
+    margin: 0;
+    border-radius: 1.2rem;
+  }
+
+  .home-logo-tile svg {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .home-hero-copy {
+    min-width: 0;
+  }
+
+  .home-hero-kicker {
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+  }
+
+  .home-hero-title {
+    margin-top: 0.25rem;
+    font-size: 1.7rem;
+    line-height: 1;
+  }
+
+  .home-hero-description {
+    margin-top: 0.35rem;
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+
+  .home-stat-grid {
+    flex-shrink: 0;
+    gap: 0.55rem;
+    padding: 0.65rem;
+  }
+
+  .home-stat-card {
+    border-radius: 1rem;
+    padding: 0.6rem;
+  }
+
+  .home-stat-number {
+    font-size: 1.45rem;
+    line-height: 1;
+  }
+
+  .home-stat-label {
+    margin-top: 0.1rem;
+    font-size: 0.72rem;
+  }
+
+  .home-action-panel {
+    display: grid !important;
+    grid-template-rows: minmax(0, 1.2fr) minmax(0, 1fr);
+    align-content: stretch;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    gap: 0.5rem;
+  }
+
+  .home-action-panel > * + * {
+    margin-top: 0 !important;
+  }
+
+  .home-secondary-actions {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    min-height: 0;
+  }
+
+  .home-action-panel .party-button {
+    min-height: 0;
+    height: 100%;
+    border-radius: 1rem;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.88rem;
+    line-height: 1.05;
+  }
+
+  .home-action-panel .party-button svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .mode-select-screen {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(9rem, 12.25rem);
+    grid-template-rows: minmax(0, 1fr);
+    align-items: stretch;
+    gap: 0.7rem;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .mode-list {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: start;
+    gap: 0.55rem;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 0 0.1rem 0.15rem 0;
+  }
+
+  .mode-list > * + * {
+    margin-top: 0 !important;
+  }
+
+  .mode-list > p {
+    grid-column: 1 / -1;
+  }
+
+  .mode-start-panel {
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+  }
+
+  .mode-start-button {
+    min-height: 0;
+    height: 100%;
+    border-radius: 1rem;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  .mode-list .mode-card-dynamic {
+    border-radius: 1rem;
+    padding: 0.62rem;
+  }
+
+  .mode-list .mode-card-dynamic > span:first-child {
+    gap: 0.55rem;
+  }
+
+  .mode-list .mode-card-icon {
+    width: 2.45rem;
+    height: 2.45rem;
+    border-radius: 0.9rem;
+  }
+
+  .mode-list .mode-card-icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .mode-list .mode-card-title {
+    font-size: 0.95rem;
+    line-height: 1.05;
+  }
+
+  .mode-list .mode-card-level {
+    padding: 0.16rem 0.45rem;
+    font-size: 0.52rem;
+    letter-spacing: 0.08em;
+  }
+
+  .mode-list .mode-card-type {
+    margin-top: 0.15rem;
+    font-size: 0.74rem;
+    line-height: 1.05;
+  }
+
+  .mode-list .mode-card-description {
+    margin-top: 0.42rem;
+    font-size: 0.74rem;
+    line-height: 1.25;
+  }
+
+  .mode-list .mode-card-style {
+    display: none;
+  }
+
   .game-screen {
     display: grid !important;
     grid-template-columns: minmax(0, 1fr) minmax(9rem, 12.25rem);
@@ -1218,6 +1426,64 @@ button,
 }
 
 @media (orientation: landscape) and (min-width: 840px) {
+  .home-screen,
+  .mode-select-screen {
+    grid-template-columns: minmax(0, 1fr) minmax(11rem, 13.5rem);
+    gap: 0.85rem;
+  }
+
+  .home-hero-content {
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .home-logo-tile {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 1.45rem;
+  }
+
+  .home-logo-tile svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .home-hero-title {
+    font-size: 2.15rem;
+  }
+
+  .home-hero-description {
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  .home-action-panel,
+  .mode-select-screen {
+    gap: 0.65rem;
+  }
+
+  .home-action-panel .party-button,
+  .mode-start-button {
+    font-size: 1rem;
+  }
+
+  .mode-list {
+    gap: 0.7rem;
+  }
+
+  .mode-list .mode-card-dynamic {
+    padding: 0.75rem;
+  }
+
+  .mode-list .mode-card-title {
+    font-size: 1.08rem;
+  }
+
+  .mode-list .mode-card-description {
+    font-size: 0.82rem;
+    line-height: 1.3;
+  }
+
   .game-screen {
     grid-template-columns: minmax(0, 1fr) minmax(11rem, 13.5rem);
     gap: 0.85rem;
@@ -1282,6 +1548,124 @@ button,
 
   .phone-frame > header {
     margin-bottom: 0.3rem;
+  }
+
+  .home-screen,
+  .mode-select-screen {
+    grid-template-columns: minmax(0, 1fr) minmax(7.6rem, 9.5rem);
+    gap: 0.45rem;
+  }
+
+  .home-hero-card {
+    border-radius: 1rem;
+  }
+
+  .home-hero-content {
+    gap: 0.55rem;
+    padding: 0.55rem;
+  }
+
+  .home-logo-tile {
+    width: 3.05rem;
+    height: 3.05rem;
+    border-radius: 0.95rem;
+  }
+
+  .home-logo-tile svg {
+    width: 1.55rem;
+    height: 1.55rem;
+  }
+
+  .home-hero-kicker {
+    font-size: 0.5rem;
+    letter-spacing: 0.12em;
+  }
+
+  .home-hero-title {
+    margin-top: 0.16rem;
+    font-size: 1.15rem;
+  }
+
+  .home-hero-description {
+    margin-top: 0.22rem;
+    font-size: 0.64rem;
+    line-height: 1.22;
+  }
+
+  .home-stat-grid {
+    gap: 0.4rem;
+    padding: 0.45rem;
+  }
+
+  .home-stat-card {
+    border-radius: 0.8rem;
+    padding: 0.42rem;
+  }
+
+  .home-stat-number {
+    font-size: 1.05rem;
+  }
+
+  .home-stat-label {
+    font-size: 0.58rem;
+  }
+
+  .home-action-panel,
+  .home-secondary-actions,
+  .mode-select-screen {
+    gap: 0.35rem;
+  }
+
+  .home-action-panel .party-button,
+  .mode-start-button {
+    border-radius: 0.85rem;
+    padding: 0.18rem 0.35rem;
+    font-size: 0.74rem;
+  }
+
+  .home-action-panel .party-button svg,
+  .mode-start-button svg {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  .mode-list {
+    gap: 0.42rem;
+  }
+
+  .mode-list .mode-card-dynamic {
+    border-radius: 0.85rem;
+    padding: 0.46rem;
+  }
+
+  .mode-list .mode-card-icon {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.72rem;
+  }
+
+  .mode-list .mode-card-icon svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .mode-list .mode-card-title {
+    font-size: 0.78rem;
+  }
+
+  .mode-list .mode-card-level {
+    padding: 0.12rem 0.35rem;
+    font-size: 0.46rem;
+  }
+
+  .mode-list .mode-card-type,
+  .mode-list .mode-card-description {
+    font-size: 0.62rem;
+    line-height: 1.18;
+  }
+
+  .mode-list .mode-card-description {
+    margin-top: 0.25rem;
   }
 
   .game-screen {

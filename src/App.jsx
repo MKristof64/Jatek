@@ -31,6 +31,8 @@ const limits = {
 };
 
 const initialGame = {
+  playerOrder: [],
+  orderPosition: 0,
   playerIndex: 0,
   targetIndex: 1,
   participantIndexes: [],
@@ -175,13 +177,18 @@ function pickTargetIndex(players, playerIndex, modeId = 'classic') {
   return targets[Math.floor(Math.random() * targets.length)];
 }
 
-function pickRandomPlayerIndexes(players, count) {
+function shufflePlayerIndexes(players) {
   const indexes = players.map((_, index) => index);
   for (let index = indexes.length - 1; index > 0; index -= 1) {
     const randomIndex = Math.floor(Math.random() * (index + 1));
     [indexes[index], indexes[randomIndex]] = [indexes[randomIndex], indexes[index]];
   }
 
+  return indexes;
+}
+
+function pickRandomPlayerIndexes(players, count) {
+  const indexes = shufflePlayerIndexes(players);
   return indexes.slice(0, Math.min(count, indexes.length));
 }
 
@@ -325,11 +332,14 @@ export default function App() {
   const startGame = () => {
     if (players.length < 2 || cardPool.length === 0) return;
     const picked = pickRandomCard(cardPool);
+    const playerOrder = shufflePlayerIndexes(players);
+    const firstPlayerIndex = playerOrder[0] ?? 0;
     setGame({
       ...initialGame,
-      playerIndex: 0,
-      targetIndex: pickTargetIndex(players, 0, selectedMode),
-      participantIndexes: getParticipantIndexes(picked.card, players, 0),
+      playerOrder,
+      playerIndex: firstPlayerIndex,
+      targetIndex: pickTargetIndex(players, firstPlayerIndex, selectedMode),
+      participantIndexes: getParticipantIndexes(picked.card, players, firstPlayerIndex),
       card: picked.card,
       usedIds: picked.usedIds,
     });
@@ -338,10 +348,23 @@ export default function App() {
   };
 
   const advanceGame = () => {
-    const nextPlayerIndex = (game.playerIndex + 1) % players.length;
+    if (players.length < 2 || cardPool.length === 0) return;
+    const playerOrder =
+      game.playerOrder.length === players.length
+        ? game.playerOrder
+        : shufflePlayerIndexes(players);
+    if (playerOrder.length === 0) return;
+
+    const currentOrderPosition = Number.isInteger(game.orderPosition)
+      ? game.orderPosition
+      : Math.max(0, playerOrder.indexOf(game.playerIndex));
+    const nextOrderPosition = (currentOrderPosition + 1) % playerOrder.length;
+    const nextPlayerIndex = playerOrder[nextOrderPosition] ?? 0;
     const picked = pickRandomCard(cardPool, game.usedIds);
 
     setGame({
+      playerOrder,
+      orderPosition: nextOrderPosition,
       playerIndex: nextPlayerIndex,
       targetIndex: pickTargetIndex(players, nextPlayerIndex, selectedMode),
       participantIndexes: getParticipantIndexes(picked.card, players, nextPlayerIndex),

@@ -37,7 +37,7 @@ export default function ModeCard({ mode, selected, disabled, onClick }) {
       <span className="flex items-center gap-4">
         <span
           className={[
-            'grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br text-slate-950 shadow-lg min-[390px]:h-14 min-[390px]:w-14',
+            'mode-card-icon grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br text-slate-950 shadow-lg min-[390px]:h-14 min-[390px]:w-14',
             mode.accent,
           ].join(' ')}
         >
@@ -45,20 +45,20 @@ export default function ModeCard({ mode, selected, disabled, onClick }) {
         </span>
         <span className="min-w-0 flex-1">
           <span className="flex flex-wrap items-center gap-2">
-            <span className="text-base font-black text-white min-[390px]:text-lg">{mode.name}</span>
-            <span className="rounded-full bg-slate-950/34 px-2.5 py-1 text-[0.68rem] font-black uppercase tracking-[0.12em] text-amber-100">
+            <span className="mode-card-title text-base font-black text-white min-[390px]:text-lg">{mode.name}</span>
+            <span className="mode-card-level rounded-full bg-slate-950/34 px-2.5 py-1 text-[0.68rem] font-black uppercase tracking-[0.12em] text-amber-100">
               {mode.level}
             </span>
           </span>
-          <span className="mt-1 block text-sm font-bold text-white/72">
+          <span className="mode-card-type mt-1 block text-sm font-bold text-white/72">
             {mode.type}
           </span>
         </span>
       </span>
-      <span className="mt-3 block text-sm leading-5 text-white/68">
+      <span className="mode-card-description mt-3 block text-sm leading-5 text-white/68">
         {mode.description}
       </span>
-      <span className="mt-3 block rounded-2xl bg-slate-950/28 px-3 py-2 text-xs font-bold leading-5 text-lime-50/78 ring-1 ring-white/10">
+      <span className="mode-card-style mt-3 block rounded-2xl bg-slate-950/28 px-3 py-2 text-xs font-bold leading-5 text-lime-50/78 ring-1 ring-white/10">
         {mode.playStyle}
       </span>
     </button>
