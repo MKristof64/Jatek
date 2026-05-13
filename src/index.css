@@ -711,6 +711,309 @@ button,
   }
 }
 
+@media (orientation: landscape) and (max-height: 620px) {
+  body {
+    overscroll-behavior: none;
+  }
+
+  .phone-frame {
+    max-width: min(100%, 940px);
+    padding-block-start: max(0.5rem, env(safe-area-inset-top));
+    padding-block-end: max(0.5rem, env(safe-area-inset-bottom));
+    padding-inline-start: max(0.625rem, env(safe-area-inset-left));
+    padding-inline-end: max(0.625rem, env(safe-area-inset-right));
+  }
+
+  .phone-frame > header {
+    margin-bottom: 0.5rem;
+  }
+
+  .game-screen {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(8.5rem, 11rem);
+    align-items: stretch;
+    gap: 0.65rem;
+  }
+
+  .game-main {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+    gap: 0.55rem;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .game-main > * + * {
+    margin-top: 0 !important;
+  }
+
+  .game-topic-bar {
+    flex-shrink: 0;
+    border-radius: 1rem;
+    padding: 0.55rem 0.7rem;
+  }
+
+  .game-topic-bar p {
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+  }
+
+  .game-topic-bar h1 {
+    margin-top: 0.08rem;
+    font-size: 1rem;
+    line-height: 1.05;
+  }
+
+  .game-topic-bar span {
+    padding: 0.2rem 0.55rem;
+    font-size: 0.62rem;
+  }
+
+  .game-card-dynamic {
+    display: flex;
+    min-height: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+    border-radius: 1.25rem;
+    padding: 0.75rem;
+  }
+
+  .game-card-top {
+    flex-shrink: 0;
+  }
+
+  .game-card-top p {
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+  }
+
+  .player-chip {
+    margin-top: 0.35rem;
+    padding: 0.45rem 0.65rem;
+  }
+
+  .player-chip h2 {
+    font-size: 0.95rem;
+  }
+
+  .spark-tile {
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 1rem;
+  }
+
+  .spark-tile svg {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
+
+  .team-ribbon,
+  .timer-control {
+    margin-top: 0.45rem;
+    border-radius: 1rem;
+    padding: 0.45rem 0.6rem;
+  }
+
+  .question-stage {
+    display: flex;
+    min-height: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+    margin-top: 0.55rem !important;
+  }
+
+  .question-meta {
+    margin-bottom: 0.45rem;
+  }
+
+  .question-meta p {
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+  }
+
+  .question-meta span {
+    padding: 0.2rem 0.6rem;
+    font-size: 0.62rem;
+  }
+
+  .question-copy {
+    min-height: 0;
+    flex: 1 1 auto;
+    border-radius: 1rem;
+    padding: 0.8rem 0.9rem;
+  }
+
+  .question-copy::before {
+    left: 0.9rem;
+    right: 0.9rem;
+    height: 0.22rem;
+  }
+
+  .question-prefix {
+    margin-top: 0.15rem;
+    font-size: 0.92rem;
+  }
+
+  .question-sentence {
+    margin-top: 0.45rem;
+    font-size: 1.28rem;
+    line-height: 1.08;
+  }
+
+  .game-question-copy::after {
+    right: 0.9rem;
+    bottom: 0.75rem;
+    width: 3rem;
+  }
+
+  .game-action-panel {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow: hidden;
+    padding-top: 0;
+  }
+
+  .game-action-panel::before {
+    left: 0.25rem;
+    right: 0.25rem;
+  }
+
+  .game-action-panel > div {
+    display: grid;
+    flex: 1 1 0;
+    grid-template-columns: 1fr !important;
+    gap: 0.5rem;
+  }
+
+  .game-action-panel .party-button {
+    min-height: 0;
+    height: 100%;
+    border-radius: 1rem;
+    padding: 0.35rem 0.55rem;
+    font-size: 0.88rem;
+  }
+
+  .game-action-panel .party-button svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 380px) {
+  .game-screen {
+    grid-template-columns: minmax(0, 1fr) minmax(7.75rem, 9.5rem);
+    gap: 0.5rem;
+  }
+
+  .game-topic-bar {
+    padding: 0.45rem 0.6rem;
+  }
+
+  .game-card-dynamic {
+    padding: 0.62rem;
+  }
+
+  .player-chip {
+    padding-block: 0.35rem;
+  }
+
+  .question-stage {
+    margin-top: 0.4rem !important;
+  }
+
+  .question-copy {
+    padding: 0.65rem 0.75rem;
+  }
+
+  .question-prefix {
+    font-size: 0.82rem;
+  }
+
+  .question-sentence {
+    font-size: 1.08rem;
+    line-height: 1.1;
+  }
+
+  .game-action-panel {
+    gap: 0.4rem;
+  }
+
+  .game-action-panel > div {
+    gap: 0.4rem;
+  }
+
+  .game-action-panel .party-button {
+    font-size: 0.78rem;
+  }
+}
+
+@media (orientation: landscape) and (min-height: 621px) and (min-width: 760px) {
+  .phone-frame {
+    max-width: min(100%, 920px);
+  }
+
+  .game-screen {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(11rem, 13rem);
+    align-items: stretch;
+    gap: 0.9rem;
+  }
+
+  .game-main {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .game-main > * + * {
+    margin-top: 0 !important;
+  }
+
+  .game-card-dynamic {
+    display: flex;
+    min-height: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+  }
+
+  .question-stage {
+    display: flex;
+    min-height: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+  }
+
+  .question-copy {
+    min-height: 0;
+    flex: 1 1 auto;
+  }
+
+  .game-action-panel {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.65rem;
+  }
+
+  .game-action-panel > div {
+    display: grid;
+    flex: 0 0 auto;
+    grid-template-columns: 1fr !important;
+    gap: 0.65rem;
+  }
+
+  .game-action-panel .party-button {
+    min-height: 4rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
