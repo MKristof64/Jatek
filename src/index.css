@@ -1014,6 +1014,364 @@ button,
   }
 }
 
+@media (orientation: landscape) and (min-width: 560px) {
+  .phone-frame {
+    width: 100%;
+    max-width: min(100%, 1180px);
+    padding-block-start: max(0.4rem, env(safe-area-inset-top));
+    padding-block-end: max(0.4rem, env(safe-area-inset-bottom));
+    padding-inline-start: max(0.55rem, env(safe-area-inset-left));
+    padding-inline-end: max(0.55rem, env(safe-area-inset-right));
+  }
+
+  .phone-frame > header {
+    margin-bottom: 0.45rem;
+  }
+
+  .game-screen {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(9rem, 12.25rem);
+    grid-template-rows: minmax(0, 1fr);
+    align-items: stretch;
+    gap: 0.7rem;
+    min-height: 0;
+  }
+
+  .game-main {
+    display: flex !important;
+    min-width: 0;
+    min-height: 0;
+    flex-direction: column;
+    gap: 0.55rem;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .game-main > * + * {
+    margin-top: 0 !important;
+  }
+
+  .game-topic-bar {
+    flex-shrink: 0;
+    width: 100%;
+    border-radius: 1.15rem;
+    padding: 0.55rem 0.75rem;
+  }
+
+  .game-topic-bar p {
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+  }
+
+  .game-topic-bar h1 {
+    margin-top: 0.08rem;
+    font-size: 1.05rem;
+    line-height: 1.05;
+  }
+
+  .game-topic-bar span {
+    padding: 0.22rem 0.6rem;
+    font-size: 0.62rem;
+  }
+
+  .game-card-dynamic {
+    display: flex;
+    width: 100%;
+    min-height: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+    border-radius: 1.35rem;
+    padding: 0.8rem 0.85rem;
+  }
+
+  .game-card-top {
+    flex-shrink: 0;
+  }
+
+  .game-card-top p {
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+  }
+
+  .player-chip {
+    margin-top: 0.35rem;
+    padding: 0.42rem 0.7rem;
+  }
+
+  .player-chip h2 {
+    font-size: 1rem;
+  }
+
+  .spark-tile {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 1rem;
+  }
+
+  .spark-tile svg {
+    width: 1.45rem;
+    height: 1.45rem;
+  }
+
+  .team-ribbon,
+  .timer-control {
+    margin-top: 0.45rem;
+    border-radius: 1rem;
+    padding: 0.45rem 0.6rem;
+  }
+
+  .question-stage {
+    display: flex;
+    min-height: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+    margin-top: 0.55rem !important;
+  }
+
+  .question-meta {
+    margin-bottom: 0.45rem;
+  }
+
+  .question-meta p {
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+  }
+
+  .question-meta span {
+    padding: 0.2rem 0.6rem;
+    font-size: 0.62rem;
+  }
+
+  .question-copy {
+    display: flex;
+    width: 100%;
+    min-height: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 1.1rem;
+    padding: 0.85rem 0.95rem;
+  }
+
+  .question-copy::before {
+    left: 0.95rem;
+    right: 0.95rem;
+    height: 0.22rem;
+  }
+
+  .question-prefix {
+    margin-top: 0;
+    font-size: 0.95rem;
+    line-height: 1.05;
+  }
+
+  .question-sentence {
+    width: 100%;
+    max-width: none;
+    margin-top: 0.45rem;
+    font-size: 1.38rem;
+    line-height: 1.07;
+  }
+
+  .game-question-copy::after {
+    right: 0.95rem;
+    bottom: 0.75rem;
+    width: 3.25rem;
+  }
+
+  .game-action-panel {
+    display: grid !important;
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    align-content: stretch;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    gap: 0.5rem;
+    overflow: hidden;
+    padding-top: 0;
+  }
+
+  .game-action-panel::before {
+    left: 0.25rem;
+    right: 0.25rem;
+  }
+
+  .game-action-row {
+    display: contents !important;
+  }
+
+  .game-action-panel .party-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    border-radius: 1rem;
+    padding: 0.3rem 0.55rem;
+    font-size: 0.88rem;
+    line-height: 1.05;
+  }
+
+  .game-action-panel .party-button svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+}
+
+@media (orientation: landscape) and (min-width: 840px) {
+  .game-screen {
+    grid-template-columns: minmax(0, 1fr) minmax(11rem, 13.5rem);
+    gap: 0.85rem;
+  }
+
+  .game-topic-bar {
+    padding: 0.65rem 0.9rem;
+  }
+
+  .game-topic-bar h1 {
+    font-size: 1.35rem;
+  }
+
+  .game-card-dynamic {
+    padding: 1rem;
+  }
+
+  .player-chip h2 {
+    font-size: 1.2rem;
+  }
+
+  .spark-tile {
+    width: 3.4rem;
+    height: 3.4rem;
+    border-radius: 1.15rem;
+  }
+
+  .spark-tile svg {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .question-copy {
+    padding: 1rem 1.1rem;
+  }
+
+  .question-prefix {
+    font-size: 1.08rem;
+  }
+
+  .question-sentence {
+    font-size: 1.85rem;
+    line-height: 1.06;
+  }
+
+  .game-action-panel {
+    gap: 0.65rem;
+  }
+
+  .game-action-panel .party-button {
+    font-size: 1rem;
+  }
+}
+
+@media (orientation: landscape) and (min-width: 560px) and (max-height: 390px) {
+  .phone-frame {
+    padding-block-start: max(0.25rem, env(safe-area-inset-top));
+    padding-block-end: max(0.25rem, env(safe-area-inset-bottom));
+    padding-inline-start: max(0.4rem, env(safe-area-inset-left));
+    padding-inline-end: max(0.4rem, env(safe-area-inset-right));
+  }
+
+  .phone-frame > header {
+    margin-bottom: 0.3rem;
+  }
+
+  .game-screen {
+    grid-template-columns: minmax(0, 1fr) minmax(7.6rem, 9.5rem);
+    gap: 0.45rem;
+  }
+
+  .game-main {
+    gap: 0.4rem;
+  }
+
+  .game-topic-bar {
+    border-radius: 0.95rem;
+    padding: 0.38rem 0.6rem;
+  }
+
+  .game-topic-bar h1 {
+    font-size: 0.92rem;
+  }
+
+  .game-card-dynamic {
+    border-radius: 1.05rem;
+    padding: 0.56rem 0.62rem;
+  }
+
+  .player-chip {
+    margin-top: 0.25rem;
+    padding: 0.32rem 0.55rem;
+  }
+
+  .player-chip h2 {
+    font-size: 0.9rem;
+  }
+
+  .spark-tile {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 0.8rem;
+  }
+
+  .spark-tile svg {
+    width: 1.12rem;
+    height: 1.12rem;
+  }
+
+  .question-stage {
+    margin-top: 0.35rem !important;
+  }
+
+  .question-meta {
+    margin-bottom: 0.28rem;
+  }
+
+  .question-copy {
+    border-radius: 0.9rem;
+    padding: 0.58rem 0.7rem;
+  }
+
+  .question-copy::before {
+    left: 0.7rem;
+    right: 0.7rem;
+    height: 0.18rem;
+  }
+
+  .question-prefix {
+    font-size: 0.78rem;
+  }
+
+  .question-sentence {
+    margin-top: 0.28rem;
+    font-size: 1.05rem;
+    line-height: 1.08;
+  }
+
+  .game-action-panel {
+    gap: 0.35rem;
+  }
+
+  .game-action-panel .party-button {
+    border-radius: 0.85rem;
+    padding: 0.18rem 0.35rem;
+    font-size: 0.74rem;
+  }
+
+  .game-action-panel .party-button svg {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

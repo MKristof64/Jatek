@@ -43,7 +43,7 @@ export default function GamePage({
       </div>
 
       <div className="game-action-panel shrink-0 space-y-2">
-        <div className="grid grid-cols-2 gap-2">
+        <div className="game-action-row grid grid-cols-2 gap-2">
           <PrimaryButton variant="secondary" icon={SkipForward} onClick={onSkip}>
             Kihagyás
           </PrimaryButton>
@@ -56,7 +56,7 @@ export default function GamePage({
             Következő
           </PrimaryButton>
         </div>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="game-action-row grid grid-cols-2 gap-2">
           <PrimaryButton variant="danger" icon={LogOut} onClick={onExit}>
             Kilépés
           </PrimaryButton>
