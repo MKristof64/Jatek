@@ -23,6 +23,13 @@ const defaultSettings = {
   safeMode: true,
 };
 
+const limits = {
+  players: 24,
+  playerNameLength: 24,
+  customCards: 120,
+  customCardLength: 180,
+};
+
 const initialGame = {
   playerIndex: 0,
   targetIndex: 1,
@@ -50,7 +57,95 @@ function loadJson(key, fallback) {
   }
 }
 
+function saveJson(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    // Storage can be disabled or full; the in-memory game state should still work.
+  }
+}
+
+function removeStoredKey(key) {
+  try {
+    localStorage.removeItem(key);
+  } catch {
+    // Ignore storage failures so clearing data never crashes the UI.
+  }
+}
+
+function sanitizeText(value, maxLength) {
+  if (typeof value !== 'string') return '';
+
+  return value
+    .replace(/[\u0000-\u001f\u007f<>]/g, '')
+    .trim()
+    .slice(0, maxLength);
+}
+
+function sanitizeId(value, fallbackPrefix) {
+  if (typeof value !== 'string') return createId(fallbackPrefix);
+  const safeId = value.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 80);
+  return safeId || createId(fallbackPrefix);
+}
+
+function loadPlayers() {
+  const savedPlayers = loadJson(storageKeys.players, []);
+  if (!Array.isArray(savedPlayers)) return [];
+
+  return savedPlayers
+    .slice(0, limits.players)
+    .map((player) => ({
+      id: sanitizeId(player?.id, 'player'),
+      name: sanitizeText(player?.name, limits.playerNameLength),
+    }))
+    .filter((player) => player.name.length > 0);
+}
+
+function loadCustomCards() {
+  const savedCards = loadJson(storageKeys.customCards, []);
+  if (!Array.isArray(savedCards)) return [];
+
+  return savedCards
+    .slice(0, limits.customCards)
+    .map((card) => ({
+      id: sanitizeId(card?.id, 'custom'),
+      text: sanitizeText(card?.text, limits.customCardLength),
+      safe: true,
+    }))
+    .filter((card) => card.text.length > 0);
+}
+
+function loadSettings() {
+  const savedSettings = loadJson(storageKeys.settings, {});
+  if (!savedSettings || typeof savedSettings !== 'object' || Array.isArray(savedSettings)) {
+    return defaultSettings;
+  }
+
+  return {
+    darkMode:
+      typeof savedSettings.darkMode === 'boolean'
+        ? savedSettings.darkMode
+        : defaultSettings.darkMode,
+    sound:
+      typeof savedSettings.sound === 'boolean'
+        ? savedSettings.sound
+        : defaultSettings.sound,
+    vibration:
+      typeof savedSettings.vibration === 'boolean'
+        ? savedSettings.vibration
+        : defaultSettings.vibration,
+    safeMode:
+      typeof savedSettings.safeMode === 'boolean'
+        ? savedSettings.safeMode
+        : defaultSettings.safeMode,
+  };
+}
+
 function createId(prefix) {
+  if (globalThis.crypto?.randomUUID) {
+    return `${prefix}-${globalThis.crypto.randomUUID()}`;
+  }
+
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
@@ -143,28 +238,23 @@ function playFeedback(settings) {
 
 export default function App() {
   const [page, setPage] = useState(pages.home);
-  const [players, setPlayers] = useState(() => loadJson(storageKeys.players, []));
-  const [customCards, setCustomCards] = useState(() =>
-    loadJson(storageKeys.customCards, []),
-  );
-  const [settings, setSettings] = useState(() => ({
-    ...defaultSettings,
-    ...loadJson(storageKeys.settings, defaultSettings),
-  }));
+  const [players, setPlayers] = useState(loadPlayers);
+  const [customCards, setCustomCards] = useState(loadCustomCards);
+  const [settings, setSettings] = useState(loadSettings);
   const [selectedMode, setSelectedMode] = useState('classic');
   const [game, setGame] = useState(initialGame);
   const [pendingExit, setPendingExit] = useState('exit');
 
   useEffect(() => {
-    localStorage.setItem(storageKeys.players, JSON.stringify(players));
+    saveJson(storageKeys.players, players);
   }, [players]);
 
   useEffect(() => {
-    localStorage.setItem(storageKeys.customCards, JSON.stringify(customCards));
+    saveJson(storageKeys.customCards, customCards);
   }, [customCards]);
 
   useEffect(() => {
-    localStorage.setItem(storageKeys.settings, JSON.stringify(settings));
+    saveJson(storageKeys.settings, settings);
   }, [settings]);
 
   const activeMode = useMemo(() => getModeById(selectedMode), [selectedMode]);
@@ -203,9 +293,12 @@ export default function App() {
     .trim();
 
   const addPlayer = (name) => {
+    const safeName = sanitizeText(name, limits.playerNameLength);
+    if (!safeName) return;
+
     setPlayers((currentPlayers) => [
-      ...currentPlayers,
-      { id: createId('player'), name },
+      ...currentPlayers.slice(0, limits.players - 1),
+      { id: createId('player'), name: safeName },
     ]);
   };
 
@@ -216,9 +309,12 @@ export default function App() {
   };
 
   const addCustomCard = (text) => {
+    const safeText = sanitizeText(text, limits.customCardLength);
+    if (!safeText) return;
+
     setCustomCards((currentCards) => [
-      { id: createId('custom'), text, safe: true },
-      ...currentCards,
+      { id: createId('custom'), text: safeText, safe: true },
+      ...currentCards.slice(0, limits.customCards - 1),
     ]);
   };
 
@@ -256,7 +352,7 @@ export default function App() {
   };
 
   const clearData = () => {
-    Object.values(storageKeys).forEach((key) => localStorage.removeItem(key));
+    Object.values(storageKeys).forEach((key) => removeStoredKey(key));
     setPlayers([]);
     setCustomCards([]);
     setSettings(defaultSettings);
