@@ -1175,15 +1175,17 @@ export default function App() {
     }
   };
 
-  const leaveRoom = () => {
+  const leaveRoomNow = () => {
+    setPendingConfirmation(null);
+
     if (!room || !currentRoomPlayerId) {
       setGame(initialGame);
       setPage(pages.home);
       return;
     }
 
-    if (currentRoomRole === roomRoles.host) {
-      setPendingConfirmation('finish-room');
+    if (isRoomHost) {
+      finishRoomNow();
       return;
     }
 
@@ -1211,8 +1213,20 @@ export default function App() {
     setPage(pages.home);
   };
 
+  const requestLeaveRoom = () => {
+    if (isRoomHost) {
+      setPendingConfirmation('finish-room');
+      return;
+    }
+
+    setPendingConfirmation('leave-room');
+  };
+
   const finishRoomNow = () => {
-    if (!isRoomHost) return;
+    if (!isRoomHost) {
+      setPendingConfirmation(null);
+      return;
+    }
 
     hostConnectionsRef.current.forEach((connection) => {
       sendPeerMessage(connection, {
@@ -1327,14 +1341,20 @@ export default function App() {
     setPage(players.length >= 2 ? pages.modes : pages.players);
   };
 
-  const exitGameToHome = () => {
-    if (room && currentRoomRole !== roomRoles.host) {
-      leaveRoom();
+  const exitGameToHomeNow = () => {
+    setPendingConfirmation(null);
+
+    if (room && !isRoomHost) {
+      leaveRoomNow();
       return;
     }
 
     setGame(initialGame);
     setPage(pages.home);
+  };
+
+  const requestExitGame = () => {
+    setPendingConfirmation('exit-game');
   };
 
   return (
@@ -1371,7 +1391,7 @@ export default function App() {
           onJoinRoom={joinRoom}
           onSetRole={setParticipantRole}
           onRemoveParticipant={removeParticipant}
-          onLeaveRoom={leaveRoom}
+          onLeaveRoom={requestLeaveRoom}
           onFinishRoom={finishRoomGame}
           onStartGame={() => setPage(pages.modes)}
           onlineStatus={onlineStatus}
@@ -1402,7 +1422,7 @@ export default function App() {
           isHost={isRoomHost}
           onNext={() => advanceGame('next')}
           onSkip={() => advanceGame('skip')}
-          onExit={exitGameToHome}
+          onExit={requestExitGame}
           onFinishGame={finishRoomGame}
         />
       ) : null}
@@ -1432,6 +1452,30 @@ export default function App() {
           confirmLabel="Befejezés"
           onCancel={() => setPendingConfirmation(null)}
           onConfirm={finishRoomNow}
+        />
+      ) : null}
+
+      {pendingConfirmation === 'leave-room' ? (
+        <ConfirmDialog
+          title="Kilépsz a szobából?"
+          description="Ezzel elhagyod a szobát, és visszakerülsz a kezdőlapra. A többiek játéka ettől még folytatódhat."
+          confirmLabel="Kilépés"
+          onCancel={() => setPendingConfirmation(null)}
+          onConfirm={leaveRoomNow}
+        />
+      ) : null}
+
+      {pendingConfirmation === 'exit-game' ? (
+        <ConfirmDialog
+          title="Kilépsz a játékból?"
+          description={
+            room && !isRoomHost
+              ? 'Ezzel kilépsz a szobából, és visszakerülsz a kezdőlapra.'
+              : 'Ezzel megszakítod a jelenlegi játék nézetet, és visszakerülsz a kezdőlapra.'
+          }
+          confirmLabel="Kilépés"
+          onCancel={() => setPendingConfirmation(null)}
+          onConfirm={exitGameToHomeNow}
         />
       ) : null}
     </Layout>
