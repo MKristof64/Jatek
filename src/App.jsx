@@ -423,9 +423,9 @@ export default function App() {
   const [customCards, setCustomCards] = useState(loadCustomCards);
   const [settings, setSettings] = useState(loadSettings);
   const [selectedMode, setSelectedMode] = useState(loadSelectedMode);
-  const [game, setGame] = useState(loadGame);
-  const [room, setRoom] = useState(loadRoom);
-  const [currentRoomPlayerId, setCurrentRoomPlayerId] = useState(loadCurrentRoomPlayerId);
+  const [game, setGame] = useState(initialGame);
+  const [room, setRoom] = useState(null);
+  const [currentRoomPlayerId, setCurrentRoomPlayerId] = useState(null);
   const [onlineStatus, setOnlineStatus] = useState(defaultOnlineStatus);
   const [pendingConfirmation, setPendingConfirmation] = useState(null);
   const peerRef = useRef(null);
@@ -434,10 +434,21 @@ export default function App() {
   const guestConnectionRef = useRef(null);
   const latestStateRef = useRef(null);
   const advanceGameRef = useRef(null);
+  const localPlayersRef = useRef(loadPlayers());
 
   useEffect(() => {
+    removeStoredKey(storageKeys.room);
+    removeStoredKey(storageKeys.game);
+    removeStoredKey(storageKeys.currentRoomPlayerId);
+    removeSessionKey(getCurrentRoomPlayerStorageKey());
+    removeSessionKey(storageKeys.currentRoomPlayerId);
+  }, []);
+
+  useEffect(() => {
+    if (room) return;
+    localPlayersRef.current = players;
     saveJson(storageKeys.players, players);
-  }, [players]);
+  }, [players, room]);
 
   useEffect(() => {
     saveJson(storageKeys.customCards, customCards);
@@ -452,32 +463,15 @@ export default function App() {
   }, [selectedMode]);
 
   useEffect(() => {
-    if (room) {
-      saveJson(storageKeys.game, game);
-      return;
-    }
-
     removeStoredKey(storageKeys.game);
-  }, [game, room]);
+  }, [game]);
 
   useEffect(() => {
-    if (room) {
-      saveJson(storageKeys.room, room);
-      return;
-    }
-
     removeStoredKey(storageKeys.room);
   }, [room]);
 
   useEffect(() => {
     const currentRoomStorageKey = getCurrentRoomPlayerStorageKey();
-    if (currentRoomPlayerId) {
-      saveSessionJson(currentRoomStorageKey, currentRoomPlayerId);
-      removeSessionKey(storageKeys.currentRoomPlayerId);
-      removeStoredKey(storageKeys.currentRoomPlayerId);
-      return;
-    }
-
     removeSessionKey(currentRoomStorageKey);
     removeSessionKey(storageKeys.currentRoomPlayerId);
     removeStoredKey(storageKeys.currentRoomPlayerId);
@@ -498,11 +492,17 @@ export default function App() {
       if (event.key === null || event.key === storageKeys.players) {
         setPlayers(loadPlayers());
       }
-      if (event.key === null || event.key === storageKeys.room) {
-        setRoom(loadRoom());
-      }
-      if (event.key === null || event.key === storageKeys.game) {
-        setGame(loadGame());
+      if (
+        event.key === null ||
+        event.key === storageKeys.room ||
+        event.key === storageKeys.game ||
+        event.key === storageKeys.currentRoomPlayerId
+      ) {
+        removeStoredKey(storageKeys.room);
+        removeStoredKey(storageKeys.game);
+        removeStoredKey(storageKeys.currentRoomPlayerId);
+        removeSessionKey(getCurrentRoomPlayerStorageKey());
+        removeSessionKey(storageKeys.currentRoomPlayerId);
       }
       if (event.key === null || event.key === storageKeys.selectedMode) {
         setSelectedMode(loadSelectedMode());
@@ -534,12 +534,6 @@ export default function App() {
       }
     }
   }, [currentRoomPlayerId, page, room]);
-
-  useEffect(() => {
-    if (room?.hostPlayerId && !currentRoomPlayerId && onlineStatus.mode !== 'guest') {
-      setCurrentRoomPlayerId(room.hostPlayerId);
-    }
-  }, [currentRoomPlayerId, onlineStatus.mode, room?.hostPlayerId]);
 
   const activeMode = useMemo(() => getModeById(selectedMode), [selectedMode]);
 
@@ -660,6 +654,7 @@ export default function App() {
   const closeRoomLocally = () => {
     clearPeerConnections();
     setOnlineStatus(defaultOnlineStatus);
+    setPlayers(localPlayersRef.current ?? loadPlayers());
     setRoom(null);
     setCurrentRoomPlayerId(null);
     setGame(initialGame);
@@ -1189,7 +1184,6 @@ export default function App() {
       return;
     }
 
-    const leavingId = currentRoomPlayerId;
     if (isOnlineGuest) {
       sendPeerMessage(guestConnectionRef.current, {
         type: onlineMessageTypes.leave,
@@ -1198,16 +1192,8 @@ export default function App() {
       setOnlineStatus(defaultOnlineStatus);
     }
 
-    setPlayers((currentPlayers) => currentPlayers.filter((player) => player.id !== leavingId));
-    setRoom((currentRoom) => {
-      if (!currentRoom) return currentRoom;
-      const nextRoles = { ...currentRoom.rolesByPlayerId };
-      delete nextRoles[leavingId];
-      return {
-        ...currentRoom,
-        rolesByPlayerId: nextRoles,
-      };
-    });
+    setPlayers(localPlayersRef.current ?? loadPlayers());
+    setRoom(null);
     setCurrentRoomPlayerId(null);
     setGame(initialGame);
     setPage(pages.home);
@@ -1307,6 +1293,7 @@ export default function App() {
     clearPeerConnections();
     setOnlineStatus(defaultOnlineStatus);
     setPlayers([]);
+    localPlayersRef.current = [];
     setCustomCards([]);
     setSettings(defaultSettings);
     setSelectedMode('classic');
