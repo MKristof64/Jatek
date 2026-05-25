@@ -1,4 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Peer } from 'peerjs';
+import ConfirmDialog from './components/ConfirmDialog.jsx';
 import Layout from './components/Layout.jsx';
 import { cards } from './data/cards.js';
 import { getModeById } from './data/modes.js';
@@ -24,6 +26,23 @@ const roomRoles = {
   host: 'host',
   narrator: 'narrator',
   player: 'player',
+};
+
+const onlineMessageTypes = {
+  joinRoom: 'join-room',
+  joinAccepted: 'join-accepted',
+  joinRejected: 'join-rejected',
+  state: 'state',
+  control: 'control',
+  leave: 'leave',
+  removed: 'removed',
+  roomEnded: 'room-ended',
+};
+
+const defaultOnlineStatus = {
+  mode: 'offline',
+  state: 'idle',
+  message: 'Offline',
 };
 
 const defaultSettings = {
@@ -207,6 +226,7 @@ function loadRoom() {
 
   return {
     code,
+    peerId: createRoomPeerId(code),
     hostPlayerId,
     rolesByPlayerId: {
       ...rolesByPlayerId,
@@ -282,6 +302,27 @@ function createId(prefix) {
 
 function createRoomCode() {
   return String(Math.floor(100000 + Math.random() * 900000));
+}
+
+function createRoomPeerId(code) {
+  return `enmegsosem-${String(code ?? '').replace(/\D/g, '').slice(0, 6)}`;
+}
+
+function sanitizeRoomCode(value) {
+  return String(value ?? '').replace(/\D/g, '').slice(0, 6);
+}
+
+function sendPeerMessage(connection, message) {
+  try {
+    if (connection?.open) {
+      connection.send(message);
+      return true;
+    }
+  } catch {
+    // Dead connections are removed lazily by close/error handlers.
+  }
+
+  return false;
 }
 
 function pickRandomCard(pool, usedIds = []) {
@@ -385,6 +426,14 @@ export default function App() {
   const [game, setGame] = useState(loadGame);
   const [room, setRoom] = useState(loadRoom);
   const [currentRoomPlayerId, setCurrentRoomPlayerId] = useState(loadCurrentRoomPlayerId);
+  const [onlineStatus, setOnlineStatus] = useState(defaultOnlineStatus);
+  const [pendingConfirmation, setPendingConfirmation] = useState(null);
+  const peerRef = useRef(null);
+  const peerModeRef = useRef('offline');
+  const hostConnectionsRef = useRef(new Map());
+  const guestConnectionRef = useRef(null);
+  const latestStateRef = useRef(null);
+  const advanceGameRef = useRef(null);
 
   useEffect(() => {
     saveJson(storageKeys.players, players);
@@ -433,6 +482,16 @@ export default function App() {
     removeSessionKey(storageKeys.currentRoomPlayerId);
     removeStoredKey(storageKeys.currentRoomPlayerId);
   }, [currentRoomPlayerId]);
+
+  useEffect(() => {
+    latestStateRef.current = {
+      room,
+      players,
+      selectedMode,
+      game,
+      currentRoomPlayerId,
+    };
+  }, [currentRoomPlayerId, game, players, room, selectedMode]);
 
   useEffect(() => {
     const syncFromStorage = (event) => {
@@ -514,6 +573,324 @@ export default function App() {
   const isRoomHost = currentRoomRole === roomRoles.host;
   const canControlRoomGame =
     !room || currentRoomRole === roomRoles.host || currentRoomRole === roomRoles.narrator;
+  const isOnlineGuest = onlineStatus.mode === 'guest';
+
+  const createSharedState = (overrides = {}) => ({
+    room,
+    players,
+    selectedMode,
+    game,
+    ...overrides,
+  });
+
+  const broadcastSharedState = (overrides = {}) => {
+    if (!isRoomHost) return;
+
+    const message = {
+      type: onlineMessageTypes.state,
+      state: createSharedState(overrides),
+    };
+
+    hostConnectionsRef.current.forEach((connection, playerId) => {
+      if (!sendPeerMessage(connection, message)) {
+        hostConnectionsRef.current.delete(playerId);
+      }
+    });
+  };
+
+  const clearPeerConnections = () => {
+    hostConnectionsRef.current.forEach((connection) => {
+      try {
+        connection.close();
+      } catch {
+        // Ignore connection cleanup failures.
+      }
+    });
+    hostConnectionsRef.current.clear();
+
+    try {
+      guestConnectionRef.current?.close();
+    } catch {
+      // Ignore connection cleanup failures.
+    }
+    guestConnectionRef.current = null;
+
+    try {
+      peerRef.current?.destroy();
+    } catch {
+      // Ignore peer cleanup failures.
+    }
+    peerRef.current = null;
+    peerModeRef.current = 'offline';
+  };
+
+  const applySharedState = (sharedState, nextCurrentPlayerId = currentRoomPlayerId) => {
+    if (!sharedState?.room || !Array.isArray(sharedState.players)) return;
+
+    setRoom(sharedState.room);
+    setPlayers(sharedState.players.slice(0, limits.roomParticipants));
+    setSelectedMode(getModeById(sharedState.selectedMode).id);
+    setGame(sharedState.game ?? initialGame);
+    if (nextCurrentPlayerId) {
+      setCurrentRoomPlayerId(nextCurrentPlayerId);
+    }
+  };
+
+  const removeParticipantById = (playerId) => {
+    setPlayers((currentPlayers) => currentPlayers.filter((player) => player.id !== playerId));
+    setRoom((currentRoom) => {
+      if (!currentRoom) return currentRoom;
+      const nextRoles = { ...currentRoom.rolesByPlayerId };
+      delete nextRoles[playerId];
+      return {
+        ...currentRoom,
+        rolesByPlayerId: nextRoles,
+      };
+    });
+  };
+
+  const closeRoomLocally = () => {
+    clearPeerConnections();
+    setOnlineStatus(defaultOnlineStatus);
+    setRoom(null);
+    setCurrentRoomPlayerId(null);
+    setGame(initialGame);
+    setPage(pages.home);
+  };
+
+  const handleGuestMessage = (message) => {
+    if (!message || typeof message !== 'object') return;
+
+    if (message.type === onlineMessageTypes.state) {
+      applySharedState(message.state);
+      if (message.state?.game?.card) {
+        setPage(pages.game);
+      }
+      return;
+    }
+
+    if (message.type === onlineMessageTypes.removed) {
+      closeRoomLocally();
+      setOnlineStatus({
+        mode: 'offline',
+        state: 'removed',
+        message: 'A házigazda eltávolított a szobából.',
+      });
+      return;
+    }
+
+    if (message.type === onlineMessageTypes.roomEnded) {
+      closeRoomLocally();
+      setOnlineStatus({
+        mode: 'offline',
+        state: 'ended',
+        message: 'A házigazda befejezte a játékot.',
+      });
+    }
+  };
+
+  const attachGuestConnection = (connection) => {
+    guestConnectionRef.current = connection;
+    connection.on('data', handleGuestMessage);
+    connection.on('close', () => {
+      if (peerModeRef.current === 'guest') {
+        setOnlineStatus({
+          mode: 'guest',
+          state: 'disconnected',
+          message: 'Megszakadt a kapcsolat a házigazdával.',
+        });
+      }
+    });
+    connection.on('error', () => {
+      setOnlineStatus({
+        mode: 'guest',
+        state: 'error',
+        message: 'Nem sikerült tartani a kapcsolatot.',
+      });
+    });
+  };
+
+  const acceptOnlineParticipant = (connection, player) => {
+    const current = latestStateRef.current;
+    if (!current?.room) return;
+
+    const nextPlayers = [...current.players, player].slice(0, limits.roomParticipants);
+    const nextRoom = {
+      ...current.room,
+      rolesByPlayerId: {
+        ...current.room.rolesByPlayerId,
+        [player.id]: roomRoles.player,
+      },
+    };
+
+    hostConnectionsRef.current.set(player.id, connection);
+    connection.partyrushPlayerId = player.id;
+    setPlayers(nextPlayers);
+    setRoom(nextRoom);
+    sendPeerMessage(connection, {
+      type: onlineMessageTypes.joinAccepted,
+      playerId: player.id,
+      state: {
+        room: nextRoom,
+        players: nextPlayers,
+        selectedMode: current.selectedMode,
+        game: current.game,
+      },
+    });
+    window.setTimeout(() => {
+      broadcastSharedState({
+        room: nextRoom,
+        players: nextPlayers,
+      });
+    }, 0);
+  };
+
+  const handleHostConnection = (connection) => {
+    connection.on('data', (message) => {
+      if (!message || typeof message !== 'object') return;
+
+      if (message.type === onlineMessageTypes.joinRoom) {
+        const current = latestStateRef.current;
+        const safeCode = sanitizeRoomCode(message.code);
+        const safeName = sanitizeText(message.player?.name, limits.playerNameLength);
+        const requestedPlayerId = sanitizeId(message.player?.id, 'player');
+
+        if (!current?.room || safeCode !== current.room.code) {
+          sendPeerMessage(connection, {
+            type: onlineMessageTypes.joinRejected,
+            message: 'Nincs ilyen aktív szoba.',
+          });
+          return;
+        }
+
+        if (!safeName) {
+          sendPeerMessage(connection, {
+            type: onlineMessageTypes.joinRejected,
+            message: 'Adj meg egy nevet.',
+          });
+          return;
+        }
+
+        if (current.players.length >= limits.roomParticipants) {
+          sendPeerMessage(connection, {
+            type: onlineMessageTypes.joinRejected,
+            message: 'A szoba megtelt.',
+          });
+          return;
+        }
+
+        const alreadyExists = current.players.some(
+          (player) =>
+            player.id === requestedPlayerId ||
+            player.name.toLocaleLowerCase('hu-HU') === safeName.toLocaleLowerCase('hu-HU'),
+        );
+
+        if (alreadyExists) {
+          sendPeerMessage(connection, {
+            type: onlineMessageTypes.joinRejected,
+            message: 'Ez a név már szerepel a szobában.',
+          });
+          return;
+        }
+
+        acceptOnlineParticipant(connection, {
+          id: requestedPlayerId,
+          name: safeName,
+        });
+        return;
+      }
+
+      if (message.type === onlineMessageTypes.control) {
+        const participantId = connection.partyrushPlayerId;
+        const role = latestStateRef.current?.room?.rolesByPlayerId?.[participantId];
+        if (role === roomRoles.narrator && (message.action === 'next' || message.action === 'skip')) {
+          advanceGameRef.current?.();
+        }
+        return;
+      }
+
+      if (message.type === onlineMessageTypes.leave) {
+        const participantId = connection.partyrushPlayerId;
+        if (participantId) {
+          hostConnectionsRef.current.delete(participantId);
+          removeParticipantById(participantId);
+        }
+      }
+    });
+
+    connection.on('close', () => {
+      if (connection.partyrushPlayerId) {
+        hostConnectionsRef.current.delete(connection.partyrushPlayerId);
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (!room || !isRoomHost) return undefined;
+
+    const peerId = createRoomPeerId(room.code);
+    if (peerRef.current && peerModeRef.current === 'host' && peerRef.current.id === peerId) {
+      return undefined;
+    }
+
+    clearPeerConnections();
+    peerModeRef.current = 'host';
+    const peer = new Peer(peerId, { debug: 1 });
+    peerRef.current = peer;
+    setOnlineStatus({
+      mode: 'host',
+      state: 'connecting',
+      message: 'Online szoba indítása...',
+    });
+
+    peer.on('open', () => {
+      setOnlineStatus({
+        mode: 'host',
+        state: 'ready',
+        message: 'Online szoba aktív',
+      });
+    });
+
+    peer.on('connection', handleHostConnection);
+
+    peer.on('error', (error) => {
+      if (error?.type === 'unavailable-id') {
+        setRoom((currentRoom) => {
+          if (!currentRoom) return currentRoom;
+          const nextCode = createRoomCode();
+          return {
+            ...currentRoom,
+            code: nextCode,
+            peerId: createRoomPeerId(nextCode),
+          };
+        });
+        setOnlineStatus({
+          mode: 'host',
+          state: 'connecting',
+          message: 'Új kód készül...',
+        });
+        return;
+      }
+
+      setOnlineStatus({
+        mode: 'host',
+        state: 'error',
+        message: 'Nem sikerült online szobát nyitni.',
+      });
+    });
+
+    return () => {
+      if (peerRef.current === peer) {
+        clearPeerConnections();
+      }
+    };
+  }, [isRoomHost, room?.code]);
+
+  useEffect(() => {
+    if (isRoomHost) {
+      broadcastSharedState();
+    }
+  }, [game, isRoomHost, players, room, selectedMode]);
 
   const addPlayer = (name) => {
     const safeName = sanitizeText(name, limits.playerNameLength);
@@ -560,8 +937,10 @@ export default function App() {
   const createRoom = (hostName) => {
     const safeName = sanitizeText(hostName, limits.playerNameLength) || 'Házigazda';
     const hostId = createId('player');
+    const code = createRoomCode();
     const nextRoom = {
-      code: createRoomCode(),
+      code,
+      peerId: createRoomPeerId(code),
       hostPlayerId: hostId,
       rolesByPlayerId: {
         [hostId]: roomRoles.host,
@@ -576,12 +955,119 @@ export default function App() {
     return null;
   };
 
+  const joinOnlineRoom = (code, name) =>
+    new Promise((resolve) => {
+      const safeCode = sanitizeRoomCode(code);
+      const safeName = sanitizeText(name, limits.playerNameLength);
+
+      if (safeCode.length !== 6) {
+        resolve('Adj meg egy 6 jegyű kódot.');
+        return;
+      }
+
+      if (!safeName) {
+        resolve('Adj meg egy nevet.');
+        return;
+      }
+
+      clearPeerConnections();
+      setOnlineStatus({
+        mode: 'guest',
+        state: 'connecting',
+        message: 'Csatlakozás a szobához...',
+      });
+
+      const playerId = createId('player');
+      const peer = new Peer(undefined, { debug: 1 });
+      let settled = false;
+      let timeoutId = null;
+
+      const finish = (error) => {
+        if (settled) return;
+        settled = true;
+        window.clearTimeout(timeoutId);
+        if (error) {
+          clearPeerConnections();
+          setOnlineStatus({
+            mode: 'offline',
+            state: 'error',
+            message: error,
+          });
+        }
+        resolve(error ?? null);
+      };
+
+      peerRef.current = peer;
+      peerModeRef.current = 'guest';
+      timeoutId = window.setTimeout(() => {
+        finish('Nem sikerült csatlakozni ehhez a kódhoz.');
+      }, 15000);
+
+      peer.on('open', () => {
+        const connection = peer.connect(createRoomPeerId(safeCode), {
+          reliable: true,
+          metadata: {
+            playerId,
+            name: safeName,
+          },
+        });
+
+        attachGuestConnection(connection);
+
+        connection.on('open', () => {
+          sendPeerMessage(connection, {
+            type: onlineMessageTypes.joinRoom,
+            code: safeCode,
+            player: {
+              id: playerId,
+              name: safeName,
+            },
+          });
+        });
+
+        connection.on('error', () => {
+          finish('Nem sikerült kapcsolódni a házigazdához.');
+        });
+
+        connection.on('close', () => {
+          finish('A házigazda nem érhető el ezzel a kóddal.');
+        });
+
+        connection.on('data', (message) => {
+          if (message?.type === onlineMessageTypes.joinAccepted) {
+            applySharedState(message.state, message.playerId ?? playerId);
+            setOnlineStatus({
+              mode: 'guest',
+              state: 'ready',
+              message: 'Csatlakozva',
+            });
+            setPage(message.state?.game?.card ? pages.game : pages.room);
+            finish(null);
+            return;
+          }
+
+          if (message?.type === onlineMessageTypes.joinRejected) {
+            finish(message.message ?? 'A csatlakozás elutasítva.');
+          }
+        });
+      });
+
+      peer.on('error', (error) => {
+        if (error?.type === 'peer-unavailable') {
+          finish('Nincs aktív szoba ezzel a kóddal.');
+          return;
+        }
+
+        finish('Nem sikerült online kapcsolatot nyitni.');
+      });
+    });
+
   const joinRoom = (code, name) => {
-    const safeCode = String(code ?? '').replace(/\D/g, '').slice(0, 6);
+    const safeCode = sanitizeRoomCode(code);
     const safeName = sanitizeText(name, limits.playerNameLength);
 
-    if (!room || safeCode !== room.code) {
-      return 'Nincs ilyen helyi szoba.';
+    if (!room || safeCode !== room.code || !isRoomHost) {
+      return joinOnlineRoom(safeCode, safeName);
     }
 
     if (!safeName) {
@@ -650,6 +1136,19 @@ export default function App() {
   const removeParticipant = (playerId) => {
     if (!isRoomHost || room?.hostPlayerId === playerId) return;
 
+    const onlineConnection = hostConnectionsRef.current.get(playerId);
+    if (onlineConnection) {
+      sendPeerMessage(onlineConnection, {
+        type: onlineMessageTypes.removed,
+      });
+      try {
+        onlineConnection.close();
+      } catch {
+        // Ignore stale connection cleanup.
+      }
+      hostConnectionsRef.current.delete(playerId);
+    }
+
     setPlayers((currentPlayers) => currentPlayers.filter((player) => player.id !== playerId));
     setRoom((currentRoom) => {
       if (!currentRoom) return currentRoom;
@@ -676,12 +1175,19 @@ export default function App() {
     }
 
     if (currentRoomRole === roomRoles.host) {
-      setGame(initialGame);
-      setPage(pages.home);
+      setPendingConfirmation('finish-room');
       return;
     }
 
     const leavingId = currentRoomPlayerId;
+    if (isOnlineGuest) {
+      sendPeerMessage(guestConnectionRef.current, {
+        type: onlineMessageTypes.leave,
+      });
+      clearPeerConnections();
+      setOnlineStatus(defaultOnlineStatus);
+    }
+
     setPlayers((currentPlayers) => currentPlayers.filter((player) => player.id !== leavingId));
     setRoom((currentRoom) => {
       if (!currentRoom) return currentRoom;
@@ -697,13 +1203,21 @@ export default function App() {
     setPage(pages.home);
   };
 
-  const finishRoomGame = () => {
+  const finishRoomNow = () => {
     if (!isRoomHost) return;
 
-    setRoom(null);
-    setCurrentRoomPlayerId(null);
-    setGame(initialGame);
-    setPage(pages.home);
+    hostConnectionsRef.current.forEach((connection) => {
+      sendPeerMessage(connection, {
+        type: onlineMessageTypes.roomEnded,
+      });
+    });
+    setPendingConfirmation(null);
+    closeRoomLocally();
+  };
+
+  const finishRoomGame = () => {
+    if (!isRoomHost) return;
+    setPendingConfirmation('finish-room');
   };
 
   const startGame = () => {
@@ -727,6 +1241,15 @@ export default function App() {
 
   const advanceGame = () => {
     if (!canControlRoomGame) return;
+    if (isOnlineGuest) {
+      sendPeerMessage(guestConnectionRef.current, {
+        type: onlineMessageTypes.control,
+        action: 'next',
+      });
+      playFeedback(settings);
+      return;
+    }
+
     if (players.length < 2 || cardPool.length === 0) return;
     const playerOrder =
       game.playerOrder.length === players.length
@@ -753,10 +1276,14 @@ export default function App() {
     playFeedback(settings);
   };
 
+  advanceGameRef.current = advanceGame;
+
   const clearData = () => {
     Object.values(storageKeys).forEach((key) => removeStoredKey(key));
     removeSessionKey(getCurrentRoomPlayerStorageKey());
     removeSessionKey(storageKeys.currentRoomPlayerId);
+    clearPeerConnections();
+    setOnlineStatus(defaultOnlineStatus);
     setPlayers([]);
     setCustomCards([]);
     setSettings(defaultSettings);
@@ -837,7 +1364,9 @@ export default function App() {
           onSetRole={setParticipantRole}
           onRemoveParticipant={removeParticipant}
           onLeaveRoom={leaveRoom}
+          onFinishRoom={finishRoomGame}
           onStartGame={() => setPage(pages.modes)}
+          onlineStatus={onlineStatus}
           onBack={() => setPage(pages.home)}
         />
       ) : null}
@@ -885,6 +1414,16 @@ export default function App() {
           onToggle={toggleSetting}
           onClearData={clearData}
           onBack={() => setPage(pages.home)}
+        />
+      ) : null}
+
+      {pendingConfirmation === 'finish-room' ? (
+        <ConfirmDialog
+          title="Befejezed a szobát?"
+          description="Ez lezárja a játékot, bezárja a szobát, és minden csatlakozott játékost visszaküld a kezdőlapra."
+          confirmLabel="Befejezés"
+          onCancel={() => setPendingConfirmation(null)}
+          onConfirm={finishRoomNow}
         />
       ) : null}
     </Layout>

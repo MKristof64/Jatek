@@ -57,13 +57,16 @@ export default function RoomPage({
   onSetRole,
   onRemoveParticipant,
   onLeaveRoom,
+  onFinishRoom,
   onStartGame,
+  onlineStatus,
   onBack,
 }) {
   const [hostName, setHostName] = useState('Házigazda');
   const [joinCode, setJoinCode] = useState(room?.code ?? '');
   const [joinName, setJoinName] = useState('');
   const [message, setMessage] = useState('');
+  const [joining, setJoining] = useState(false);
   const currentRole = room?.rolesByPlayerId?.[currentParticipantId] ?? null;
   const isHost = currentRole === 'host';
   const canStart = players.length >= 2;
@@ -79,17 +82,22 @@ export default function RoomPage({
     [players, currentParticipantId],
   );
 
-  const handleCreate = (event) => {
+  const handleCreate = async (event) => {
     event.preventDefault();
-    const error = onCreateRoom(hostName);
+    const error = await Promise.resolve(onCreateRoom(hostName));
     setMessage(error ?? '');
   };
 
-  const handleJoin = (event) => {
+  const handleJoin = async (event) => {
     event.preventDefault();
-    const error = onJoinRoom(joinCode, joinName);
-    setMessage(error ?? '');
-    if (!error) setJoinName('');
+    setJoining(true);
+    try {
+      const error = await Promise.resolve(onJoinRoom(joinCode, joinName));
+      setMessage(error ?? '');
+      if (!error) setJoinName('');
+    } finally {
+      setJoining(false);
+    }
   };
 
   return (
@@ -166,8 +174,8 @@ export default function RoomPage({
                   placeholder="Neved"
                   aria-label="Játékos neve"
                 />
-                <PrimaryButton type="submit" variant="secondary" icon={DoorOpen}>
-                  Belépés
+                <PrimaryButton type="submit" variant="secondary" icon={DoorOpen} disabled={joining}>
+                  {joining ? 'Csatlakozás...' : 'Belépés'}
                 </PrimaryButton>
               </div>
             </form>
@@ -195,6 +203,11 @@ export default function RoomPage({
                 {currentPlayer ? (
                   <p className="mt-3 truncate text-sm font-bold text-white/62">
                     Belépve: {currentPlayer.name}
+                  </p>
+                ) : null}
+                {onlineStatus?.message ? (
+                  <p className="mt-1 text-xs font-black uppercase tracking-[0.16em] text-lime-100/72">
+                    {onlineStatus.message}
                   </p>
                 ) : null}
               </div>
@@ -251,26 +264,29 @@ export default function RoomPage({
             </div>
 
             <div className="room-side shrink-0 space-y-2">
-              <form
-                onSubmit={handleJoin}
-                className="room-join-inline grid grid-cols-[1fr_auto] gap-2"
-              >
-                <input
-                  className="party-field min-w-0 rounded-2xl px-4 py-3 font-bold outline-none"
-                  value={joinName}
-                  onChange={(event) => setJoinName(event.target.value)}
-                  maxLength={24}
-                  placeholder="Új játékos neve"
-                  aria-label="Új játékos neve"
-                />
-                <button
-                  type="submit"
-                  className="party-button grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-amber-300 via-orange-400 to-pink-500 text-slate-950 transition active:scale-[0.98]"
-                  aria-label="Játékos csatlakoztatása"
+              {isHost ? (
+                <form
+                  onSubmit={handleJoin}
+                  className="room-join-inline grid grid-cols-[1fr_auto] gap-2"
                 >
-                  <DoorOpen className="relative z-10 h-5 w-5" />
-                </button>
-              </form>
+                  <input
+                    className="party-field min-w-0 rounded-2xl px-4 py-3 font-bold outline-none"
+                    value={joinName}
+                    onChange={(event) => setJoinName(event.target.value)}
+                    maxLength={24}
+                    placeholder="Új játékos neve"
+                    aria-label="Új játékos neve"
+                  />
+                  <button
+                    type="submit"
+                    disabled={joining}
+                    className="party-button grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-amber-300 via-orange-400 to-pink-500 text-slate-950 transition active:scale-[0.98] disabled:pointer-events-none disabled:opacity-45"
+                    aria-label="Játékos csatlakoztatása"
+                  >
+                    <DoorOpen className="relative z-10 h-5 w-5" />
+                  </button>
+                </form>
+              ) : null}
 
               <div className="room-actions grid grid-cols-2 gap-2">
                 <PrimaryButton
@@ -280,8 +296,12 @@ export default function RoomPage({
                 >
                   Kezdés
                 </PrimaryButton>
-                <PrimaryButton variant="danger" icon={DoorOpen} onClick={onLeaveRoom}>
-                  Kilépés
+                <PrimaryButton
+                  variant="danger"
+                  icon={DoorOpen}
+                  onClick={isHost ? onFinishRoom : onLeaveRoom}
+                >
+                  {isHost ? 'Befejezés' : 'Kilépés'}
                 </PrimaryButton>
               </div>
             </div>
