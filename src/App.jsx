@@ -1357,6 +1357,15 @@ export default function App() {
     setPendingConfirmation('exit-game');
   };
 
+  const backFromRoom = () => {
+    if (room) {
+      requestLeaveRoom();
+      return;
+    }
+
+    setPage(pages.home);
+  };
+
   return (
     <Layout darkMode={settings.darkMode}>
       {page === pages.home ? (
@@ -1395,7 +1404,7 @@ export default function App() {
           onFinishRoom={finishRoomGame}
           onStartGame={() => setPage(pages.modes)}
           onlineStatus={onlineStatus}
-          onBack={() => setPage(pages.home)}
+          onBack={backFromRoom}
         />
       ) : null}
 
