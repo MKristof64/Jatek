@@ -2,48 +2,49 @@ import { Pause, Play, Sparkles, UserRound, UsersRound } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 function formatTimer(seconds) {
-  return `00:${seconds.toString().padStart(2, '0')}`;
+  const safeSeconds = Math.max(0, Math.floor(seconds));
+  const minutes = Math.floor(safeSeconds / 60);
+  const remainingSeconds = safeSeconds % 60;
+  return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
 }
 
-function TimerControl({ durationSeconds, resetKey }) {
-  const [remaining, setRemaining] = useState(durationSeconds);
-  const [running, setRunning] = useState(false);
+function getSyncedRemaining(timerState, durationSeconds) {
+  const duration = Number.isFinite(durationSeconds)
+    ? Math.max(0, Math.min(120, Math.floor(durationSeconds)))
+    : 0;
+  const baseRemaining = Number.isFinite(timerState?.remainingSeconds)
+    ? Math.max(0, Math.min(duration, Math.ceil(timerState.remainingSeconds)))
+    : duration;
+
+  if (!timerState?.running) return baseRemaining;
+
+  const updatedAt = Number.isFinite(timerState.updatedAt) ? timerState.updatedAt : Date.now();
+  const elapsedSeconds = Math.max(0, (Date.now() - updatedAt) / 1000);
+  return Math.max(0, Math.ceil(baseRemaining - elapsedSeconds));
+}
+
+function TimerControl({ durationSeconds, timerState, canControlTimer, onToggleTimer }) {
+  const [remaining, setRemaining] = useState(() =>
+    getSyncedRemaining(timerState, durationSeconds),
+  );
 
   useEffect(() => {
-    setRemaining(durationSeconds);
-    setRunning(false);
-  }, [durationSeconds, resetKey]);
+    setRemaining(getSyncedRemaining(timerState, durationSeconds));
+  }, [durationSeconds, timerState]);
 
   useEffect(() => {
-    if (!running) return undefined;
+    if (!timerState?.running) return undefined;
 
     const intervalId = window.setInterval(() => {
-      setRemaining((currentRemaining) => {
-        if (currentRemaining <= 1) {
-          setRunning(false);
-          return 0;
-        }
-
-        return currentRemaining - 1;
-      });
-    }, 1000);
+      setRemaining(getSyncedRemaining(timerState, durationSeconds));
+    }, 250);
 
     return () => window.clearInterval(intervalId);
-  }, [running]);
+  }, [durationSeconds, timerState]);
 
-  const toggleTimer = () => {
-    if (running) {
-      setRunning(false);
-      return;
-    }
-
-    if (remaining === 0) {
-      setRemaining(durationSeconds);
-    }
-    setRunning(true);
-  };
-
+  const running = Boolean(timerState?.running && remaining > 0);
   const Icon = running ? Pause : Play;
+  const disabled = !canControlTimer;
 
   return (
     <div className="timer-control relative z-10 mt-3 flex items-center justify-between gap-3 rounded-2xl bg-slate-950/54 p-3 ring-1 ring-white/10">
@@ -57,8 +58,15 @@ function TimerControl({ durationSeconds, resetKey }) {
       </div>
       <button
         type="button"
-        onClick={toggleTimer}
-        className="party-mini-button inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl bg-amber-300 px-4 py-2 text-sm font-black text-slate-950 transition active:scale-[0.98]"
+        onClick={onToggleTimer}
+        disabled={disabled}
+        title={disabled ? 'Csak a házigazda vagy a mesélő vezérelheti.' : undefined}
+        className={[
+          'party-mini-button inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl bg-amber-300 px-4 py-2 text-sm font-black text-slate-950 transition active:scale-[0.98]',
+          disabled ? 'cursor-not-allowed opacity-50 active:scale-100' : '',
+        ]
+          .filter(Boolean)
+          .join(' ')}
       >
         <Icon className="h-4 w-4" />
         {running ? 'Pause' : 'Indítás'}
@@ -83,6 +91,9 @@ export default function GameCard({
   card,
   text,
   currentTeam,
+  timerState,
+  canControlTimer = true,
+  onToggleTimer,
 }) {
   const cardKind = card?.kind ?? 'never';
   const cardTitle = card?.title ?? 'Én még sosem...';
@@ -137,7 +148,12 @@ export default function GameCard({
       ) : null}
 
       {hasTimer ? (
-        <TimerControl durationSeconds={durationSeconds} resetKey={card?.id} />
+        <TimerControl
+          durationSeconds={durationSeconds}
+          timerState={timerState}
+          canControlTimer={canControlTimer}
+          onToggleTimer={onToggleTimer}
+        />
       ) : null}
 
       <div className="question-stage relative z-10 mt-4 min-[390px]:mt-5">

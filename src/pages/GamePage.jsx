@@ -10,10 +10,13 @@ export default function GamePage({
   card,
   cardText,
   currentTeam,
+  timerState,
   canControlGame = true,
+  canControlTimer = true,
   isHost = false,
   onNext,
   onSkip,
+  onToggleTimer,
   onExit,
   onFinishGame,
 }) {
@@ -51,6 +54,9 @@ export default function GamePage({
           card={card}
           text={cardText}
           currentTeam={currentTeam}
+          timerState={timerState}
+          canControlTimer={canControlTimer}
+          onToggleTimer={onToggleTimer}
         />
       </div>
 

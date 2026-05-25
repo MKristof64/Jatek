@@ -60,6 +60,14 @@ const limits = {
   customCardLength: 180,
 };
 
+const initialTimer = {
+  cardId: null,
+  durationSeconds: 0,
+  remainingSeconds: 0,
+  running: false,
+  updatedAt: 0,
+};
+
 const initialGame = {
   playerOrder: [],
   orderPosition: 0,
@@ -68,6 +76,7 @@ const initialGame = {
   participantIndexes: [],
   card: null,
   usedIds: [],
+  timer: initialTimer,
 };
 
 const pages = {
@@ -242,6 +251,69 @@ function sanitizeCard(value) {
   };
 }
 
+function getCardDurationSeconds(card) {
+  return Number.isFinite(card?.durationSeconds)
+    ? Math.max(0, Math.min(120, Math.floor(card.durationSeconds)))
+    : 0;
+}
+
+function createTimerState(card, now = Date.now()) {
+  const durationSeconds = getCardDurationSeconds(card);
+
+  return {
+    cardId: card?.id ?? null,
+    durationSeconds,
+    remainingSeconds: durationSeconds,
+    running: false,
+    updatedAt: now,
+  };
+}
+
+function getTimerRemainingSeconds(timer, now = Date.now()) {
+  if (!timer || typeof timer !== 'object' || Array.isArray(timer)) return 0;
+
+  const durationSeconds = Number.isFinite(timer.durationSeconds)
+    ? Math.max(0, Math.min(120, Math.floor(timer.durationSeconds)))
+    : 0;
+  const remainingSeconds = Number.isFinite(timer.remainingSeconds)
+    ? Math.max(0, Math.min(durationSeconds, Math.ceil(timer.remainingSeconds)))
+    : 0;
+
+  if (!timer.running) return remainingSeconds;
+
+  const updatedAt = Number.isFinite(timer.updatedAt) ? timer.updatedAt : now;
+  const elapsedSeconds = Math.max(0, Math.floor((now - updatedAt) / 1000));
+  return Math.max(0, remainingSeconds - elapsedSeconds);
+}
+
+function sanitizeTimer(value, card = null) {
+  const fallback = createTimerState(card);
+
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    return fallback;
+  }
+
+  const cardId = typeof value.cardId === 'string' ? sanitizeId(value.cardId, 'card') : fallback.cardId;
+  if (card?.id && cardId !== card.id) {
+    return fallback;
+  }
+
+  const durationSeconds = Number.isFinite(value.durationSeconds)
+    ? Math.max(0, Math.min(120, Math.floor(value.durationSeconds)))
+    : fallback.durationSeconds;
+  const remainingSeconds = Number.isFinite(value.remainingSeconds)
+    ? Math.max(0, Math.min(durationSeconds, Math.ceil(value.remainingSeconds)))
+    : fallback.remainingSeconds;
+
+  return {
+    cardId,
+    durationSeconds,
+    remainingSeconds,
+    running: Boolean(value.running && durationSeconds > 0 && remainingSeconds > 0),
+    updatedAt: Number.isFinite(value.updatedAt) ? Math.max(0, value.updatedAt) : fallback.updatedAt,
+  };
+}
+
 function sanitizeGame(value) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) {
     return initialGame;
@@ -256,6 +328,7 @@ function sanitizeGame(value) {
   const usedIds = Array.isArray(value.usedIds)
     ? value.usedIds.filter((id) => typeof id === 'string').slice(0, 300)
     : [];
+  const card = sanitizeCard(value.card);
 
   return {
     playerOrder,
@@ -263,8 +336,50 @@ function sanitizeGame(value) {
     playerIndex: Number.isInteger(value.playerIndex) ? value.playerIndex : 0,
     targetIndex: Number.isInteger(value.targetIndex) ? value.targetIndex : 1,
     participantIndexes,
-    card: sanitizeCard(value.card),
+    card,
     usedIds,
+    timer: sanitizeTimer(value.timer, card),
+  };
+}
+
+function getLiveGameState(value, now = Date.now()) {
+  const safeGame = sanitizeGame(value);
+  const timer = sanitizeTimer(safeGame.timer, safeGame.card);
+  if (!timer.running) return safeGame;
+
+  const remainingSeconds = getTimerRemainingSeconds(timer, now);
+  return {
+    ...safeGame,
+    timer: {
+      ...timer,
+      remainingSeconds,
+      running: remainingSeconds > 0,
+      updatedAt: now,
+    },
+  };
+}
+
+function toggleTimerState(value, now = Date.now()) {
+  const safeGame = sanitizeGame(value);
+  const timer = sanitizeTimer(safeGame.timer, safeGame.card);
+  if (!timer.cardId || timer.durationSeconds <= 0) return safeGame;
+
+  const remainingSeconds = getTimerRemainingSeconds(timer, now);
+  const shouldPause = timer.running && remainingSeconds > 0;
+  const nextRemainingSeconds = shouldPause
+    ? remainingSeconds
+    : remainingSeconds > 0
+      ? remainingSeconds
+      : timer.durationSeconds;
+
+  return {
+    ...safeGame,
+    timer: {
+      ...timer,
+      remainingSeconds: nextRemainingSeconds,
+      running: !shouldPause,
+      updatedAt: now,
+    },
   };
 }
 
@@ -435,6 +550,7 @@ export default function App() {
   const guestConnectionRef = useRef(null);
   const latestStateRef = useRef(null);
   const advanceGameRef = useRef(null);
+  const toggleTimerRef = useRef(null);
   const localPlayersRef = useRef(loadPlayers());
 
   useEffect(() => {
@@ -543,6 +659,7 @@ export default function App() {
         team.players.some((player) => player.id === currentPlayerObject?.id),
       )
     : null;
+  const timerState = useMemo(() => sanitizeTimer(game.timer, game.card), [game.card, game.timer]);
   const cardText = (game.card?.text ?? 'Nincs betöltött kártya ehhez a módhoz.')
     .replaceAll('{player}', currentPlayer)
     .replaceAll('{target}', targetPlayer)
@@ -555,13 +672,20 @@ export default function App() {
     !room || currentRoomRole === roomRoles.host || currentRoomRole === roomRoles.narrator;
   const isOnlineGuest = onlineStatus.mode === 'guest';
 
-  const createSharedState = (overrides = {}) => ({
-    room,
-    players,
-    selectedMode,
-    game,
-    ...overrides,
-  });
+  const createSharedState = (overrides = {}) => {
+    const nextState = {
+      room,
+      players,
+      selectedMode,
+      game,
+      ...overrides,
+    };
+
+    return {
+      ...nextState,
+      game: getLiveGameState(nextState.game),
+    };
+  };
 
   const broadcastSharedState = (overrides = {}) => {
     if (!isRoomHost) return;
@@ -709,7 +833,7 @@ export default function App() {
         room: nextRoom,
         players: nextPlayers,
         selectedMode: current.selectedMode,
-        game: current.game,
+        game: getLiveGameState(current.game),
       },
     });
     window.setTimeout(() => {
@@ -778,8 +902,14 @@ export default function App() {
       if (message.type === onlineMessageTypes.control) {
         const participantId = connection.partyrushPlayerId;
         const role = latestStateRef.current?.room?.rolesByPlayerId?.[participantId];
-        if (role === roomRoles.narrator && (message.action === 'next' || message.action === 'skip')) {
-          advanceGameRef.current?.();
+        if (role === roomRoles.narrator) {
+          if (message.action === 'next' || message.action === 'skip') {
+            advanceGameRef.current?.(message.action);
+          }
+
+          if (message.action === 'timer-toggle') {
+            toggleTimerRef.current?.();
+          }
         }
         return;
       }
@@ -1198,17 +1328,18 @@ export default function App() {
       participantIndexes: getParticipantIndexes(picked.card, players, firstPlayerIndex),
       card: picked.card,
       usedIds: picked.usedIds,
+      timer: createTimerState(picked.card),
     });
     playFeedback(settings);
     setPage(pages.game);
   };
 
-  const advanceGame = () => {
+  const advanceGame = (action = 'next') => {
     if (!canControlRoomGame) return;
     if (isOnlineGuest) {
       sendPeerMessage(guestConnectionRef.current, {
         type: onlineMessageTypes.control,
-        action: 'next',
+        action,
       });
       playFeedback(settings);
       return;
@@ -1236,11 +1367,30 @@ export default function App() {
       participantIndexes: getParticipantIndexes(picked.card, players, nextPlayerIndex),
       card: picked.card,
       usedIds: picked.usedIds,
+      timer: createTimerState(picked.card),
     });
     playFeedback(settings);
   };
 
   advanceGameRef.current = advanceGame;
+
+  const toggleTimer = () => {
+    if (!canControlRoomGame) return;
+
+    if (isOnlineGuest) {
+      sendPeerMessage(guestConnectionRef.current, {
+        type: onlineMessageTypes.control,
+        action: 'timer-toggle',
+      });
+      playFeedback(settings);
+      return;
+    }
+
+    setGame((currentGame) => toggleTimerState(currentGame));
+    playFeedback(settings);
+  };
+
+  toggleTimerRef.current = toggleTimer;
 
   const clearData = () => {
     Object.values(storageKeys).forEach((key) => removeStoredKey(key));
@@ -1369,10 +1519,13 @@ export default function App() {
           card={game.card}
           cardText={cardText}
           currentTeam={currentTeam}
+          timerState={timerState}
           canControlGame={canControlRoomGame}
+          canControlTimer={canControlRoomGame}
           isHost={isRoomHost}
           onNext={() => advanceGame('next')}
           onSkip={() => advanceGame('skip')}
+          onToggleTimer={toggleTimer}
           onExit={requestExitGame}
           onFinishGame={finishRoomGame}
         />
