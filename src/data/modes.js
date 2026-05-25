@@ -12,18 +12,6 @@ export const modes = [
     icon: 'Sparkles',
   },
   {
-    id: 'preparty',
-    name: 'Előparty',
-    level: 'közepes',
-    type: 'Lendületes',
-    tagline: 'Lendületesebb, vicces feladatok.',
-    description: 'Gyorsabb, hangulatindító feladatok indulás vagy program előtt.',
-    playStyle: 'Rövidebb körök, több nevetés, több mozgós mini feladat.',
-    rhythm: 'Gyors tempó',
-    accent: 'from-lime-300 via-emerald-300 to-cyan-400',
-    icon: 'Music2',
-  },
-  {
     id: 'crazy',
     name: 'Őrült',
     level: 'erősebb',
