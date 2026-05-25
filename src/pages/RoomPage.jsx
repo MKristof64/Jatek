@@ -5,6 +5,7 @@ import {
   Play,
   Skull,
   Trash2,
+  UserPlus,
   UserRound,
   UsersRound,
 } from 'lucide-react';
@@ -68,7 +69,11 @@ export default function RoomPage({
   const [message, setMessage] = useState('');
   const [joining, setJoining] = useState(false);
   const currentRole = room?.rolesByPlayerId?.[currentParticipantId] ?? null;
-  const isHost = currentRole === 'host';
+  const isHost =
+    currentRole === 'host' ||
+    Boolean(room?.hostPlayerId && currentParticipantId === room.hostPlayerId) ||
+    onlineStatus?.mode === 'host';
+  const currentDisplayRole = isHost ? 'host' : (currentRole ?? 'player');
   const canStart = players.length >= 2;
 
   useEffect(() => {
@@ -194,7 +199,7 @@ export default function RoomPage({
                     </p>
                   </div>
                   <div className="text-right">
-                    <RoleBadge role={currentRole ?? 'player'} />
+                    <RoleBadge role={currentDisplayRole} />
                     <p className="mt-2 text-sm font-bold text-white/58">
                       {players.length}/{maxParticipants}
                     </p>
@@ -267,7 +272,7 @@ export default function RoomPage({
               {isHost ? (
                 <form
                   onSubmit={handleJoin}
-                  className="room-join-inline grid grid-cols-[1fr_auto] gap-2"
+                  className="room-join-inline grid gap-2"
                 >
                   <input
                     className="party-field min-w-0 rounded-2xl px-4 py-3 font-bold outline-none"
@@ -277,14 +282,14 @@ export default function RoomPage({
                     placeholder="Új játékos neve"
                     aria-label="Új játékos neve"
                   />
-                  <button
+                  <PrimaryButton
                     type="submit"
+                    icon={UserPlus}
                     disabled={joining}
-                    className="party-button grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-amber-300 via-orange-400 to-pink-500 text-slate-950 transition active:scale-[0.98] disabled:pointer-events-none disabled:opacity-45"
-                    aria-label="Játékos csatlakoztatása"
+                    className="min-h-12"
                   >
-                    <DoorOpen className="relative z-10 h-5 w-5" />
-                  </button>
+                    {joining ? 'Hozzáadás...' : 'Hozzáadás'}
+                  </PrimaryButton>
                 </form>
               ) : null}
 

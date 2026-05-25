@@ -535,6 +535,12 @@ export default function App() {
     }
   }, [currentRoomPlayerId, page, room]);
 
+  useEffect(() => {
+    if (room?.hostPlayerId && !currentRoomPlayerId && onlineStatus.mode !== 'guest') {
+      setCurrentRoomPlayerId(room.hostPlayerId);
+    }
+  }, [currentRoomPlayerId, onlineStatus.mode, room?.hostPlayerId]);
+
   const activeMode = useMemo(() => getModeById(selectedMode), [selectedMode]);
 
   const cardPool = useMemo(() => {
@@ -570,7 +576,9 @@ export default function App() {
     .replaceAll('{target}', targetPlayer)
     .trim();
   const currentRoomRole = room?.rolesByPlayerId?.[currentRoomPlayerId] ?? null;
-  const isRoomHost = currentRoomRole === roomRoles.host;
+  const isRoomHost =
+    currentRoomRole === roomRoles.host ||
+    Boolean(room?.hostPlayerId && currentRoomPlayerId === room.hostPlayerId);
   const canControlRoomGame =
     !room || currentRoomRole === roomRoles.host || currentRoomRole === roomRoles.narrator;
   const isOnlineGuest = onlineStatus.mode === 'guest';
