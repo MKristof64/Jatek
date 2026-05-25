@@ -108,26 +108,6 @@ function removeStoredKey(key) {
   }
 }
 
-function loadSessionJson(key, fallback) {
-  try {
-    const saved = sessionStorage.getItem(key);
-    return saved ? JSON.parse(saved) : fallback;
-  } catch {
-    return fallback;
-  }
-}
-
-function saveSessionJson(key, value) {
-  try {
-    const serialized = JSON.stringify(value);
-    if (sessionStorage.getItem(key) !== serialized) {
-      sessionStorage.setItem(key, serialized);
-    }
-  } catch {
-    // Session storage is best-effort; the current tab state still works.
-  }
-}
-
 function removeSessionKey(key) {
   try {
     sessionStorage.removeItem(key);
@@ -151,17 +131,20 @@ function sanitizeId(value, fallbackPrefix) {
   return safeId || createId(fallbackPrefix);
 }
 
-function loadPlayers() {
-  const savedPlayers = loadJson(storageKeys.players, []);
-  if (!Array.isArray(savedPlayers)) return [];
+function sanitizePlayers(value, limit = limits.players) {
+  if (!Array.isArray(value)) return [];
 
-  return savedPlayers
-    .slice(0, limits.players)
+  return value
+    .slice(0, limit)
     .map((player) => ({
       id: sanitizeId(player?.id, 'player'),
       name: sanitizeText(player?.name, limits.playerNameLength),
     }))
     .filter((player) => player.name.length > 0);
+}
+
+function loadPlayers() {
+  return sanitizePlayers(loadJson(storageKeys.players, []));
 }
 
 function loadCustomCards() {
@@ -204,17 +187,16 @@ function loadSettings() {
   };
 }
 
-function loadRoom() {
-  const savedRoom = loadJson(storageKeys.room, null);
-  if (!savedRoom || typeof savedRoom !== 'object' || Array.isArray(savedRoom)) {
+function sanitizeRoom(value) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
     return null;
   }
 
-  const code = String(savedRoom.code ?? '').replace(/\D/g, '').slice(0, 6);
-  const hostPlayerId = sanitizeId(savedRoom.hostPlayerId, 'player');
+  const code = String(value.code ?? '').replace(/\D/g, '').slice(0, 6);
+  const hostPlayerId = sanitizeId(value.hostPlayerId, 'player');
   const savedRoles =
-    savedRoom.rolesByPlayerId && typeof savedRoom.rolesByPlayerId === 'object'
-      ? savedRoom.rolesByPlayerId
+    value.rolesByPlayerId && typeof value.rolesByPlayerId === 'object'
+      ? value.rolesByPlayerId
       : {};
   const rolesByPlayerId = Object.entries(savedRoles).reduce((roles, [playerId, role]) => {
     const safeRole = Object.values(roomRoles).includes(role) ? role : roomRoles.player;
@@ -232,28 +214,8 @@ function loadRoom() {
       ...rolesByPlayerId,
       [hostPlayerId]: roomRoles.host,
     },
-    createdAt: Number.isFinite(savedRoom.createdAt) ? savedRoom.createdAt : Date.now(),
+    createdAt: Number.isFinite(value.createdAt) ? value.createdAt : Date.now(),
   };
-}
-
-function getCurrentRoomPlayerStorageKey() {
-  try {
-    const existingName = typeof window.name === 'string' ? window.name : '';
-    if (!existingName.startsWith('enmegsosem-tab-')) {
-      const randomPart =
-        globalThis.crypto?.randomUUID?.() ?? Math.random().toString(36).slice(2, 14);
-      window.name = `enmegsosem-tab-${randomPart}`;
-    }
-
-    return `${storageKeys.currentRoomPlayerId}.${window.name}`;
-  } catch {
-    return storageKeys.currentRoomPlayerId;
-  }
-}
-
-function loadCurrentRoomPlayerId() {
-  const savedId = loadSessionJson(getCurrentRoomPlayerStorageKey(), null);
-  return typeof savedId === 'string' ? sanitizeId(savedId, 'player') : null;
 }
 
 function loadSelectedMode() {
@@ -261,34 +223,73 @@ function loadSelectedMode() {
   return getModeById(typeof savedMode === 'string' ? savedMode : 'classic').id;
 }
 
-function loadGame() {
-  const savedGame = loadJson(storageKeys.game, initialGame);
-  if (!savedGame || typeof savedGame !== 'object' || Array.isArray(savedGame)) {
+function sanitizeCard(value) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+
+  const safeKind = ['never', 'duel', 'roundtable'].includes(value.kind) ? value.kind : 'never';
+  const durationSeconds = Number.isFinite(value.durationSeconds)
+    ? Math.max(0, Math.min(120, Math.floor(value.durationSeconds)))
+    : 0;
+
+  return {
+    id: sanitizeId(value.id, 'card'),
+    mode: getModeById(value.mode).id,
+    kind: safeKind,
+    title: sanitizeText(value.title, 80) || 'Én még sosem...',
+    text: sanitizeText(value.text, 320),
+    durationSeconds,
+    safe: value.safe !== false,
+  };
+}
+
+function sanitizeGame(value) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
     return initialGame;
   }
 
-  const playerOrder = Array.isArray(savedGame.playerOrder)
-    ? savedGame.playerOrder.filter(Number.isInteger)
+  const playerOrder = Array.isArray(value.playerOrder)
+    ? value.playerOrder.filter(Number.isInteger)
     : [];
-  const participantIndexes = Array.isArray(savedGame.participantIndexes)
-    ? savedGame.participantIndexes.filter(Number.isInteger)
+  const participantIndexes = Array.isArray(value.participantIndexes)
+    ? value.participantIndexes.filter(Number.isInteger)
     : [];
-  const usedIds = Array.isArray(savedGame.usedIds)
-    ? savedGame.usedIds.filter((id) => typeof id === 'string').slice(0, 300)
+  const usedIds = Array.isArray(value.usedIds)
+    ? value.usedIds.filter((id) => typeof id === 'string').slice(0, 300)
     : [];
-  const card =
-    savedGame.card && typeof savedGame.card === 'object' && !Array.isArray(savedGame.card)
-      ? savedGame.card
-      : null;
 
   return {
     playerOrder,
-    orderPosition: Number.isInteger(savedGame.orderPosition) ? savedGame.orderPosition : 0,
-    playerIndex: Number.isInteger(savedGame.playerIndex) ? savedGame.playerIndex : 0,
-    targetIndex: Number.isInteger(savedGame.targetIndex) ? savedGame.targetIndex : 1,
+    orderPosition: Number.isInteger(value.orderPosition) ? value.orderPosition : 0,
+    playerIndex: Number.isInteger(value.playerIndex) ? value.playerIndex : 0,
+    targetIndex: Number.isInteger(value.targetIndex) ? value.targetIndex : 1,
     participantIndexes,
-    card,
+    card: sanitizeCard(value.card),
     usedIds,
+  };
+}
+
+function clearStoredRoomState() {
+  removeStoredKey(storageKeys.room);
+  removeStoredKey(storageKeys.game);
+  removeStoredKey(storageKeys.currentRoomPlayerId);
+  removeSessionKey(storageKeys.currentRoomPlayerId);
+
+  try {
+    Object.keys(sessionStorage)
+      .filter((key) => key.startsWith(`${storageKeys.currentRoomPlayerId}.`))
+      .forEach(removeSessionKey);
+  } catch {
+    // Session storage may be blocked; the in-memory room still works.
+  }
+}
+
+function removeRoomRole(room, playerId) {
+  if (!room) return room;
+  const nextRoles = { ...room.rolesByPlayerId };
+  delete nextRoles[playerId];
+  return {
+    ...room,
+    rolesByPlayerId: nextRoles,
   };
 }
 
@@ -437,12 +438,8 @@ export default function App() {
   const localPlayersRef = useRef(loadPlayers());
 
   useEffect(() => {
-    removeStoredKey(storageKeys.room);
-    removeStoredKey(storageKeys.game);
-    removeStoredKey(storageKeys.currentRoomPlayerId);
-    removeSessionKey(getCurrentRoomPlayerStorageKey());
-    removeSessionKey(storageKeys.currentRoomPlayerId);
-  }, []);
+    clearStoredRoomState();
+  }, [currentRoomPlayerId, game, room]);
 
   useEffect(() => {
     if (room) return;
@@ -463,21 +460,6 @@ export default function App() {
   }, [selectedMode]);
 
   useEffect(() => {
-    removeStoredKey(storageKeys.game);
-  }, [game]);
-
-  useEffect(() => {
-    removeStoredKey(storageKeys.room);
-  }, [room]);
-
-  useEffect(() => {
-    const currentRoomStorageKey = getCurrentRoomPlayerStorageKey();
-    removeSessionKey(currentRoomStorageKey);
-    removeSessionKey(storageKeys.currentRoomPlayerId);
-    removeStoredKey(storageKeys.currentRoomPlayerId);
-  }, [currentRoomPlayerId]);
-
-  useEffect(() => {
     latestStateRef.current = {
       room,
       players,
@@ -489,7 +471,7 @@ export default function App() {
 
   useEffect(() => {
     const syncFromStorage = (event) => {
-      if (event.key === null || event.key === storageKeys.players) {
+      if ((event.key === null || event.key === storageKeys.players) && !latestStateRef.current?.room) {
         setPlayers(loadPlayers());
       }
       if (
@@ -498,11 +480,7 @@ export default function App() {
         event.key === storageKeys.game ||
         event.key === storageKeys.currentRoomPlayerId
       ) {
-        removeStoredKey(storageKeys.room);
-        removeStoredKey(storageKeys.game);
-        removeStoredKey(storageKeys.currentRoomPlayerId);
-        removeSessionKey(getCurrentRoomPlayerStorageKey());
-        removeSessionKey(storageKeys.currentRoomPlayerId);
+        clearStoredRoomState();
       }
       if (event.key === null || event.key === storageKeys.selectedMode) {
         setSelectedMode(loadSelectedMode());
@@ -627,12 +605,14 @@ export default function App() {
   };
 
   const applySharedState = (sharedState, nextCurrentPlayerId = currentRoomPlayerId) => {
-    if (!sharedState?.room || !Array.isArray(sharedState.players)) return;
+    const nextRoom = sanitizeRoom(sharedState?.room);
+    const nextPlayers = sanitizePlayers(sharedState?.players, limits.roomParticipants);
+    if (!nextRoom || nextPlayers.length === 0) return;
 
-    setRoom(sharedState.room);
-    setPlayers(sharedState.players.slice(0, limits.roomParticipants));
+    setRoom(nextRoom);
+    setPlayers(nextPlayers);
     setSelectedMode(getModeById(sharedState.selectedMode).id);
-    setGame(sharedState.game ?? initialGame);
+    setGame(sanitizeGame(sharedState.game));
     if (nextCurrentPlayerId) {
       setCurrentRoomPlayerId(nextCurrentPlayerId);
     }
@@ -640,15 +620,7 @@ export default function App() {
 
   const removeParticipantById = (playerId) => {
     setPlayers((currentPlayers) => currentPlayers.filter((player) => player.id !== playerId));
-    setRoom((currentRoom) => {
-      if (!currentRoom) return currentRoom;
-      const nextRoles = { ...currentRoom.rolesByPlayerId };
-      delete nextRoles[playerId];
-      return {
-        ...currentRoom,
-        rolesByPlayerId: nextRoles,
-      };
-    });
+    setRoom((currentRoom) => removeRoomRole(currentRoom, playerId));
   };
 
   const closeRoomLocally = () => {
@@ -909,15 +881,7 @@ export default function App() {
     setPlayers((currentPlayers) =>
       currentPlayers.filter((player) => player.id !== id),
     );
-    setRoom((currentRoom) => {
-      if (!currentRoom) return currentRoom;
-      const nextRoles = { ...currentRoom.rolesByPlayerId };
-      delete nextRoles[id];
-      return {
-        ...currentRoom,
-        rolesByPlayerId: nextRoles,
-      };
-    });
+    setRoom((currentRoom) => removeRoomRole(currentRoom, id));
     if (currentRoomPlayerId === id) {
       setCurrentRoomPlayerId(null);
     }
@@ -1153,15 +1117,7 @@ export default function App() {
     }
 
     setPlayers((currentPlayers) => currentPlayers.filter((player) => player.id !== playerId));
-    setRoom((currentRoom) => {
-      if (!currentRoom) return currentRoom;
-      const nextRoles = { ...currentRoom.rolesByPlayerId };
-      delete nextRoles[playerId];
-      return {
-        ...currentRoom,
-        rolesByPlayerId: nextRoles,
-      };
-    });
+    setRoom((currentRoom) => removeRoomRole(currentRoom, playerId));
 
     if (currentRoomPlayerId === playerId) {
       setCurrentRoomPlayerId(null);
@@ -1288,8 +1244,7 @@ export default function App() {
 
   const clearData = () => {
     Object.values(storageKeys).forEach((key) => removeStoredKey(key));
-    removeSessionKey(getCurrentRoomPlayerStorageKey());
-    removeSessionKey(storageKeys.currentRoomPlayerId);
+    clearStoredRoomState();
     clearPeerConnections();
     setOnlineStatus(defaultOnlineStatus);
     setPlayers([]);
