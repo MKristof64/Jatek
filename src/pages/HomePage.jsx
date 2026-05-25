@@ -1,4 +1,4 @@
-import { Play, Sparkles, UserPlus, Wand2 } from 'lucide-react';
+import { Crown, Play, Sparkles, UserPlus, Wand2 } from 'lucide-react';
 import Header from '../components/Header.jsx';
 import PrimaryButton from '../components/PrimaryButton.jsx';
 
@@ -8,6 +8,7 @@ export default function HomePage({
   onStart,
   onPlayers,
   onCustomCards,
+  onRoom,
   onSettings,
 }) {
   return (
@@ -48,6 +49,9 @@ export default function HomePage({
         <div className="home-action-panel shrink-0 space-y-3">
           <PrimaryButton icon={Play} onClick={onStart}>
             Játék indítása
+          </PrimaryButton>
+          <PrimaryButton variant="secondary" icon={Crown} onClick={onRoom}>
+            Szoba
           </PrimaryButton>
           <div className="home-secondary-actions grid grid-cols-2 gap-3">
             <PrimaryButton

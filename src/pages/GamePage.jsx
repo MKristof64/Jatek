@@ -1,4 +1,4 @@
-import { Home, LogOut, Shuffle, SkipForward } from 'lucide-react';
+import { Crown, LogOut, Shuffle, SkipForward } from 'lucide-react';
 import FullscreenButton from '../components/FullscreenButton.jsx';
 import GameCard from '../components/GameCard.jsx';
 import PrimaryButton from '../components/PrimaryButton.jsx';
@@ -10,11 +10,21 @@ export default function GamePage({
   card,
   cardText,
   currentTeam,
+  canControlGame = true,
+  isHost = false,
   onNext,
   onSkip,
   onExit,
-  onHome,
+  onFinishGame,
 }) {
+  const panelClassName = [
+    'game-action-panel shrink-0 space-y-2',
+    canControlGame ? 'game-action-panel--controller' : 'game-action-panel--viewer',
+    isHost ? 'game-action-panel--host' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
     <section className="game-screen flex min-h-0 flex-1 flex-col gap-3">
       <div className="game-main mobile-scroll min-h-0 flex-1 space-y-3 overflow-y-auto pb-1 pr-1">
@@ -44,28 +54,34 @@ export default function GamePage({
         />
       </div>
 
-      <div className="game-action-panel shrink-0 space-y-2">
-        <div className="game-action-row grid grid-cols-2 gap-2">
-          <PrimaryButton variant="secondary" icon={SkipForward} onClick={onSkip}>
-            Kihagyás
-          </PrimaryButton>
-          <PrimaryButton
-            variant="warning"
-            icon={Shuffle}
-            className="next-pulse"
-            onClick={onNext}
-          >
-            Következő
-          </PrimaryButton>
-        </div>
-        <div className="game-action-row grid grid-cols-2 gap-2">
+      <div className={panelClassName}>
+        {canControlGame ? (
+          <div className="game-action-row grid grid-cols-2 gap-2">
+            <PrimaryButton variant="secondary" icon={SkipForward} onClick={onSkip}>
+              Kihagyás
+            </PrimaryButton>
+            <PrimaryButton
+              variant="warning"
+              icon={Shuffle}
+              className="next-pulse"
+              onClick={onNext}
+            >
+              Következő
+            </PrimaryButton>
+          </div>
+        ) : null}
+        <div className="game-action-row grid grid-cols-1 gap-2">
           <PrimaryButton variant="danger" icon={LogOut} onClick={onExit}>
             Kilépés
           </PrimaryButton>
-          <PrimaryButton variant="ghost" icon={Home} onClick={onHome}>
-            Főoldal
-          </PrimaryButton>
         </div>
+        {isHost ? (
+          <div className="game-action-row grid grid-cols-1 gap-2">
+            <PrimaryButton variant="ghost" icon={Crown} onClick={onFinishGame}>
+              Befejezés
+            </PrimaryButton>
+          </div>
+        ) : null}
       </div>
     </section>
   );

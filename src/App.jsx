@@ -2,18 +2,28 @@ import { useEffect, useMemo, useState } from 'react';
 import Layout from './components/Layout.jsx';
 import { cards } from './data/cards.js';
 import { getModeById } from './data/modes.js';
-import ConfirmExitPage from './pages/ConfirmExitPage.jsx';
 import CustomCardsPage from './pages/CustomCardsPage.jsx';
 import GamePage from './pages/GamePage.jsx';
 import HomePage from './pages/HomePage.jsx';
 import ModeSelectPage from './pages/ModeSelectPage.jsx';
 import PlayersPage from './pages/PlayersPage.jsx';
+import RoomPage from './pages/RoomPage.jsx';
 import SettingsPage from './pages/SettingsPage.jsx';
 
 const storageKeys = {
   players: 'enmegsosem.players',
   customCards: 'enmegsosem.customCards',
   settings: 'enmegsosem.settings',
+  selectedMode: 'enmegsosem.selectedMode',
+  game: 'enmegsosem.game',
+  room: 'enmegsosem.room',
+  currentRoomPlayerId: 'enmegsosem.currentRoomPlayerId',
+};
+
+const roomRoles = {
+  host: 'host',
+  narrator: 'narrator',
+  player: 'player',
 };
 
 const defaultSettings = {
@@ -25,6 +35,7 @@ const defaultSettings = {
 
 const limits = {
   players: 24,
+  roomParticipants: 15,
   playerNameLength: 24,
   customCards: 120,
   customCardLength: 180,
@@ -43,9 +54,9 @@ const initialGame = {
 const pages = {
   home: 'home',
   players: 'players',
+  room: 'room',
   modes: 'modes',
   game: 'game',
-  confirmExit: 'confirmExit',
   custom: 'custom',
   settings: 'settings',
 };
@@ -61,7 +72,10 @@ function loadJson(key, fallback) {
 
 function saveJson(key, value) {
   try {
-    localStorage.setItem(key, JSON.stringify(value));
+    const serialized = JSON.stringify(value);
+    if (localStorage.getItem(key) !== serialized) {
+      localStorage.setItem(key, serialized);
+    }
   } catch {
     // Storage can be disabled or full; the in-memory game state should still work.
   }
@@ -72,6 +86,34 @@ function removeStoredKey(key) {
     localStorage.removeItem(key);
   } catch {
     // Ignore storage failures so clearing data never crashes the UI.
+  }
+}
+
+function loadSessionJson(key, fallback) {
+  try {
+    const saved = sessionStorage.getItem(key);
+    return saved ? JSON.parse(saved) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function saveSessionJson(key, value) {
+  try {
+    const serialized = JSON.stringify(value);
+    if (sessionStorage.getItem(key) !== serialized) {
+      sessionStorage.setItem(key, serialized);
+    }
+  } catch {
+    // Session storage is best-effort; the current tab state still works.
+  }
+}
+
+function removeSessionKey(key) {
+  try {
+    sessionStorage.removeItem(key);
+  } catch {
+    // Ignore storage failures.
   }
 }
 
@@ -143,12 +185,103 @@ function loadSettings() {
   };
 }
 
+function loadRoom() {
+  const savedRoom = loadJson(storageKeys.room, null);
+  if (!savedRoom || typeof savedRoom !== 'object' || Array.isArray(savedRoom)) {
+    return null;
+  }
+
+  const code = String(savedRoom.code ?? '').replace(/\D/g, '').slice(0, 6);
+  const hostPlayerId = sanitizeId(savedRoom.hostPlayerId, 'player');
+  const savedRoles =
+    savedRoom.rolesByPlayerId && typeof savedRoom.rolesByPlayerId === 'object'
+      ? savedRoom.rolesByPlayerId
+      : {};
+  const rolesByPlayerId = Object.entries(savedRoles).reduce((roles, [playerId, role]) => {
+    const safeRole = Object.values(roomRoles).includes(role) ? role : roomRoles.player;
+    roles[sanitizeId(playerId, 'player')] = safeRole;
+    return roles;
+  }, {});
+
+  if (code.length !== 6) return null;
+
+  return {
+    code,
+    hostPlayerId,
+    rolesByPlayerId: {
+      ...rolesByPlayerId,
+      [hostPlayerId]: roomRoles.host,
+    },
+    createdAt: Number.isFinite(savedRoom.createdAt) ? savedRoom.createdAt : Date.now(),
+  };
+}
+
+function getCurrentRoomPlayerStorageKey() {
+  try {
+    const existingName = typeof window.name === 'string' ? window.name : '';
+    if (!existingName.startsWith('enmegsosem-tab-')) {
+      const randomPart =
+        globalThis.crypto?.randomUUID?.() ?? Math.random().toString(36).slice(2, 14);
+      window.name = `enmegsosem-tab-${randomPart}`;
+    }
+
+    return `${storageKeys.currentRoomPlayerId}.${window.name}`;
+  } catch {
+    return storageKeys.currentRoomPlayerId;
+  }
+}
+
+function loadCurrentRoomPlayerId() {
+  const savedId = loadSessionJson(getCurrentRoomPlayerStorageKey(), null);
+  return typeof savedId === 'string' ? sanitizeId(savedId, 'player') : null;
+}
+
+function loadSelectedMode() {
+  const savedMode = loadJson(storageKeys.selectedMode, 'classic');
+  return getModeById(typeof savedMode === 'string' ? savedMode : 'classic').id;
+}
+
+function loadGame() {
+  const savedGame = loadJson(storageKeys.game, initialGame);
+  if (!savedGame || typeof savedGame !== 'object' || Array.isArray(savedGame)) {
+    return initialGame;
+  }
+
+  const playerOrder = Array.isArray(savedGame.playerOrder)
+    ? savedGame.playerOrder.filter(Number.isInteger)
+    : [];
+  const participantIndexes = Array.isArray(savedGame.participantIndexes)
+    ? savedGame.participantIndexes.filter(Number.isInteger)
+    : [];
+  const usedIds = Array.isArray(savedGame.usedIds)
+    ? savedGame.usedIds.filter((id) => typeof id === 'string').slice(0, 300)
+    : [];
+  const card =
+    savedGame.card && typeof savedGame.card === 'object' && !Array.isArray(savedGame.card)
+      ? savedGame.card
+      : null;
+
+  return {
+    playerOrder,
+    orderPosition: Number.isInteger(savedGame.orderPosition) ? savedGame.orderPosition : 0,
+    playerIndex: Number.isInteger(savedGame.playerIndex) ? savedGame.playerIndex : 0,
+    targetIndex: Number.isInteger(savedGame.targetIndex) ? savedGame.targetIndex : 1,
+    participantIndexes,
+    card,
+    usedIds,
+  };
+}
+
 function createId(prefix) {
   if (globalThis.crypto?.randomUUID) {
     return `${prefix}-${globalThis.crypto.randomUUID()}`;
   }
 
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function createRoomCode() {
+  return String(Math.floor(100000 + Math.random() * 900000));
 }
 
 function pickRandomCard(pool, usedIds = []) {
@@ -248,9 +381,10 @@ export default function App() {
   const [players, setPlayers] = useState(loadPlayers);
   const [customCards, setCustomCards] = useState(loadCustomCards);
   const [settings, setSettings] = useState(loadSettings);
-  const [selectedMode, setSelectedMode] = useState('classic');
-  const [game, setGame] = useState(initialGame);
-  const [pendingExit, setPendingExit] = useState('exit');
+  const [selectedMode, setSelectedMode] = useState(loadSelectedMode);
+  const [game, setGame] = useState(loadGame);
+  const [room, setRoom] = useState(loadRoom);
+  const [currentRoomPlayerId, setCurrentRoomPlayerId] = useState(loadCurrentRoomPlayerId);
 
   useEffect(() => {
     saveJson(storageKeys.players, players);
@@ -263,6 +397,84 @@ export default function App() {
   useEffect(() => {
     saveJson(storageKeys.settings, settings);
   }, [settings]);
+
+  useEffect(() => {
+    saveJson(storageKeys.selectedMode, selectedMode);
+  }, [selectedMode]);
+
+  useEffect(() => {
+    if (room) {
+      saveJson(storageKeys.game, game);
+      return;
+    }
+
+    removeStoredKey(storageKeys.game);
+  }, [game, room]);
+
+  useEffect(() => {
+    if (room) {
+      saveJson(storageKeys.room, room);
+      return;
+    }
+
+    removeStoredKey(storageKeys.room);
+  }, [room]);
+
+  useEffect(() => {
+    const currentRoomStorageKey = getCurrentRoomPlayerStorageKey();
+    if (currentRoomPlayerId) {
+      saveSessionJson(currentRoomStorageKey, currentRoomPlayerId);
+      removeSessionKey(storageKeys.currentRoomPlayerId);
+      removeStoredKey(storageKeys.currentRoomPlayerId);
+      return;
+    }
+
+    removeSessionKey(currentRoomStorageKey);
+    removeSessionKey(storageKeys.currentRoomPlayerId);
+    removeStoredKey(storageKeys.currentRoomPlayerId);
+  }, [currentRoomPlayerId]);
+
+  useEffect(() => {
+    const syncFromStorage = (event) => {
+      if (event.key === null || event.key === storageKeys.players) {
+        setPlayers(loadPlayers());
+      }
+      if (event.key === null || event.key === storageKeys.room) {
+        setRoom(loadRoom());
+      }
+      if (event.key === null || event.key === storageKeys.game) {
+        setGame(loadGame());
+      }
+      if (event.key === null || event.key === storageKeys.selectedMode) {
+        setSelectedMode(loadSelectedMode());
+      }
+    };
+
+    window.addEventListener('storage', syncFromStorage);
+    return () => window.removeEventListener('storage', syncFromStorage);
+  }, []);
+
+  useEffect(() => {
+    if (room && game.card && currentRoomPlayerId && page !== pages.game) {
+      setPage(pages.game);
+    }
+  }, [currentRoomPlayerId, game.card, page, room]);
+
+  useEffect(() => {
+    if (room && !game.card && currentRoomPlayerId && page === pages.game) {
+      setPage(pages.room);
+    }
+  }, [currentRoomPlayerId, game.card, page, room]);
+
+  useEffect(() => {
+    if (!room && currentRoomPlayerId) {
+      setCurrentRoomPlayerId(null);
+      setGame(initialGame);
+      if (page === pages.game || page === pages.room) {
+        setPage(pages.home);
+      }
+    }
+  }, [currentRoomPlayerId, page, room]);
 
   const activeMode = useMemo(() => getModeById(selectedMode), [selectedMode]);
 
@@ -298,6 +510,10 @@ export default function App() {
     .replaceAll('{player}', currentPlayer)
     .replaceAll('{target}', targetPlayer)
     .trim();
+  const currentRoomRole = room?.rolesByPlayerId?.[currentRoomPlayerId] ?? null;
+  const isRoomHost = currentRoomRole === roomRoles.host;
+  const canControlRoomGame =
+    !room || currentRoomRole === roomRoles.host || currentRoomRole === roomRoles.narrator;
 
   const addPlayer = (name) => {
     const safeName = sanitizeText(name, limits.playerNameLength);
@@ -313,6 +529,18 @@ export default function App() {
     setPlayers((currentPlayers) =>
       currentPlayers.filter((player) => player.id !== id),
     );
+    setRoom((currentRoom) => {
+      if (!currentRoom) return currentRoom;
+      const nextRoles = { ...currentRoom.rolesByPlayerId };
+      delete nextRoles[id];
+      return {
+        ...currentRoom,
+        rolesByPlayerId: nextRoles,
+      };
+    });
+    if (currentRoomPlayerId === id) {
+      setCurrentRoomPlayerId(null);
+    }
   };
 
   const addCustomCard = (text) => {
@@ -329,7 +557,157 @@ export default function App() {
     setCustomCards((currentCards) => currentCards.filter((card) => card.id !== id));
   };
 
+  const createRoom = (hostName) => {
+    const safeName = sanitizeText(hostName, limits.playerNameLength) || 'Házigazda';
+    const hostId = createId('player');
+    const nextRoom = {
+      code: createRoomCode(),
+      hostPlayerId: hostId,
+      rolesByPlayerId: {
+        [hostId]: roomRoles.host,
+      },
+      createdAt: Date.now(),
+    };
+
+    setPlayers([{ id: hostId, name: safeName }]);
+    setRoom(nextRoom);
+    setCurrentRoomPlayerId(hostId);
+    setGame(initialGame);
+    return null;
+  };
+
+  const joinRoom = (code, name) => {
+    const safeCode = String(code ?? '').replace(/\D/g, '').slice(0, 6);
+    const safeName = sanitizeText(name, limits.playerNameLength);
+
+    if (!room || safeCode !== room.code) {
+      return 'Nincs ilyen helyi szoba.';
+    }
+
+    if (!safeName) {
+      return 'Adj meg egy nevet.';
+    }
+
+    if (players.length >= limits.roomParticipants) {
+      return 'A szoba megtelt.';
+    }
+
+    const alreadyExists = players.some(
+      (player) => player.name.toLocaleLowerCase('hu-HU') === safeName.toLocaleLowerCase('hu-HU'),
+    );
+
+    if (alreadyExists) {
+      return 'Ez a név már szerepel a szobában.';
+    }
+
+    const newPlayer = { id: createId('player'), name: safeName };
+    const keepHostView = room.rolesByPlayerId?.[currentRoomPlayerId] === roomRoles.host;
+
+    setPlayers((currentPlayers) => [...currentPlayers, newPlayer].slice(0, limits.roomParticipants));
+    setRoom((currentRoom) => {
+      if (!currentRoom) return currentRoom;
+      return {
+        ...currentRoom,
+        rolesByPlayerId: {
+          ...currentRoom.rolesByPlayerId,
+          [newPlayer.id]: roomRoles.player,
+        },
+      };
+    });
+
+    if (!keepHostView) {
+      setCurrentRoomPlayerId(newPlayer.id);
+    }
+
+    return null;
+  };
+
+  const setParticipantRole = (playerId, role) => {
+    if (!isRoomHost || !Object.values(roomRoles).includes(role) || role === roomRoles.host) return;
+
+    setRoom((currentRoom) => {
+      if (!currentRoom || currentRoom.hostPlayerId === playerId) return currentRoom;
+      const nextRoles = Object.fromEntries(
+        Object.entries(currentRoom.rolesByPlayerId).map(([id, currentRole]) => [
+          id,
+          role === roomRoles.narrator && currentRole === roomRoles.narrator
+            ? roomRoles.player
+            : currentRole,
+        ]),
+      );
+
+      return {
+        ...currentRoom,
+        rolesByPlayerId: {
+          ...nextRoles,
+          [playerId]: role,
+          [currentRoom.hostPlayerId]: roomRoles.host,
+        },
+      };
+    });
+  };
+
+  const removeParticipant = (playerId) => {
+    if (!isRoomHost || room?.hostPlayerId === playerId) return;
+
+    setPlayers((currentPlayers) => currentPlayers.filter((player) => player.id !== playerId));
+    setRoom((currentRoom) => {
+      if (!currentRoom) return currentRoom;
+      const nextRoles = { ...currentRoom.rolesByPlayerId };
+      delete nextRoles[playerId];
+      return {
+        ...currentRoom,
+        rolesByPlayerId: nextRoles,
+      };
+    });
+
+    if (currentRoomPlayerId === playerId) {
+      setCurrentRoomPlayerId(null);
+      setGame(initialGame);
+      setPage(pages.home);
+    }
+  };
+
+  const leaveRoom = () => {
+    if (!room || !currentRoomPlayerId) {
+      setGame(initialGame);
+      setPage(pages.home);
+      return;
+    }
+
+    if (currentRoomRole === roomRoles.host) {
+      setGame(initialGame);
+      setPage(pages.home);
+      return;
+    }
+
+    const leavingId = currentRoomPlayerId;
+    setPlayers((currentPlayers) => currentPlayers.filter((player) => player.id !== leavingId));
+    setRoom((currentRoom) => {
+      if (!currentRoom) return currentRoom;
+      const nextRoles = { ...currentRoom.rolesByPlayerId };
+      delete nextRoles[leavingId];
+      return {
+        ...currentRoom,
+        rolesByPlayerId: nextRoles,
+      };
+    });
+    setCurrentRoomPlayerId(null);
+    setGame(initialGame);
+    setPage(pages.home);
+  };
+
+  const finishRoomGame = () => {
+    if (!isRoomHost) return;
+
+    setRoom(null);
+    setCurrentRoomPlayerId(null);
+    setGame(initialGame);
+    setPage(pages.home);
+  };
+
   const startGame = () => {
+    if (room && !isRoomHost) return;
     if (players.length < 2 || cardPool.length === 0) return;
     const picked = pickRandomCard(cardPool);
     const playerOrder = shufflePlayerIndexes(players);
@@ -348,6 +726,7 @@ export default function App() {
   };
 
   const advanceGame = () => {
+    if (!canControlRoomGame) return;
     if (players.length < 2 || cardPool.length === 0) return;
     const playerOrder =
       game.playerOrder.length === players.length
@@ -376,11 +755,15 @@ export default function App() {
 
   const clearData = () => {
     Object.values(storageKeys).forEach((key) => removeStoredKey(key));
+    removeSessionKey(getCurrentRoomPlayerStorageKey());
+    removeSessionKey(storageKeys.currentRoomPlayerId);
     setPlayers([]);
     setCustomCards([]);
     setSettings(defaultSettings);
     setSelectedMode('classic');
     setGame(initialGame);
+    setRoom(null);
+    setCurrentRoomPlayerId(null);
     setPage(pages.home);
   };
 
@@ -401,16 +784,22 @@ export default function App() {
   };
 
   const goToStartFlow = () => {
+    if (room && players.length < 2) {
+      setPage(pages.room);
+      return;
+    }
+
     setPage(players.length >= 2 ? pages.modes : pages.players);
   };
 
-  const requestGameNavigation = (intent) => {
-    setPendingExit(intent);
-    setPage(pages.confirmExit);
-  };
+  const exitGameToHome = () => {
+    if (room && currentRoomRole !== roomRoles.host) {
+      leaveRoom();
+      return;
+    }
 
-  const confirmGameNavigation = () => {
-    setPage(pendingExit === 'home' ? pages.home : pages.modes);
+    setGame(initialGame);
+    setPage(pages.home);
   };
 
   return (
@@ -422,6 +811,7 @@ export default function App() {
           onStart={goToStartFlow}
           onPlayers={() => setPage(pages.players)}
           onCustomCards={() => setPage(pages.custom)}
+          onRoom={() => setPage(pages.room)}
           onSettings={() => setPage(pages.settings)}
         />
       ) : null}
@@ -436,6 +826,22 @@ export default function App() {
         />
       ) : null}
 
+      {page === pages.room ? (
+        <RoomPage
+          room={room}
+          players={players}
+          currentParticipantId={currentRoomPlayerId}
+          maxParticipants={limits.roomParticipants}
+          onCreateRoom={createRoom}
+          onJoinRoom={joinRoom}
+          onSetRole={setParticipantRole}
+          onRemoveParticipant={removeParticipant}
+          onLeaveRoom={leaveRoom}
+          onStartGame={() => setPage(pages.modes)}
+          onBack={() => setPage(pages.home)}
+        />
+      ) : null}
+
       {page === pages.modes ? (
         <ModeSelectPage
           selectedMode={selectedMode}
@@ -443,7 +849,7 @@ export default function App() {
           customCount={customCards.length}
           onSelectMode={setSelectedMode}
           onStartGame={startGame}
-          onBack={() => setPage(pages.players)}
+          onBack={() => setPage(room ? pages.room : pages.players)}
         />
       ) : null}
 
@@ -455,18 +861,12 @@ export default function App() {
           card={game.card}
           cardText={cardText}
           currentTeam={currentTeam}
+          canControlGame={canControlRoomGame}
+          isHost={isRoomHost}
           onNext={() => advanceGame('next')}
           onSkip={() => advanceGame('skip')}
-          onExit={() => requestGameNavigation('exit')}
-          onHome={() => requestGameNavigation('home')}
-        />
-      ) : null}
-
-      {page === pages.confirmExit ? (
-        <ConfirmExitPage
-          intent={pendingExit}
-          onCancel={() => setPage(pages.game)}
-          onConfirm={confirmGameNavigation}
+          onExit={exitGameToHome}
+          onFinishGame={finishRoomGame}
         />
       ) : null}
 
