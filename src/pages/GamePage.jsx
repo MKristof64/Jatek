@@ -11,12 +11,15 @@ export default function GamePage({
   cardText,
   currentTeam,
   timerState,
+  feedbackState,
+  feedbackStats,
   canControlGame = true,
   canControlTimer = true,
   isHost = false,
   onNext,
   onSkip,
   onToggleTimer,
+  onFeedback,
   onExit,
   onFinishGame,
 }) {
@@ -55,8 +58,11 @@ export default function GamePage({
           text={cardText}
           currentTeam={currentTeam}
           timerState={timerState}
+          feedbackState={feedbackState}
+          feedbackStats={feedbackStats}
           canControlTimer={canControlTimer}
           onToggleTimer={onToggleTimer}
+          onFeedback={onFeedback}
         />
       </div>
 

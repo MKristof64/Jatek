@@ -4,6 +4,7 @@ import ConfirmDialog from './components/ConfirmDialog.jsx';
 import Layout from './components/Layout.jsx';
 import { cards } from './data/cards.js';
 import { getModeById } from './data/modes.js';
+import { fetchBoldFeedbackStats, submitCardFeedback } from './lib/feedback.js';
 import CustomCardsPage from './pages/CustomCardsPage.jsx';
 import GamePage from './pages/GamePage.jsx';
 import HomePage from './pages/HomePage.jsx';
@@ -441,11 +442,11 @@ function sendPeerMessage(connection, message) {
   return false;
 }
 
-function pickRandomCard(pool, usedIds = []) {
+function pickRandomCard(pool, usedIds = [], preferOrder = false) {
   if (pool.length === 0) return { card: null, usedIds };
   const availableCards = pool.filter((card) => !usedIds.includes(card.id));
   const nextPool = availableCards.length > 0 ? availableCards : pool;
-  const card = nextPool[Math.floor(Math.random() * nextPool.length)];
+  const card = preferOrder ? nextPool[0] : nextPool[Math.floor(Math.random() * nextPool.length)];
   return {
     card,
     usedIds: availableCards.length > 0 ? [...usedIds, card.id] : [card.id],
@@ -506,6 +507,77 @@ function buildTeams(players) {
   ].filter((team) => team.players.length > 0);
 }
 
+function getFeedbackSortMetrics(card, statsByCardId) {
+  if (card?.mode !== 'bold') {
+    return {
+      dislikes: 0,
+      likes: 0,
+      score: -1,
+      totalVotes: 0,
+    };
+  }
+
+  const stats = statsByCardId[card.id];
+  if (!stats || stats.totalVotes === 0 || stats.successPercent === null) {
+    return {
+      dislikes: 0,
+      likes: 0,
+      score: -1,
+      totalVotes: 0,
+    };
+  }
+
+  return {
+    dislikes: stats.dislikes ?? 0,
+    likes: stats.likes ?? 0,
+    score: Math.max(0, Math.min(100, stats.successPercent)),
+    totalVotes: stats.totalVotes ?? 0,
+  };
+}
+
+function sortBoldCardsByFeedback(pool, statsByCardId) {
+  if (!Array.isArray(pool) || pool.length < 2) return pool;
+
+  return [...pool].sort((firstCard, secondCard) => {
+    const firstStats = getFeedbackSortMetrics(firstCard, statsByCardId);
+    const secondStats = getFeedbackSortMetrics(secondCard, statsByCardId);
+    if (secondStats.score !== firstStats.score) return secondStats.score - firstStats.score;
+    if (secondStats.totalVotes !== firstStats.totalVotes) {
+      return secondStats.totalVotes - firstStats.totalVotes;
+    }
+    if (secondStats.likes !== firstStats.likes) return secondStats.likes - firstStats.likes;
+    if (firstStats.dislikes !== secondStats.dislikes) return firstStats.dislikes - secondStats.dislikes;
+
+    return 0;
+  });
+}
+
+function applyFeedbackVote(statsByCardId, card, voteType) {
+  if (!card?.id || card.mode !== 'bold') return statsByCardId;
+
+  const currentStats = statsByCardId[card.id] ?? {
+    cardId: card.id,
+    totalVotes: 0,
+    likes: 0,
+    dislikes: 0,
+    successPercent: null,
+  };
+  const likes = currentStats.likes + (voteType === 'like' ? 1 : 0);
+  const dislikes = currentStats.dislikes + (voteType === 'dislike' ? 1 : 0);
+  const totalVotes = likes + dislikes;
+
+  return {
+    ...statsByCardId,
+    [card.id]: {
+      ...currentStats,
+      totalVotes,
+      likes,
+      dislikes,
+      successPercent: totalVotes > 0 ? Math.round((likes / totalVotes) * 10000) / 100 : null,
+    },
+  };
+}
+
 function playFeedback(settings) {
   if (settings.vibration && 'vibrate' in navigator) {
     navigator.vibrate(24);
@@ -540,6 +612,13 @@ export default function App() {
   const [settings, setSettings] = useState(loadSettings);
   const [selectedMode, setSelectedMode] = useState(loadSelectedMode);
   const [game, setGame] = useState(initialGame);
+  const [boldFeedbackStats, setBoldFeedbackStats] = useState({});
+  const [feedbackState, setFeedbackState] = useState({
+    cardId: null,
+    message: '',
+    status: 'idle',
+    voteType: null,
+  });
   const [room, setRoom] = useState(null);
   const [currentRoomPlayerId, setCurrentRoomPlayerId] = useState(null);
   const [onlineStatus, setOnlineStatus] = useState(defaultOnlineStatus);
@@ -584,6 +663,31 @@ export default function App() {
       currentRoomPlayerId,
     };
   }, [currentRoomPlayerId, game, players, room, selectedMode]);
+
+  useEffect(() => {
+    let ignore = false;
+
+    if (selectedMode !== 'bold') return undefined;
+
+    fetchBoldFeedbackStats().then((result) => {
+      if (!ignore && result.ok) {
+        setBoldFeedbackStats(result.stats);
+      }
+    });
+
+    return () => {
+      ignore = true;
+    };
+  }, [selectedMode]);
+
+  useEffect(() => {
+    setFeedbackState({
+      cardId: game.card?.id ?? null,
+      message: '',
+      status: 'idle',
+      voteType: null,
+    });
+  }, [game.card?.id]);
 
   useEffect(() => {
     const syncFromStorage = (event) => {
@@ -640,12 +744,16 @@ export default function App() {
       }));
     }
 
-    return cards.filter((card) => {
+    const filteredCards = cards.filter((card) => {
       const modeMatches = card.mode === selectedMode;
       const safetyMatches = settings.safeMode ? card.safe !== false : true;
       return modeMatches && safetyMatches;
     });
-  }, [customCards, selectedMode, settings.safeMode]);
+
+    return selectedMode === 'bold'
+      ? sortBoldCardsByFeedback(filteredCards, boldFeedbackStats)
+      : filteredCards;
+  }, [boldFeedbackStats, customCards, selectedMode, settings.safeMode]);
 
   const teams = useMemo(() => buildTeams(players), [players]);
   const currentPlayerObject = players[game.playerIndex];
@@ -660,6 +768,8 @@ export default function App() {
       )
     : null;
   const timerState = useMemo(() => sanitizeTimer(game.timer, game.card), [game.card, game.timer]);
+  const currentFeedbackStats =
+    game.card?.mode === 'bold' ? boldFeedbackStats[game.card.id] ?? null : null;
   const cardText = (game.card?.text ?? 'Nincs betöltött kártya ehhez a módhoz.')
     .replaceAll('{player}', currentPlayer)
     .replaceAll('{target}', targetPlayer)
@@ -1317,7 +1427,8 @@ export default function App() {
   const startGame = () => {
     if (room && !isRoomHost) return;
     if (players.length < 2 || cardPool.length === 0) return;
-    const picked = pickRandomCard(cardPool);
+    const useFeedbackOrder = selectedMode === 'bold' && Object.keys(boldFeedbackStats).length > 0;
+    const picked = pickRandomCard(cardPool, [], useFeedbackOrder);
     const playerOrder = shufflePlayerIndexes(players);
     const firstPlayerIndex = playerOrder[0] ?? 0;
     setGame({
@@ -1357,7 +1468,8 @@ export default function App() {
       : Math.max(0, playerOrder.indexOf(game.playerIndex));
     const nextOrderPosition = (currentOrderPosition + 1) % playerOrder.length;
     const nextPlayerIndex = playerOrder[nextOrderPosition] ?? 0;
-    const picked = pickRandomCard(cardPool, game.usedIds);
+    const useFeedbackOrder = selectedMode === 'bold' && Object.keys(boldFeedbackStats).length > 0;
+    const picked = pickRandomCard(cardPool, game.usedIds, useFeedbackOrder);
 
     setGame({
       playerOrder,
@@ -1391,6 +1503,42 @@ export default function App() {
   };
 
   toggleTimerRef.current = toggleTimer;
+
+  const sendCardFeedback = async (voteType) => {
+    if (!game.card || activeMode.id !== 'bold' || feedbackState.status === 'sending') return;
+
+    setFeedbackState({
+      cardId: game.card.id,
+      message: '',
+      status: 'sending',
+      voteType,
+    });
+
+    const result = await submitCardFeedback({
+      appContext: room ? 'room' : 'local',
+      card: game.card,
+      mode: activeMode,
+      voteType,
+    });
+
+    if (!result.ok) {
+      setFeedbackState({
+        cardId: game.card.id,
+        message: 'Nem sikerült elküldeni.',
+        status: 'error',
+        voteType,
+      });
+      return;
+    }
+
+    setBoldFeedbackStats((currentStats) => applyFeedbackVote(currentStats, game.card, voteType));
+    setFeedbackState({
+      cardId: game.card.id,
+      message: 'Köszi!',
+      status: 'sent',
+      voteType,
+    });
+  };
 
   const clearData = () => {
     Object.values(storageKeys).forEach((key) => removeStoredKey(key));
@@ -1520,12 +1668,15 @@ export default function App() {
           cardText={cardText}
           currentTeam={currentTeam}
           timerState={timerState}
+          feedbackState={feedbackState}
+          feedbackStats={currentFeedbackStats}
           canControlGame={canControlRoomGame}
           canControlTimer={canControlRoomGame}
           isHost={isRoomHost}
           onNext={() => advanceGame('next')}
           onSkip={() => advanceGame('skip')}
           onToggleTimer={toggleTimer}
+          onFeedback={sendCardFeedback}
           onExit={requestExitGame}
           onFinishGame={finishRoomGame}
         />

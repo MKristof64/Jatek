@@ -1,0 +1,11 @@
+name = "jatek"
+main = "src/index.js"
+compatibility_date = "2026-05-26"
+
+[triggers]
+crons = ["0 3 * * *"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "jatek"
+database_id = "828964a5-bbed-46cf-96c8-79e202ef7934"
