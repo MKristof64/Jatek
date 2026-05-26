@@ -1,4 +1,4 @@
-import { Crown, LogOut, Shuffle, SkipForward, ThumbsDown, ThumbsUp } from 'lucide-react';
+import { Crown, LogOut, Shuffle, ThumbsDown, ThumbsUp } from 'lucide-react';
 import FullscreenButton from '../components/FullscreenButton.jsx';
 import GameCard from '../components/GameCard.jsx';
 import PrimaryButton from '../components/PrimaryButton.jsx';
@@ -80,7 +80,6 @@ export default function GamePage({
   isHost = false,
   canFinishGame = isHost,
   onNext,
-  onSkip,
   onToggleTimer,
   onFeedback,
   onExit,
@@ -135,10 +134,7 @@ export default function GamePage({
 
       <div className={panelClassName}>
         {canControlGame ? (
-          <div className="game-action-row grid grid-cols-2 gap-2">
-            <PrimaryButton variant="secondary" icon={SkipForward} onClick={onSkip}>
-              Kihagyás
-            </PrimaryButton>
+          <div className="game-action-row grid grid-cols-1 gap-2">
             <PrimaryButton
               variant="warning"
               icon={Shuffle}

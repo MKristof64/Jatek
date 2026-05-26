@@ -1626,7 +1626,6 @@ export default function App() {
           isHost={isRoomHost}
           canFinishGame={isRoomHost}
           onNext={() => advanceGame('next')}
-          onSkip={() => advanceGame('skip')}
           onToggleTimer={toggleTimer}
           onFeedback={sendCardFeedback}
           onExit={requestExitGame}
