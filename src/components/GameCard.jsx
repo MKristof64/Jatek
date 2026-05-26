@@ -1,4 +1,4 @@
-import { Pause, Play, Sparkles, ThumbsDown, ThumbsUp, UserRound, UsersRound } from 'lucide-react';
+import { Pause, Play, Sparkles, UserRound, UsersRound } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 function formatTimer(seconds) {
@@ -75,66 +75,6 @@ function TimerControl({ durationSeconds, timerState, canControlTimer, onToggleTi
   );
 }
 
-function formatSuccessPercent(value) {
-  if (!Number.isFinite(value)) return null;
-  return `${Math.round(value)}%`;
-}
-
-function FeedbackControls({ card, feedbackState, feedbackStats, mode, onFeedback }) {
-  const showFeedback = mode?.id === 'bold' && card?.id && typeof onFeedback === 'function';
-  if (!showFeedback) return null;
-
-  const status = feedbackState?.cardId === card.id ? feedbackState.status : 'idle';
-  const selectedVote = feedbackState?.cardId === card.id ? feedbackState.voteType : null;
-  const disabled = status === 'sending' || status === 'sent';
-  const successPercent = formatSuccessPercent(feedbackStats?.successPercent);
-  const likes = feedbackStats?.likes ?? 0;
-  const dislikes = feedbackStats?.dislikes ?? 0;
-  const totalVotes = feedbackStats?.totalVotes ?? 0;
-  const summary =
-    totalVotes > 0
-      ? `Sikeresség: ${successPercent} · ${likes} like / ${dislikes} dislike`
-      : 'Még nincs elég visszajelzés.';
-
-  return (
-    <div className="card-feedback mt-3 flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-white/[0.07] p-2.5 ring-1 ring-white/10">
-      <p className="min-w-0 flex-1 text-[0.72rem] font-black uppercase tracking-[0.12em] text-white/54">
-        {status === 'sent' ? `${feedbackState.message} ${summary}` : summary}
-      </p>
-      <div className="grid grid-cols-2 gap-1.5">
-        <button
-          type="button"
-          onClick={() => onFeedback('like')}
-          disabled={disabled}
-          className={[
-            'feedback-button grid h-10 w-10 place-items-center rounded-xl bg-lime-300/12 text-lime-100 ring-1 ring-lime-200/18 transition active:scale-[0.96]',
-            selectedVote === 'like' && status === 'sent' ? 'feedback-button--selected' : '',
-          ]
-            .filter(Boolean)
-            .join(' ')}
-          aria-label="Like"
-        >
-          <ThumbsUp className="h-[1.125rem] w-[1.125rem]" />
-        </button>
-        <button
-          type="button"
-          onClick={() => onFeedback('dislike')}
-          disabled={disabled}
-          className={[
-            'feedback-button grid h-10 w-10 place-items-center rounded-xl bg-rose-300/12 text-rose-100 ring-1 ring-rose-200/18 transition active:scale-[0.96]',
-            selectedVote === 'dislike' && status === 'sent' ? 'feedback-button--selected' : '',
-          ]
-            .filter(Boolean)
-            .join(' ')}
-          aria-label="Dislike"
-        >
-          <ThumbsDown className="h-[1.125rem] w-[1.125rem]" />
-        </button>
-      </div>
-    </div>
-  );
-}
-
 function getQuestionSizeClass(value) {
   const length = String(value ?? '').trim().length;
 
@@ -152,11 +92,8 @@ export default function GameCard({
   text,
   currentTeam,
   timerState,
-  feedbackState,
-  feedbackStats,
   canControlTimer = true,
   onToggleTimer,
-  onFeedback,
 }) {
   const cardKind = card?.kind ?? 'never';
   const cardTitle = card?.title ?? 'Én még sosem...';
@@ -232,13 +169,6 @@ export default function GameCard({
           <p className="question-prefix">{cardTitle}</p>
           <p className="question-sentence">{text}</p>
         </div>
-        <FeedbackControls
-          card={card}
-          feedbackState={feedbackState}
-          feedbackStats={feedbackStats}
-          mode={mode}
-          onFeedback={onFeedback}
-        />
       </div>
     </section>
   );

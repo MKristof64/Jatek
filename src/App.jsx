@@ -442,11 +442,11 @@ function sendPeerMessage(connection, message) {
   return false;
 }
 
-function pickRandomCard(pool, usedIds = [], preferOrder = false) {
+function pickRandomCard(pool, usedIds = []) {
   if (pool.length === 0) return { card: null, usedIds };
   const availableCards = pool.filter((card) => !usedIds.includes(card.id));
   const nextPool = availableCards.length > 0 ? availableCards : pool;
-  const card = preferOrder ? nextPool[0] : nextPool[Math.floor(Math.random() * nextPool.length)];
+  const card = nextPool[Math.floor(Math.random() * nextPool.length)];
   return {
     card,
     usedIds: availableCards.length > 0 ? [...usedIds, card.id] : [card.id],
@@ -505,51 +505,6 @@ function buildTeams(players) {
       players: players.filter((_, index) => index % 2 === 1),
     },
   ].filter((team) => team.players.length > 0);
-}
-
-function getFeedbackSortMetrics(card, statsByCardId) {
-  if (card?.mode !== 'bold') {
-    return {
-      dislikes: 0,
-      likes: 0,
-      score: -1,
-      totalVotes: 0,
-    };
-  }
-
-  const stats = statsByCardId[card.id];
-  if (!stats || stats.totalVotes === 0 || stats.successPercent === null) {
-    return {
-      dislikes: 0,
-      likes: 0,
-      score: -1,
-      totalVotes: 0,
-    };
-  }
-
-  return {
-    dislikes: stats.dislikes ?? 0,
-    likes: stats.likes ?? 0,
-    score: Math.max(0, Math.min(100, stats.successPercent)),
-    totalVotes: stats.totalVotes ?? 0,
-  };
-}
-
-function sortBoldCardsByFeedback(pool, statsByCardId) {
-  if (!Array.isArray(pool) || pool.length < 2) return pool;
-
-  return [...pool].sort((firstCard, secondCard) => {
-    const firstStats = getFeedbackSortMetrics(firstCard, statsByCardId);
-    const secondStats = getFeedbackSortMetrics(secondCard, statsByCardId);
-    if (secondStats.score !== firstStats.score) return secondStats.score - firstStats.score;
-    if (secondStats.totalVotes !== firstStats.totalVotes) {
-      return secondStats.totalVotes - firstStats.totalVotes;
-    }
-    if (secondStats.likes !== firstStats.likes) return secondStats.likes - firstStats.likes;
-    if (firstStats.dislikes !== secondStats.dislikes) return firstStats.dislikes - secondStats.dislikes;
-
-    return 0;
-  });
 }
 
 function applyFeedbackVote(statsByCardId, card, voteType) {
@@ -750,10 +705,8 @@ export default function App() {
       return modeMatches && safetyMatches;
     });
 
-    return selectedMode === 'bold'
-      ? sortBoldCardsByFeedback(filteredCards, boldFeedbackStats)
-      : filteredCards;
-  }, [boldFeedbackStats, customCards, selectedMode, settings.safeMode]);
+    return filteredCards;
+  }, [customCards, selectedMode, settings.safeMode]);
 
   const teams = useMemo(() => buildTeams(players), [players]);
   const currentPlayerObject = players[game.playerIndex];
@@ -1427,8 +1380,7 @@ export default function App() {
   const startGame = () => {
     if (room && !isRoomHost) return;
     if (players.length < 2 || cardPool.length === 0) return;
-    const useFeedbackOrder = selectedMode === 'bold' && Object.keys(boldFeedbackStats).length > 0;
-    const picked = pickRandomCard(cardPool, [], useFeedbackOrder);
+    const picked = pickRandomCard(cardPool, []);
     const playerOrder = shufflePlayerIndexes(players);
     const firstPlayerIndex = playerOrder[0] ?? 0;
     setGame({
@@ -1468,8 +1420,7 @@ export default function App() {
       : Math.max(0, playerOrder.indexOf(game.playerIndex));
     const nextOrderPosition = (currentOrderPosition + 1) % playerOrder.length;
     const nextPlayerIndex = playerOrder[nextOrderPosition] ?? 0;
-    const useFeedbackOrder = selectedMode === 'bold' && Object.keys(boldFeedbackStats).length > 0;
-    const picked = pickRandomCard(cardPool, game.usedIds, useFeedbackOrder);
+    const picked = pickRandomCard(cardPool, game.usedIds);
 
     setGame({
       playerOrder,
@@ -1673,6 +1624,7 @@ export default function App() {
           canControlGame={canControlRoomGame}
           canControlTimer={canControlRoomGame}
           isHost={isRoomHost}
+          canFinishGame={isRoomHost}
           onNext={() => advanceGame('next')}
           onSkip={() => advanceGame('skip')}
           onToggleTimer={toggleTimer}

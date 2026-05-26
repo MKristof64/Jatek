@@ -1,7 +1,69 @@
-import { Crown, LogOut, Shuffle, SkipForward } from 'lucide-react';
+import { Crown, LogOut, Shuffle, SkipForward, ThumbsDown, ThumbsUp } from 'lucide-react';
 import FullscreenButton from '../components/FullscreenButton.jsx';
 import GameCard from '../components/GameCard.jsx';
 import PrimaryButton from '../components/PrimaryButton.jsx';
+
+function formatSuccessPercent(value) {
+  if (!Number.isFinite(value)) return null;
+  return `${Math.round(value)}%`;
+}
+
+function FeedbackActionBar({ card, feedbackState, feedbackStats, mode, onFeedback }) {
+  const showFeedback = mode?.id === 'bold' && card?.id && typeof onFeedback === 'function';
+  if (!showFeedback) return null;
+
+  const status = feedbackState?.cardId === card.id ? feedbackState.status : 'idle';
+  const selectedVote = feedbackState?.cardId === card.id ? feedbackState.voteType : null;
+  const disabled = status === 'sending' || status === 'sent';
+  const successPercent = formatSuccessPercent(feedbackStats?.successPercent);
+  const likes = feedbackStats?.likes ?? 0;
+  const dislikes = feedbackStats?.dislikes ?? 0;
+  const totalVotes = feedbackStats?.totalVotes ?? 0;
+  const summary =
+    totalVotes > 0
+      ? `Sikeresség: ${successPercent} · ${likes}/${dislikes}`
+      : 'Még nincs elég visszajelzés.';
+  const sentPrefix = status === 'sent' ? `${feedbackState.message} ` : '';
+
+  return (
+    <div className="game-feedback-actions rounded-[1.25rem] bg-white/[0.08] p-2 ring-1 ring-white/10">
+      <p className="game-feedback-summary mb-2 text-center text-[0.68rem] font-black uppercase tracking-[0.12em] text-white/58">
+        {sentPrefix}
+        {summary}
+      </p>
+      <div className="game-feedback-buttons grid grid-cols-2 gap-2">
+        <PrimaryButton
+          variant="success"
+          icon={ThumbsUp}
+          disabled={disabled}
+          className={[
+            'feedback-action-button',
+            selectedVote === 'like' && status === 'sent' ? 'feedback-action-button--selected' : '',
+          ]
+            .filter(Boolean)
+            .join(' ')}
+          onClick={() => onFeedback('like')}
+        >
+          Like
+        </PrimaryButton>
+        <PrimaryButton
+          variant="danger"
+          icon={ThumbsDown}
+          disabled={disabled}
+          className={[
+            'feedback-action-button',
+            selectedVote === 'dislike' && status === 'sent' ? 'feedback-action-button--selected' : '',
+          ]
+            .filter(Boolean)
+            .join(' ')}
+          onClick={() => onFeedback('dislike')}
+        >
+          Dislike
+        </PrimaryButton>
+      </div>
+    </div>
+  );
+}
 
 export default function GamePage({
   currentPlayer,
@@ -16,6 +78,7 @@ export default function GamePage({
   canControlGame = true,
   canControlTimer = true,
   isHost = false,
+  canFinishGame = isHost,
   onNext,
   onSkip,
   onToggleTimer,
@@ -26,7 +89,7 @@ export default function GamePage({
   const panelClassName = [
     'game-action-panel shrink-0 space-y-2',
     canControlGame ? 'game-action-panel--controller' : 'game-action-panel--viewer',
-    isHost ? 'game-action-panel--host' : '',
+    canFinishGame ? 'game-action-panel--finisher' : '',
   ]
     .filter(Boolean)
     .join(' ');
@@ -58,10 +121,14 @@ export default function GamePage({
           text={cardText}
           currentTeam={currentTeam}
           timerState={timerState}
-          feedbackState={feedbackState}
-          feedbackStats={feedbackStats}
           canControlTimer={canControlTimer}
           onToggleTimer={onToggleTimer}
+        />
+        <FeedbackActionBar
+          card={card}
+          feedbackState={feedbackState}
+          feedbackStats={feedbackStats}
+          mode={mode}
           onFeedback={onFeedback}
         />
       </div>
@@ -82,18 +149,19 @@ export default function GamePage({
             </PrimaryButton>
           </div>
         ) : null}
-        <div className="game-action-row grid grid-cols-1 gap-2">
-          <PrimaryButton variant="danger" icon={LogOut} onClick={onExit}>
-            Kilépés
-          </PrimaryButton>
-        </div>
-        {isHost ? (
+        {canFinishGame ? (
           <div className="game-action-row grid grid-cols-1 gap-2">
             <PrimaryButton variant="ghost" icon={Crown} onClick={onFinishGame}>
               Befejezés
             </PrimaryButton>
           </div>
-        ) : null}
+        ) : (
+          <div className="game-action-row grid grid-cols-1 gap-2">
+            <PrimaryButton variant="danger" icon={LogOut} onClick={onExit}>
+              Kilépés
+            </PrimaryButton>
+          </div>
+        )}
       </div>
     </section>
   );
