@@ -721,8 +721,6 @@ export default function App() {
       )
     : null;
   const timerState = useMemo(() => sanitizeTimer(game.timer, game.card), [game.card, game.timer]);
-  const currentFeedbackStats =
-    game.card?.mode === 'bold' ? boldFeedbackStats[game.card.id] ?? null : null;
   const cardText = (game.card?.text ?? 'Nincs betöltött kártya ehhez a módhoz.')
     .replaceAll('{player}', currentPlayer)
     .replaceAll('{target}', targetPlayer)
@@ -966,8 +964,8 @@ export default function App() {
         const participantId = connection.partyrushPlayerId;
         const role = latestStateRef.current?.room?.rolesByPlayerId?.[participantId];
         if (role === roomRoles.narrator) {
-          if (message.action === 'next' || message.action === 'skip') {
-            advanceGameRef.current?.(message.action);
+          if (message.action === 'next') {
+            advanceGameRef.current?.();
           }
 
           if (message.action === 'timer-toggle') {
@@ -1397,12 +1395,12 @@ export default function App() {
     setPage(pages.game);
   };
 
-  const advanceGame = (action = 'next') => {
+  const advanceGame = () => {
     if (!canControlRoomGame) return;
     if (isOnlineGuest) {
       sendPeerMessage(guestConnectionRef.current, {
         type: onlineMessageTypes.control,
-        action,
+        action: 'next',
       });
       playFeedback(settings);
       return;
@@ -1620,12 +1618,11 @@ export default function App() {
           currentTeam={currentTeam}
           timerState={timerState}
           feedbackState={feedbackState}
-          feedbackStats={currentFeedbackStats}
           canControlGame={canControlRoomGame}
           canControlTimer={canControlRoomGame}
           isHost={isRoomHost}
           canFinishGame={isRoomHost}
-          onNext={() => advanceGame('next')}
+          onNext={advanceGame}
           onToggleTimer={toggleTimer}
           onFeedback={sendCardFeedback}
           onExit={requestExitGame}

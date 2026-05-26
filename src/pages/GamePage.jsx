@@ -3,34 +3,39 @@ import FullscreenButton from '../components/FullscreenButton.jsx';
 import GameCard from '../components/GameCard.jsx';
 import PrimaryButton from '../components/PrimaryButton.jsx';
 
-function formatSuccessPercent(value) {
-  if (!Number.isFinite(value)) return null;
-  return `${Math.round(value)}%`;
-}
-
-function FeedbackActionBar({ card, feedbackState, feedbackStats, mode, onFeedback }) {
+function FeedbackActionBar({ card, feedbackState, mode, onFeedback }) {
   const showFeedback = mode?.id === 'bold' && card?.id && typeof onFeedback === 'function';
   if (!showFeedback) return null;
 
   const status = feedbackState?.cardId === card.id ? feedbackState.status : 'idle';
   const selectedVote = feedbackState?.cardId === card.id ? feedbackState.voteType : null;
   const disabled = status === 'sending' || status === 'sent';
-  const successPercent = formatSuccessPercent(feedbackStats?.successPercent);
-  const likes = feedbackStats?.likes ?? 0;
-  const dislikes = feedbackStats?.dislikes ?? 0;
-  const totalVotes = feedbackStats?.totalVotes ?? 0;
-  const summary =
-    totalVotes > 0
-      ? `Sikeresség: ${successPercent} · ${likes}/${dislikes}`
-      : 'Még nincs elég visszajelzés.';
-  const sentPrefix = status === 'sent' ? `${feedbackState.message} ` : '';
+  const feedbackMessage =
+    status === 'sent'
+      ? 'Köszi!'
+      : status === 'sending'
+        ? 'Küldés...'
+        : status === 'error'
+          ? (feedbackState.message || 'Nem sikerült elküldeni.')
+          : '';
+
+  if (status === 'sent') {
+    return (
+      <div className="game-feedback-actions game-feedback-actions--thanks rounded-[1.25rem] bg-white/[0.08] p-2 ring-1 ring-white/10">
+        <p className="game-feedback-thanks text-center text-sm font-black text-lime-100">
+          {feedbackMessage}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="game-feedback-actions rounded-[1.25rem] bg-white/[0.08] p-2 ring-1 ring-white/10">
-      <p className="game-feedback-summary mb-2 text-center text-[0.68rem] font-black uppercase tracking-[0.12em] text-white/58">
-        {sentPrefix}
-        {summary}
-      </p>
+      {feedbackMessage ? (
+        <p className="game-feedback-summary mb-2 text-center text-[0.68rem] font-black uppercase tracking-[0.12em] text-white/58">
+          {feedbackMessage}
+        </p>
+      ) : null}
       <div className="game-feedback-buttons grid grid-cols-2 gap-2">
         <PrimaryButton
           variant="success"
@@ -74,7 +79,6 @@ export default function GamePage({
   currentTeam,
   timerState,
   feedbackState,
-  feedbackStats,
   canControlGame = true,
   canControlTimer = true,
   isHost = false,
@@ -92,6 +96,10 @@ export default function GamePage({
   ]
     .filter(Boolean)
     .join(' ');
+  const actionRowClassName = [
+    'game-action-row grid gap-2',
+    canControlGame ? 'game-action-row--split grid-cols-2' : 'grid-cols-1',
+  ].join(' ');
 
   return (
     <section className="game-screen flex min-h-0 flex-1 flex-col gap-3">
@@ -126,38 +134,33 @@ export default function GamePage({
         <FeedbackActionBar
           card={card}
           feedbackState={feedbackState}
-          feedbackStats={feedbackStats}
           mode={mode}
           onFeedback={onFeedback}
         />
       </div>
 
       <div className={panelClassName}>
+        <div className={actionRowClassName}>
         {canControlGame ? (
-          <div className="game-action-row grid grid-cols-1 gap-2">
-            <PrimaryButton
-              variant="warning"
-              icon={Shuffle}
-              className="next-pulse"
-              onClick={onNext}
-            >
-              Következő
-            </PrimaryButton>
-          </div>
+          <PrimaryButton
+            variant="warning"
+            icon={Shuffle}
+            className="next-pulse"
+            onClick={onNext}
+          >
+            Következő
+          </PrimaryButton>
         ) : null}
         {canFinishGame ? (
-          <div className="game-action-row grid grid-cols-1 gap-2">
-            <PrimaryButton variant="ghost" icon={Crown} onClick={onFinishGame}>
-              Befejezés
-            </PrimaryButton>
-          </div>
+          <PrimaryButton variant="ghost" icon={Crown} onClick={onFinishGame}>
+            Befejezés
+          </PrimaryButton>
         ) : (
-          <div className="game-action-row grid grid-cols-1 gap-2">
-            <PrimaryButton variant="danger" icon={LogOut} onClick={onExit}>
-              Kilépés
-            </PrimaryButton>
-          </div>
+          <PrimaryButton variant="danger" icon={LogOut} onClick={onExit}>
+            Kilépés
+          </PrimaryButton>
         )}
+        </div>
       </div>
     </section>
   );

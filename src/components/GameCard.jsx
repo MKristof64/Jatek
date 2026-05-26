@@ -81,7 +81,8 @@ function getQuestionSizeClass(value) {
   if (length <= 58) return 'question-copy--short';
   if (length <= 105) return 'question-copy--medium';
   if (length <= 155) return 'question-copy--long';
-  return 'question-copy--dense';
+  if (length <= 220) return 'question-copy--dense';
+  return 'question-copy--compact';
 }
 
 export default function GameCard({

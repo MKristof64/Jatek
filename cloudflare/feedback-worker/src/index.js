@@ -10,6 +10,8 @@ const kindLabels = {
   roundtable: 'Körkérdés',
 };
 
+const defaultSuccessPercent = 50;
+
 function corsHeaders(request) {
   const origin = request.headers.get('Origin') ?? '*';
   return {
@@ -129,7 +131,8 @@ async function getVoteStats(env) {
       const likes = Number(row.likes) || 0;
       const dislikes = Number(row.dislikes) || 0;
       const totalVotes = Number(row.total_votes) || 0;
-      const successPercent = totalVotes > 0 ? Math.round((likes / totalVotes) * 10000) / 100 : null;
+      const successPercent =
+        totalVotes > 0 ? Math.round((likes / totalVotes) * 10000) / 100 : defaultSuccessPercent;
 
       return [
         row.card_id,
@@ -145,8 +148,12 @@ async function getVoteStats(env) {
 }
 
 function compareCardsBySuccess(firstCard, secondCard) {
-  const firstScore = Number.isFinite(firstCard.successPercent) ? firstCard.successPercent : -1;
-  const secondScore = Number.isFinite(secondCard.successPercent) ? secondCard.successPercent : -1;
+  const firstScore = Number.isFinite(firstCard.successPercent)
+    ? firstCard.successPercent
+    : defaultSuccessPercent;
+  const secondScore = Number.isFinite(secondCard.successPercent)
+    ? secondCard.successPercent
+    : defaultSuccessPercent;
   if (secondScore !== firstScore) return secondScore - firstScore;
   if (secondCard.totalVotes !== firstCard.totalVotes) {
     return secondCard.totalVotes - firstCard.totalVotes;
@@ -165,7 +172,7 @@ async function buildStats(env) {
         likes: 0,
         dislikes: 0,
         totalVotes: 0,
-        successPercent: null,
+        successPercent: defaultSuccessPercent,
       };
 
       return {
@@ -201,7 +208,9 @@ async function handleStats(request, env) {
     { likes: 0, dislikes: 0, totalVotes: 0 },
   );
   const successPercent =
-    totals.totalVotes > 0 ? Math.round((totals.likes / totals.totalVotes) * 10000) / 100 : null;
+    totals.totalVotes > 0
+      ? Math.round((totals.likes / totals.totalVotes) * 10000) / 100
+      : defaultSuccessPercent;
 
   return jsonResponse(request, {
     mode: 'bold',
@@ -237,16 +246,16 @@ async function handlePublicStats(request, env) {
     return jsonResponse(request, { error: 'only-bold-is-ready' }, { status: 400 });
   }
 
-  const statsByCard = await getVoteStats(env);
+  const cards = await buildStats(env);
   const stats = Object.fromEntries(
-    Object.entries(statsByCard).map(([cardId, stat]) => [
-      cardId,
+    cards.map((card) => [
+      card.id,
       {
-        cardId,
-        likes: stat.likes,
-        dislikes: stat.dislikes,
-        totalVotes: stat.totalVotes,
-        successPercent: stat.successPercent,
+        cardId: card.id,
+        likes: card.likes,
+        dislikes: card.dislikes,
+        totalVotes: card.totalVotes,
+        successPercent: card.successPercent,
       },
     ]),
   );
@@ -379,6 +388,14 @@ function adminHtml() {
     .score { text-align: right; }
     .score b { display: block; font-size: 2rem; line-height: 1; color: #bef264; }
     .score span { color: rgba(255,255,255,.58); font-weight: 900; font-size: .82rem; }
+    .vote-breakdown { display: grid; gap: 6px; margin-top: 10px; }
+    .vote {
+      display: flex; justify-content: space-between; gap: 10px; border-radius: 12px; padding: 7px 9px;
+      background: rgba(255,255,255,.08); color: rgba(255,255,255,.78); font-weight: 950; font-size: .82rem;
+    }
+    .vote em { font-style: normal; }
+    .vote.like strong { color: #bef264; }
+    .vote.dislike strong { color: #fecdd3; }
     .bar { height: 8px; border-radius: 99px; margin-top: 10px; background: rgba(255,255,255,.1); overflow: hidden; }
     .bar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg,#bef264,#fcd34d,#ec4899); }
     .empty, .error { padding: 22px; border-radius: 22px; background: rgba(244,63,94,.12); color: #ffe4e6; font-weight: 900; }
@@ -450,8 +467,12 @@ function adminHtml() {
       return token ? { 'X-Admin-Token': token } : {};
     }
 
+    function successValue(value) {
+      return Number.isFinite(value) ? value : 50;
+    }
+
     function formatPercent(value) {
-      return Number.isFinite(value) ? Math.round(value) + '%' : '-';
+      return Math.round(successValue(value)) + '%';
     }
 
     function escapeHtml(value) {
@@ -471,7 +492,7 @@ function adminHtml() {
         acc.totalVotes += card.totalVotes;
         return acc;
       }, { likes: 0, dislikes: 0, totalVotes: 0 });
-      const success = totals.totalVotes > 0 ? (totals.likes / totals.totalVotes) * 100 : null;
+      const success = totals.totalVotes > 0 ? (totals.likes / totals.totalVotes) * 100 : 50;
       document.getElementById('statsGrid').innerHTML = [
         ['Kérdés', cards.length],
         ['Like', totals.likes],
@@ -504,8 +525,8 @@ function adminHtml() {
     }
 
     function compareDashboardCards(firstCard, secondCard) {
-      const firstScore = Number.isFinite(firstCard.successPercent) ? firstCard.successPercent : -1;
-      const secondScore = Number.isFinite(secondCard.successPercent) ? secondCard.successPercent : -1;
+      const firstScore = successValue(firstCard.successPercent);
+      const secondScore = successValue(secondCard.successPercent);
       if (secondScore !== firstScore) return secondScore - firstScore;
       if (secondCard.totalVotes !== firstCard.totalVotes) return secondCard.totalVotes - firstCard.totalVotes;
       if (secondCard.likes !== firstCard.likes) return secondCard.likes - firstCard.likes;
@@ -520,11 +541,13 @@ function adminHtml() {
         return;
       }
       list.innerHTML = cards.map((card) => {
-        const percent = Number.isFinite(card.successPercent) ? card.successPercent : 0;
+        const percent = successValue(card.successPercent);
         return '<article class="card">' +
           '<div><p class="card-title">' + escapeHtml(card.title) + '</p><p class="card-text">' + escapeHtml(card.text) + '</p>' +
           '<div class="meta"><span class="pill">' + escapeHtml(card.kindLabel) + '</span><span class="pill">ID: ' + escapeHtml(card.id) + '</span></div></div>' +
-          '<div class="score"><b>' + formatPercent(card.successPercent) + '</b><span>' + card.likes + ' like / ' + card.dislikes + ' dislike</span>' +
+          '<div class="score"><b>' + formatPercent(card.successPercent) + '</b>' +
+          '<div class="vote-breakdown"><span class="vote like"><em>Like</em><strong>' + card.likes + '</strong></span>' +
+          '<span class="vote dislike"><em>Dislike</em><strong>' + card.dislikes + '</strong></span></div>' +
           '<div class="bar"><i style="width:' + percent + '%"></i></div><span>' + card.totalVotes + ' szavazat</span></div>' +
         '</article>';
       }).join('');
