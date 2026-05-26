@@ -294,7 +294,7 @@ function adminHtml() {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jatek Vezérlőközpont</title>
+  <title>Az ivós játék</title>
   <style>
     :root {
       color-scheme: dark;
@@ -405,7 +405,7 @@ function adminHtml() {
     <header class="topbar">
       <div>
         <p class="eyebrow">Én még sosem...</p>
-        <h1>Jatek</h1>
+        <h1>Az ivós játék</h1>
         <p class="muted">Pikáns kérdések sikerességi rátája Cloudflare D1 adatokból.</p>
       </div>
       <div class="actions">
