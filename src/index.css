@@ -449,8 +449,23 @@ button,
   overflow: hidden;
 }
 
+.game-topic-bar--minimal {
+  width: fit-content;
+  flex-shrink: 0;
+  overflow: visible;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  backdrop-filter: none !important;
+}
+
+.game-topic-bar--minimal::before {
+  display: none;
+}
+
 .game-topic-bar::before,
-.game-action-panel::before,
 .game-card-top::before {
   content: "";
   position: absolute;
@@ -468,7 +483,7 @@ button,
 .game-action-panel {
   position: relative;
   border-radius: 1.5rem;
-  padding-top: 0.2rem;
+  padding-top: 0;
 }
 
 .game-action-panel .party-button {
@@ -523,10 +538,6 @@ button,
 
 .game-card-dynamic--timed .question-copy--medium .question-sentence {
   font-size: 1.96rem;
-}
-
-.question-meta span {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .game-feedback-actions {
@@ -595,7 +606,6 @@ button,
 }
 
 .theme-light .game-topic-bar::before,
-.theme-light .game-action-panel::before,
 .theme-light .game-card-top::before {
   opacity: 0.95;
 }
@@ -1095,20 +1105,6 @@ button,
     margin-top: 0.55rem !important;
   }
 
-  .question-meta {
-    margin-bottom: 0.45rem;
-  }
-
-  .question-meta p {
-    font-size: 0.58rem;
-    letter-spacing: 0.14em;
-  }
-
-  .question-meta span {
-    padding: 0.2rem 0.6rem;
-    font-size: 0.62rem;
-  }
-
   .question-copy {
     min-height: 0;
     flex: 1 1 auto;
@@ -1146,11 +1142,6 @@ button,
     gap: 0.5rem;
     overflow: hidden;
     padding-top: 0;
-  }
-
-  .game-action-panel::before {
-    left: 0.25rem;
-    right: 0.25rem;
   }
 
   .game-action-panel > div {
@@ -1669,20 +1660,6 @@ button,
     margin-top: 0.55rem !important;
   }
 
-  .question-meta {
-    margin-bottom: 0.45rem;
-  }
-
-  .question-meta p {
-    font-size: 0.58rem;
-    letter-spacing: 0.14em;
-  }
-
-  .question-meta span {
-    padding: 0.2rem 0.6rem;
-    font-size: 0.62rem;
-  }
-
   .question-copy {
     display: flex;
     width: 100%;
@@ -1781,11 +1758,6 @@ button,
 
   .game-action-panel--viewer {
     grid-template-rows: minmax(0, 1fr);
-  }
-
-  .game-action-panel::before {
-    left: 0.25rem;
-    right: 0.25rem;
   }
 
   .game-action-row {
@@ -2160,10 +2132,6 @@ button,
     margin-top: 0.35rem !important;
   }
 
-  .question-meta {
-    margin-bottom: 0.28rem;
-  }
-
   .question-copy {
     border-radius: 0.9rem;
     padding: 0.58rem 0.7rem;
@@ -2373,6 +2341,128 @@ button,
 
   .game-feedback-actions--thanks {
     min-height: 1.65rem;
+  }
+}
+
+.question-copy--free {
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: clamp(0.65rem, 3vw, 1.6rem) clamp(0.35rem, 2.4vw, 1.15rem) !important;
+}
+
+.question-copy--free::before,
+.game-question-copy.question-copy--free::after {
+  display: none;
+}
+
+.question-copy--free .question-prefix {
+  color: #fef3c7;
+}
+
+.question-copy--free .question-sentence {
+  max-width: 100%;
+}
+
+.theme-light .question-copy--free {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.question-spotlight--open {
+  min-height: 0 !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: clamp(0.35rem, 1.8vw, 0.85rem) 0.15rem 0.15rem !important;
+}
+
+.question-spotlight--open::before,
+.question-spotlight--open::after,
+.question-spotlight--open .game-card-top::before {
+  display: none !important;
+}
+
+.question-spotlight--open .game-card-top {
+  align-items: flex-start;
+  padding-inline: clamp(0.35rem, 2.5vw, 1.1rem);
+}
+
+.question-spotlight--open .game-card-top > div:first-child {
+  min-width: 0;
+}
+
+.question-spotlight--open .player-chip {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.08)),
+    rgba(15, 23, 42, 0.38) !important;
+  backdrop-filter: blur(14px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 14px 34px rgba(0, 0, 0, 0.24),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.question-spotlight--open .spark-tile {
+  box-shadow:
+    0 18px 38px rgba(236, 72, 153, 0.28),
+    0 0 28px rgba(252, 211, 77, 0.16);
+}
+
+.question-spotlight--open .question-stage {
+  flex: 1 1 auto;
+  justify-content: flex-start;
+  margin-top: clamp(0.65rem, 3.2vw, 1.25rem) !important;
+  padding-inline: clamp(0.55rem, 4.8vw, 1.55rem);
+  padding-block-start: clamp(0.9rem, 5vw, 2rem);
+  padding-block-end: clamp(0.85rem, 4vw, 1.8rem);
+}
+
+.question-spotlight--open .question-stage--open {
+  gap: 0;
+}
+
+.question-spotlight--open .question-copy--free {
+  display: block !important;
+  min-height: 0;
+  flex: 0 1 auto;
+  padding: 0 !important;
+}
+
+.question-spotlight--open .question-prefix {
+  margin-top: 0;
+  margin-bottom: 0.55rem;
+}
+
+.question-spotlight--open .question-sentence {
+  max-width: 22ch;
+}
+
+.theme-light .question-spotlight--open {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+@media (orientation: landscape) and (min-width: 560px) {
+  .question-spotlight--open {
+    padding: 0.1rem 0.1rem 0 !important;
+  }
+
+  .question-spotlight--open .game-card-top {
+    padding-inline: 0.35rem;
+  }
+
+  .question-spotlight--open .question-stage {
+    margin-top: 0.45rem !important;
+    padding-inline: clamp(0.7rem, 3vw, 1.35rem);
+    padding-block-start: clamp(0.05rem, 1.6vh, 0.45rem);
+    padding-block-end: 0.6rem;
+  }
+
+  .question-spotlight--open .question-sentence {
+    max-width: 30ch;
   }
 }
 

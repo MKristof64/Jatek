@@ -1,5 +1,24 @@
-import { Pause, Play, Sparkles, UserRound, UsersRound } from 'lucide-react';
+import {
+  Bolt,
+  Flame,
+  Layers3,
+  Pause,
+  Play,
+  Sparkles,
+  UserRound,
+  UsersRound,
+  Zap,
+} from 'lucide-react';
 import { useEffect, useState } from 'react';
+
+const modeIcons = {
+  Bolt,
+  Flame,
+  Layers3,
+  Sparkles,
+  UsersRound,
+  Zap,
+};
 
 function formatTimer(seconds) {
   const safeSeconds = Math.max(0, Math.floor(seconds));
@@ -102,7 +121,7 @@ export default function GameCard({
   const hasTimer = durationSeconds > 0;
   const questionSizeClass = getQuestionSizeClass(text);
   const cardClasses = [
-    'question-spotlight game-card-dynamic animate-pop',
+    'question-spotlight question-spotlight--open game-card-dynamic animate-pop',
     hasTimer ? 'game-card-dynamic--timed' : '',
     currentTeam ? 'game-card-dynamic--team' : '',
   ]
@@ -122,6 +141,7 @@ export default function GameCard({
       ? participantNames.join(' vs ')
       : (participantNames[0] ?? playerName);
   const ParticipantIcon = isRoundtable || isDuel ? UsersRound : UserRound;
+  const ModeIcon = modeIcons[mode?.icon] ?? Sparkles;
 
   return (
     <section className={cardClasses}>
@@ -137,8 +157,13 @@ export default function GameCard({
             </h2>
           </div>
         </div>
-        <div className="spark-tile grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-amber-300 via-orange-400 to-pink-500 text-slate-950 shadow-lg min-[390px]:h-14 min-[390px]:w-14">
-          <Sparkles className="h-6 w-6 min-[390px]:h-7 min-[390px]:w-7" />
+        <div
+          className={[
+            'spark-tile grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br text-slate-950 shadow-lg min-[390px]:h-14 min-[390px]:w-14',
+            mode?.accent ?? 'from-amber-300 via-orange-400 to-pink-500',
+          ].join(' ')}
+        >
+          <ModeIcon className="h-6 w-6 min-[390px]:h-7 min-[390px]:w-7" />
         </div>
       </div>
 
@@ -157,16 +182,8 @@ export default function GameCard({
         />
       ) : null}
 
-      <div className="question-stage relative z-10 mt-4 min-[390px]:mt-5">
-        <div className="question-meta mb-3 flex items-center justify-between gap-3">
-          <p className="text-xs font-black uppercase tracking-[0.2em] text-pink-100/70">
-            Kérdés
-          </p>
-          <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-black text-white/70 ring-1 ring-white/10">
-            {mode.type}
-          </span>
-        </div>
-        <div className={['question-copy game-question-copy', questionSizeClass].join(' ')}>
+      <div className="question-stage question-stage--open relative z-10 mt-4 min-[390px]:mt-5">
+        <div className={['question-copy question-copy--free game-question-copy', questionSizeClass].join(' ')}>
           <p className="question-prefix">{cardTitle}</p>
           <p className="question-sentence">{text}</p>
         </div>
