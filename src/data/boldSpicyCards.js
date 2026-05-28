@@ -5,7 +5,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csókoltam meg valakit egy buli után (vagy közben) spontán.",
+    "text": "csókoltam meg valakit egy buli után (vagy közben) spontán",
     "safe": true
   },
   {
@@ -13,7 +13,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "bántam meg egy randit már az első 10 percben.",
+    "text": "bántam meg egy randit már az első 10 percben",
     "safe": true
   },
   {
@@ -21,7 +21,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam társkereső appot csak kíváncsiságból.",
+    "text": "használtam társkereső appot csak kíváncsiságból",
     "safe": true
   },
   {
@@ -29,7 +29,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "írtam rá valakire részegen.",
+    "text": "írtam rá valakire részegen",
     "safe": true
   },
   {
@@ -37,7 +37,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam kínos vakrandin.",
+    "text": "voltam kínos vakrandin",
     "safe": true
   },
   {
@@ -45,7 +45,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "flörtöltem valakivel csak azért, hogy ingyen italhoz jussak.",
+    "text": "flörtöltem valakivel csak azért, hogy ingyen italhoz jussak",
     "safe": true
   },
   {
@@ -53,7 +53,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "írtam exnek csak unalomból.",
+    "text": "írtam exnek csak unalomból",
     "safe": true
   },
   {
@@ -61,7 +61,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "néztem meg, kivel van együtt az exem.",
+    "text": "néztem meg, kivel van együtt az exem",
     "safe": true
   },
   {
@@ -69,7 +69,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "hasonlítottam össze magam az exem új párjával.",
+    "text": "hasonlítottam össze magam az exem új párjával",
     "safe": true
   },
   {
@@ -77,7 +77,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "bántam meg, hogy szakítottam valakivel.",
+    "text": "bántam meg, hogy szakítottam valakivel",
     "safe": true
   },
   {
@@ -85,7 +85,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam olyan randin, amiből menekülni akartam.",
+    "text": "voltam olyan randin, amiből menekülni akartam",
     "safe": true
   },
   {
@@ -93,7 +93,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "hazudtam a koromról.",
+    "text": "hazudtam a koromról",
     "safe": true
   },
   {
@@ -101,7 +101,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "smároltam valakivel, akinek a nevét alig tudtam.",
+    "text": "smároltam valakivel, akinek a nevét alig tudtam",
     "safe": true
   },
   {
@@ -109,7 +109,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csókolóztam nyilvános helyen feltűnően.",
+    "text": "csókolóztam nyilvános helyen feltűnően",
     "safe": true
   },
   {
@@ -117,7 +117,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kaptam olyan üzenetet, amitől lefagytam.",
+    "text": "kaptam olyan üzenetet, amitől lefagytam",
     "safe": true
   },
   {
@@ -125,7 +125,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam titkos kapcsolatban.",
+    "text": "voltam titkos kapcsolatban",
     "safe": true
   },
   {
@@ -133,7 +133,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam „barátság extrákkal” helyzetben.",
+    "text": "voltam „barátság extrákkal” helyzetben",
     "safe": true
   },
   {
@@ -141,7 +141,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam, hogy nem akarok kapcsolatot, miközben akartam.",
+    "text": "mondtam, hogy nem akarok kapcsolatot, miközben akartam",
     "safe": true
   },
   {
@@ -149,7 +149,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mentem vissza valakihez, akihez kár volt.",
+    "text": "mentem vissza valakihez, akihez kár volt",
     "safe": true
   },
   {
@@ -165,7 +165,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "veszekedtem párkapcsolati témán nyilvános helyen.",
+    "text": "veszekedtem párkapcsolati témán nyilvános helyen",
     "safe": true
   },
   {
@@ -173,7 +173,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "titkoltam el egy fontos múltbeli kapcsolatot.",
+    "text": "titkoltam el egy fontos múltbeli kapcsolatot",
     "safe": true
   },
   {
@@ -181,7 +181,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csaltam meg valakit.",
+    "text": "csaltam meg valakit",
     "safe": true
   },
   {
@@ -189,7 +189,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "bocsátottam meg olyat, amit igazából nem tudtam feldolgozni.",
+    "text": "bocsátottam meg olyat, amit igazából nem tudtam feldolgozni",
     "safe": true
   },
   {
@@ -197,7 +197,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam olyan helyzetben, hogy valaki miattam titkolózott.",
+    "text": "voltam olyan helyzetben, hogy valaki miattam titkolózott",
     "safe": true
   },
   {
@@ -205,7 +205,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kavartam olyannal, akiről tudtam, hogy foglalt.",
+    "text": "kavartam olyannal, akiről tudtam, hogy foglalt",
     "safe": true
   },
   {
@@ -213,7 +213,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam szerelmes egy „barátomba”.",
+    "text": "voltam szerelmes egy „barátomba”",
     "safe": true
   },
   {
@@ -221,7 +221,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vonzódtam egy barátom testvéréhez.",
+    "text": "vonzódtam egy barátom testvéréhez",
     "safe": true
   },
   {
@@ -229,7 +229,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "randiztam olyannal, akit a barátaim nem kedveltek.",
+    "text": "randiztam olyannal, akit a barátaim nem kedveltek",
     "safe": true
   },
   {
@@ -237,7 +237,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "tartottam fent kapcsolatot valakivel csak figyelem miatt.",
+    "text": "tartottam fent kapcsolatot valakivel csak figyelem miatt",
     "safe": true
   },
   {
@@ -245,7 +245,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "fantáziáltam hírességről.",
+    "text": "fantáziáltam hírességről",
     "safe": true
   },
   {
@@ -253,7 +253,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "crusholtam valakit, akit alig ismertem.",
+    "text": "crusholtam valakit, akit alig ismertem",
     "safe": true
   },
   {
@@ -261,7 +261,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "tetszett meg valaki csak a hangja miatt.",
+    "text": "tetszett meg valaki csak a hangja miatt",
     "safe": true
   },
   {
@@ -269,7 +269,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "játszottam el fejben egy beszélgetést valakivel.",
+    "text": "játszottam el fejben egy beszélgetést valakivel",
     "safe": true
   },
   {
@@ -277,7 +277,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "képzeltem el, milyen lenne újra találkozni egy régi crush-sal.",
+    "text": "képzeltem el, milyen lenne újra találkozni egy régi crush-sal",
     "safe": true
   },
   {
@@ -285,7 +285,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "flörtöltem valakivel munkahelyen vagy iskolában.",
+    "text": "flörtöltem valakivel munkahelyen vagy iskolában",
     "safe": true
   },
   {
@@ -293,7 +293,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "tetszett meg tanár, főnök vagy más „tiltott” személy.",
+    "text": "tetszett meg tanár, főnök vagy más „tiltott” személy",
     "safe": true
   },
   {
@@ -301,7 +301,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam le valakiről csak azért, mert túl bonyolult lett volna.",
+    "text": "mondtam le valakiről csak azért, mert túl bonyolult lett volna",
     "safe": true
   },
   {
@@ -309,7 +309,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "küldtem olyan üzenetet, amit azonnal megbántam.",
+    "text": "küldtem olyan üzenetet, amit azonnal megbántam",
     "safe": true
   },
   {
@@ -317,7 +317,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "töröltem beszélgetést, nehogy valaki meglássa.",
+    "text": "töröltem beszélgetést, nehogy valaki meglássa",
     "safe": true
   },
   {
@@ -325,7 +325,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mentettem el valakiről képet titokban.",
+    "text": "mentettem el valakiről képet titokban",
     "safe": true
   },
   {
@@ -333,7 +333,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vártam, hogy valaki más tegye meg az első lépést.",
+    "text": "vártam, hogy valaki más tegye meg az első lépést",
     "safe": true
   },
   {
@@ -357,7 +357,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam valakinek bókot csak azért, hogy teszteljem a reakcióját.",
+    "text": "mondtam valakinek bókot csak azért, hogy teszteljem a reakcióját",
     "safe": true
   },
   {
@@ -365,7 +365,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csókolóztam olyan igazi filmesen.",
+    "text": "csókolóztam olyan igazi filmesen",
     "safe": true
   },
   {
@@ -373,7 +373,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "volt olyan csókom, amit inkább elfelejtenék.",
+    "text": "volt olyan csókom, amit inkább elfelejtenék",
     "safe": true
   },
   {
@@ -381,7 +381,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "gondoltam egy csók után, hogy „ez hiba volt”.",
+    "text": "gondoltam egy csók után, hogy „ez hiba volt”",
     "safe": true
   },
   {
@@ -389,7 +389,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam olyan helyzetben, ahol nem tudtam, randin vagyok-e.",
+    "text": "voltam olyan helyzetben, ahol nem tudtam, randin vagyok-e",
     "safe": true
   },
   {
@@ -397,7 +397,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "flörtöltem valakivel úgy, hogy közben más is tetszett.",
+    "text": "flörtöltem valakivel úgy, hogy közben más is tetszett",
     "safe": true
   },
   {
@@ -405,7 +405,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "untam meg valakit túl gyorsan.",
+    "text": "untam meg valakit túl gyorsan",
     "safe": true
   },
   {
@@ -413,7 +413,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "választottam rosszul csak azért, mert izgalmas volt.",
+    "text": "választottam rosszul csak azért, mert izgalmas volt",
     "safe": true
   },
   {
@@ -421,7 +421,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "hagytam figyelmen kívül red flaget.",
+    "text": "hagytam figyelmen kívül red flaget",
     "safe": true
   },
   {
@@ -429,7 +429,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "beszéltem ki túl részletesen a randimat a barátaimnak.",
+    "text": "beszéltem ki túl részletesen a randimat a barátaimnak",
     "safe": true
   },
   {
@@ -437,7 +437,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kértem tanácsot üzenet megírásához.",
+    "text": "kértem tanácsot üzenet megírásához",
     "safe": true
   },
   {
@@ -445,7 +445,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "hagytam, hogy a barátaim döntsenek helyettem szerelmi ügyben.",
+    "text": "hagytam, hogy a barátaim döntsenek helyettem szerelmi ügyben",
     "safe": true
   },
   {
@@ -453,7 +453,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "bántam meg, hogy valakinek adtam még egy esélyt.",
+    "text": "bántam meg, hogy valakinek adtam még egy esélyt",
     "safe": true
   },
   {
@@ -461,7 +461,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam kíváncsi valamire, amit nem mertem kipróbálni.",
+    "text": "voltam kíváncsi valamire, amit nem mertem kipróbálni",
     "safe": true
   },
   {
@@ -469,7 +469,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "titkoltam el egy vágyamat a párom elől.",
+    "text": "titkoltam el egy vágyamat a párom elől",
     "safe": true
   },
   {
@@ -477,7 +477,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vonzódtam jelentősen idősebb személyhez.",
+    "text": "vonzódtam jelentősen idősebb személyhez",
     "safe": true
   },
   {
@@ -485,7 +485,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vártam titokban, hogy valaki szakítson a párjával.",
+    "text": "vártam titokban, hogy valaki szakítson a párjával",
     "safe": true
   },
   {
@@ -493,7 +493,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam valakinek a titkos crush-a.",
+    "text": "voltam valakinek a titkos crush-a",
     "safe": true
   },
   {
@@ -501,7 +501,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vallottam be valakinek túl későn, hogy tetszett.",
+    "text": "vallottam be valakinek túl későn, hogy tetszett",
     "safe": true
   },
   {
@@ -509,7 +509,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mentem ki „levegőzni” valakivel.",
+    "text": "mentem ki „levegőzni” valakivel",
     "safe": true
   },
   {
@@ -517,7 +517,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mentem fel valakihez „csak egy teára”.",
+    "text": "mentem fel valakihez „csak egy teára”",
     "safe": true
   },
   {
@@ -525,7 +525,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam, hogy „nem tudok táncolni”, kerülve a dolgot.",
+    "text": "mondtam, hogy „nem tudok táncolni”, kerülve a dolgot",
     "safe": true
   },
   {
@@ -533,7 +533,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kavartam valakivel, akivel előtte azt mondtuk, hogy „köztünk ilyen soha”.",
+    "text": "kavartam valakivel, akivel előtte azt mondtuk, hogy „köztünk ilyen soha”",
     "safe": true
   },
   {
@@ -541,7 +541,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam, hogy „vele soha”, aztán az univerzum kiröhögött.",
+    "text": "mondtam, hogy „vele soha”, aztán az univerzum kiröhögött",
     "safe": true
   },
   {
@@ -549,7 +549,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kavartam valakivel, akivel előtte csak egymást oltottuk.",
+    "text": "kavartam valakivel, akivel előtte csak egymást oltottuk",
     "safe": true
   },
   {
@@ -557,7 +557,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam, hogy „utállak”, miközben pont ez volt a flört.",
+    "text": "mondtam, hogy „utállak”, miközben pont ez volt a flört",
     "safe": true
   },
   {
@@ -565,7 +565,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vallottam be valamit „poénból”, hogy ha rosszul sül el, vissza tudjam vonni.",
+    "text": "vallottam be valamit „poénból”, hogy ha rosszul sül el, vissza tudjam vonni",
     "safe": true
   },
   {
@@ -573,7 +573,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "flörtöltem úgy, hogy a barátaim már élőben narrálták.",
+    "text": "flörtöltem úgy, hogy a barátaim már élőben narrálták",
     "safe": true
   },
   {
@@ -581,7 +581,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "bókoltam ruhára flört közben.",
+    "text": "bókoltam ruhára flört közben",
     "safe": true
   },
   {
@@ -589,7 +589,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "próbáltam komolyan beszélgetni valakivel, aki túl jól nézett ki hozzá(m).",
+    "text": "próbáltam komolyan beszélgetni valakivel, aki túl jól nézett ki hozzá(m)",
     "safe": true
   },
   {
@@ -597,7 +597,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam, hogy „nem az esetem”, majd két ital és egy mosoly után átértékeltem.",
+    "text": "mondtam, hogy „nem az esetem”, majd két ital és egy mosoly után átértékeltem",
     "safe": true
   },
   {
@@ -605,7 +605,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csókolóztam valakivel úgy, hogy már közben tudtam: ezt majd magyarázni kell.",
+    "text": "csókolóztam valakivel úgy, hogy már közben tudtam: ezt majd magyarázni kell",
     "safe": true
   },
   {
@@ -613,7 +613,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam olyan helyzetben, hogy a barátaim előbb tudták, kivel fogok kavarni, mint én.",
+    "text": "voltam olyan helyzetben, hogy a barátaim előbb tudták, kivel fogok kavarni, mint én",
     "safe": true
   },
   {
@@ -621,7 +621,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "fantáziáltam valakiről, akiről tudtam, hogy nagyon rossz ötlet.",
+    "text": "fantáziáltam valakiről, akiről tudtam, hogy nagyon rossz ötlet",
     "safe": true
   },
   {
@@ -629,7 +629,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vettem ürügyként egy ruhadarabot, hogy hozzáérhessek valakihez.",
+    "text": "vettem ürügyként egy ruhadarabot, hogy hozzáérhessek valakihez",
     "safe": true
   },
   {
@@ -637,7 +637,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kértem meg valakit, hogy nézzen meg rajtam valamit, csak hogy közelebb jöjjön.",
+    "text": "kértem meg valakit, hogy nézzen meg rajtam valamit, csak hogy közelebb jöjjön",
     "safe": true
   },
   {
@@ -645,7 +645,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam, hogy „jaj, rajtad van valami”, csak hogy hozzáérhessek.",
+    "text": "mondtam, hogy „jaj, rajtad van valami”, csak hogy hozzáérhessek",
     "safe": true
   },
   {
@@ -653,7 +653,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "flörtöltem úgy, hogy a másik foglalt volt.",
+    "text": "flörtöltem úgy, hogy a másik foglalt volt",
     "safe": true
   },
   {
@@ -661,7 +661,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "meséltem el egy spicy sztorit úgy, hogy kihagytam a legfontosabb részt.",
+    "text": "meséltem el egy spicy sztorit úgy, hogy kihagytam a legfontosabb részt",
     "safe": true
   },
   {
@@ -669,7 +669,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kérdeztem rá valami spicy részletre túl nagy lelkesedéssel.",
+    "text": "kérdeztem rá valami spicy részletre túl nagy lelkesedéssel",
     "safe": true
   },
   {
@@ -677,7 +677,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csináltam valamit csak azért, mert tudtam, hogy később jó sztori lesz.",
+    "text": "csináltam valamit csak azért, mert tudtam, hogy később jó sztori lesz",
     "safe": true
   },
   {
@@ -685,7 +685,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mentem bele egy kavarásba úgy, hogy már előre tudtam: ebből csoportchat-téma lesz.",
+    "text": "mentem bele egy kavarásba úgy, hogy már előre tudtam: ebből csoportchat-téma lesz",
     "safe": true
   },
   {
@@ -693,7 +693,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "próbáltam átfordítani egy friendzone-helyzetet.",
+    "text": "próbáltam átfordítani egy friendzone-helyzetet",
     "safe": true
   },
   {
@@ -701,7 +701,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam, hogy „csak barát”, miközben a mondat már füstölt.",
+    "text": "mondtam, hogy „csak barát”, miközben a mondat már füstölt",
     "safe": true
   },
   {
@@ -709,7 +709,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "követtem kiszemeltet azért, hogy kettesben „beszéljünk”.",
+    "text": "követtem kiszemeltet azért, hogy kettesben „beszéljünk”",
     "safe": true
   },
   {
@@ -717,7 +717,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kértem „egy kortyot” azért, hogy a kiszemeltem után igyak.",
+    "text": "kértem „egy kortyot” azért, hogy a kiszemeltem után igyak",
     "safe": true
   },
   {
@@ -725,7 +725,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "ültem valaki ölébe „mert nem volt szék”.",
+    "text": "ültem valaki ölébe „mert nem volt szék”",
     "safe": true
   },
   {
@@ -733,7 +733,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam társasjátékot ürügyként testi kontaktusra.",
+    "text": "használtam társasjátékot ürügyként testi kontaktusra",
     "safe": true
   },
   {
@@ -741,7 +741,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "játszottam túl bénán, csak hogy valaki segítsen.",
+    "text": "játszottam túl bénán, csak hogy valaki segítsen",
     "safe": true
   },
   {
@@ -749,7 +749,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "ajánlottam masszázst kiszemeltnek.",
+    "text": "ajánlottam masszázst kiszemeltnek",
     "safe": true
   },
   {
@@ -757,7 +757,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "ültem valaki mellé „véletlenül” sokadszor is ugyanazon az estén.",
+    "text": "ültem valaki mellé „véletlenül” sokadszor is ugyanazon az estén",
     "safe": true
   },
   {
@@ -765,7 +765,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "adtam oda a pulcsim úgy, hogy vissza se akartam kapni.",
+    "text": "adtam oda a pulcsim úgy, hogy vissza se akartam kapni",
     "safe": true
   },
   {
@@ -773,7 +773,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "tartottam meg valaki pulcsiját túl sokáig érzelmi okokból.",
+    "text": "tartottam meg valaki pulcsiját túl sokáig érzelmi okokból",
     "safe": true
   },
   {
@@ -781,7 +781,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kérdeztem meg, „jó illatom van?”, miközben csak a másikat akartam megszagolni.",
+    "text": "kérdeztem meg, „jó illatom van?”, miközben csak a másikat akartam megszagolni",
     "safe": true
   },
   {
@@ -789,7 +789,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "dicsértem meg valaki illatát túl gyanús hangsúllyal.",
+    "text": "dicsértem meg valaki illatát túl gyanús hangsúllyal",
     "safe": true
   },
   {
@@ -797,7 +797,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam parfümöt stratégiai „fegyverként”.",
+    "text": "használtam parfümöt stratégiai „fegyverként”",
     "safe": true
   },
   {
@@ -805,7 +805,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mentem vissza egy buliba csak azért, mert valaki még ott volt.",
+    "text": "mentem vissza egy buliba csak azért, mert valaki még ott volt",
     "safe": true
   },
   {
@@ -813,7 +813,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "táncoltam valaki közelében úgy, hogy az nem volt véletlen.",
+    "text": "táncoltam valaki közelében úgy, hogy az nem volt véletlen",
     "safe": true
   },
   {
@@ -821,7 +821,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "énekeltem túl szenvedélyesen egy sort valakinek címezve.",
+    "text": "énekeltem túl szenvedélyesen egy sort valakinek címezve",
     "safe": true
   },
   {
@@ -829,7 +829,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam karaoke-t flörtölési bűncselekményre.",
+    "text": "használtam karaoke-t flörtölési bűncselekményre",
     "safe": true
   },
   {
@@ -837,7 +837,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vágtam ki másokat egy képről, hogy ketten maradjunk rajta.",
+    "text": "vágtam ki másokat egy képről, hogy ketten maradjunk rajta",
     "safe": true
   },
   {
@@ -845,7 +845,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "posztoltam közös képet úgy, hogy üzenetértéke volt.",
+    "text": "posztoltam közös képet úgy, hogy üzenetértéke volt",
     "safe": true
   },
   {
@@ -853,7 +853,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam sztorit romantikus célzott lövedékként.",
+    "text": "használtam sztorit romantikus célzott lövedékként",
     "safe": true
   },
   {
@@ -861,7 +861,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam „véletlen” reakciót beszélgetésindításra.",
+    "text": "használtam „véletlen” reakciót beszélgetésindításra",
     "safe": true
   },
   {
@@ -869,7 +869,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "játszottam meglepődést olyan infón, amit már kinyomoztam.",
+    "text": "játszottam meglepődést olyan infón, amit már kinyomoztam",
     "safe": true
   },
   {
@@ -877,7 +877,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam, hogy „tényleg?”, miközben már láttam Instagramon.",
+    "text": "mondtam, hogy „tényleg?”, miközben már láttam Instagramon",
     "safe": true
   },
   {
@@ -885,7 +885,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "írtam meg a választ jegyzetekbe, mert elküldeni gyáva voltam.",
+    "text": "írtam meg a választ jegyzetekbe, mert elküldeni gyáva voltam",
     "safe": true
   },
   {
@@ -893,7 +893,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kaptam olyan tanácsot, amitől még kínosabban írtam vissza.",
+    "text": "kaptam olyan tanácsot, amitől még kínosabban írtam vissza",
     "safe": true
   },
   {
@@ -901,7 +901,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "oldottam fel valakit csak azért, hogy megnézzem, mi van vele.",
+    "text": "oldottam fel valakit csak azért, hogy megnézzem, mi van vele",
     "safe": true
   },
   {
@@ -909,7 +909,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "próbáltam elrontani egy alakuló dolgot egy „ártatlan” megjegyzéssel.",
+    "text": "próbáltam elrontani egy alakuló dolgot egy „ártatlan” megjegyzéssel",
     "safe": true
   },
   {
@@ -917,7 +917,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam valakinek, hogy „te jobbat érdemelsz”, miközben magamra gondoltam.",
+    "text": "mondtam valakinek, hogy „te jobbat érdemelsz”, miközben magamra gondoltam",
     "safe": true
   },
   {
@@ -925,7 +925,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam búcsúölelést próbaként.",
+    "text": "használtam búcsúölelést próbaként",
     "safe": true
   },
   {
@@ -933,7 +933,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "öleltem meg valakit úgy, hogy utána máshogy néztünk egymásra.",
+    "text": "öleltem meg valakit úgy, hogy utána máshogy néztünk egymásra",
     "safe": true
   },
   {
@@ -941,7 +941,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "öltöztem úgy buliba, hogy egy konkrét embernek szólt az outfit.",
+    "text": "öltöztem úgy buliba, hogy egy konkrét embernek szólt az outfit",
     "safe": true
   },
   {
@@ -949,7 +949,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "választottam parfümöt célcsoport alapján.",
+    "text": "választottam parfümöt célcsoport alapján",
     "safe": true
   },
   {
@@ -957,7 +957,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "ittam bele valaki italába csak a közös pohár romantikája miatt.",
+    "text": "ittam bele valaki italába csak a közös pohár romantikája miatt",
     "safe": true
   },
   {
@@ -965,7 +965,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kérdeztem meg, „ez milyen koktél?”, miközben inkább ő érdekelt.",
+    "text": "kérdeztem meg, „ez milyen koktél?”, miközben inkább ő érdekelt",
     "safe": true
   },
   {
@@ -973,7 +973,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "ajánlottam megkóstolásra az italomat túl sok szemkontaktussal.",
+    "text": "ajánlottam megkóstolásra az italomat túl sok szemkontaktussal",
     "safe": true
   },
   {
@@ -981,7 +981,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "játszottam gyengét ivós játékban, hogy valaki „segítsen”.",
+    "text": "játszottam gyengét ivós játékban, hogy valaki „segítsen”",
     "safe": true
   },
   {
@@ -989,7 +989,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "választottam be valakit játékba csak azért, mert tetszett.",
+    "text": "választottam be valakit játékba csak azért, mert tetszett",
     "safe": true
   },
   {
@@ -997,7 +997,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam ivós játékot romantikai adatgyűjtésre.",
+    "text": "használtam ivós játékot romantikai adatgyűjtésre",
     "safe": true
   },
   {
@@ -1005,7 +1005,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam „véletlen” képküldést beszélgetésindításra.",
+    "text": "használtam „véletlen” képküldést beszélgetésindításra",
     "safe": true
   },
   {
@@ -1013,7 +1013,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "cseréltem profilképet stratégiai okból.",
+    "text": "cseréltem profilképet stratégiai okból",
     "safe": true
   },
   {
@@ -1021,7 +1021,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "sértődtem meg azon, hogy valaki nem nézte meg a sztorimat.",
+    "text": "sértődtem meg azon, hogy valaki nem nézte meg a sztorimat",
     "safe": true
   },
   {
@@ -1029,7 +1029,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "nyomoztam ki valaki kedvenc helyét, majd „véletlenül” oda mentem.",
+    "text": "nyomoztam ki valaki kedvenc helyét, majd „véletlenül” oda mentem",
     "safe": true
   },
   {
@@ -1037,7 +1037,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "meséltem el úgy egy kavarást, hogy előtte jogi védőbeszédet tartottam.",
+    "text": "meséltem el úgy egy kavarást, hogy előtte jogi védőbeszédet tartottam",
     "safe": true
   },
   {
@@ -1045,7 +1045,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "ittam mosolyogva olyan kérdésre, ahol mindenki rám nézett.",
+    "text": "ittam mosolyogva olyan kérdésre, ahol mindenki rám nézett",
     "safe": true
   },
   {
@@ -1053,7 +1053,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam a társaság „na, te biztos” embere.",
+    "text": "voltam a társaság „na, te biztos” embere",
     "safe": true
   },
   {
@@ -1061,7 +1061,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kérdeztem meg, „mennyit láttatok?”, miután már mindegy volt.",
+    "text": "kérdeztem meg, „mennyit láttatok?”, miután már mindegy volt",
     "safe": true
   },
   {
@@ -1069,7 +1069,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kaptam másnap olyan üzenetet, hogy „beszélnünk kell”, és lefagyott a lelkem.",
+    "text": "kaptam másnap olyan üzenetet, hogy „beszélnünk kell”, és lefagyott a lelkem",
     "safe": true
   },
   {
@@ -1077,7 +1077,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "flörtöltem unalomból.",
+    "text": "flörtöltem unalomból",
     "safe": true
   },
   {
@@ -1085,7 +1085,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csináltam valamit azért, hogy később legendásan mesélhető legyen.",
+    "text": "csináltam valamit azért, hogy később legendásan mesélhető legyen",
     "safe": true
   },
   {
@@ -1093,7 +1093,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam rossz nevet flört közben.",
+    "text": "mondtam rossz nevet flört közben",
     "safe": true
   },
   {
@@ -1109,7 +1109,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "adtam vissza valamit késve, mert jó ürügy volt újra találkozni.",
+    "text": "adtam vissza valamit késve, mert jó ürügy volt újra találkozni",
     "safe": true
   },
   {
@@ -1117,7 +1117,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "hagytam ott direkt valamit valakinél, hogy legyen második felvonás.",
+    "text": "hagytam ott direkt valamit valakinél, hogy legyen második felvonás",
     "safe": true
   },
   {
@@ -1125,7 +1125,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "tartottam túl hosszú szemkontaktust, majd úgy tettem, mintha csak gondolkodnék.",
+    "text": "tartottam túl hosszú szemkontaktust, majd úgy tettem, mintha csak gondolkodnék",
     "safe": true
   },
   {
@@ -1133,7 +1133,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "hallottam/láttam szexszelni a szüleimet.",
+    "text": "hallottam/láttam szexszelni a szüleimet",
     "safe": true
   },
   {
@@ -1141,7 +1141,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "álmodoztam a legjobb barátom párjáról / a párom legjobb barátjáról.",
+    "text": "álmodoztam a legjobb barátom párjáról / a párom legjobb barátjáról",
     "safe": true
   },
   {
@@ -1149,7 +1149,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "színleltem orgazmust.",
+    "text": "színleltem orgazmust",
     "safe": true
   },
   {
@@ -1157,7 +1157,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "bámultam meg egy azonos nemű fenekét.",
+    "text": "bámultam meg egy azonos nemű fenekét",
     "safe": true
   },
   {
@@ -1165,7 +1165,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csaltam meg a párom.",
+    "text": "csaltam meg a párom",
     "safe": true
   },
   {
@@ -1173,7 +1173,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vettem be / vettem a barátnőmnek eseményutáni tablettát.",
+    "text": "vettem be / vettem a barátnőmnek eseményutáni tablettát",
     "safe": true
   },
   {
@@ -1181,7 +1181,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "fizettem szexuális szolgáltatásért.",
+    "text": "fizettem szexuális szolgáltatásért",
     "safe": true
   },
   {
@@ -1189,7 +1189,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "flörtöltem tanárral.",
+    "text": "flörtöltem tanárral",
     "safe": true
   },
   {
@@ -1197,7 +1197,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam külföldi fiúba/lányba szerelmes.",
+    "text": "voltam külföldi fiúba/lányba szerelmes",
     "safe": true
   },
   {
@@ -1205,7 +1205,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "léptem utcára látványosan kiszívott nyakkal.",
+    "text": "léptem utcára látványosan kiszívott nyakkal",
     "safe": true
   },
   {
@@ -1213,7 +1213,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vettem el senkinek a szüzességét.",
+    "text": "vettem el senkinek a szüzességét",
     "safe": true
   },
   {
@@ -1221,7 +1221,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "volt egyéjszakás kalandom.",
+    "text": "volt egyéjszakás kalandom",
     "safe": true
   },
   {
@@ -1229,7 +1229,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csókolóztam részegen.",
+    "text": "csókolóztam részegen",
     "safe": true
   },
   {
@@ -1237,7 +1237,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "dugtam úgy, hogy nem egyedül voltunk az adott helyen.",
+    "text": "dugtam úgy, hogy nem egyedül voltunk az adott helyen",
     "safe": true
   },
   {
@@ -1245,7 +1245,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "flörtöltem tiniként nálam jóval idősebb emberrel.",
+    "text": "flörtöltem tiniként nálam jóval idősebb emberrel",
     "safe": true
   },
   {
@@ -1253,7 +1253,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vallottam szerelmet olyannak, aki visszautasított.",
+    "text": "vallottam szerelmet olyannak, aki visszautasított",
     "safe": true
   },
   {
@@ -1269,7 +1269,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "szexszeltem barátom/barátnőm exével.",
+    "text": "szexszeltem barátom/barátnőm exével",
     "safe": true
   },
   {
@@ -1277,7 +1277,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csináltam terhességi tesztet (ha miattad kellett 2-t igyál).",
+    "text": "csináltam terhességi tesztet (ha miattad kellett 2-t igyál)",
     "safe": true
   },
   {
@@ -1285,7 +1285,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "ettem ételt senki meztelen testéről.",
+    "text": "ettem ételt senki meztelen testéről",
     "safe": true
   },
   {
@@ -1293,7 +1293,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csókolóztam azonos neművel.",
+    "text": "csókolóztam azonos neművel",
     "safe": true
   },
   {
@@ -1301,7 +1301,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "szexszeltem exszel (szakítás után).",
+    "text": "szexszeltem exszel (szakítás után)",
     "safe": true
   },
   {
@@ -1309,7 +1309,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "szexszeltem WC-n.",
+    "text": "szexszeltem WC-n",
     "safe": true
   },
   {
@@ -1317,7 +1317,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam szexuális játékot.",
+    "text": "használtam szexuális játékot",
     "safe": true
   },
   {
@@ -1325,7 +1325,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam olyan helyzetben, hogy rám nyitottak huncutkodás közben.",
+    "text": "voltam olyan helyzetben, hogy rám nyitottak huncutkodás közben",
     "safe": true
   },
   {
@@ -1341,7 +1341,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "feküdtem le egynél több személlyel egy időben.",
+    "text": "feküdtem le egynél több személlyel egy időben",
     "safe": true
   },
   {
@@ -1349,7 +1349,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "szólítottam rossz néven a párom/exem.",
+    "text": "szólítottam rossz néven a párom/exem",
     "safe": true
   },
   {
@@ -1357,7 +1357,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam anal plugot.",
+    "text": "használtam anal plugot",
     "safe": true
   },
   {
@@ -1365,7 +1365,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "fizettem felnőtt tartalomért.",
+    "text": "fizettem felnőtt tartalomért",
     "safe": true
   },
   {
@@ -1373,7 +1373,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kaptam meztelen képet idegentől.",
+    "text": "kaptam meztelen képet idegentől",
     "safe": true
   },
   {
@@ -1389,7 +1389,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam nudista strandon.",
+    "text": "voltam nudista strandon",
     "safe": true
   },
   {
@@ -1397,7 +1397,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vittem két külön embert ugyan arra a randihelyszínre. Ha mégis, annyit igyál ahány kiszemelted vitted.",
+    "text": "vittem két külön embert ugyanarra a randihelyszínre. Ha mégis, annyit igyál, ahány kiszemeltedet vittél",
     "safe": true
   },
   {
@@ -1405,7 +1405,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "sérültem meg rosszalkodás körben.",
+    "text": "sérültem meg rosszalkodás körben",
     "safe": true
   },
   {
@@ -1413,7 +1413,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "fingottam szex közben hangosan.",
+    "text": "fingottam szex közben hangosan",
     "safe": true
   },
   {
@@ -1421,7 +1421,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kerestem kifogást ondófoltra.",
+    "text": "kerestem kifogást ondófoltra",
     "safe": true
   },
   {
@@ -1429,7 +1429,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam viagrát, vagy egyéb vágyfokozót.",
+    "text": "használtam viagrát, vagy egyéb vágyfokozót",
     "safe": true
   },
   {
@@ -1437,7 +1437,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam ételt, mint „segédeszköz”.",
+    "text": "használtam ételt, mint „segédeszköz”",
     "safe": true
   },
   {
@@ -1445,7 +1445,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "hazudtam a bodycountomról.",
+    "text": "hazudtam a body countomról",
     "safe": true
   },
   {
@@ -1453,7 +1453,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "szexszeltem olyan hangosan, hogy szólt a szomszéd.",
+    "text": "szexszeltem olyan hangosan, hogy szólt a szomszéd",
     "safe": true
   },
   {
@@ -1461,7 +1461,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "futottam össze randin egy exszel.",
+    "text": "futottam össze randin egy exszel",
     "safe": true
   },
   {
@@ -1469,7 +1469,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "hagytam el egy bulit azért, hogy valakivel egy privátabb helyre menjek.",
+    "text": "hagytam el egy bulit azért, hogy valakivel egy privátabb helyre menjek",
     "safe": true
   },
   {
@@ -1477,7 +1477,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mentettem el a szerelmem üzeneteiről képernyőképeket.",
+    "text": "mentettem el a szerelmem üzeneteiről képernyőképeket",
     "safe": true
   },
   {
@@ -1485,7 +1485,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "hazudtam semmiről egy randin, hogy érdekesebbnek tűnjek.",
+    "text": "hazudtam semmiről egy randin, hogy érdekesebbnek tűnjek",
     "safe": true
   },
   {
@@ -1493,7 +1493,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kerültem olyan helyzetbe, hogy nyilvánosan került ki rólam pucér kép.",
+    "text": "kerültem olyan helyzetbe, hogy nyilvánosan került ki rólam pucér kép",
     "safe": true
   },
   {
@@ -1501,7 +1501,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "játszottam vetkőzős társast.",
+    "text": "játszottam vetkőzős társast",
     "safe": true
   },
   {
@@ -1509,7 +1509,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "filmeztem le magam szex közben.",
+    "text": "filmeztem le magam szex közben",
     "safe": true
   },
   {
@@ -1517,7 +1517,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam nyílt kapcsolatban.",
+    "text": "voltam nyílt kapcsolatban",
     "safe": true
   },
   {
@@ -1525,7 +1525,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "nyaltam le alkoholt más testéről.",
+    "text": "nyaltam le alkoholt más testéről",
     "safe": true
   },
   {
@@ -1533,7 +1533,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "próbáltam nyakörvet, pórázt.",
+    "text": "próbáltam nyakörvet, pórázt",
     "safe": true
   },
   {
@@ -1541,7 +1541,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "küldtem meztelen fotót idegennek.",
+    "text": "küldtem meztelen fotót idegennek",
     "safe": true
   },
   {
@@ -1549,7 +1549,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam a szakító fél.",
+    "text": "voltam a szakító fél",
     "safe": true
   },
   {
@@ -1557,7 +1557,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vettem részt orgián.",
+    "text": "vettem részt orgián",
     "safe": true
   },
   {
@@ -1565,7 +1565,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "regisztráltam OnlyFans-ra.",
+    "text": "regisztráltam OnlyFansre",
     "safe": true
   },
   {
@@ -1573,7 +1573,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a kifogásipari nagyvállalkozó?",
-    "text": "Soroljatok kifogásokat, amivel le lehet mondani egy randit.",
+    "text": "Soroljatok kifogásokat, amivel le lehet mondani egy randit",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1582,7 +1582,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a piros zászlók zászlóvivője?",
-    "text": "Soroljatok red flageket egy kapcsolat elején.",
+    "text": "Soroljatok red flageket egy kapcsolat elején",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1591,7 +1591,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Kinek a telefonja közveszélyes?",
-    "text": "Soroljatok dolgokat, amiket nem kéne részegen elküldeni.",
+    "text": "Soroljatok dolgokat, amiket nem kéne részegen elküldeni",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1600,7 +1600,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki túlélte a randipokol bugyrait?",
-    "text": "Soroljatok kínos randiszituációkat.",
+    "text": "Soroljatok kínos randiszituációkat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1609,7 +1609,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a felszedőszöveg-bűnöző?",
-    "text": "Soroljatok béna felszedőszövegeket.",
+    "text": "Soroljatok béna felszedőszövegeket",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1618,7 +1618,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki flörtöt lát a számlában is?",
-    "text": "Soroljatok jeleket, hogy valaki flörtöl veled.",
+    "text": "Soroljatok jeleket, hogy valaki flörtöl veled",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1627,7 +1627,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a randirombolás Picassója?",
-    "text": "Soroljatok dolgokat, amik miatt egy randi azonnal elromlik.",
+    "text": "Soroljatok dolgokat, amik miatt egy randi azonnal elromlik",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1636,7 +1636,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki hazudik elegánsabban?",
-    "text": "Soroljatok indokokat, miért nem válaszol valaki órák óta.",
+    "text": "Soroljatok indokokat, miért nem válaszol valaki órák óta",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1645,7 +1645,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki az érzelmi FBI?",
-    "text": "Soroljatok dolgokat, amiket mindenki megnéz egy crush profilján.",
+    "text": "Soroljatok dolgokat, amiket mindenki megnéz egy crush profilján",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1654,7 +1654,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki küldi el a másnapi szégyent?",
-    "text": "Soroljatok tipikus üzeneteket, amiket valaki másnap reggel megbán.",
+    "text": "Soroljatok tipikus üzeneteket, amiket valaki másnap reggel megbán",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1663,7 +1663,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a féltékenység díszpolgára?",
-    "text": "Soroljatok dolgokat, amikből látszik, hogy valaki féltékeny.",
+    "text": "Soroljatok dolgokat, amikből látszik, hogy valaki féltékeny",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1672,7 +1672,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki szakítana színházi bérlettel?",
-    "text": "Soroljatok mondatokat, amiket szakítás után mondanak az emberek.",
+    "text": "Soroljatok mondatokat, amiket szakítás után mondanak az emberek",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1681,7 +1681,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki menne vissza a tűzhöz melegedni?",
-    "text": "Soroljatok okokat, amiért valaki visszamegy az exéhez.",
+    "text": "Soroljatok okokat, amiért valaki visszamegy az exéhez",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1690,7 +1690,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki az „én szóltam” nagymestere?",
-    "text": "Soroljatok dolgokat, amiket egy barát mond, amikor rossz emberbe szeretsz bele.",
+    "text": "Soroljatok dolgokat, amiket egy barát mond, amikor rossz emberbe szeretsz bele",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1699,7 +1699,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a Tinder-mesék Andersenje?",
-    "text": "Soroljatok tipikus hazugságokat társkeresőn.",
+    "text": "Soroljatok tipikus hazugságokat társkeresőn",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1708,7 +1708,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki tud hallgatni aranyáron?",
-    "text": "Soroljatok dolgokat, amiket nem kéne első randin elmondani.",
+    "text": "Soroljatok dolgokat, amiket nem kéne első randin elmondani",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1717,7 +1717,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki futna bele az exébe tragikomédiában?",
-    "text": "Soroljatok helyeket, ahol nagyon kínos lenne összefutni egy exszel.",
+    "text": "Soroljatok helyeket, ahol nagyon kínos lenne összefutni egy exszel",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1726,7 +1726,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki tűnik el, mint apró a kanapén?",
-    "text": "Soroljatok dolgokat, amik miatt valakit ghostolnak.",
+    "text": "Soroljatok dolgokat, amik miatt valakit ghostolnak",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1735,7 +1735,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a fejben szexi, élőben vészjelző?",
-    "text": "Soroljatok dolgokat, amiket mindenki túl szexinek próbál előadni, de nem az.",
+    "text": "Soroljatok dolgokat, amiket mindenki túl szexinek próbál előadni, de nem az",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1744,7 +1744,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki bókolna büntetőjogilag aggályosan?",
-    "text": "Soroljatok olyan bókokat, amik kétértelműen is hangozhatnak.",
+    "text": "Soroljatok olyan bókokat, amik kétértelműen is hangozhatnak",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1753,7 +1753,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki posztol célzottabban, mint egy reklám?",
-    "text": "Soroljatok dolgokat, amiket valaki csak azért tesz ki sztoriba, hogy egy ember lássa.",
+    "text": "Soroljatok dolgokat, amiket valaki csak azért tesz ki sztoriba, hogy egy ember lássa",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1762,7 +1762,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki lakik még az ex albérletében?",
-    "text": "Soroljatok jeleket, hogy valaki még nincs túl az exén.",
+    "text": "Soroljatok jeleket, hogy valaki még nincs túl az exén",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1771,7 +1771,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki nézi „véletlenül” stratégiai pontossággal?",
-    "text": "Soroljatok kifogásokat, miért „véletlenül” nézted meg valaki sztoriját.",
+    "text": "Soroljatok kifogásokat, miért „véletlenül” nézted meg valaki sztoriját",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1780,7 +1780,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki allergiás a komolyra?",
-    "text": "Soroljatok tipikus mondatokat, amikor valaki nem akar elköteleződni.",
+    "text": "Soroljatok tipikus mondatokat, amikor valaki nem akar elköteleződni",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1789,7 +1789,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a párkapcsolati magánnyomozó?",
-    "text": "Soroljatok dolgokat, amiket egy kapcsolatban titokban mindenki ellenőriz.",
+    "text": "Soroljatok dolgokat, amiket egy kapcsolatban titokban mindenki ellenőriz",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1798,7 +1798,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki féltékeny a levegő molekuláira is?",
-    "text": "Soroljatok okokat, miért lesz valaki féltékeny teljesen feleslegesen.",
+    "text": "Soroljatok okokat, miért lesz valaki féltékeny teljesen feleslegesen",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1807,7 +1807,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki védi a gyanús „csak barátot”?",
-    "text": "Soroljatok dolgokat, amik miatt valaki „csak barát”, de közben gyanús.",
+    "text": "Soroljatok dolgokat, amik miatt valaki „csak barát”, de közben gyanús",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1816,7 +1816,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki bohóckodna szerelemből doktori szinten?",
-    "text": "Soroljatok dolgokat, amiket az ember megtesz, ha nagyon tetszik neki valaki.",
+    "text": "Soroljatok dolgokat, amiket az ember megtesz, ha nagyon tetszik neki valaki",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1825,7 +1825,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki szagolja ki a flörtöt?",
-    "text": "Soroljatok tipikus jeleket, hogy egy beszélgetés flörtölésbe fordult.",
+    "text": "Soroljatok tipikus jeleket, hogy egy beszélgetés flörtölésbe fordult",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1834,7 +1834,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki szervez romantikus katasztrófát?",
-    "text": "Soroljatok randiprogramokat, amik romantikusnak indulnak, de káosz lesz belőlük.",
+    "text": "Soroljatok randiprogramokat, amik romantikusnak indulnak, de káosz lesz belőlük",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1843,7 +1843,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki csókolna használati útmutatóval?",
-    "text": "Soroljatok dolgokat, amitől egy csók nagyon kínos lehet.",
+    "text": "Soroljatok dolgokat, amitől egy csók nagyon kínos lehet",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1852,7 +1852,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki mondaná ki a belső monológot?",
-    "text": "Soroljatok olyan pillanatokat, amikor jobb lett volna csendben maradni.",
+    "text": "Soroljatok olyan pillanatokat, amikor jobb lett volna csendben maradni",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1861,7 +1861,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki ébredne erkölcsi másnapossággal?",
-    "text": "Soroljatok dolgokat, amiket az ember megbán egy bulis este után.",
+    "text": "Soroljatok dolgokat, amiket az ember megbán egy bulis este után",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1870,7 +1870,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki nem féltékeny, csak jegyzőkönyvez?",
-    "text": "Soroljatok tipikus „nem vagyok féltékeny, de…” mondatokat.",
+    "text": "Soroljatok tipikus „nem vagyok féltékeny, de…” mondatokat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1879,7 +1879,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki elemzi a régi chatet, mint krimit?",
-    "text": "Soroljatok okokat, amiért valaki visszaolvassa a régi beszélgetéseket.",
+    "text": "Soroljatok okokat, amiért valaki visszaolvassa a régi beszélgetéseket",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1888,7 +1888,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki bukna le fénysebességgel?",
-    "text": "Soroljatok dolgokat, amikből kiderül, hogy valaki titokban bejön neked.",
+    "text": "Soroljatok dolgokat, amikből kiderül, hogy valaki titokban bejön neked",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1897,7 +1897,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a hajnali érzelmi diszpécser?",
-    "text": "Soroljatok tipikus baráti tanácsokat szerelmi drámára.",
+    "text": "Soroljatok tipikus baráti tanácsokat szerelmi drámára",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1906,7 +1906,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki hozza a házibuli apokalipszist?",
-    "text": "Soroljatok kínos dolgokat, amik megtörténhetnek egy házibuliban.",
+    "text": "Soroljatok kínos dolgokat, amik megtörténhetnek egy házibuliban",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1915,7 +1915,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki romantikus, de ijesztő mellékhatásokkal?",
-    "text": "Soroljatok dolgokat, amik nagyon romantikusak lennének filmben, de élőben furák.",
+    "text": "Soroljatok dolgokat, amik nagyon romantikusak lennének filmben, de élőben furák",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1924,7 +1924,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki tagadna olimpiai szinten?",
-    "text": "Soroljatok tipikus mondatokat, amikor valaki nem meri bevallani, hogy tetszik neki a másik.",
+    "text": "Soroljatok tipikus mondatokat, amikor valaki nem meri bevallani, hogy tetszik neki a másik",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1933,7 +1933,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki ír vissza postagalambbal?",
-    "text": "Soroljatok okokat, amiért valaki túl sokáig vár egy válasszal.",
+    "text": "Soroljatok okokat, amiért valaki túl sokáig vár egy válasszal",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1942,7 +1942,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a konyharomantika Gordon Ramsay-je?",
-    "text": "Soroljatok konyhás flörtöket.",
+    "text": "Soroljatok konyhás flörtöket",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1951,7 +1951,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a pultos ragadozó?",
-    "text": "Soroljatok pultos nyomulásokat.",
+    "text": "Soroljatok pultos nyomulásokat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1960,7 +1960,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a tánctérbűvész?",
-    "text": "Soroljatok táncos trükköket.",
+    "text": "Soroljatok táncos trükköket",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1969,7 +1969,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a bókok balesetise?",
-    "text": "Soroljatok béna bókokat.",
+    "text": "Soroljatok béna bókokat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1978,7 +1978,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a pult mágusa?",
-    "text": "Soroljatok italos flörtöket.",
+    "text": "Soroljatok italos flörtöket",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1987,7 +1987,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki az emoji-készlet erkölcsi mélypontja?",
-    "text": "Soroljatok flörtös emojikat.",
+    "text": "Soroljatok flörtös emojikat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -1996,7 +1996,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Süllyed a randi?",
-    "text": "Soroljatok menekülőszavakat.",
+    "text": "Soroljatok menekülőszavakat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2005,7 +2005,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Red flag vagy dekoráció?",
-    "text": "Soroljatok red flageket.",
+    "text": "Soroljatok red flageket",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2014,7 +2014,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Project X elszabadul?",
-    "text": "Soroljatok házibulis káoszokat.",
+    "text": "Soroljatok házibulis káoszokat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2023,7 +2023,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Lakótárs látta, hallotta?",
-    "text": "Soroljatok kínos lakótárs-helyzeteket.",
+    "text": "Soroljatok kínos lakótárs-helyzeteket",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2032,7 +2032,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a smárutóvéd?",
-    "text": "Soroljatok csók utáni mondatokat.",
+    "text": "Soroljatok csók utáni mondatokat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2041,7 +2041,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a nyaknyom-kozmetikus?",
-    "text": "Soroljatok eltakarási módszereket a kiszívott foltokra.",
+    "text": "Soroljatok eltakarási módszereket a kiszívott foltokra",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2050,7 +2050,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ez most célzás volt?",
-    "text": "Soroljatok kétértelmű flörtöket.",
+    "text": "Soroljatok kétértelmű flörtöket",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2059,7 +2059,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Randi vége három szóban?",
-    "text": "Soroljatok randigyilkos dolgokat.",
+    "text": "Soroljatok randigyilkos dolgokat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2068,7 +2068,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Tindermese jöhet?",
-    "text": "Soroljatok profilhazugságokat.",
+    "text": "Soroljatok profilhazugságokat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2077,7 +2077,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a szemináriumcsábász?",
-    "text": "Soroljatok órás flörtöket.",
+    "text": "Soroljatok órás flörtöket",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2086,7 +2086,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Rossz ötlet, jó sztori?",
-    "text": "Soroljatok tiltott párkapcsolati ötleteket.",
+    "text": "Soroljatok tiltott párkapcsolati ötleteket",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2095,7 +2095,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Bizonyíték maradt?",
-    "text": "Soroljatok törlendő dolgokat.",
+    "text": "Soroljatok törlendő dolgokat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2103,8 +2103,8 @@ export const boldSpicyCards = [
     "id": "bold-pikans-v2-duel-060",
     "mode": "bold",
     "kind": "duel",
-    "title": "Kivágjuk az exszet?",
-    "text": "Soroljatok képről kivágandókat.",
+    "title": "Kivágjuk az exet?",
+    "text": "Soroljatok képről kivágandókat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2113,7 +2113,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a „nemkéne” specialista?",
-    "text": "Soroljatok „nemkéne” randin dolgokat.",
+    "text": "Soroljatok „nemkéne” randin dolgokat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2122,7 +2122,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Az ital valóban szépít?",
-    "text": "Soroljatok ital utáni programokat.",
+    "text": "Soroljatok ital utáni programokat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2131,7 +2131,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Lámpa le, sztori fel?",
-    "text": "Soroljatok hangulatfokozókat.",
+    "text": "Soroljatok hangulatfokozókat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2140,7 +2140,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a randibohóc?",
-    "text": "Soroljatok kínos bemutatkozásokat.",
+    "text": "Soroljatok kínos bemutatkozásokat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2347,7 +2347,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Soroljatok szex pózokat.",
+    "text": "Soroljatok szexpózokat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2356,7 +2356,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Mondjatok randin tiltott témákat, mintha csak egy nagy randin lennétek.",
+    "text": "Mondjatok randin tiltott témákat, mintha csak egy nagy randin lennétek",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2365,7 +2365,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Mondjatok veszélyes társasjátékokat.",
+    "text": "Mondjatok veszélyes társasjátékokat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2374,7 +2374,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Mondjatok lebukós appokat.",
+    "text": "Mondjatok lebukós appokat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2383,7 +2383,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Mondjatok titkolt szándékokat.",
+    "text": "Mondjatok titkolt szándékokat",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2392,7 +2392,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Mondjatok bulis alibiket.",
+    "text": "Mondjatok bulis alibiket",
     "safe": true,
     "durationSeconds": 30
   },
@@ -2428,8 +2428,10 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Soroljatok BDSM eszközöket.",
+    "text": "Soroljatok BDSM eszközöket",
     "safe": true,
     "durationSeconds": 30
   }
 ];
+
+
