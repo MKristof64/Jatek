@@ -2805,6 +2805,18 @@ button,
   }
 }
 
+.question-spotlight--open,
+.question-spotlight--open.game-card-dynamic--timed {
+  padding-bottom: clamp(5.7rem, 13vh, 7rem) !important;
+}
+
+@media (orientation: landscape) and (min-width: 560px) {
+  .question-spotlight--open,
+  .question-spotlight--open.game-card-dynamic--timed {
+    padding-bottom: clamp(4.35rem, 12vh, 5.2rem) !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
