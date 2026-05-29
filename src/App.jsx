@@ -80,6 +80,12 @@ const initialGame = {
   timer: initialTimer,
 };
 
+const cardMixRules = {
+  windowSize: 20,
+  neverMin: 12,
+  neverMax: 14,
+};
+
 const pages = {
   home: 'home',
   players: 'players',
@@ -327,7 +333,7 @@ function sanitizeGame(value) {
     ? value.participantIndexes.filter(Number.isInteger)
     : [];
   const usedIds = Array.isArray(value.usedIds)
-    ? value.usedIds.filter((id) => typeof id === 'string').slice(0, 300)
+    ? value.usedIds.filter((id) => typeof id === 'string').slice(0, 2000)
     : [];
   const card = sanitizeCard(value.card);
 
@@ -442,14 +448,47 @@ function sendPeerMessage(connection, message) {
   return false;
 }
 
+function getCardKind(card) {
+  return ['never', 'duel', 'roundtable'].includes(card?.kind) ? card.kind : 'never';
+}
+
+function getBalancedCardCandidates(pool, candidates, usedIds = []) {
+  if (candidates.length <= 1) return candidates;
+
+  const poolKinds = new Set(pool.map(getCardKind));
+  if (!poolKinds.has('never') || (!poolKinds.has('duel') && !poolKinds.has('roundtable'))) {
+    return candidates;
+  }
+
+  const cardsById = new Map(pool.map((card) => [card.id, card]));
+  const recentCards = usedIds
+    .map((id) => cardsById.get(id))
+    .filter(Boolean)
+    .slice(-(cardMixRules.windowSize - 1));
+  const currentNeverCount = recentCards.filter((card) => getCardKind(card) === 'never').length;
+  const remainingWindowSlots = cardMixRules.windowSize - recentCards.length - 1;
+
+  const balancedCandidates = candidates.filter((card) => {
+    const nextNeverCount = currentNeverCount + (getCardKind(card) === 'never' ? 1 : 0);
+    return (
+      nextNeverCount <= cardMixRules.neverMax &&
+      nextNeverCount + remainingWindowSlots >= cardMixRules.neverMin
+    );
+  });
+
+  return balancedCandidates.length > 0 ? balancedCandidates : candidates;
+}
+
 function pickRandomCard(pool, usedIds = []) {
   if (pool.length === 0) return { card: null, usedIds };
   const availableCards = pool.filter((card) => !usedIds.includes(card.id));
-  const nextPool = availableCards.length > 0 ? availableCards : pool;
-  const card = nextPool[Math.floor(Math.random() * nextPool.length)];
+  const hasUnusedCards = availableCards.length > 0;
+  const nextPool = hasUnusedCards ? availableCards : pool;
+  const balancedPool = getBalancedCardCandidates(pool, nextPool, hasUnusedCards ? usedIds : []);
+  const card = balancedPool[Math.floor(Math.random() * balancedPool.length)];
   return {
     card,
-    usedIds: availableCards.length > 0 ? [...usedIds, card.id] : [card.id],
+    usedIds: hasUnusedCards ? [...usedIds, card.id] : [card.id],
   };
 }
 
