@@ -1,5 +1,5 @@
-import { Crown, Play, Sparkles, UserPlus, Wand2 } from 'lucide-react';
-import Header from '../components/Header.jsx';
+import { Crown, Play, Settings, Sparkles, UserPlus, Wand2 } from 'lucide-react';
+import FullscreenButton from '../components/FullscreenButton.jsx';
 import PrimaryButton from '../components/PrimaryButton.jsx';
 
 export default function HomePage({
@@ -13,19 +13,29 @@ export default function HomePage({
 }) {
   return (
     <>
-      <Header title="Én még sosem..." onSettings={onSettings} />
-      <section className="home-screen flex min-h-0 flex-1 flex-col justify-between gap-4">
+      <div className="home-top-controls flex shrink-0 items-center justify-between">
+        <FullscreenButton className="h-10 w-10 rounded-[1.1rem]" />
+        <button
+          type="button"
+          onClick={onSettings}
+          className="icon-button-dynamic grid h-10 w-10 shrink-0 touch-manipulation place-items-center rounded-[1.1rem] bg-white/12 text-white ring-1 ring-white/15 transition hover:bg-white/18 active:scale-[0.98]"
+          aria-label="Beállítások"
+        >
+          <Settings className="h-5 w-5" />
+        </button>
+      </div>
+      <section className="home-screen home-screen--compact-top flex min-h-0 flex-1 flex-col justify-between gap-4">
         <div className="home-hero-card overflow-hidden rounded-[1.75rem] border border-white/12 bg-white/[0.13] shadow-card backdrop-blur">
           <div className="home-hero-content bg-gradient-to-br from-pink-500/35 via-orange-400/24 to-lime-300/18 p-4 min-[390px]:p-5">
             <div className="home-logo-tile mb-5 grid h-16 w-16 place-items-center rounded-[1.35rem] bg-gradient-to-br from-amber-300 via-orange-400 to-pink-500 text-slate-950 shadow-glow animate-floaty min-[390px]:mb-7 min-[390px]:h-20 min-[390px]:w-20 min-[390px]:rounded-[1.75rem]">
               <Sparkles className="h-8 w-8 min-[390px]:h-10 min-[390px]:w-10" />
             </div>
             <div className="home-hero-copy">
-              <p className="home-hero-kicker text-sm font-black uppercase tracking-[0.22em] text-amber-100/78">
-                Módalapú party pakli
+              <p className="home-hero-kicker text-[1.75rem] font-black tracking-normal text-amber-100/85">
+                Én még sosem...
               </p>
               <h2 className="home-hero-title mt-2 text-4xl font-black leading-none tracking-normal text-white min-[390px]:text-5xl">
-                Húzz, nevess, válts módot.
+                Az ivós játék.
               </h2>
               <p className="home-hero-description mt-3 text-base leading-6 text-white/70 min-[390px]:mt-4 min-[390px]:leading-7">
                 Gyors körök, saját pakli, céljátékosok és csapatmód egy telefonra

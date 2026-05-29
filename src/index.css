@@ -46,6 +46,10 @@ textarea {
   font: inherit;
 }
 
+.home-top-controls {
+  margin-bottom: 0.55rem;
+}
+
 button,
 input,
 textarea,
@@ -1291,6 +1295,10 @@ button,
     margin-bottom: 0.45rem;
   }
 
+  .home-top-controls {
+    margin-bottom: 0.35rem;
+  }
+
   .home-screen {
     display: grid !important;
     grid-template-columns: minmax(0, 1fr) minmax(9rem, 12.25rem);
@@ -1336,8 +1344,9 @@ button,
   }
 
   .home-hero-kicker {
-    font-size: 0.62rem;
-    letter-spacing: 0.16em;
+    font-size: 1.24rem;
+    line-height: 1.04;
+    letter-spacing: 0;
   }
 
   .home-hero-title {
@@ -1806,7 +1815,7 @@ button,
   }
 
   .home-hero-title {
-    font-size: 2.15rem;
+    font-size: 2.2rem;
   }
 
   .home-hero-description {
@@ -1955,6 +1964,16 @@ button,
     margin-bottom: 0.3rem;
   }
 
+  .home-top-controls {
+    margin-bottom: 0.25rem;
+  }
+
+  .home-top-controls .icon-button-dynamic {
+    width: 2.65rem;
+    height: 2.65rem;
+    border-radius: 0.95rem;
+  }
+
   .home-screen,
   .mode-select-screen,
   .room-screen--active {
@@ -1983,8 +2002,9 @@ button,
   }
 
   .home-hero-kicker {
-    font-size: 0.5rem;
-    letter-spacing: 0.12em;
+    font-size: 1rem;
+    line-height: 1.02;
+    letter-spacing: 0;
   }
 
   .home-hero-title {
