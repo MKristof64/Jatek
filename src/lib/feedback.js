@@ -45,6 +45,28 @@ function normalizeStat(row) {
   };
 }
 
+function normalizeRemoteCard(row) {
+  const kind = ['never', 'duel', 'roundtable'].includes(row?.kind) ? row.kind : 'never';
+  const durationSeconds = Number(row?.durationSeconds ?? row?.duration_seconds);
+
+  return {
+    id: safeText(row?.id, 120),
+    mode: safeText(row?.mode, 40),
+    kind,
+    title: safeText(row?.title, 80) || 'Én még sosem...',
+    text: safeText(row?.text, 420),
+    durationSeconds: Number.isFinite(durationSeconds)
+      ? Math.max(0, Math.min(300, Math.floor(durationSeconds)))
+      : kind === 'never'
+        ? 0
+        : 30,
+    category: safeText(row?.category, 80),
+    sortOrder: Number(row?.sortOrder ?? row?.sort_order) || 0,
+    safe: row?.safe !== false,
+    source: safeText(row?.source, 40) || 'remote',
+  };
+}
+
 export async function submitCardFeedback({
   appContext,
   appVersion = import.meta.env.VITE_APP_VERSION ?? 'local',
@@ -90,6 +112,42 @@ export async function submitCardFeedback({
     return {
       ok: false,
       reason: error?.name === 'AbortError' ? 'timeout' : 'network-error',
+    };
+  } finally {
+    window.clearTimeout(timeoutId);
+  }
+}
+
+export async function fetchRemoteCards() {
+  if (!isFeedbackConfigured()) {
+    return { ok: false, reason: 'not-configured', cards: [] };
+  }
+
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), 8000);
+
+  try {
+    const response = await fetch(`${feedbackConfig.apiUrl}/api/cards?mode=all&_=${Date.now()}`, {
+      cache: 'no-store',
+      signal: controller.signal,
+    });
+
+    if (!response.ok) {
+      return { ok: false, reason: 'cloudflare-error', status: response.status, cards: [] };
+    }
+
+    const data = await response.json();
+    const sourceCards = Array.isArray(data?.cards) ? data.cards : [];
+    const cards = sourceCards
+      .map(normalizeRemoteCard)
+      .filter((card) => card.id && card.mode && card.text);
+
+    return { ok: true, cards, updatedAt: data?.updatedAt ?? data?.updated_at ?? null };
+  } catch (error) {
+    return {
+      ok: false,
+      reason: error?.name === 'AbortError' ? 'timeout' : 'network-error',
+      cards: [],
     };
   } finally {
     window.clearTimeout(timeoutId);

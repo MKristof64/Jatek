@@ -4,7 +4,7 @@ import ConfirmDialog from './components/ConfirmDialog.jsx';
 import Layout from './components/Layout.jsx';
 import { cards } from './data/cards.js';
 import { getModeById } from './data/modes.js';
-import { fetchBoldFeedbackStats, submitCardFeedback } from './lib/feedback.js';
+import { fetchBoldFeedbackStats, fetchRemoteCards, submitCardFeedback } from './lib/feedback.js';
 import CustomCardsPage from './pages/CustomCardsPage.jsx';
 import GamePage from './pages/GamePage.jsx';
 import HomePage from './pages/HomePage.jsx';
@@ -572,6 +572,24 @@ function applyFeedbackVote(statsByCardId, card, voteType) {
   };
 }
 
+function mergeLocalAndRemoteCards(localCards, remoteCards, modeId) {
+  const remoteModeCards = remoteCards.filter((card) => card.mode === modeId);
+  if (modeId === 'bold' && remoteModeCards.length > 0) {
+    return remoteModeCards;
+  }
+
+  const cardsById = new Map(localCards.map((card) => [card.id, card]));
+  remoteModeCards.forEach((card) => {
+    cardsById.set(card.id, card);
+  });
+
+  return [...cardsById.values()].sort((firstCard, secondCard) => {
+    const firstOrder = Number(firstCard.sortOrder) || 0;
+    const secondOrder = Number(secondCard.sortOrder) || 0;
+    return firstOrder - secondOrder;
+  });
+}
+
 function playFeedback(settings) {
   if (settings.vibration && 'vibrate' in navigator) {
     navigator.vibrate(24);
@@ -606,6 +624,7 @@ export default function App() {
   const [settings, setSettings] = useState(loadSettings);
   const [selectedMode, setSelectedMode] = useState(loadSelectedMode);
   const [game, setGame] = useState(initialGame);
+  const [remoteCards, setRemoteCards] = useState([]);
   const [boldFeedbackStats, setBoldFeedbackStats] = useState({});
   const [feedbackState, setFeedbackState] = useState({
     cardId: null,
@@ -647,6 +666,33 @@ export default function App() {
   useEffect(() => {
     saveJson(storageKeys.selectedMode, selectedMode);
   }, [selectedMode]);
+
+  useEffect(() => {
+    let ignore = false;
+
+    const loadRemoteCards = () => {
+      fetchRemoteCards().then((result) => {
+        if (!ignore && result.ok) {
+          setRemoteCards(result.cards);
+        }
+      });
+    };
+
+    loadRemoteCards();
+    const intervalId = window.setInterval(loadRemoteCards, 45000);
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        loadRemoteCards();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      ignore = true;
+      window.clearInterval(intervalId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
 
   useEffect(() => {
     latestStateRef.current = {
@@ -744,8 +790,10 @@ export default function App() {
       return modeMatches && safetyMatches;
     });
 
-    return filteredCards;
-  }, [customCards, selectedMode, settings.safeMode]);
+    const mergedCards = mergeLocalAndRemoteCards(filteredCards, remoteCards, selectedMode);
+
+    return mergedCards.filter((card) => (settings.safeMode ? card.safe !== false : true));
+  }, [customCards, remoteCards, selectedMode, settings.safeMode]);
 
   const teams = useMemo(() => buildTeams(players), [players]);
   const currentPlayerObject = players[game.playerIndex];
