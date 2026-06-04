@@ -80,11 +80,15 @@ const initialGame = {
   timer: initialTimer,
 };
 
-const cardMixRules = {
-  windowSize: 20,
-  neverMin: 12,
-  neverMax: 14,
-};
+const feedbackCardModes = new Set(['bold', 'hardcore', 'university']);
+
+function getCardSourceModes(modeId) {
+  return modeId === 'university' ? ['bold', 'hardcore', 'university'] : [modeId];
+}
+
+function canUseCardFeedback(card, mode) {
+  return Boolean(card?.id && (feedbackCardModes.has(card.mode) || mode?.id === 'university'));
+}
 
 const pages = {
   home: 'home',
@@ -448,44 +452,12 @@ function sendPeerMessage(connection, message) {
   return false;
 }
 
-function getCardKind(card) {
-  return ['never', 'duel', 'roundtable'].includes(card?.kind) ? card.kind : 'never';
-}
-
-function getBalancedCardCandidates(pool, candidates, usedIds = []) {
-  if (candidates.length <= 1) return candidates;
-
-  const poolKinds = new Set(pool.map(getCardKind));
-  if (!poolKinds.has('never') || (!poolKinds.has('duel') && !poolKinds.has('roundtable'))) {
-    return candidates;
-  }
-
-  const cardsById = new Map(pool.map((card) => [card.id, card]));
-  const recentCards = usedIds
-    .map((id) => cardsById.get(id))
-    .filter(Boolean)
-    .slice(-(cardMixRules.windowSize - 1));
-  const currentNeverCount = recentCards.filter((card) => getCardKind(card) === 'never').length;
-  const remainingWindowSlots = cardMixRules.windowSize - recentCards.length - 1;
-
-  const balancedCandidates = candidates.filter((card) => {
-    const nextNeverCount = currentNeverCount + (getCardKind(card) === 'never' ? 1 : 0);
-    return (
-      nextNeverCount <= cardMixRules.neverMax &&
-      nextNeverCount + remainingWindowSlots >= cardMixRules.neverMin
-    );
-  });
-
-  return balancedCandidates.length > 0 ? balancedCandidates : candidates;
-}
-
 function pickRandomCard(pool, usedIds = []) {
   if (pool.length === 0) return { card: null, usedIds };
   const availableCards = pool.filter((card) => !usedIds.includes(card.id));
   const hasUnusedCards = availableCards.length > 0;
   const nextPool = hasUnusedCards ? availableCards : pool;
-  const balancedPool = getBalancedCardCandidates(pool, nextPool, hasUnusedCards ? usedIds : []);
-  const card = balancedPool[Math.floor(Math.random() * balancedPool.length)];
+  const card = nextPool[Math.floor(Math.random() * nextPool.length)];
   return {
     card,
     usedIds: hasUnusedCards ? [...usedIds, card.id] : [card.id],
@@ -547,7 +519,7 @@ function buildTeams(players) {
 }
 
 function applyFeedbackVote(statsByCardId, card, voteType) {
-  if (!card?.id || card.mode !== 'bold') return statsByCardId;
+  if (!card?.id || !feedbackCardModes.has(card.mode)) return statsByCardId;
 
   const currentStats = statsByCardId[card.id] ?? {
     cardId: card.id,
@@ -573,8 +545,9 @@ function applyFeedbackVote(statsByCardId, card, voteType) {
 }
 
 function mergeLocalAndRemoteCards(localCards, remoteCards, modeId) {
-  const remoteModeCards = remoteCards.filter((card) => card.mode === modeId);
-  if (modeId === 'bold' && remoteModeCards.length > 0) {
+  const sourceModes = getCardSourceModes(modeId);
+  const remoteModeCards = remoteCards.filter((card) => sourceModes.includes(card.mode));
+  if (['bold', 'hardcore', 'university'].includes(modeId) && remoteModeCards.length > 0) {
     return remoteModeCards;
   }
 
@@ -784,8 +757,9 @@ export default function App() {
       }));
     }
 
+    const sourceModes = getCardSourceModes(selectedMode);
     const filteredCards = cards.filter((card) => {
-      const modeMatches = card.mode === selectedMode;
+      const modeMatches = sourceModes.includes(card.mode);
       const safetyMatches = settings.safeMode ? card.safe !== false : true;
       return modeMatches && safetyMatches;
     });
@@ -1541,7 +1515,7 @@ export default function App() {
   toggleTimerRef.current = toggleTimer;
 
   const sendCardFeedback = async (voteType) => {
-    if (!game.card || activeMode.id !== 'bold' || feedbackState.status === 'sending') return;
+    if (!canUseCardFeedback(game.card, activeMode) || feedbackState.status === 'sending') return;
 
     setFeedbackState({
       cardId: game.card.id,

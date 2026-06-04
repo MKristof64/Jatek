@@ -3,8 +3,15 @@ import FullscreenButton from '../components/FullscreenButton.jsx';
 import GameCard from '../components/GameCard.jsx';
 import PrimaryButton from '../components/PrimaryButton.jsx';
 
+const feedbackCardModes = new Set(['bold', 'hardcore', 'university']);
+const feedbackPlayModes = new Set(['bold', 'hardcore', 'university']);
+
 function FeedbackActionBar({ card, feedbackState, mode, onFeedback }) {
-  const showFeedback = mode?.id === 'bold' && card?.id && typeof onFeedback === 'function';
+  const showFeedback =
+    card?.id &&
+    typeof onFeedback === 'function' &&
+    feedbackPlayModes.has(mode?.id) &&
+    feedbackCardModes.has(card.mode);
   if (!showFeedback) return null;
 
   const status = feedbackState?.cardId === card.id ? feedbackState.status : 'idle';

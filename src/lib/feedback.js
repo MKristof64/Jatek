@@ -4,6 +4,9 @@ const feedbackConfig = {
   apiUrl: String(import.meta.env.VITE_FEEDBACK_API_URL ?? defaultFeedbackApiUrl).replace(/\/+$/, ''),
 };
 
+const feedbackCardModes = new Set(['bold', 'hardcore', 'university']);
+const feedbackPlayModes = new Set(['bold', 'hardcore', 'university']);
+
 function isValidFeedbackUrl(value) {
   try {
     const url = new URL(value);
@@ -75,7 +78,8 @@ export async function submitCardFeedback({
   voteType,
 }) {
   const normalizedVote = voteType === 'like' || voteType === 'dislike' ? voteType : null;
-  if (!normalizedVote || !card?.id || mode?.id !== 'bold') {
+  const cardMode = feedbackCardModes.has(card?.mode) ? card.mode : mode?.id;
+  if (!normalizedVote || !card?.id || !feedbackPlayModes.has(mode?.id) || !feedbackCardModes.has(cardMode)) {
     return { ok: false, reason: 'invalid-feedback' };
   }
 
@@ -97,7 +101,7 @@ export async function submitCardFeedback({
         appVersion: safeText(appVersion, 40),
         cardId: safeText(card.id, 120),
         kind: safeText(card.kind ?? 'never', 40),
-        mode: mode.id,
+        mode: cardMode,
         voteType: normalizedVote,
       }),
       signal: controller.signal,

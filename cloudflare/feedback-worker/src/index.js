@@ -15,12 +15,26 @@ const modeLabels = {
   classic: { id: 'classic', name: 'Klasszikus', category: 'Vicces', ready: true },
   bold: { id: 'bold', name: 'Merész', category: 'Pikáns', ready: true },
   hardcore: { id: 'hardcore', name: 'Hardcore', category: 'Nagyobb kihívás', ready: true },
+  university: { id: 'university', name: 'Egyetemista', category: 'Pikáns + Hardcore', ready: true },
   team: { id: 'team', name: 'Csapat', category: 'Csapatjáték', ready: true },
+};
+
+const combinedModeSources = {
+  university: ['bold', 'hardcore', 'university'],
 };
 
 const validKinds = new Set(Object.keys(kindLabels));
 const validModes = new Set(Object.keys(modeLabels));
 const defaultSuccessPercent = 50;
+
+function getModeSourceIds(mode) {
+  return combinedModeSources[mode] ?? [mode];
+}
+
+function countCardsForMode(cards, mode) {
+  const sourceIds = getModeSourceIds(mode);
+  return cards.filter((card) => sourceIds.includes(card.mode)).length;
+}
 
 function corsHeaders(request) {
   const origin = request.headers.get('Origin') ?? '*';
@@ -305,6 +319,8 @@ async function handleVote(request, env) {
 }
 
 async function getVoteStats(env, mode = 'bold') {
+  const sourceIds = getModeSourceIds(normalizeMode(mode));
+  const placeholders = sourceIds.map(() => '?').join(', ');
   const result = await env.DB.prepare(
     `SELECT
       card_id,
@@ -312,9 +328,9 @@ async function getVoteStats(env, mode = 'bold') {
       SUM(CASE WHEN vote_type = 'dislike' THEN 1 ELSE 0 END) AS dislikes,
       COUNT(*) AS total_votes
      FROM feedback_votes
-     WHERE mode = ?
+     WHERE mode IN (${placeholders})
      GROUP BY card_id`,
-  ).bind(mode).all();
+  ).bind(...sourceIds).all();
 
   return Object.fromEntries(
     (result.results ?? []).map((row) => {
@@ -355,7 +371,8 @@ function compareCardsBySuccess(firstCard, secondCard) {
 
 async function buildStats(env, mode = 'bold') {
   const statsByCard = await getVoteStats(env, mode);
-  const managedCards = (await getManagedCards(env)).filter((card) => card.mode === mode);
+  const sourceIds = getModeSourceIds(normalizeMode(mode));
+  const managedCards = (await getManagedCards(env)).filter((card) => sourceIds.includes(card.mode));
 
   return managedCards
     .map((card) => {
@@ -408,7 +425,7 @@ async function handleStats(request, env) {
       id: modeItem.id,
       name: modeItem.category,
       modeName: modeItem.name,
-      totalCards: allCards.filter((card) => card.mode === modeItem.id).length,
+      totalCards: countCardsForMode(allCards, modeItem.id),
       ready: modeItem.ready,
     })),
     kinds: Object.entries(kindLabels).map(([id, label]) => ({
@@ -453,14 +470,15 @@ async function handleCards(request, env) {
   const url = new URL(request.url);
   const mode = url.searchParams.get('mode') ?? 'all';
   const cards = await getManagedCards(env);
+  const sourceIds = mode === 'all' ? [] : getModeSourceIds(normalizeMode(mode));
   const filteredCards =
-    mode === 'all' ? cards : cards.filter((card) => card.mode === normalizeMode(mode));
+    mode === 'all' ? cards : cards.filter((card) => sourceIds.includes(card.mode));
 
   return jsonResponse(request, {
     cards: filteredCards,
     categories: Object.values(modeLabels).map((modeItem) => ({
       ...modeItem,
-      totalCards: cards.filter((card) => card.mode === modeItem.id).length,
+      totalCards: countCardsForMode(cards, modeItem.id),
     })),
     kinds: Object.entries(kindLabels).map(([id, label]) => ({ id, label })),
     updatedAt: new Date().toISOString(),
@@ -535,13 +553,21 @@ async function handleDeleteCard(request, env, cardId) {
 
 async function refreshDailySnapshot(env) {
   const snapshotDate = new Date().toISOString().slice(0, 10);
-  const stats = await buildStats(env);
-  const statements = stats.map((card) =>
+  const snapshotModes = ['bold', 'hardcore', 'university'];
+  const cardsById = new Map();
+
+  for (const mode of snapshotModes) {
+    const stats = await buildStats(env, mode);
+    stats.forEach((card) => cardsById.set(card.id, card));
+  }
+
+  const statements = [...cardsById.values()].map((card) =>
     env.DB.prepare(
       `INSERT INTO daily_feedback_snapshots
         (snapshot_date, card_id, mode, kind, likes, dislikes, total_votes, success_percent, updated_at)
-       VALUES (?, ?, 'bold', ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
        ON CONFLICT(snapshot_date, card_id) DO UPDATE SET
+        mode = excluded.mode,
         likes = excluded.likes,
         dislikes = excluded.dislikes,
         total_votes = excluded.total_votes,
@@ -550,6 +576,7 @@ async function refreshDailySnapshot(env) {
     ).bind(
       snapshotDate,
       card.id,
+      card.mode,
       card.kind,
       card.likes,
       card.dislikes,
@@ -774,6 +801,7 @@ function cardAdminHtml() {
       { id: 'classic', name: 'Vicces', modeName: 'Klasszikus', totalCards: 0, ready: true },
       { id: 'bold', name: 'Pikáns', modeName: 'Merész', totalCards: 0, ready: true },
       { id: 'hardcore', name: 'Nagyobb kihívás', modeName: 'Hardcore', totalCards: 0, ready: true },
+      { id: 'university', name: 'Pikáns + Hardcore', modeName: 'Egyetemista', totalCards: 0, ready: true },
       { id: 'team', name: 'Csapatjáték', modeName: 'Csapat', totalCards: 0, ready: true },
     ];
 

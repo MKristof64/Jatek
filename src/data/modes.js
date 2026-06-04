@@ -36,6 +36,18 @@ export const modes = [
     icon: 'Bolt',
   },
   {
+    id: 'university',
+    name: 'Egyetemista',
+    level: 'mix',
+    type: 'Pikáns + Hardcore',
+    tagline: 'A két legerősebb pakli egyben.',
+    description: 'Pikáns és Hardcore kártyák teljesen random keveréke, extra bulis tempóval.',
+    playStyle: 'Minden lap ugyanabból a közös nagy pakliból jön, aránykényszer nélkül.',
+    rhythm: 'Campus tempó',
+    accent: 'from-amber-300 via-red-500 to-pink-600',
+    icon: 'Beer',
+  },
+  {
     id: 'team',
     name: 'Csapat',
     level: 'csapatjáték',

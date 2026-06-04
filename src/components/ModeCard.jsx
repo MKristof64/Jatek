@@ -1,4 +1,5 @@
 import {
+  Beer,
   Bolt,
   Flame,
   Layers3,
@@ -8,6 +9,7 @@ import {
 } from 'lucide-react';
 
 const icons = {
+  Beer,
   Bolt,
   Flame,
   Layers3,

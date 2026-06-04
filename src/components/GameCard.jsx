@@ -1,4 +1,5 @@
 import {
+  Beer,
   Bolt,
   Flame,
   Layers3,
@@ -12,6 +13,7 @@ import {
 import { useEffect, useState } from 'react';
 
 const modeIcons = {
+  Beer,
   Bolt,
   Flame,
   Layers3,
