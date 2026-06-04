@@ -2837,6 +2837,241 @@ button,
   }
 }
 
+/* Dev palette experiment: warmer, redder party composition for jatek-teszt. */
+:root {
+  --party-ink: #080011;
+  --party-plum: #240018;
+  --party-merlot: #4c001f;
+  --party-crimson: #8b1238;
+  --party-rose: #f43f5e;
+  --party-coral: #ff5a3d;
+  --party-orange: #ff8a2a;
+  --party-amber: #ffd84d;
+  --party-cyan: #67e8f9;
+  --party-lime: #bef264;
+}
+
+html,
+body,
+:fullscreen,
+:-webkit-full-screen,
+.app-fullscreen-fallback,
+.app-fullscreen-fallback body {
+  background: var(--party-ink);
+}
+
+.party-bg {
+  background-image:
+    linear-gradient(118deg, rgba(255, 216, 77, 0.12) 0 10%, transparent 10% 31%, rgba(244, 63, 94, 0.13) 31% 43%, transparent 43%),
+    linear-gradient(24deg, transparent 0 52%, rgba(255, 90, 61, 0.18) 52% 63%, transparent 63%),
+    linear-gradient(154deg, transparent 0 60%, rgba(103, 232, 249, 0.08) 60% 65%, transparent 65%),
+    linear-gradient(rgba(255, 255, 255, 0.042) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.042) 1px, transparent 1px),
+    radial-gradient(circle at 78% 12%, rgba(255, 90, 61, 0.18), transparent 31%),
+    linear-gradient(135deg, var(--party-ink) 0%, var(--party-plum) 28%, var(--party-merlot) 62%, var(--party-crimson) 100%);
+  background-size:
+    180% 180%,
+    160% 160%,
+    190% 190%,
+    42px 42px,
+    42px 42px,
+    auto,
+    auto;
+  background-position:
+    0% 0%,
+    100% 0%,
+    0% 100%,
+    0 0,
+    0 0,
+    center,
+    center;
+}
+
+.theme-light .party-bg {
+  background-image:
+    linear-gradient(118deg, rgba(255, 138, 42, 0.18) 0 10%, transparent 10% 32%, rgba(244, 63, 94, 0.16) 32% 43%, transparent 43%),
+    linear-gradient(22deg, transparent 0 54%, rgba(103, 232, 249, 0.14) 54% 60%, transparent 60%),
+    linear-gradient(rgba(159, 18, 57, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(159, 18, 57, 0.08) 1px, transparent 1px),
+    linear-gradient(135deg, #fff1e8 0%, #fff0f5 50%, #ffe4ec 100%);
+}
+
+.party-button {
+  box-shadow:
+    0 18px 48px rgba(244, 63, 94, 0.28),
+    0 10px 28px rgba(255, 138, 42, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.party-button::before {
+  background: linear-gradient(
+    115deg,
+    transparent 0 30%,
+    rgba(255, 255, 255, 0.4) 43%,
+    rgba(255, 216, 77, 0.18) 50%,
+    transparent 62% 100%
+  );
+}
+
+.party-button::after {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.24), transparent 58%);
+}
+
+.next-pulse {
+  animation: hot-next-button-breathe 2.35s ease-in-out infinite;
+}
+
+.icon-button-dynamic::before,
+.mode-card-dynamic::before,
+.party-mini-button::before {
+  background: linear-gradient(135deg, rgba(255, 216, 77, 0.18), rgba(255, 90, 61, 0.22), rgba(103, 232, 249, 0.12));
+}
+
+.mode-card-dynamic,
+.home-hero-card,
+.room-card,
+.game-feedback-actions,
+.confirm-dialog section {
+  box-shadow:
+    0 18px 48px rgba(54, 0, 28, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.11);
+}
+
+.mode-card-dynamic::after,
+.game-topic-bar::before,
+.game-card-top::before,
+.question-copy::before {
+  background: linear-gradient(90deg, var(--party-amber), var(--party-orange), var(--party-rose), var(--party-cyan));
+}
+
+.party-field {
+  border-color: rgba(255, 214, 186, 0.18);
+  background: rgba(20, 0, 20, 0.72);
+  caret-color: var(--party-amber);
+}
+
+.party-field:focus {
+  border-color: rgba(255, 216, 77, 0.88);
+  background: rgba(28, 0, 22, 0.9);
+  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.18);
+}
+
+.question-spotlight {
+  background:
+    linear-gradient(155deg, rgba(255, 216, 77, 0.18) 0 7%, transparent 7% 24%),
+    linear-gradient(28deg, transparent 0 57%, rgba(103, 232, 249, 0.12) 57% 64%, transparent 64%),
+    linear-gradient(145deg, rgba(244, 63, 94, 0.3), rgba(35, 0, 28, 0.92) 42%, rgba(8, 0, 17, 0.96));
+  box-shadow:
+    0 30px 90px rgba(54, 0, 28, 0.52),
+    0 0 46px rgba(244, 63, 94, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.13);
+}
+
+.question-spotlight::before {
+  background:
+    conic-gradient(
+      from 210deg,
+      rgba(255, 216, 77, 0.2),
+      rgba(244, 63, 94, 0.25),
+      rgba(255, 90, 61, 0.2),
+      rgba(103, 232, 249, 0.16),
+      rgba(255, 216, 77, 0.2)
+    );
+}
+
+.question-copy {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 118, 86, 0.06)),
+    rgba(9, 0, 22, 0.72);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 214, 186, 0.13),
+    0 18px 38px rgba(54, 0, 28, 0.3),
+    0 0 34px rgba(244, 63, 94, 0.08);
+}
+
+.question-prefix,
+.question-copy--free .question-prefix {
+  color: #ffe8b3;
+  text-shadow: 0 0 20px rgba(255, 138, 42, 0.26);
+}
+
+.question-spotlight--open .player-chip {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 90, 61, 0.08)),
+    rgba(48, 0, 33, 0.46) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 14px 34px rgba(54, 0, 28, 0.28),
+    0 0 0 1px rgba(255, 216, 77, 0.1);
+}
+
+.question-spotlight--open .spark-tile,
+.home-logo-tile {
+  box-shadow:
+    0 18px 42px rgba(244, 63, 94, 0.34),
+    0 0 30px rgba(255, 138, 42, 0.18);
+}
+
+.question-spotlight--open .timer-control {
+  background:
+    radial-gradient(circle at 13% 20%, rgba(255, 216, 77, 0.38), transparent 36%),
+    radial-gradient(circle at 84% 72%, rgba(244, 63, 94, 0.3), transparent 42%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 90, 61, 0.08)),
+    rgba(44, 0, 32, 0.8) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.07),
+    0 22px 46px rgba(54, 0, 28, 0.38),
+    0 0 36px rgba(255, 138, 42, 0.18);
+}
+
+.question-spotlight--open .timer-control::before {
+  background:
+    linear-gradient(90deg, rgba(255, 216, 77, 0.4), rgba(255, 138, 42, 0.3), rgba(244, 63, 94, 0.3)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.13), transparent 58%);
+}
+
+.game-question-copy::after {
+  background: linear-gradient(90deg, rgba(255, 216, 77, 0.12), rgba(255, 90, 61, 0.55), rgba(244, 63, 94, 0.9));
+}
+
+.theme-light .question-spotlight {
+  background:
+    linear-gradient(155deg, rgba(255, 138, 42, 0.26) 0 7%, transparent 7% 24%),
+    linear-gradient(28deg, transparent 0 57%, rgba(103, 232, 249, 0.14) 57% 64%, transparent 64%),
+    linear-gradient(145deg, rgba(255, 241, 232, 0.92), rgba(255, 255, 255, 0.92) 42%, rgba(255, 228, 236, 0.92));
+}
+
+.theme-light .question-copy {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(255, 228, 236, 0.8)),
+    rgba(255, 255, 255, 0.9);
+}
+
+.theme-light .party-button {
+  box-shadow:
+    0 18px 40px rgba(244, 63, 94, 0.2),
+    0 10px 24px rgba(255, 138, 42, 0.17),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+@keyframes hot-next-button-breathe {
+  0%,
+  100% {
+    box-shadow:
+      0 18px 48px rgba(244, 63, 94, 0.28),
+      0 10px 28px rgba(255, 138, 42, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+  50% {
+    box-shadow:
+      0 24px 62px rgba(244, 63, 94, 0.46),
+      0 12px 36px rgba(255, 138, 42, 0.28),
+      0 0 24px rgba(255, 216, 77, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.32);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

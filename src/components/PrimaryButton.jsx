@@ -1,14 +1,14 @@
 const variants = {
   primary:
-    'bg-gradient-to-r from-amber-300 via-orange-400 to-pink-500 text-slate-950 shadow-glow hover:brightness-110 active:scale-[0.98]',
+    'bg-gradient-to-r from-yellow-300 via-orange-500 to-rose-500 text-slate-950 shadow-glow hover:brightness-110 active:scale-[0.98]',
   success:
-    'bg-gradient-to-r from-lime-300 via-emerald-300 to-cyan-300 text-slate-950 shadow-glow hover:brightness-110 active:scale-[0.98]',
+    'bg-gradient-to-r from-lime-300 via-yellow-300 to-orange-400 text-slate-950 shadow-glow hover:brightness-110 active:scale-[0.98]',
   warning:
-    'bg-gradient-to-r from-fuchsia-400 via-pink-500 to-rose-500 text-white shadow-glow hover:brightness-110 active:scale-[0.98]',
+    'bg-gradient-to-r from-fuchsia-400 via-rose-500 to-red-500 text-white shadow-glow hover:brightness-110 active:scale-[0.98]',
   secondary:
-    'bg-white/12 text-white ring-1 ring-white/15 hover:bg-white/18 active:scale-[0.98]',
+    'bg-rose-950/26 text-white ring-1 ring-rose-100/18 hover:bg-rose-900/34 active:scale-[0.98]',
   danger:
-    'bg-rose-500/18 text-rose-50 ring-1 ring-rose-300/30 hover:bg-rose-500/28 active:scale-[0.98]',
+    'bg-red-500/22 text-rose-50 ring-1 ring-red-200/34 hover:bg-red-500/32 active:scale-[0.98]',
   ghost:
     'bg-transparent text-white/80 hover:bg-white/10 active:scale-[0.98]',
 };

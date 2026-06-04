@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       boxShadow: {
-        glow: '0 22px 80px rgba(168, 85, 247, 0.38)',
-        card: '0 18px 44px rgba(15, 23, 42, 0.3)',
+        glow: '0 22px 80px rgba(244, 63, 94, 0.42)',
+        card: '0 18px 44px rgba(54, 0, 28, 0.34)',
       },
       fontFamily: {
         display: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],

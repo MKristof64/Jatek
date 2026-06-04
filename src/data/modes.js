@@ -8,7 +8,7 @@ export const modes = [
     description: 'Laza bemelegítés könnyed, nevetős kártyákkal.',
     playStyle: 'Kevés szereplés, sok könnyű válasz, jó első körnek.',
     rhythm: 'Laza tempó',
-    accent: 'from-amber-300 via-orange-400 to-pink-500',
+    accent: 'from-yellow-300 via-orange-500 to-rose-500',
     icon: 'Sparkles',
   },
   {
@@ -20,7 +20,7 @@ export const modes = [
     description: 'Rögtönzés, szerepjáték és teljesen ártalmatlan kreatív káosz.',
     playStyle: 'Több előadás, furább ötletek, kevesebb komolykodás.',
     rhythm: 'Káosz tempó',
-    accent: 'from-fuchsia-300 via-pink-500 to-orange-400',
+    accent: 'from-fuchsia-300 via-rose-500 to-orange-500',
     icon: 'Zap',
   },
   {
@@ -32,7 +32,7 @@ export const modes = [
     description: 'Kicsit személyesebb, flörtösebb hangulat, kényelmetlen nyomás nélkül.',
     playStyle: 'Határok tiszteletben tartva, kényelmetlen nyomás nélkül.',
     rhythm: 'Fokozódó tempó',
-    accent: 'from-yellow-300 via-orange-400 to-red-500',
+    accent: 'from-amber-300 via-red-500 to-rose-600',
     icon: 'Flame',
   },
   {
@@ -44,7 +44,7 @@ export const modes = [
     description: 'Erősebb vállalások és gyorsabb ritmus, kiesés vagy versenyhelyzet nélkül.',
     playStyle: 'Több energia és több szereplés, versenyhelyzet nélkül.',
     rhythm: 'Intenzív tempó',
-    accent: 'from-violet-300 via-fuchsia-500 to-rose-600',
+    accent: 'from-red-400 via-rose-600 to-fuchsia-600',
     icon: 'Bolt',
   },
   {
@@ -56,7 +56,7 @@ export const modes = [
     description: 'A játékosok automatikusan két csapatba kerülnek, a feladatok közösen mozgatják a társaságot.',
     playStyle: 'Váltott csapatkörök és közös döntések, rangsor nélkül.',
     rhythm: 'Közös tempó',
-    accent: 'from-teal-300 via-lime-300 to-amber-300',
+    accent: 'from-teal-300 via-lime-300 to-orange-400',
     icon: 'UsersRound',
     teamMode: true,
   },
@@ -69,7 +69,7 @@ export const modes = [
     description: 'A te kártyáid saját ritmussal és placeholder támogatással.',
     playStyle: 'Használható: {player} és {target}.',
     rhythm: 'Saját tempó',
-    accent: 'from-cyan-300 via-fuchsia-400 to-amber-300',
+    accent: 'from-cyan-300 via-rose-400 to-orange-400',
     icon: 'Layers3',
   },
 ];
