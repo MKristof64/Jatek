@@ -2489,14 +2489,14 @@ button,
 }
 
 .question-spotlight--open.game-card-dynamic--timed {
-  padding-bottom: clamp(5.7rem, 13vh, 7rem) !important;
+  padding-bottom: clamp(6.1rem, 14vh, 7.6rem) !important;
 }
 
 .question-spotlight--open .timer-control {
   position: absolute !important;
   isolation: isolate;
   right: auto !important;
-  bottom: clamp(0.65rem, 2.6vh, 1.1rem);
+  bottom: clamp(1.05rem, 3.6vh, 1.65rem);
   left: 50%;
   width: auto;
   min-width: clamp(11.5rem, 48vw, 13.4rem);
@@ -2604,11 +2604,11 @@ button,
   }
 
   .question-spotlight--open.game-card-dynamic--timed {
-    padding-bottom: clamp(4.35rem, 12vh, 5.2rem) !important;
+    padding-bottom: clamp(4.8rem, 13vh, 5.8rem) !important;
   }
 
   .question-spotlight--open .timer-control {
-    bottom: clamp(0.24rem, 1.9vh, 0.65rem);
+    bottom: clamp(0.7rem, 2.8vh, 1.1rem);
     min-width: clamp(9.8rem, 25vw, 11.6rem);
     min-height: clamp(3.35rem, 11vh, 4.05rem);
     gap: clamp(0.72rem, 2vw, 0.95rem);
@@ -2827,13 +2827,13 @@ button,
 
 .question-spotlight--open,
 .question-spotlight--open.game-card-dynamic--timed {
-  padding-bottom: clamp(5.7rem, 13vh, 7rem) !important;
+  padding-bottom: clamp(6.1rem, 14vh, 7.6rem) !important;
 }
 
 @media (orientation: landscape) and (min-width: 560px) {
   .question-spotlight--open,
   .question-spotlight--open.game-card-dynamic--timed {
-    padding-bottom: clamp(4.35rem, 12vh, 5.2rem) !important;
+    padding-bottom: clamp(4.8rem, 13vh, 5.8rem) !important;
   }
 }
 
