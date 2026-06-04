@@ -1,31 +1,17 @@
 import { boldSpicyCards } from './boldSpicyCards.js';
 import { classicFunnyCards } from './classicFunnyCards.js';
+import { hardcoreCards } from './hardcoreCards.js';
 
 export const cards = [
   ...classicFunnyCards,
   ...boldSpicyCards,
-  { id: 'crazy-01', mode: 'crazy', text: '{player}, beszélj robotként a következő köröd elejéig', safe: true },
-  { id: 'crazy-02', mode: 'crazy', text: '{player}, adj időjárás-jelentést a szobáról drámai hangon', safe: true },
-  { id: 'crazy-03', mode: 'crazy', text: '{player}, találj ki egy reklámszlogent a kanapénak vagy egy közeli tárgynak', safe: true },
-  { id: 'crazy-04', mode: 'crazy', text: '{player}, mondd el a neved úgy, mintha filmszereplő lennél egy trailerben', safe: true },
-  { id: 'crazy-05', mode: 'crazy', text: '{player}, válassz egy tárgyat, és mutasd be, mintha luxustermék lenne', safe: true },
-  { id: 'crazy-06', mode: 'crazy', text: '{player}, adj egy képzeletbeli díjat valakinek a társaságban', safe: true },
-  { id: 'hardcore-01', mode: 'hardcore', text: '{player}, vezess le egy 20 másodperces villámvitát arról, melyik nasi a legjobb', safe: true },
-  { id: 'hardcore-02', mode: 'hardcore', text: '{player}, mondj három dolgot, amit vinnél egy képzeletbeli fesztiválra', safe: true },
-  { id: 'hardcore-03', mode: 'hardcore', text: '{player}, válassz két embert, akik egy percig csak kérdésekkel beszélhetnek', safe: true },
-  { id: 'hardcore-04', mode: 'hardcore', text: '{player}, találj ki egy gyors kihívást, amit bárki kényelmesen visszautasíthat', safe: true },
-  { id: 'hardcore-05', mode: 'hardcore', text: '{player}, mondd el, milyen lenne a társaság közös szuperképessége', safe: true },
-  { id: 'hardcore-06', mode: 'hardcore', text: '{player}, adj három teljesen komoly szabályt egy képzeletbeli társasjátékhoz', safe: true },
+  ...hardcoreCards,
   { id: 'team-01', mode: 'team', text: '{player}, válassz csapattársat, és találjatok ki közösen egy kézfogást', safe: true },
   { id: 'team-02', mode: 'team', text: '{player}, a jobb oldaladon ülővel mondjatok felváltva öt városnevet', safe: true },
   { id: 'team-03', mode: 'team', text: '{player}, két csapat vitassa meg 30 másodpercig: reggeli vagy vacsora a jobb?', safe: true },
   { id: 'team-04', mode: 'team', text: '{player}, válassz valakit, akivel egyszerre mutattok egy pózt. A többiek adjanak címet neki', safe: true },
   { id: 'team-05', mode: 'team', text: '{player}, indíts lánctörténetet egy mondattal, mindenki tegyen hozzá egy szót', safe: true },
   { id: 'team-06', mode: 'team', text: '{player}, kérj két önkéntest egy 15 másodperces némás jelenethez', safe: true },
-  { id: 'crazy-07', mode: 'crazy', text: '{player}, mondj egy hétköznapi mondatot operaénekes energiával', safe: true },
-  { id: 'hardcore-07', mode: 'hardcore', text: '{player}, 30 másodpercig te vagy a műsorvezető: kérdezz két gyorsat', safe: true },
   { id: 'team-07', mode: 'team', text: '{player}, a társaság szavazzon: melyik két ember alkotná a legviccesebb kvízcsapatot?', safe: true },
-  { id: 'crazy-08', mode: 'crazy', text: '{player}, adj {target} számára egy teljesen ártalmatlan szuperhősnevet', safe: true },
-  { id: 'hardcore-08', mode: 'hardcore', text: '{player} és {target} 20 másodperc alatt találjanak ki egy új társasjáték-szabályt', safe: true },
   { id: 'team-08', mode: 'team', text: '{player}, válaszd {target}-t csapattársnak egy villám asszociációs körre', safe: true },
 ];

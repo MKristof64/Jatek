@@ -1,4 +1,5 @@
 import { boldCards } from './bold-cards.js';
+import { hardcoreCards } from './hardcore-cards.js';
 
 const jsonHeaders = {
   'Content-Type': 'application/json; charset=utf-8',
@@ -13,7 +14,6 @@ const kindLabels = {
 const modeLabels = {
   classic: { id: 'classic', name: 'Klasszikus', category: 'Vicces', ready: true },
   bold: { id: 'bold', name: 'Merész', category: 'Pikáns', ready: true },
-  crazy: { id: 'crazy', name: 'Őrült', category: 'Abszurd', ready: true },
   hardcore: { id: 'hardcore', name: 'Hardcore', category: 'Nagyobb kihívás', ready: true },
   team: { id: 'team', name: 'Csapat', category: 'Csapatjáték', ready: true },
 };
@@ -118,7 +118,7 @@ function rowToCard(row) {
 }
 
 function baseCards() {
-  return boldCards.map((card) =>
+  return [...boldCards, ...hardcoreCards].map((card) =>
     publicCard({
       ...card,
       safe: true,
@@ -773,7 +773,6 @@ function cardAdminHtml() {
     const fallbackModes = [
       { id: 'classic', name: 'Vicces', modeName: 'Klasszikus', totalCards: 0, ready: true },
       { id: 'bold', name: 'Pikáns', modeName: 'Merész', totalCards: 0, ready: true },
-      { id: 'crazy', name: 'Abszurd', modeName: 'Őrült', totalCards: 0, ready: true },
       { id: 'hardcore', name: 'Nagyobb kihívás', modeName: 'Hardcore', totalCards: 0, ready: true },
       { id: 'team', name: 'Csapatjáték', modeName: 'Csapat', totalCards: 0, ready: true },
     ];

@@ -12,18 +12,6 @@ export const modes = [
     icon: 'Sparkles',
   },
   {
-    id: 'crazy',
-    name: 'Őrült',
-    level: 'erősebb',
-    type: 'Abszurd',
-    tagline: 'Abszurd, kreatív kihívások.',
-    description: 'Rögtönzés, szerepjáték és teljesen ártalmatlan kreatív káosz.',
-    playStyle: 'Több előadás, furább ötletek, kevesebb komolykodás.',
-    rhythm: 'Káosz tempó',
-    accent: 'from-fuchsia-300 via-rose-500 to-orange-500',
-    icon: 'Zap',
-  },
-  {
     id: 'bold',
     name: 'Merész',
     level: 'pikánsabb',
