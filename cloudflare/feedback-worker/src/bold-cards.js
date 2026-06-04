@@ -5,7 +5,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csókoltam meg valakit egy buli után (vagy közben) spontán",
+    "text": "csókoltam meg valakit spontán egy buli közben vagy után",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 1
@@ -15,7 +15,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "bántam meg egy randit már az első 10 percben",
+    "text": "bántam meg egy randit már az első tíz percben",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 2
@@ -25,7 +25,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam társkereső appot csak kíváncsiságból",
+    "text": "használtam társkereső alkalmazást csak kíváncsiságból",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 3
@@ -55,7 +55,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "flörtöltem valakivel csak azért, hogy ingyen italhoz jussak",
+    "text": "flörtöltem valakivel csak azért, hogy meghívjon egy italra",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 6
@@ -65,7 +65,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "írtam exnek csak unalomból",
+    "text": "írtam rá az exemre csak unalomból",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 7
@@ -105,7 +105,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam olyan randin, amiből menekülni akartam",
+    "text": "voltam olyan randin, ahonnan legszívesebben elmenekültem volna",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 11
@@ -125,7 +125,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "smároltam valakivel, akinek a nevét alig tudtam",
+    "text": "smároltam olyannal, akinek alig tudtam a nevét",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 13
@@ -135,7 +135,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csókolóztam nyilvános helyen feltűnően",
+    "text": "csókolóztam feltűnően nyilvános helyen",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 14
@@ -145,7 +145,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kaptam olyan üzenetet, amitől lefagytam",
+    "text": "kaptam olyan üzenetet, amitől teljesen lefagytam",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 15
@@ -165,7 +165,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam „barátság extrákkal” helyzetben",
+    "text": "voltam barátság extrákkal helyzetben",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 17
@@ -175,7 +175,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam, hogy nem akarok kapcsolatot, miközben akartam",
+    "text": "mondtam, hogy nem akarok kapcsolatot, miközben valójában akartam",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 18
@@ -185,7 +185,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mentem vissza valakihez, akihez kár volt",
+    "text": "mentem vissza valakihez, akiről tudtam, hogy rossz ötlet",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 19
@@ -195,7 +195,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "néztem bele más telefonjába, de úgy mélyen",
+    "text": "néztem bele alaposan más telefonjába",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 20
@@ -205,7 +205,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "veszekedtem párkapcsolati témán nyilvános helyen",
+    "text": "veszekedtem párkapcsolati ügyön nyilvános helyen",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 21
@@ -215,7 +215,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "titkoltam el egy fontos múltbeli kapcsolatot",
+    "text": "titkoltam el egy fontos korábbi kapcsolatomat",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 22
@@ -225,7 +225,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csaltam meg valakit",
+    "text": "bocsátottam meg olyasmit, amit valójában nem tudtam feldolgozni",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 23
@@ -235,7 +235,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "bocsátottam meg olyat, amit igazából nem tudtam feldolgozni",
+    "text": "kerültem olyan helyzetbe, hogy valaki miattam titkolózott",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 24
@@ -245,7 +245,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam olyan helyzetben, hogy valaki miattam titkolózott",
+    "text": "kavartam olyannal, akiről tudtam, hogy kapcsolatban van",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 25
@@ -255,7 +255,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kavartam olyannal, akiről tudtam, hogy foglalt",
+    "text": "szerettem bele egy barátomba",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 26
@@ -265,7 +265,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam szerelmes egy „barátomba”",
+    "text": "vonzódtam egy barátom testvéréhez",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 27
@@ -275,7 +275,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vonzódtam egy barátom testvéréhez",
+    "text": "randiztam olyannal, akit a barátaim nem kedveltek",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 28
@@ -285,7 +285,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "randiztam olyannal, akit a barátaim nem kedveltek",
+    "text": "tartottam fenn kapcsolatot valakivel csak a figyelem miatt",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 29
@@ -295,7 +295,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "tartottam fent kapcsolatot valakivel csak figyelem miatt",
+    "text": "fantáziáltam egy hírességről",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 30
@@ -305,7 +305,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "fantáziáltam hírességről",
+    "text": "zúgtam bele valakibe, akit alig ismertem",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 31
@@ -315,7 +315,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "crusholtam valakit, akit alig ismertem",
+    "text": "vonzódtam valakihez csak a hangja miatt",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 32
@@ -325,7 +325,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "tetszett meg valaki csak a hangja miatt",
+    "text": "játszottam le fejben előre egy beszélgetést valakivel",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 33
@@ -335,7 +335,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "játszottam el fejben egy beszélgetést valakivel",
+    "text": "képzeltem el, milyen lenne újra találkozni egy régi kiszemeltemmel",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 34
@@ -345,7 +345,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "képzeltem el, milyen lenne újra találkozni egy régi crush-sal",
+    "text": "flörtöltem valakivel munkahelyen vagy iskolában",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 35
@@ -355,7 +355,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "flörtöltem valakivel munkahelyen vagy iskolában",
+    "text": "vonzódtam tanárhoz, főnökhöz vagy más tiltott személyhez",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 36
@@ -365,7 +365,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "tetszett meg tanár, főnök vagy más „tiltott” személy",
+    "text": "mondtam le valakiről csak azért, mert túl bonyolult lett volna",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 37
@@ -375,7 +375,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam le valakiről csak azért, mert túl bonyolult lett volna",
+    "text": "küldtem olyan üzenetet, amit azonnal megbántam",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 38
@@ -385,7 +385,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "küldtem olyan üzenetet, amit azonnal megbántam",
+    "text": "töröltem beszélgetést azért, nehogy valaki meglássa",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 39
@@ -395,7 +395,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "töröltem beszélgetést, nehogy valaki meglássa",
+    "text": "mentettem el titokban képet valakiről",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 40
@@ -405,7 +405,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mentettem el valakiről képet titokban",
+    "text": "vártam arra, hogy a másik tegye meg az első lépést",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 41
@@ -415,7 +415,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vártam, hogy valaki más tegye meg az első lépést",
+    "text": "használtam béna felszedőszöveget. Inkább igyál!",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 42
@@ -425,7 +425,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam béna felszedőszöveget. Inkább igyál",
+    "text": "próbáltam direkt megnevettetni valakit flörtölésből. Ha nem, igyál kettőt!",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 43
@@ -435,7 +435,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "nevettettem meg valakit direkt flörtölésből. Ha nem, 2-t igyál",
+    "text": "bókoltam valakinek csak azért, hogy teszteljem a reakcióját",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 44
@@ -445,7 +445,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam valakinek bókot csak azért, hogy teszteljem a reakcióját",
+    "text": "csókolóztam úgy, mintha egy romantikus filmben lennék",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 45
@@ -455,7 +455,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csókolóztam olyan igazi filmesen",
+    "text": "csókolóztam úgy, hogy legszívesebben elfelejtettem volna",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 46
@@ -465,7 +465,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "volt olyan csókom, amit inkább elfelejtenék",
+    "text": "gondoltam egy csók után, hogy „ez hiba volt”",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 47
@@ -475,7 +475,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "gondoltam egy csók után, hogy „ez hiba volt”",
+    "text": "voltam olyan helyzetben, amikor nem tudtam eldönteni, hogy randin vagyok-e",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 48
@@ -485,7 +485,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam olyan helyzetben, ahol nem tudtam, randin vagyok-e",
+    "text": "flörtöltem valakivel úgy, hogy közben más is tetszett",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 49
@@ -495,7 +495,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "flörtöltem valakivel úgy, hogy közben más is tetszett",
+    "text": "untam meg valakit túl gyorsan",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 50
@@ -505,7 +505,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "untam meg valakit túl gyorsan",
+    "text": "választottam rosszul csak azért, mert izgalmasnak tűnt",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 51
@@ -515,7 +515,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "választottam rosszul csak azért, mert izgalmas volt",
+    "text": "hagytam figyelmen kívül egy egyértelmű intő jelet",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 52
@@ -525,7 +525,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "hagytam figyelmen kívül red flaget",
+    "text": "beszéltem ki túl részletesen egy randimat a barátaimnak",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 53
@@ -535,7 +535,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "beszéltem ki túl részletesen a randimat a barátaimnak",
+    "text": "kértem segítséget egy üzenet megírásához",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 54
@@ -545,7 +545,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kértem tanácsot üzenet megírásához",
+    "text": "hagytam, hogy a barátaim döntsenek helyettem szerelmi ügyben",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 55
@@ -555,7 +555,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "hagytam, hogy a barátaim döntsenek helyettem szerelmi ügyben",
+    "text": "bántam meg, hogy valakinek adtam még egy esélyt",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 56
@@ -565,7 +565,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "bántam meg, hogy valakinek adtam még egy esélyt",
+    "text": "voltam kíváncsi valamire, amit végül nem mertem kipróbálni",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 57
@@ -575,7 +575,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam kíváncsi valamire, amit nem mertem kipróbálni",
+    "text": "titkoltam el egy vágyamat a párom elől",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 58
@@ -585,7 +585,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "titkoltam el egy vágyamat a párom elől",
+    "text": "vonzódtam nálam jóval idősebb emberhez",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 59
@@ -595,7 +595,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vonzódtam jelentősen idősebb személyhez",
+    "text": "vártam titokban, hogy valaki szakítson a párjával",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 60
@@ -605,7 +605,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vártam titokban, hogy valaki szakítson a párjával",
+    "text": "tudtam meg, hogy valaki titokban odavolt értem",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 61
@@ -615,7 +615,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam valakinek a titkos crush-a",
+    "text": "vallottam be valakinek túl későn, hogy tetszett",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 62
@@ -625,7 +625,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vallottam be valakinek túl későn, hogy tetszett",
+    "text": "mentem ki „levegőzni” valakivel",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 63
@@ -635,7 +635,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mentem ki „levegőzni” valakivel",
+    "text": "mentem fel valakihez „csak egy teára”",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 64
@@ -645,7 +645,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mentem fel valakihez „csak egy teára”",
+    "text": "mondtam, hogy nem tudok táncolni, csak hogy kibújjak alóla",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 65
@@ -655,7 +655,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam, hogy „nem tudok táncolni”, kerülve a dolgot",
+    "text": "kavartam olyannal, akivel előtte kijelentettük, hogy köztünk soha nem lesz semmi",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 66
@@ -665,7 +665,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kavartam valakivel, akivel előtte azt mondtuk, hogy „köztünk ilyen soha”",
+    "text": "mondtam valakire, hogy „vele soha”, aztán mégis lett belőle valami",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 67
@@ -675,7 +675,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam, hogy „vele soha”, aztán az univerzum kiröhögött",
+    "text": "kavartam olyannal, akivel előtte csak egymást oltottuk",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 68
@@ -685,7 +685,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kavartam valakivel, akivel előtte csak egymást oltottuk",
+    "text": "mondtam valakinek, hogy „utállak”, miközben valójában flörtöltem vele",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 69
@@ -695,7 +695,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam, hogy „utállak”, miközben pont ez volt a flört",
+    "text": "vallottam be valamit poénnak álcázva, hogy szükség esetén vissza tudjam vonni",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 70
@@ -705,7 +705,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vallottam be valamit „poénból”, hogy ha rosszul sül el, vissza tudjam vonni",
+    "text": "flörtöltem úgy, hogy a barátaim már élőben kommentálták",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 71
@@ -715,7 +715,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "flörtöltem úgy, hogy a barátaim már élőben narrálták",
+    "text": "dicsértem meg valaki ruháját csak azért, hogy flörtöljek vele",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 72
@@ -725,7 +725,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "bókoltam ruhára flört közben",
+    "text": "próbáltam komolyan beszélgetni valakivel, aki túl jól nézett ki ahhoz, hogy figyelni tudjak",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 73
@@ -735,7 +735,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "próbáltam komolyan beszélgetni valakivel, aki túl jól nézett ki hozzá(m)",
+    "text": "mondtam valakire, hogy „nem az esetem”, majd két ital és egy mosoly után meggondoltam magam",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 74
@@ -745,7 +745,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam, hogy „nem az esetem”, majd két ital és egy mosoly után átértékeltem",
+    "text": "csókolóztam valakivel úgy, hogy már közben tudtam: ezt később magyarázni kell",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 75
@@ -755,7 +755,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csókolóztam valakivel úgy, hogy már közben tudtam: ezt majd magyarázni kell",
+    "text": "kerültem olyan helyzetbe, hogy a barátaim előbb tudták, kivel fogok kavarni, mint én",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 76
@@ -765,7 +765,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam olyan helyzetben, hogy a barátaim előbb tudták, kivel fogok kavarni, mint én",
+    "text": "fantáziáltam valakiről, akiről tudtam, hogy nagyon rossz ötlet",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 77
@@ -775,7 +775,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "fantáziáltam valakiről, akiről tudtam, hogy nagyon rossz ötlet",
+    "text": "kértem meg valakit, hogy nézzen meg rajtam valamit, csak azért, hogy közelebb jöjjön",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 78
@@ -785,7 +785,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vettem ürügyként egy ruhadarabot, hogy hozzáérhessek valakihez",
+    "text": "mondtam valakinek, hogy „jaj, van rajtad valami”, csak azért, hogy hozzáérhessek",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 79
@@ -795,7 +795,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kértem meg valakit, hogy nézzen meg rajtam valamit, csak hogy közelebb jöjjön",
+    "text": "flörtöltem valakivel úgy, hogy tudtam, kapcsolatban van",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 80
@@ -805,7 +805,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam, hogy „jaj, rajtad van valami”, csak hogy hozzáérhessek",
+    "text": "meséltem el egy pikáns történetet úgy, hogy a legfontosabb részt kihagytam",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 81
@@ -815,7 +815,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "flörtöltem úgy, hogy a másik foglalt volt",
+    "text": "kérdeztem rá túl lelkesen egy pikáns részletre",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 82
@@ -825,7 +825,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "meséltem el egy spicy sztorit úgy, hogy kihagytam a legfontosabb részt",
+    "text": "csináltam valamit csak azért, mert tudtam, hogy később jó történet lesz belőle",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 83
@@ -835,7 +835,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kérdeztem rá valami spicy részletre túl nagy lelkesedéssel",
+    "text": "mentem bele egy kavarásba úgy, hogy előre tudtam: ebből csoportchat-téma lesz",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 84
@@ -845,7 +845,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csináltam valamit csak azért, mert tudtam, hogy később jó sztori lesz",
+    "text": "próbáltam kitörni a barátzónából",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 85
@@ -855,7 +855,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mentem bele egy kavarásba úgy, hogy már előre tudtam: ebből csoportchat-téma lesz",
+    "text": "mondtam valakire, hogy „csak barát”, miközben mindenki tudta, hogy ennél többről van szó",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 86
@@ -865,7 +865,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "próbáltam átfordítani egy friendzone-helyzetet",
+    "text": "követtem a kiszemeltemet azért, hogy kettesben „beszélgethessünk”",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 87
@@ -875,7 +875,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam, hogy „csak barát”, miközben a mondat már füstölt",
+    "text": "kértem egy kortyot csak azért, hogy a kiszemeltem után ihassak",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 88
@@ -885,7 +885,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "követtem kiszemeltet azért, hogy kettesben „beszéljünk”",
+    "text": "ültem valaki ölébe arra hivatkozva, hogy nem volt szék",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 89
@@ -895,7 +895,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kértem „egy kortyot” azért, hogy a kiszemeltem után igyak",
+    "text": "használtam társasjátékot ürügyként testi kontaktusra",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 90
@@ -905,7 +905,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "ültem valaki ölébe „mert nem volt szék”",
+    "text": "játszottam szándékosan bénán csak azért, hogy valaki segítsen",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 91
@@ -915,7 +915,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam társasjátékot ürügyként testi kontaktusra",
+    "text": "ajánlottam masszázst a kiszemeltemnek",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 92
@@ -925,7 +925,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "játszottam túl bénán, csak hogy valaki segítsen",
+    "text": "ültem valaki mellé „véletlenül” újra és újra ugyanazon az estén",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 93
@@ -935,7 +935,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "ajánlottam masszázst kiszemeltnek",
+    "text": "adtam oda valakinek a pulcsimat úgy, hogy igazából vissza sem akartam kapni",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 94
@@ -945,7 +945,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "ültem valaki mellé „véletlenül” sokadszor is ugyanazon az estén",
+    "text": "tartottam magamnál valaki pulcsiját túl sokáig érzelmi okokból",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 95
@@ -955,7 +955,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "adtam oda a pulcsim úgy, hogy vissza se akartam kapni",
+    "text": "kérdeztem meg valakitől, hogy „jó illatom van?”, miközben igazából őt akartam közelebb érezni",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 96
@@ -965,7 +965,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "tartottam meg valaki pulcsiját túl sokáig érzelmi okokból",
+    "text": "dicsértem meg valaki illatát gyanúsan lelkes hangsúllyal",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 97
@@ -975,7 +975,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kérdeztem meg, „jó illatom van?”, miközben csak a másikat akartam megszagolni",
+    "text": "használtam parfümöt tudatos csábítási fegyverként",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 98
@@ -985,7 +985,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "dicsértem meg valaki illatát túl gyanús hangsúllyal",
+    "text": "mentem vissza egy buliba csak azért, mert valaki még ott volt",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 99
@@ -995,7 +995,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam parfümöt stratégiai „fegyverként”",
+    "text": "táncoltam valaki közelében úgy, hogy az egyáltalán nem volt véletlen",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 100
@@ -1005,7 +1005,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mentem vissza egy buliba csak azért, mert valaki még ott volt",
+    "text": "énekeltem túl szenvedélyesen egy sort úgy, hogy azt valakinek címeztem",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 101
@@ -1015,7 +1015,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "táncoltam valaki közelében úgy, hogy az nem volt véletlen",
+    "text": "használtam a karaokét flörtölésre",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 102
@@ -1025,7 +1025,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "énekeltem túl szenvedélyesen egy sort valakinek címezve",
+    "text": "vágtam ki másokat egy képről azért, hogy csak ketten maradjunk rajta",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 103
@@ -1035,7 +1035,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam karaoke-t flörtölési bűncselekményre",
+    "text": "posztoltam közös képet valakivel úgy, hogy annak üzenete volt",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 104
@@ -1045,7 +1045,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vágtam ki másokat egy képről, hogy ketten maradjunk rajta",
+    "text": "tettem ki történetet kifejezetten azért, hogy egy bizonyos ember lássa",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 105
@@ -1055,7 +1055,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "posztoltam közös képet úgy, hogy üzenetértéke volt",
+    "text": "reagáltam „véletlenül” valamire csak azért, hogy beszélgetést kezdhessek",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 106
@@ -1065,7 +1065,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam sztorit romantikus célzott lövedékként",
+    "text": "tettem úgy, mintha meglepne valami, amit már korábban kinyomoztam",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 107
@@ -1075,7 +1075,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam „véletlen” reakciót beszélgetésindításra",
+    "text": "mondtam, hogy „tényleg?”, miközben már láttam az egészet Instagramon",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 108
@@ -1085,7 +1085,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "játszottam meglepődést olyan infón, amit már kinyomoztam",
+    "text": "írtam meg előre egy választ a jegyzeteimbe, mert nem mertem elküldeni",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 109
@@ -1095,7 +1095,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam, hogy „tényleg?”, miközben már láttam Instagramon",
+    "text": "kaptam olyan tanácsot, amitől csak még kínosabban írtam vissza",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 110
@@ -1105,7 +1105,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "írtam meg a választ jegyzetekbe, mert elküldeni gyáva voltam",
+    "text": "oldottam fel valakit csak azért, hogy megnézzem, mi van vele",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 111
@@ -1115,7 +1115,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kaptam olyan tanácsot, amitől még kínosabban írtam vissza",
+    "text": "próbáltam elrontani egy alakuló kapcsolatot egy „ártatlan” megjegyzéssel",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 112
@@ -1125,7 +1125,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "oldottam fel valakit csak azért, hogy megnézzem, mi van vele",
+    "text": "mondtam valakinek, hogy „te jobbat érdemelsz”, miközben magamra gondoltam",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 113
@@ -1135,7 +1135,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "próbáltam elrontani egy alakuló dolgot egy „ártatlan” megjegyzéssel",
+    "text": "használtam egy búcsúölelést próbaként",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 114
@@ -1145,7 +1145,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam valakinek, hogy „te jobbat érdemelsz”, miközben magamra gondoltam",
+    "text": "öleltem meg valakit úgy, hogy utána már máshogy néztünk egymásra",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 115
@@ -1155,7 +1155,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam búcsúölelést próbaként",
+    "text": "öltöztem úgy buliba, hogy a szettem egy konkrét embernek szólt",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 116
@@ -1165,7 +1165,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "öleltem meg valakit úgy, hogy utána máshogy néztünk egymásra",
+    "text": "választottam parfümöt egy konkrét kiszemelt kedvéért",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 117
@@ -1175,7 +1175,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "öltöztem úgy buliba, hogy egy konkrét embernek szólt az outfit",
+    "text": "ittam bele valaki italába csak a közös pohár romantikája miatt",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 118
@@ -1185,7 +1185,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "választottam parfümöt célcsoport alapján",
+    "text": "kérdeztem meg, hogy „ez milyen koktél?”, miközben igazából inkább az illető érdekelt",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 119
@@ -1195,7 +1195,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "ittam bele valaki italába csak a közös pohár romantikája miatt",
+    "text": "kínáltam meg valakit az italomból túl sok szemkontaktussal",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 120
@@ -1205,7 +1205,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kérdeztem meg, „ez milyen koktél?”, miközben inkább ő érdekelt",
+    "text": "játszottam gyengén egy ivós játékban csak azért, hogy valaki segítsen",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 121
@@ -1215,7 +1215,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "ajánlottam megkóstolásra az italomat túl sok szemkontaktussal",
+    "text": "választottam be valakit egy játékba csak azért, mert tetszett",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 122
@@ -1225,7 +1225,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "játszottam gyengét ivós játékban, hogy valaki „segítsen”",
+    "text": "használtam ivós játékot arra, hogy romantikus információkat szerezzek valakiről",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 123
@@ -1235,7 +1235,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "választottam be valakit játékba csak azért, mert tetszett",
+    "text": "küldtem „véletlenül” képet valakinek csak azért, hogy beszélgetést kezdjek",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 124
@@ -1245,7 +1245,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam ivós játékot romantikai adatgyűjtésre",
+    "text": "cseréltem profilképet azért, hogy valaki felfigyeljen rám",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 125
@@ -1255,7 +1255,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam „véletlen” képküldést beszélgetésindításra",
+    "text": "sértődtem meg azon, hogy valaki nem nézte meg a történetemet",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 126
@@ -1265,7 +1265,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "cseréltem profilképet stratégiai okból",
+    "text": "nyomoztam ki valaki kedvenc helyét, majd mentem oda „véletlenül”",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 127
@@ -1275,7 +1275,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "sértődtem meg azon, hogy valaki nem nézte meg a sztorimat",
+    "text": "meséltem el egy kavarást úgy, mintha előtte védőbeszédet tartanék magam mellett",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 128
@@ -1285,7 +1285,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "nyomoztam ki valaki kedvenc helyét, majd „véletlenül” oda mentem",
+    "text": "ittam mosolyogva olyan kérdésre, amelynél mindenki rám nézett",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 129
@@ -1295,7 +1295,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "meséltem el úgy egy kavarást, hogy előtte jogi védőbeszédet tartottam",
+    "text": "voltam a társaságban az, akire mindenki azt mondta: „na, te biztos”",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 130
@@ -1305,7 +1305,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "ittam mosolyogva olyan kérdésre, ahol mindenki rám nézett",
+    "text": "kérdeztem meg, hogy „mennyit láttatok?”, amikor már úgyis mindegy volt",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 131
@@ -1315,7 +1315,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam a társaság „na, te biztos” embere",
+    "text": "kaptam másnap olyan üzenetet, hogy „beszélnünk kell”, amitől megállt bennem az ütő",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 132
@@ -1325,7 +1325,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kérdeztem meg, „mennyit láttatok?”, miután már mindegy volt",
+    "text": "flörtöltem csak unalomból",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 133
@@ -1335,7 +1335,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kaptam másnap olyan üzenetet, hogy „beszélnünk kell”, és lefagyott a lelkem",
+    "text": "mondtam rossz nevet flörtölés közben",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 134
@@ -1345,7 +1345,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "flörtöltem unalomból",
+    "text": "használtam a „merre van a mosdó?” kérdést flörtölésre",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 135
@@ -1355,7 +1355,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csináltam valamit azért, hogy később legendásan mesélhető legyen",
+    "text": "adtam vissza valamit késve csak azért, mert jó ürügy volt az újabb találkozásra",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 136
@@ -1365,7 +1365,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mondtam rossz nevet flört közben",
+    "text": "hagytam ott szándékosan valamit valakinél, hogy legyen okom újra találkozni vele",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 137
@@ -1375,7 +1375,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam a „hol van a mosdó?” kérdést flörtölés közben",
+    "text": "tartottam túl sokáig a szemkontaktust, majd tettem úgy, mintha csak elgondolkodtam volna",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 138
@@ -1385,7 +1385,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "adtam vissza valamit késve, mert jó ürügy volt újra találkozni",
+    "text": "hallottam vagy láttam a szüleimet intim helyzetben",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 139
@@ -1395,7 +1395,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "hagytam ott direkt valamit valakinél, hogy legyen második felvonás",
+    "text": "álmodoztam a legjobb barátom párjáról vagy a párom legjobb barátjáról",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 140
@@ -1405,7 +1405,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "tartottam túl hosszú szemkontaktust, majd úgy tettem, mintha csak gondolkodnék",
+    "text": "színleltem orgazmust",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 141
@@ -1415,7 +1415,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "hallottam/láttam szexszelni a szüleimet",
+    "text": "bámultam meg egy velem azonos nemű ember fenekét",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 142
@@ -1425,7 +1425,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "álmodoztam a legjobb barátom párjáról / a párom legjobb barátjáról",
+    "text": "csaltam meg a páromat",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 143
@@ -1435,7 +1435,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "színleltem orgazmust",
+    "text": "vettem be, vagy vettem a páromnak esemény utáni tablettát",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 144
@@ -1445,7 +1445,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "bámultam meg egy azonos nemű fenekét",
+    "text": "fizettem szexuális szolgáltatásért",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 145
@@ -1455,7 +1455,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csaltam meg a párom",
+    "text": "flörtöltem tanárral",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 146
@@ -1465,7 +1465,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vettem be / vettem a barátnőmnek eseményutáni tablettát",
+    "text": "szerettem bele külföldi fiúba vagy lányba",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 147
@@ -1475,7 +1475,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "fizettem szexuális szolgáltatásért",
+    "text": "mentem utcára látványosan kiszívott nyakkal",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 148
@@ -1485,7 +1485,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "flörtöltem tanárral",
+    "text": "vettem el senkinek a szüzességét",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 149
@@ -1495,7 +1495,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam külföldi fiúba/lányba szerelmes",
+    "text": "voltam egyéjszakás kalandban",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 150
@@ -1505,7 +1505,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "léptem utcára látványosan kiszívott nyakkal",
+    "text": "csókolóztam részegen",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 151
@@ -1515,7 +1515,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vettem el senkinek a szüzességét",
+    "text": "szexeltem úgy, hogy más is a közelben volt",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 152
@@ -1525,7 +1525,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "volt egyéjszakás kalandom",
+    "text": "flörtöltem tinédzserként nálam jóval idősebb emberrel",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 153
@@ -1535,7 +1535,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csókolóztam részegen",
+    "text": "vallottam szerelmet olyannak, aki visszautasított",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 154
@@ -1545,7 +1545,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "dugtam úgy, hogy nem egyedül voltunk az adott helyen",
+    "text": "néztem olyan típusú pornót, amelyet a tőlem jobbra ülő talál ki",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 155
@@ -1555,7 +1555,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "flörtöltem tiniként nálam jóval idősebb emberrel",
+    "text": "szexeltem a barátom vagy barátnőm exével",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 156
@@ -1565,7 +1565,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vallottam szerelmet olyannak, aki visszautasított",
+    "text": "csináltam terhességi tesztet. Ha miattad kellett, igyál kettőt!",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 157
@@ -1575,7 +1575,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "néztem Vmilyen típusú pornót. Ezt a melletted jobbra ülő találja ki",
+    "text": "ettem ételt valaki meztelen testéről",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 158
@@ -1585,7 +1585,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "szexszeltem barátom/barátnőm exével",
+    "text": "csókolóztam velem azonos nemű emberrel",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 159
@@ -1595,7 +1595,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csináltam terhességi tesztet (ha miattad kellett 2-t igyál)",
+    "text": "szexeltem az exemmel a szakításunk után",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 160
@@ -1605,7 +1605,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "ettem ételt senki meztelen testéről",
+    "text": "szexeltem vécében",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 161
@@ -1615,7 +1615,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "csókolóztam azonos neművel",
+    "text": "használtam szexuális játékszert",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 162
@@ -1625,7 +1625,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "szexszeltem exszel (szakítás után)",
+    "text": "kerültem olyan helyzetbe, hogy rám nyitottak intim együttlét közben",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 163
@@ -1635,7 +1635,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "szexszeltem WC-n",
+    "text": "szagoltam bele más használt alsóneműjébe. Ha idegenébe, igyál duplát!",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 164
@@ -1645,7 +1645,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam szexuális játékot",
+    "text": "feküdtem le egyszerre egynél több emberrel",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 165
@@ -1655,7 +1655,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam olyan helyzetben, hogy rám nyitottak huncutkodás közben",
+    "text": "szólítottam rossz néven a páromat vagy az exemet",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 166
@@ -1665,7 +1665,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "szagoltam bele más használt alsóneműjébe. Ha idegenébe duplát igyál!",
+    "text": "használtam anális dugót",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 167
@@ -1675,7 +1675,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "feküdtem le egynél több személlyel egy időben",
+    "text": "fizettem felnőtteknek szóló tartalomért",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 168
@@ -1685,7 +1685,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "szólítottam rossz néven a párom/exem",
+    "text": "kaptam meztelen képet idegentől",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 169
@@ -1695,7 +1695,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam anal plugot",
+    "text": "jártam felnőttboltban",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 170
@@ -1705,7 +1705,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "fizettem felnőtt tartalomért",
+    "text": "voltam nudista strandon",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 171
@@ -1715,7 +1715,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kaptam meztelen képet idegentől",
+    "text": "vittem két különböző embert ugyanarra a randihelyszínre. Ha mégis, annyit igyál, ahány kiszemeltet odavittél!",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 172
@@ -1725,7 +1725,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam felnőtt boltban",
+    "text": "fingottam hangosan szex közben",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 173
@@ -1735,7 +1735,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam nudista strandon",
+    "text": "kerestem kifogást egy ondófoltra",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 174
@@ -1745,7 +1745,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vittem két külön embert ugyanarra a randihelyszínre. Ha mégis, annyit igyál, ahány kiszemeltedet vittél",
+    "text": "használtam Viagrát vagy más vágyfokozót",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 175
@@ -1755,7 +1755,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "sérültem meg rosszalkodás körben",
+    "text": "használtam ételt erotikus kellékként",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 176
@@ -1765,7 +1765,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "fingottam szex közben hangosan",
+    "text": "hazudtam arról, hány emberrel feküdtem le",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 177
@@ -1775,7 +1775,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kerestem kifogást ondófoltra",
+    "text": "szexeltem olyan hangosan, hogy szólt miatta a szomszéd",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 178
@@ -1785,7 +1785,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam viagrát, vagy egyéb vágyfokozót",
+    "text": "futottam össze az exemmel egy randi közben",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 179
@@ -1795,7 +1795,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "használtam ételt, mint „segédeszköz”",
+    "text": "hagytam ott egy bulit azért, hogy valakivel kettesben menjek tovább",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 180
@@ -1805,7 +1805,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "hazudtam a body countomról",
+    "text": "mentettem el képernyőképként a szerelmem üzeneteit",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 181
@@ -1815,7 +1815,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "szexszeltem olyan hangosan, hogy szólt a szomszéd",
+    "text": "hazudtam magamról egy randin azért, hogy érdekesebbnek tűnjek",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 182
@@ -1825,7 +1825,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "futottam össze randin egy exszel",
+    "text": "kerültem olyan helyzetbe, hogy nyilvánosan kikerüljön rólam egy meztelen kép",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 183
@@ -1835,7 +1835,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "hagytam el egy bulit azért, hogy valakivel egy privátabb helyre menjek",
+    "text": "játszottam vetkőzős társasjátékot",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 184
@@ -1845,7 +1845,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "mentettem el a szerelmem üzeneteiről képernyőképeket",
+    "text": "videóztam le magam szex közben",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 185
@@ -1855,7 +1855,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "hazudtam semmiről egy randin, hogy érdekesebbnek tűnjek",
+    "text": "voltam nyitott kapcsolatban",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 186
@@ -1865,7 +1865,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kerültem olyan helyzetbe, hogy nyilvánosan került ki rólam pucér kép",
+    "text": "nyaltam le alkoholt más testéről",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 187
@@ -1875,7 +1875,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "játszottam vetkőzős társast",
+    "text": "próbáltam nyakörvet vagy pórázt. Ha valakire rá is adtad, igyál duplát!",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 188
@@ -1885,7 +1885,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "filmeztem le magam szex közben",
+    "text": "küldtem meztelen képet idegennek",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 189
@@ -1895,7 +1895,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam nyílt kapcsolatban",
+    "text": "én voltam az, aki szakított",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 190
@@ -1905,7 +1905,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "nyaltam le alkoholt más testéről",
+    "text": "vettem részt orgián",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 191
@@ -1915,7 +1915,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "próbáltam nyakörvet, pórázt",
+    "text": "regisztráltam OnlyFansre",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 192
@@ -1925,7 +1925,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "küldtem meztelen fotót idegennek",
+    "text": "használtam szexuális játékszert partnerrel",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 193
@@ -1935,7 +1935,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "voltam a szakító fél",
+    "text": "maszturbáltam hentai tartalomra",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 194
@@ -1945,7 +1945,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "vettem részt orgián",
+    "text": "feküdtem le egy haverom párjával",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 195
@@ -1955,10 +1955,830 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "regisztráltam OnlyFansre",
+    "text": "vágytam arra, hogy nagyobb legyen a péniszem",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 196
+  },
+  {
+    "id": "bold-pikans-v2-never-197",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "próbáltam anális-orális szexuális gyakorlatot",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 197
+  },
+  {
+    "id": "bold-pikans-v2-never-198",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "vásároltam szexuális játékszert",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 198
+  },
+  {
+    "id": "bold-pikans-v2-never-199",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "maszturbáltam zuhanyrózsával",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 199
+  },
+  {
+    "id": "bold-pikans-v2-never-200",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "vonzódtam szexuálisan valamelyik családtagomhoz",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 200
+  },
+  {
+    "id": "bold-pikans-v2-never-201",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "flörtöltem mással párkapcsolatban",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 201
+  },
+  {
+    "id": "bold-pikans-v2-never-202",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "vettem részt négyfős csoportos szexben",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 202
+  },
+  {
+    "id": "bold-pikans-v2-never-203",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "vágytam cukormamára",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 203
+  },
+  {
+    "id": "bold-pikans-v2-never-204",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "köptem le valakit szex közben",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 204
+  },
+  {
+    "id": "bold-pikans-v2-never-205",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "hazudtam a súlyomról azért, hogy vonzóbbnak tűnjek",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 205
+  },
+  {
+    "id": "bold-pikans-v2-never-206",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "létesítettem orális kapcsolatot vadidegennel",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 206
+  },
+  {
+    "id": "bold-pikans-v2-never-207",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "voltam hármasban két férfival",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 207
+  },
+  {
+    "id": "bold-pikans-v2-never-208",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "próbáltam saját magamon anális ujjazást",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 208
+  },
+  {
+    "id": "bold-pikans-v2-never-209",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "vágytam saját BDSM-szobára otthon",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 209
+  },
+  {
+    "id": "bold-pikans-v2-never-210",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "hazudtam a magasságomról flörtölés miatt",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 210
+  },
+  {
+    "id": "bold-pikans-v2-never-211",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "küldtem intim képet internetes ismerősnek",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 211
+  },
+  {
+    "id": "bold-pikans-v2-never-212",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "néztem transz pornót",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 212
+  },
+  {
+    "id": "bold-pikans-v2-never-213",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "húztam meg valakinek a haját szex közben",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 213
+  },
+  {
+    "id": "bold-pikans-v2-never-214",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "szorultam orvosi ellátásra szex után",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 214
+  },
+  {
+    "id": "bold-pikans-v2-never-215",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "ajánlottam pénzt szexért",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 215
+  },
+  {
+    "id": "bold-pikans-v2-never-216",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "vettem a számba alsóneműt",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 216
+  },
+  {
+    "id": "bold-pikans-v2-never-217",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "léptem le egy randi közben",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 217
+  },
+  {
+    "id": "bold-pikans-v2-never-218",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "fontolgattam, hogy szexmunkából keressek pénzt",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 218
+  },
+  {
+    "id": "bold-pikans-v2-never-219",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "lestem meg titokban valakit öltözködés közben",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 219
+  },
+  {
+    "id": "bold-pikans-v2-never-220",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "voltam hármasban két nővel",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 220
+  },
+  {
+    "id": "bold-pikans-v2-never-221",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "próbáltam nyilvános helyen eltakarni a merevedésemet",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 221
+  },
+  {
+    "id": "bold-pikans-v2-never-222",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "próbáltam tárgyat mélyen a torkomba venni",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 222
+  },
+  {
+    "id": "bold-pikans-v2-never-223",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "mentem egyedül szórakozóhelyre alkalmi szexet keresni",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 223
+  },
+  {
+    "id": "bold-pikans-v2-never-224",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "használtam ízesített óvszert",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 224
+  },
+  {
+    "id": "bold-pikans-v2-never-225",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "szexeltem vízben",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 225
+  },
+  {
+    "id": "bold-pikans-v2-never-226",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "hívtam erotikus telefonos szolgáltatást",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 226
+  },
+  {
+    "id": "bold-pikans-v2-never-227",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "kóstoltam vagy nyeltem ondót",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 227
+  },
+  {
+    "id": "bold-pikans-v2-never-228",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "kóstoltam vizeletet",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 228
+  },
+  {
+    "id": "bold-pikans-v2-never-229",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "csókolóztam közvetlenül hányás után",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 229
+  },
+  {
+    "id": "bold-pikans-v2-never-230",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "voltam szexuális zaklatás áldozata",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 230
+  },
+  {
+    "id": "bold-pikans-v2-never-231",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "fantáziáltam a párom egyik rokonáról",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 231
+  },
+  {
+    "id": "bold-pikans-v2-never-232",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "akartam végignézni, ahogy a párom mással szexel",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 232
+  },
+  {
+    "id": "bold-pikans-v2-never-233",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "szedtem fel pultost, és sosem feküdtem le vele",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 233
+  },
+  {
+    "id": "bold-pikans-v2-never-234",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "hazudtam a péniszem méretéről",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 234
+  },
+  {
+    "id": "bold-pikans-v2-never-235",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "használtam ki egy részeg embert",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 235
+  },
+  {
+    "id": "bold-pikans-v2-never-236",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "feküdtem le nálam sokkal idősebb emberrel",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 236
+  },
+  {
+    "id": "bold-pikans-v2-never-237",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "néztem élőben másokat szex közben",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 237
+  },
+  {
+    "id": "bold-pikans-v2-never-238",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "vágytam intim piercingre",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 238
+  },
+  {
+    "id": "bold-pikans-v2-never-239",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "kaptam olyan ajánlatot, hogy fizetnének nekem a szexért",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 239
+  },
+  {
+    "id": "bold-pikans-v2-never-240",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "tömtem ki a melltartómat azért, hogy nagyobbnak tűnjön a mellem",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 240
+  },
+  {
+    "id": "bold-pikans-v2-never-241",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "maszturbáltam rajzfilmfigurára",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 241
+  },
+  {
+    "id": "bold-pikans-v2-never-242",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "gondoltam az exemre, miközben az aktuális párommal voltam együtt",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 242
+  },
+  {
+    "id": "bold-pikans-v2-never-243",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "adtam meg hamis telefonszámot valakinek",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 243
+  },
+  {
+    "id": "bold-pikans-v2-never-244",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "készítettem meztelen képet valakiről",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 244
+  },
+  {
+    "id": "bold-pikans-v2-never-245",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "szivárogtattam ki más intim képét",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 245
+  },
+  {
+    "id": "bold-pikans-v2-never-246",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "csókolóztam a barátom testvérével",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 246
+  },
+  {
+    "id": "bold-pikans-v2-never-247",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "találtam ki kamu vészhelyzetet csak azért, hogy leléphessek egy rossz randiról",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 247
+  },
+  {
+    "id": "bold-pikans-v2-never-248",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "szexeltem konyhapulton",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 248
+  },
+  {
+    "id": "bold-pikans-v2-never-249",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "kaptam fojtogatást vagy pofont szex közben",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 249
+  },
+  {
+    "id": "bold-pikans-v2-never-250",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "feküdtem le házas vagy kapcsolatban élő emberrel",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 250
+  },
+  {
+    "id": "bold-pikans-v2-never-251",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "jártam sztriptízbárban",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 251
+  },
+  {
+    "id": "bold-pikans-v2-never-252",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "írtam részegen az exemnek buli közben",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 252
+  },
+  {
+    "id": "bold-pikans-v2-never-253",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "szexeltem nyilvános parkban",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 253
+  },
+  {
+    "id": "bold-pikans-v2-never-254",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "voltam megkötözve szex közben",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 254
+  },
+  {
+    "id": "bold-pikans-v2-never-255",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "ébredtem arra, hogy valaki orálisan kényeztet",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 255
+  },
+  {
+    "id": "bold-pikans-v2-never-256",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "mentem buliba melltartó nélkül",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 256
+  },
+  {
+    "id": "bold-pikans-v2-never-257",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "tetettem piercinget intim testrészre vagy mellbimbóra",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 257
+  },
+  {
+    "id": "bold-pikans-v2-never-258",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "vettem fel poénból a barátnőm melltartóját",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 258
+  },
+  {
+    "id": "bold-pikans-v2-never-259",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "hazudtam arról, hogyan veszítettem el a szüzességemet",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 259
+  },
+  {
+    "id": "bold-pikans-v2-never-260",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "hordtam magamnál óvszert biztonsági tartalékként",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 260
+  },
+  {
+    "id": "bold-pikans-v2-never-261",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "mentem buliba alsónemű nélkül",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 261
+  },
+  {
+    "id": "bold-pikans-v2-never-262",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "beszéltem a szexuális életemről a szüleimmel",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 262
+  },
+  {
+    "id": "bold-pikans-v2-never-263",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "loptam el más alsóneműjét",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 263
+  },
+  {
+    "id": "bold-pikans-v2-never-264",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "gondolkodtam állattal kapcsolatos szexuális fantázián",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 264
+  },
+  {
+    "id": "bold-pikans-v2-never-265",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "szexeltem játszótéren",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 265
+  },
+  {
+    "id": "bold-pikans-v2-never-266",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "fantáziáltam szexuálisan a tanáromról",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 266
+  },
+  {
+    "id": "bold-pikans-v2-never-267",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "létesítettem orális kapcsolatot velem azonos nemű emberrel",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 267
+  },
+  {
+    "id": "bold-pikans-v2-never-268",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "szexeltem más bőrszínű emberrel",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 268
+  },
+  {
+    "id": "bold-pikans-v2-never-269",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "feküdtem le valakivel az első randin",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 269
+  },
+  {
+    "id": "bold-pikans-v2-never-270",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "néztem pornót más emberrel közösen",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 270
+  },
+  {
+    "id": "bold-pikans-v2-never-271",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "randiztam valakivel csak azért, hogy féltékennyé tegyem az exemet",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 271
+  },
+  {
+    "id": "bold-pikans-v2-never-272",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "hazudtam azt, hogy van párom, csak azért, hogy békén hagyjanak",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 272
+  },
+  {
+    "id": "bold-pikans-v2-never-273",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "hazudtam magamról egy társkeresős profilban",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 273
+  },
+  {
+    "id": "bold-pikans-v2-never-274",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "csókolóztam a barátom vagy barátnőm exével",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 274
+  },
+  {
+    "id": "bold-pikans-v2-never-275",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "maszturbáltam játékszerrel vagy más tárggyal",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 275
+  },
+  {
+    "id": "bold-pikans-v2-never-276",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "voltam teljesen meztelen nyilvános helyen",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 276
+  },
+  {
+    "id": "bold-pikans-v2-never-277",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "akartam újra találkozni az exemmel",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 277
+  },
+  {
+    "id": "bold-pikans-v2-never-278",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "játszottam más érzéseivel",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 278
   },
   {
     "id": "bold-pikans-v2-duel-001",
@@ -1968,7 +2788,7 @@ export const boldCards = [
     "text": "Soroljatok kifogásokat, amivel le lehet mondani egy randit",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 197
+    "sortOrder": 279
   },
   {
     "id": "bold-pikans-v2-duel-002",
@@ -1978,7 +2798,7 @@ export const boldCards = [
     "text": "Soroljatok red flageket egy kapcsolat elején",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 198
+    "sortOrder": 280
   },
   {
     "id": "bold-pikans-v2-duel-003",
@@ -1988,7 +2808,7 @@ export const boldCards = [
     "text": "Soroljatok dolgokat, amiket nem kéne részegen elküldeni",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 199
+    "sortOrder": 281
   },
   {
     "id": "bold-pikans-v2-duel-004",
@@ -1998,617 +2818,527 @@ export const boldCards = [
     "text": "Soroljatok kínos randiszituációkat",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 200
+    "sortOrder": 282
   },
   {
     "id": "bold-pikans-v2-duel-005",
-    "mode": "bold",
-    "kind": "duel",
-    "title": "Ki a felszedőszöveg-bűnöző?",
-    "text": "Soroljatok béna felszedőszövegeket",
-    "durationSeconds": 30,
-    "category": "Pikáns",
-    "sortOrder": 201
-  },
-  {
-    "id": "bold-pikans-v2-duel-006",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki flörtöt lát a számlában is?",
     "text": "Soroljatok jeleket, hogy valaki flörtöl veled",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 202
+    "sortOrder": 283
   },
   {
-    "id": "bold-pikans-v2-duel-007",
+    "id": "bold-pikans-v2-duel-006",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a randirombolás Picassója?",
     "text": "Soroljatok dolgokat, amik miatt egy randi azonnal elromlik",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 203
+    "sortOrder": 284
   },
   {
-    "id": "bold-pikans-v2-duel-008",
+    "id": "bold-pikans-v2-duel-007",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki hazudik elegánsabban?",
     "text": "Soroljatok indokokat, miért nem válaszol valaki órák óta",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 204
+    "sortOrder": 285
   },
   {
-    "id": "bold-pikans-v2-duel-009",
+    "id": "bold-pikans-v2-duel-008",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki az érzelmi FBI?",
     "text": "Soroljatok dolgokat, amiket mindenki megnéz egy crush profilján",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 205
+    "sortOrder": 286
   },
   {
-    "id": "bold-pikans-v2-duel-010",
+    "id": "bold-pikans-v2-duel-009",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki küldi el a másnapi szégyent?",
     "text": "Soroljatok tipikus üzeneteket, amiket valaki másnap reggel megbán",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 206
+    "sortOrder": 287
   },
   {
-    "id": "bold-pikans-v2-duel-011",
+    "id": "bold-pikans-v2-duel-010",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a féltékenység díszpolgára?",
     "text": "Soroljatok dolgokat, amikből látszik, hogy valaki féltékeny",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 207
+    "sortOrder": 288
   },
   {
-    "id": "bold-pikans-v2-duel-012",
+    "id": "bold-pikans-v2-duel-011",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki szakítana színházi bérlettel?",
     "text": "Soroljatok mondatokat, amiket szakítás után mondanak az emberek",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 208
+    "sortOrder": 289
   },
   {
-    "id": "bold-pikans-v2-duel-013",
+    "id": "bold-pikans-v2-duel-012",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki menne vissza a tűzhöz melegedni?",
     "text": "Soroljatok okokat, amiért valaki visszamegy az exéhez",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 209
+    "sortOrder": 290
   },
   {
-    "id": "bold-pikans-v2-duel-014",
-    "mode": "bold",
-    "kind": "duel",
-    "title": "Ki az „én szóltam” nagymestere?",
-    "text": "Soroljatok dolgokat, amiket egy barát mond, amikor rossz emberbe szeretsz bele",
-    "durationSeconds": 30,
-    "category": "Pikáns",
-    "sortOrder": 210
-  },
-  {
-    "id": "bold-pikans-v2-duel-015",
+    "id": "bold-pikans-v2-duel-013",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a Tinder-mesék Andersenje?",
     "text": "Soroljatok tipikus hazugságokat társkeresőn",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 211
+    "sortOrder": 291
   },
   {
-    "id": "bold-pikans-v2-duel-016",
+    "id": "bold-pikans-v2-duel-014",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki tud hallgatni aranyáron?",
     "text": "Soroljatok dolgokat, amiket nem kéne első randin elmondani",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 212
+    "sortOrder": 292
   },
   {
-    "id": "bold-pikans-v2-duel-017",
+    "id": "bold-pikans-v2-duel-015",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki futna bele az exébe tragikomédiában?",
     "text": "Soroljatok helyeket, ahol nagyon kínos lenne összefutni egy exszel",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 213
+    "sortOrder": 293
   },
   {
-    "id": "bold-pikans-v2-duel-018",
+    "id": "bold-pikans-v2-duel-016",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki tűnik el, mint apró a kanapén?",
     "text": "Soroljatok dolgokat, amik miatt valakit ghostolnak",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 214
+    "sortOrder": 294
   },
   {
-    "id": "bold-pikans-v2-duel-019",
+    "id": "bold-pikans-v2-duel-017",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a fejben szexi, élőben vészjelző?",
     "text": "Soroljatok dolgokat, amiket mindenki túl szexinek próbál előadni, de nem az",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 215
+    "sortOrder": 295
   },
   {
-    "id": "bold-pikans-v2-duel-020",
+    "id": "bold-pikans-v2-duel-018",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki bókolna büntetőjogilag aggályosan?",
     "text": "Soroljatok olyan bókokat, amik kétértelműen is hangozhatnak",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 216
+    "sortOrder": 296
   },
   {
-    "id": "bold-pikans-v2-duel-021",
+    "id": "bold-pikans-v2-duel-019",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki posztol célzottabban, mint egy reklám?",
     "text": "Soroljatok dolgokat, amiket valaki csak azért tesz ki sztoriba, hogy egy ember lássa",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 217
+    "sortOrder": 297
   },
   {
-    "id": "bold-pikans-v2-duel-022",
+    "id": "bold-pikans-v2-duel-020",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki lakik még az ex albérletében?",
     "text": "Soroljatok jeleket, hogy valaki még nincs túl az exén",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 218
+    "sortOrder": 298
   },
   {
-    "id": "bold-pikans-v2-duel-023",
+    "id": "bold-pikans-v2-duel-021",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki nézi „véletlenül” stratégiai pontossággal?",
     "text": "Soroljatok kifogásokat, miért „véletlenül” nézted meg valaki sztoriját",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 219
+    "sortOrder": 299
   },
   {
-    "id": "bold-pikans-v2-duel-024",
-    "mode": "bold",
-    "kind": "duel",
-    "title": "Ki allergiás a komolyra?",
-    "text": "Soroljatok tipikus mondatokat, amikor valaki nem akar elköteleződni",
-    "durationSeconds": 30,
-    "category": "Pikáns",
-    "sortOrder": 220
-  },
-  {
-    "id": "bold-pikans-v2-duel-025",
+    "id": "bold-pikans-v2-duel-022",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a párkapcsolati magánnyomozó?",
     "text": "Soroljatok dolgokat, amiket egy kapcsolatban titokban mindenki ellenőriz",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 221
+    "sortOrder": 300
   },
   {
-    "id": "bold-pikans-v2-duel-026",
+    "id": "bold-pikans-v2-duel-023",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki féltékeny a levegő molekuláira is?",
     "text": "Soroljatok okokat, miért lesz valaki féltékeny teljesen feleslegesen",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 222
+    "sortOrder": 301
   },
   {
-    "id": "bold-pikans-v2-duel-027",
+    "id": "bold-pikans-v2-duel-024",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki védi a gyanús „csak barátot”?",
     "text": "Soroljatok dolgokat, amik miatt valaki „csak barát”, de közben gyanús",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 223
+    "sortOrder": 302
   },
   {
-    "id": "bold-pikans-v2-duel-028",
+    "id": "bold-pikans-v2-duel-025",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki bohóckodna szerelemből doktori szinten?",
     "text": "Soroljatok dolgokat, amiket az ember megtesz, ha nagyon tetszik neki valaki",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 224
+    "sortOrder": 303
   },
   {
-    "id": "bold-pikans-v2-duel-029",
+    "id": "bold-pikans-v2-duel-026",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki szagolja ki a flörtöt?",
     "text": "Soroljatok tipikus jeleket, hogy egy beszélgetés flörtölésbe fordult",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 225
+    "sortOrder": 304
   },
   {
-    "id": "bold-pikans-v2-duel-030",
+    "id": "bold-pikans-v2-duel-027",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki szervez romantikus katasztrófát?",
     "text": "Soroljatok randiprogramokat, amik romantikusnak indulnak, de káosz lesz belőlük",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 226
+    "sortOrder": 305
   },
   {
-    "id": "bold-pikans-v2-duel-031",
+    "id": "bold-pikans-v2-duel-028",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki csókolna használati útmutatóval?",
     "text": "Soroljatok dolgokat, amitől egy csók nagyon kínos lehet",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 227
+    "sortOrder": 306
   },
   {
-    "id": "bold-pikans-v2-duel-032",
+    "id": "bold-pikans-v2-duel-029",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki mondaná ki a belső monológot?",
     "text": "Soroljatok olyan pillanatokat, amikor jobb lett volna csendben maradni",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 228
+    "sortOrder": 307
   },
   {
-    "id": "bold-pikans-v2-duel-033",
+    "id": "bold-pikans-v2-duel-030",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki ébredne erkölcsi másnapossággal?",
     "text": "Soroljatok dolgokat, amiket az ember megbán egy bulis este után",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 229
+    "sortOrder": 308
   },
   {
-    "id": "bold-pikans-v2-duel-034",
+    "id": "bold-pikans-v2-duel-031",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki nem féltékeny, csak jegyzőkönyvez?",
     "text": "Soroljatok tipikus „nem vagyok féltékeny, de…” mondatokat",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 230
+    "sortOrder": 309
   },
   {
-    "id": "bold-pikans-v2-duel-035",
+    "id": "bold-pikans-v2-duel-032",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki elemzi a régi chatet, mint krimit?",
     "text": "Soroljatok okokat, amiért valaki visszaolvassa a régi beszélgetéseket",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 231
+    "sortOrder": 310
   },
   {
-    "id": "bold-pikans-v2-duel-036",
+    "id": "bold-pikans-v2-duel-033",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki bukna le fénysebességgel?",
     "text": "Soroljatok dolgokat, amikből kiderül, hogy valaki titokban bejön neked",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 232
+    "sortOrder": 311
   },
   {
-    "id": "bold-pikans-v2-duel-037",
+    "id": "bold-pikans-v2-duel-034",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a hajnali érzelmi diszpécser?",
     "text": "Soroljatok tipikus baráti tanácsokat szerelmi drámára",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 233
+    "sortOrder": 312
   },
   {
-    "id": "bold-pikans-v2-duel-038",
+    "id": "bold-pikans-v2-duel-035",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki hozza a házibuli apokalipszist?",
     "text": "Soroljatok kínos dolgokat, amik megtörténhetnek egy házibuliban",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 234
+    "sortOrder": 313
   },
   {
-    "id": "bold-pikans-v2-duel-039",
+    "id": "bold-pikans-v2-duel-036",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki romantikus, de ijesztő mellékhatásokkal?",
     "text": "Soroljatok dolgokat, amik nagyon romantikusak lennének filmben, de élőben furák",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 235
+    "sortOrder": 314
   },
   {
-    "id": "bold-pikans-v2-duel-040",
+    "id": "bold-pikans-v2-duel-037",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki tagadna olimpiai szinten?",
     "text": "Soroljatok tipikus mondatokat, amikor valaki nem meri bevallani, hogy tetszik neki a másik",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 236
+    "sortOrder": 315
   },
   {
-    "id": "bold-pikans-v2-duel-041",
+    "id": "bold-pikans-v2-duel-038",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki ír vissza postagalambbal?",
     "text": "Soroljatok okokat, amiért valaki túl sokáig vár egy válasszal",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 237
+    "sortOrder": 316
   },
   {
-    "id": "bold-pikans-v2-duel-042",
+    "id": "bold-pikans-v2-duel-039",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a konyharomantika Gordon Ramsay-je?",
     "text": "Soroljatok konyhás flörtöket",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 238
+    "sortOrder": 317
   },
   {
-    "id": "bold-pikans-v2-duel-043",
+    "id": "bold-pikans-v2-duel-040",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a pultos ragadozó?",
     "text": "Soroljatok pultos nyomulásokat",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 239
+    "sortOrder": 318
   },
   {
-    "id": "bold-pikans-v2-duel-044",
-    "mode": "bold",
-    "kind": "duel",
-    "title": "Ki a tánctérbűvész?",
-    "text": "Soroljatok táncos trükköket",
-    "durationSeconds": 30,
-    "category": "Pikáns",
-    "sortOrder": 240
-  },
-  {
-    "id": "bold-pikans-v2-duel-045",
+    "id": "bold-pikans-v2-duel-041",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a bókok balesetise?",
     "text": "Soroljatok béna bókokat",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 241
+    "sortOrder": 319
   },
   {
-    "id": "bold-pikans-v2-duel-046",
+    "id": "bold-pikans-v2-duel-042",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a pult mágusa?",
     "text": "Soroljatok italos flörtöket",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 242
+    "sortOrder": 320
   },
   {
-    "id": "bold-pikans-v2-duel-047",
+    "id": "bold-pikans-v2-duel-043",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki az emoji-készlet erkölcsi mélypontja?",
     "text": "Soroljatok flörtös emojikat",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 243
+    "sortOrder": 321
   },
   {
-    "id": "bold-pikans-v2-duel-048",
+    "id": "bold-pikans-v2-duel-044",
     "mode": "bold",
     "kind": "duel",
     "title": "Süllyed a randi?",
     "text": "Soroljatok menekülőszavakat",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 244
+    "sortOrder": 322
   },
   {
-    "id": "bold-pikans-v2-duel-049",
+    "id": "bold-pikans-v2-duel-045",
     "mode": "bold",
     "kind": "duel",
     "title": "Red flag vagy dekoráció?",
     "text": "Soroljatok red flageket",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 245
+    "sortOrder": 323
   },
   {
-    "id": "bold-pikans-v2-duel-050",
+    "id": "bold-pikans-v2-duel-046",
     "mode": "bold",
     "kind": "duel",
     "title": "Project X elszabadul?",
-    "text": "Soroljatok házibulis káoszokat",
+    "text": "Soroljatok házibulis őrultségeket",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 246
+    "sortOrder": 324
   },
   {
-    "id": "bold-pikans-v2-duel-051",
-    "mode": "bold",
-    "kind": "duel",
-    "title": "Lakótárs látta, hallotta?",
-    "text": "Soroljatok kínos lakótárs-helyzeteket",
-    "durationSeconds": 30,
-    "category": "Pikáns",
-    "sortOrder": 247
-  },
-  {
-    "id": "bold-pikans-v2-duel-052",
-    "mode": "bold",
-    "kind": "duel",
-    "title": "Ki a smárutóvéd?",
-    "text": "Soroljatok csók utáni mondatokat",
-    "durationSeconds": 30,
-    "category": "Pikáns",
-    "sortOrder": 248
-  },
-  {
-    "id": "bold-pikans-v2-duel-053",
+    "id": "bold-pikans-v2-duel-047",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a nyaknyom-kozmetikus?",
     "text": "Soroljatok eltakarási módszereket a kiszívott foltokra",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 249
+    "sortOrder": 325
   },
   {
-    "id": "bold-pikans-v2-duel-054",
-    "mode": "bold",
-    "kind": "duel",
-    "title": "Ez most célzás volt?",
-    "text": "Soroljatok kétértelmű flörtöket",
-    "durationSeconds": 30,
-    "category": "Pikáns",
-    "sortOrder": 250
-  },
-  {
-    "id": "bold-pikans-v2-duel-055",
+    "id": "bold-pikans-v2-duel-048",
     "mode": "bold",
     "kind": "duel",
     "title": "Randi vége három szóban?",
     "text": "Soroljatok randigyilkos dolgokat",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 251
+    "sortOrder": 326
   },
   {
-    "id": "bold-pikans-v2-duel-056",
+    "id": "bold-pikans-v2-duel-049",
     "mode": "bold",
     "kind": "duel",
     "title": "Tindermese jöhet?",
     "text": "Soroljatok profilhazugságokat",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 252
+    "sortOrder": 327
   },
   {
-    "id": "bold-pikans-v2-duel-057",
-    "mode": "bold",
-    "kind": "duel",
-    "title": "Ki a szemináriumcsábász?",
-    "text": "Soroljatok órás flörtöket",
-    "durationSeconds": 30,
-    "category": "Pikáns",
-    "sortOrder": 253
-  },
-  {
-    "id": "bold-pikans-v2-duel-058",
-    "mode": "bold",
-    "kind": "duel",
-    "title": "Rossz ötlet, jó sztori?",
-    "text": "Soroljatok tiltott párkapcsolati ötleteket",
-    "durationSeconds": 30,
-    "category": "Pikáns",
-    "sortOrder": 254
-  },
-  {
-    "id": "bold-pikans-v2-duel-059",
+    "id": "bold-pikans-v2-duel-050",
     "mode": "bold",
     "kind": "duel",
     "title": "Bizonyíték maradt?",
     "text": "Soroljatok törlendő dolgokat",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 255
+    "sortOrder": 328
   },
   {
-    "id": "bold-pikans-v2-duel-060",
+    "id": "bold-pikans-v2-duel-051",
     "mode": "bold",
     "kind": "duel",
-    "title": "Kivágjuk az exet?",
+    "title": "Kivágjuk az exszet?",
     "text": "Soroljatok képről kivágandókat",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 256
+    "sortOrder": 329
   },
   {
-    "id": "bold-pikans-v2-duel-061",
+    "id": "bold-pikans-v2-duel-052",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a „nemkéne” specialista?",
     "text": "Soroljatok „nemkéne” randin dolgokat",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 257
+    "sortOrder": 330
   },
   {
-    "id": "bold-pikans-v2-duel-062",
+    "id": "bold-pikans-v2-duel-053",
     "mode": "bold",
     "kind": "duel",
     "title": "Az ital valóban szépít?",
     "text": "Soroljatok ital utáni programokat",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 258
+    "sortOrder": 331
   },
   {
-    "id": "bold-pikans-v2-duel-063",
+    "id": "bold-pikans-v2-duel-054",
     "mode": "bold",
     "kind": "duel",
     "title": "Lámpa le, sztori fel?",
     "text": "Soroljatok hangulatfokozókat",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 259
+    "sortOrder": 332
   },
   {
-    "id": "bold-pikans-v2-duel-064",
+    "id": "bold-pikans-v2-duel-055",
     "mode": "bold",
     "kind": "duel",
     "title": "Ki a randibohóc?",
-    "text": "Soroljatok kínos bemutatkozásokat",
+    "text": "Soroljatok elrontott dolgokat bemutatkozáskor",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 260
+    "sortOrder": 333
   },
   {
     "id": "bold-pikans-v2-roundtable-001",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Mik azok a mondatok, amikkel első randin ki lehet iratkozni a társadalomból?",
+    "text": "Mik azok a szavak, amikkel első randin ki lehet iratkozni a társadalomból?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 261
+    "sortOrder": 334
   },
   {
     "id": "bold-pikans-v2-roundtable-002",
@@ -2618,7 +3348,7 @@ export const boldCards = [
     "text": "Milyen red flagekre mondanátok, hogy „á, biztos nem para”?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 262
+    "sortOrder": 335
   },
   {
     "id": "bold-pikans-v2-roundtable-003",
@@ -2628,7 +3358,7 @@ export const boldCards = [
     "text": "Mik küldenek valakit azonnal a „köszi, nem” mappába?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 263
+    "sortOrder": 336
   },
   {
     "id": "bold-pikans-v2-roundtable-004",
@@ -2638,7 +3368,7 @@ export const boldCards = [
     "text": "Milyen kamukkal lehet lemondani egy találkát?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 264
+    "sortOrder": 337
   },
   {
     "id": "bold-pikans-v2-roundtable-005",
@@ -2648,278 +3378,266 @@ export const boldCards = [
     "text": "Miket néztek meg először crush-nyomozáskor?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 265
+    "sortOrder": 338
   },
   {
     "id": "bold-pikans-v2-roundtable-006",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Miből látszik, hogy ez már flört, nem ügyfélszolgálat?",
+    "text": "Mik tudnak egy randit azonnal eltemetni?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 266
+    "sortOrder": 339
   },
   {
     "id": "bold-pikans-v2-roundtable-007",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Mik tudnak egy randit azonnal eltemetni?",
+    "text": "Milyen hülyeségeket csinálnak emberek crush miatt?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 267
+    "sortOrder": 340
   },
   {
     "id": "bold-pikans-v2-roundtable-008",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Milyen hülyeségeket csinálnak emberek crush miatt?",
+    "text": "Hol lenne katasztrófa összefutni az exetekkel?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 268
+    "sortOrder": 341
   },
   {
     "id": "bold-pikans-v2-roundtable-009",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Hol lenne katasztrófa összefutni az exetekkel?",
+    "text": "Miért írnak vissza emberek az exüknek, minden józan ész ellenére?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 269
+    "sortOrder": 342
   },
   {
     "id": "bold-pikans-v2-roundtable-010",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Miért írnak vissza emberek az exüknek, minden józan ész ellenére?",
+    "text": "Mikben kamuznak legtöbbet társkeresőn?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 270
+    "sortOrder": 343
   },
   {
     "id": "bold-pikans-v2-roundtable-011",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Mikben kamuznak legtöbbet társkeresőn?",
+    "text": "Miket törölnétek ki a múltatokból?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 271
+    "sortOrder": 344
   },
   {
     "id": "bold-pikans-v2-roundtable-012",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Miket törölnétek ki a múltatokból?",
+    "text": "Miket tilos első randin megkérdezni?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 272
+    "sortOrder": 345
   },
   {
     "id": "bold-pikans-v2-roundtable-013",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Miket tilos első randin megkérdezni?",
+    "text": "Miért várnak emberek órákat egy válasszal?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 273
+    "sortOrder": 346
   },
   {
     "id": "bold-pikans-v2-roundtable-014",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Miért várnak emberek órákat egy válasszal?",
+    "text": "Mikor a legnehezebb lazának tűnni?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 274
+    "sortOrder": 347
   },
   {
     "id": "bold-pikans-v2-roundtable-015",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Mikor a legnehezebb lazának tűnni?",
+    "text": "Miket nem szabad visszanézni egy erős buli után?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 275
+    "sortOrder": 348
   },
   {
     "id": "bold-pikans-v2-roundtable-016",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Miket nem szabad visszanézni egy erős buli után?",
+    "text": "Mikben hazudik mindenki randizásnál?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 276
+    "sortOrder": 349
   },
   {
     "id": "bold-pikans-v2-roundtable-017",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Mikben hazudik mindenki randizásnál?",
+    "text": "Miket nem mer senki elsőként bevallani?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 277
+    "sortOrder": 350
   },
   {
     "id": "bold-pikans-v2-roundtable-018",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Miket nem mer senki elsőként bevallani?",
+    "text": "Miért mondják emberek, hogy „nem keresek komolyat”?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 278
+    "sortOrder": 351
   },
   {
     "id": "bold-pikans-v2-roundtable-019",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Miért mondják emberek, hogy „nem keresek komolyat”?",
+    "text": "Mikből lesz egy sima beszélgetésből görög tragédia?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 279
+    "sortOrder": 352
   },
   {
     "id": "bold-pikans-v2-roundtable-020",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Mikből lesz egy sima beszélgetésből görög tragédia?",
+    "text": "Milyen becenevet adnátok a puncinak?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 280
+    "sortOrder": 353
   },
   {
     "id": "bold-pikans-v2-roundtable-021",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Milyen becenevet adnátok a puncinak?",
+    "text": "Milyen becenevekkel illetnétek a faszt?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 281
+    "sortOrder": 354
   },
   {
     "id": "bold-pikans-v2-roundtable-022",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Milyen becenevekkel illetnétek a faszt?",
+    "text": "Soroljatok pózokat. Akinél üt az óra duplán iszik!",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 282
+    "sortOrder": 355
   },
   {
     "id": "bold-pikans-v2-roundtable-023",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Soroljatok szexpózokat",
+    "text": "Mondjatok randin tiltott témákat, mintha csak egy nagy randin lennétek",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 283
+    "sortOrder": 356
   },
   {
     "id": "bold-pikans-v2-roundtable-024",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Mondjatok randin tiltott témákat, mintha csak egy nagy randin lennétek",
+    "text": "Mondjatok veszélyes társasjátékokat",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 284
+    "sortOrder": 357
   },
   {
     "id": "bold-pikans-v2-roundtable-025",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Mondjatok veszélyes társasjátékokat",
+    "text": "Mondjatok lebukós appokat",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 285
+    "sortOrder": 358
   },
   {
     "id": "bold-pikans-v2-roundtable-026",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Mondjatok lebukós appokat",
+    "text": "Mondjatok titkolt szándékokat",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 286
+    "sortOrder": 359
   },
   {
     "id": "bold-pikans-v2-roundtable-027",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Mondjatok titkolt szándékokat",
+    "text": "Mondjatok bulis alibiket",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 287
+    "sortOrder": 360
   },
   {
     "id": "bold-pikans-v2-roundtable-028",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Mondjatok bulis alibiket",
+    "text": "Milyen lakásba hívós kamuindokokkal próbálkozátok?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 288
+    "sortOrder": 361
   },
   {
     "id": "bold-pikans-v2-roundtable-029",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Milyen lakásba hívós kamuindokokkal próbálkoznátok?",
+    "text": "Milyen a párunknak adott beceneveket nem vállalnátok nyilvánosan?",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 289
+    "sortOrder": 362
   },
   {
     "id": "bold-pikans-v2-roundtable-030",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Milyen a párunknak adott beceneveket nem vállalnátok nyilvánosan?",
+    "text": "Vad vágyak? Soroljatok helyszíneket (;",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 290
+    "sortOrder": 363
   },
   {
     "id": "bold-pikans-v2-roundtable-031",
     "mode": "bold",
     "kind": "roundtable",
     "title": "Körbemenős",
-    "text": "Vad vágyak? Soroljatok helyszíneket",
-    "durationSeconds": 30,
-    "category": "Pikáns",
-    "sortOrder": 291
-  },
-  {
-    "id": "bold-pikans-v2-roundtable-032",
-    "mode": "bold",
-    "kind": "roundtable",
-    "title": "Körbemenős",
     "text": "Soroljatok BDSM eszközöket",
     "durationSeconds": 30,
     "category": "Pikáns",
-    "sortOrder": 292
+    "sortOrder": 364
   }
 ];
-
-

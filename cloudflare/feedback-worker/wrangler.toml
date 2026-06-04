@@ -1,5 +1,6 @@
 name = "jatek"
 main = "src/index.js"
+account_id = "5548893364a87742485d021ef428ade1"
 compatibility_date = "2026-05-26"
 
 [triggers]
