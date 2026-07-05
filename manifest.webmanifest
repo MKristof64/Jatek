@@ -1,0 +1,21 @@
+{
+  "name": "Az ivos jatek",
+  "short_name": "Jatek",
+  "description": "Mobilra optimalizalt partykartyas jatek.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#090018",
+  "theme_color": "#090018",
+  "lang": "hu",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
