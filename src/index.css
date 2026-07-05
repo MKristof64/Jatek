@@ -3070,7 +3070,7 @@ body,
 .question-spotlight--open .game-card-next-button {
   position: absolute !important;
   right: auto !important;
-  bottom: clamp(0.7rem, 2.2vh, 1.05rem);
+  bottom: clamp(5.2rem, 12vh, 6.6rem);
   left: 50%;
   width: min(100%, clamp(12.5rem, 58vw, 16rem));
   margin: 0 !important;
@@ -3149,7 +3149,7 @@ body,
   }
 
   .question-spotlight--open .game-card-next-button {
-    bottom: clamp(0.35rem, 1.2vh, 0.7rem);
+    bottom: clamp(2.7rem, 8.5vh, 3.6rem);
     width: min(100%, clamp(8.8rem, 24vw, 11.8rem));
   }
 }
@@ -3169,7 +3169,7 @@ body,
   }
 
   .question-spotlight--open .game-card-next-button {
-    bottom: clamp(0.24rem, 0.9vh, 0.48rem);
+    bottom: clamp(2.05rem, 7vh, 2.8rem);
     width: min(100%, clamp(8rem, 21vw, 10.4rem));
   }
 }
