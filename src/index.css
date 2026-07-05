@@ -3070,7 +3070,7 @@ body,
 .question-spotlight--open .game-card-next-button {
   position: absolute !important;
   right: auto !important;
-  bottom: clamp(7.5rem, 21vh, 21rem);
+  bottom: clamp(6.5rem, 19vh, 20rem);
   left: 50%;
   width: min(100%, clamp(12.5rem, 58vw, 16rem));
   margin: 0 !important;
