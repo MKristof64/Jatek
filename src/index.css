@@ -3012,6 +3012,10 @@ body,
   padding-bottom: clamp(0.45rem, 1.8vw, 0.9rem) !important;
 }
 
+.question-spotlight--open.game-card-dynamic--with-action {
+  padding-bottom: clamp(5.35rem, 15vh, 6.5rem) !important;
+}
+
 .question-spotlight--open .question-stage {
   flex: 0 1 auto !important;
   align-items: center !important;
@@ -3054,9 +3058,14 @@ body,
 }
 
 .question-spotlight--open .game-card-action-slot {
+  position: absolute !important;
+  right: auto !important;
+  bottom: clamp(0.7rem, 2.2vh, 1.05rem);
+  left: 50%;
   width: min(100%, clamp(12.5rem, 58vw, 16rem));
   flex: 0 0 auto;
-  margin: clamp(9.4rem, 6cm, 14.4rem) auto auto !important;
+  margin: 0 !important;
+  transform: translateX(-50%);
 }
 
 .question-spotlight--open .game-card-action-slot .party-button {
@@ -3099,6 +3108,10 @@ body,
     padding-bottom: clamp(0.25rem, 1vh, 0.55rem) !important;
   }
 
+  .question-spotlight--open.game-card-dynamic--with-action {
+    padding-bottom: clamp(3.65rem, 13vh, 4.4rem) !important;
+  }
+
   .question-spotlight--open .question-stage {
     margin: auto 0 !important;
     padding-block-start: 0 !important;
@@ -3123,8 +3136,8 @@ body,
   }
 
   .question-spotlight--open .game-card-action-slot {
+    bottom: clamp(0.35rem, 1.2vh, 0.7rem);
     width: min(100%, clamp(8.8rem, 24vw, 11.8rem));
-    margin: clamp(8.6rem, 6cm, 14rem) auto auto !important;
   }
 
   .question-spotlight--open .game-card-action-slot .party-button {
@@ -3137,8 +3150,8 @@ body,
 
 @media (orientation: landscape) and (min-width: 560px) and (max-height: 390px) {
   .question-spotlight--open .game-card-action-slot {
+    bottom: clamp(0.24rem, 0.9vh, 0.48rem);
     width: min(100%, clamp(8rem, 21vw, 10.4rem));
-    margin-top: clamp(7.8rem, 6cm, 13.4rem) !important;
   }
 
   .question-spotlight--open .game-card-action-slot .party-button {
