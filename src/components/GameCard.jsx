@@ -175,6 +175,13 @@ export default function GameCard({
         </p>
       ) : null}
 
+      <div className="question-stage question-stage--open relative z-10 mt-4 min-[390px]:mt-5">
+        <div className={['question-copy question-copy--free game-question-copy', questionSizeClass].join(' ')}>
+          <p className="question-prefix">{cardTitle}</p>
+          <p className="question-sentence">{text}</p>
+        </div>
+      </div>
+
       {hasTimer ? (
         <TimerControl
           durationSeconds={durationSeconds}
@@ -183,13 +190,6 @@ export default function GameCard({
           onToggleTimer={onToggleTimer}
         />
       ) : null}
-
-      <div className="question-stage question-stage--open relative z-10 mt-4 min-[390px]:mt-5">
-        <div className={['question-copy question-copy--free game-question-copy', questionSizeClass].join(' ')}>
-          <p className="question-prefix">{cardTitle}</p>
-          <p className="question-sentence">{text}</p>
-        </div>
-      </div>
     </section>
   );
 }

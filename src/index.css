@@ -2998,6 +2998,48 @@ body,
     linear-gradient(180deg, rgba(255, 255, 255, 0.13), transparent 58%);
 }
 
+/* Invariant: timed cards keep the timer directly under the question text. */
+.question-spotlight--open,
+.question-spotlight--open.game-card-dynamic--timed {
+  padding-bottom: clamp(0.35rem, 1.8vw, 0.85rem) !important;
+}
+
+.question-spotlight--open .question-stage,
+.question-spotlight--open.game-card-dynamic--timed .question-stage {
+  flex: 0 1 auto !important;
+  padding-block-end: clamp(0.25rem, 1.2vh, 0.55rem) !important;
+}
+
+.question-spotlight--open .timer-control {
+  position: relative !important;
+  inset: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  top: auto !important;
+  width: min(100%, clamp(11.5rem, 48vw, 13.4rem));
+  flex: 0 0 auto;
+  margin: clamp(0.55rem, 2.4vh, 1rem) auto 0 !important;
+  transform: none !important;
+}
+
+@media (orientation: landscape) and (min-width: 560px) {
+  .question-spotlight--open,
+  .question-spotlight--open.game-card-dynamic--timed {
+    padding-bottom: clamp(0.2rem, 1vh, 0.55rem) !important;
+  }
+
+  .question-spotlight--open .question-stage,
+  .question-spotlight--open.game-card-dynamic--timed .question-stage {
+    padding-block-end: clamp(0.15rem, 0.8vh, 0.4rem) !important;
+  }
+
+  .question-spotlight--open .timer-control {
+    width: min(100%, clamp(9.8rem, 25vw, 11.6rem));
+    margin-top: clamp(0.35rem, 1.4vh, 0.65rem) !important;
+  }
+}
+
 .game-question-copy::after {
   background: linear-gradient(90deg, rgba(255, 216, 77, 0.12), rgba(255, 90, 61, 0.55), rgba(244, 63, 94, 0.9));
 }
