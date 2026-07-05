@@ -2658,13 +2658,13 @@ button,
 }
 
 .question-spotlight--open .question-copy--free .question-prefix {
-  font-size: clamp(1.5rem, 6.2vw, 2.08rem) !important;
+  font-size: clamp(1.35rem, 5.58vw, 1.87rem) !important;
   line-height: 1.03;
 }
 
 .question-spotlight--open .question-copy--free .question-sentence {
   max-width: 24ch;
-  font-size: clamp(2.52rem, 9.72vw, 3.86rem) !important;
+  font-size: clamp(2.27rem, 8.75vw, 3.47rem) !important;
   line-height: 0.975 !important;
   overflow-wrap: break-word;
   text-wrap: balance;
@@ -2673,20 +2673,20 @@ button,
 
 .question-spotlight--open .question-copy--medium .question-sentence {
   max-width: 24ch;
-  font-size: clamp(2.38rem, 8.68vw, 3.42rem) !important;
+  font-size: clamp(2.14rem, 7.81vw, 3.08rem) !important;
   line-height: 0.995 !important;
 }
 
 .question-spotlight--open .question-copy--long .question-sentence {
   max-width: 30ch;
-  font-size: clamp(1.96rem, 7.24vw, 2.86rem) !important;
+  font-size: clamp(1.76rem, 6.52vw, 2.57rem) !important;
   line-height: 1.025 !important;
 }
 
 .question-spotlight--open .question-copy--dense .question-sentence,
 .question-spotlight--open .question-copy--compact .question-sentence {
   max-width: 36ch;
-  font-size: clamp(1.54rem, 5.9vw, 2.24rem) !important;
+  font-size: clamp(1.39rem, 5.31vw, 2.02rem) !important;
   line-height: 1.075 !important;
 }
 
@@ -2709,36 +2709,36 @@ button,
 
   .question-spotlight--open .question-copy--free .question-prefix {
     margin-bottom: clamp(0.5rem, 1.6vh, 0.85rem);
-    font-size: clamp(1.58rem, 3vw, 2.15rem) !important;
+    font-size: clamp(1.42rem, 2.7vw, 1.94rem) !important;
   }
 
   .question-spotlight--open .question-copy--free .question-sentence {
     max-width: 31ch;
-    font-size: clamp(3.08rem, 5.08vw, 4.32rem) !important;
+    font-size: clamp(2.77rem, 4.57vw, 3.89rem) !important;
     line-height: 0.965 !important;
   }
 
   .question-spotlight--open .question-copy--medium .question-sentence {
     max-width: 33ch;
-    font-size: clamp(2.8rem, 4.7vw, 3.85rem) !important;
+    font-size: clamp(2.52rem, 4.23vw, 3.47rem) !important;
     line-height: 0.985 !important;
   }
 
   .question-spotlight--open .question-copy--long .question-sentence {
     max-width: 39ch;
-    font-size: clamp(2.33rem, 3.85vw, 3.18rem) !important;
+    font-size: clamp(2.1rem, 3.47vw, 2.86rem) !important;
     line-height: 1.015 !important;
   }
 
   .question-spotlight--open .question-copy--dense .question-sentence {
     max-width: 44ch;
-    font-size: clamp(1.88rem, 3.12vw, 2.46rem) !important;
+    font-size: clamp(1.69rem, 2.81vw, 2.21rem) !important;
     line-height: 1.06 !important;
   }
 
   .question-spotlight--open .question-copy--compact .question-sentence {
     max-width: 48ch;
-    font-size: clamp(1.45rem, 2.42vw, 1.9rem) !important;
+    font-size: clamp(1.31rem, 2.18vw, 1.71rem) !important;
     line-height: 1.11 !important;
   }
 }
@@ -2751,31 +2751,31 @@ button,
   }
 
   .question-spotlight--open .question-copy--free .question-prefix {
-    font-size: clamp(1.26rem, 2.55vw, 1.62rem) !important;
+    font-size: clamp(1.13rem, 2.3vw, 1.46rem) !important;
   }
 
   .question-spotlight--open .question-copy--free .question-sentence {
     max-width: 34ch;
-    font-size: clamp(2.42rem, 4.6vw, 3.28rem) !important;
+    font-size: clamp(2.18rem, 4.14vw, 2.95rem) !important;
     line-height: 0.975 !important;
   }
 
   .question-spotlight--open .question-copy--medium .question-sentence {
     max-width: 35ch;
-    font-size: clamp(2.23rem, 4.23vw, 2.99rem) !important;
+    font-size: clamp(2.01rem, 3.81vw, 2.69rem) !important;
     line-height: 0.995 !important;
   }
 
   .question-spotlight--open .question-copy--long .question-sentence {
     max-width: 40ch;
-    font-size: clamp(1.86rem, 3.52vw, 2.52rem) !important;
+    font-size: clamp(1.67rem, 3.17vw, 2.27rem) !important;
     line-height: 1.02 !important;
   }
 
   .question-spotlight--open .question-copy--dense .question-sentence,
   .question-spotlight--open .question-copy--compact .question-sentence {
     max-width: 48ch;
-    font-size: clamp(1.35rem, 2.76vw, 1.85rem) !important;
+    font-size: clamp(1.22rem, 2.48vw, 1.67rem) !important;
     line-height: 1.08 !important;
   }
 }
@@ -2787,16 +2787,16 @@ button,
   }
 
   .question-spotlight--open .question-copy--free .question-sentence {
-    font-size: clamp(2.08rem, 4.02vw, 2.85rem) !important;
+    font-size: clamp(1.87rem, 3.62vw, 2.57rem) !important;
   }
 
   .question-spotlight--open .question-copy--long .question-sentence {
-    font-size: clamp(1.6rem, 3.02vw, 2.1rem) !important;
+    font-size: clamp(1.44rem, 2.72vw, 1.89rem) !important;
   }
 
   .question-spotlight--open .question-copy--dense .question-sentence,
   .question-spotlight--open .question-copy--compact .question-sentence {
-    font-size: clamp(1.12rem, 2.32vw, 1.54rem) !important;
+    font-size: clamp(1.01rem, 2.09vw, 1.39rem) !important;
   }
 }
 
