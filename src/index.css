@@ -3006,18 +3006,18 @@ body,
     linear-gradient(180deg, rgba(255, 255, 255, 0.13), transparent 58%);
 }
 
-/* Invariant: the question block is centered; the timer belongs directly under it. */
+/* Invariant: the question block starts in the upper play area; the timer stays directly under it. */
 .question-spotlight--open,
 .question-spotlight--open.game-card-dynamic--timed {
   padding-bottom: clamp(0.45rem, 1.8vw, 0.9rem) !important;
 }
 
 .question-spotlight--open .question-stage {
-  flex: 0 1 auto !important;
+  flex: 0 0 auto !important;
   align-items: center !important;
-  justify-content: center !important;
+  justify-content: flex-start !important;
   width: 100%;
-  margin: auto 0 !important;
+  margin: clamp(5.6rem, 18vh, 9.8rem) 0 0 !important;
   padding-block-start: 0 !important;
   padding-block-end: 0 !important;
 }
@@ -3029,11 +3029,11 @@ body,
 }
 
 .question-spotlight--open.game-card-dynamic--timed .question-stage {
-  margin: auto 0 0 !important;
+  margin: clamp(5.6rem, 18vh, 9.8rem) 0 0 !important;
 }
 
 .question-spotlight--open.game-card-dynamic--with-action .question-stage {
-  margin: auto 0 0 !important;
+  margin: clamp(5.6rem, 18vh, 9.8rem) 0 0 !important;
 }
 
 .question-spotlight--open .timer-control {
@@ -3070,7 +3070,7 @@ body,
 .question-spotlight--open .game-card-next-button {
   position: absolute !important;
   right: auto !important;
-  bottom: clamp(6.5rem, 19vh, 20rem);
+  bottom: clamp(5.5rem, 17vh, 19rem);
   left: 50%;
   width: min(100%, clamp(12.5rem, 58vw, 16rem));
   margin: 0 !important;
@@ -3113,17 +3113,17 @@ body,
   }
 
   .question-spotlight--open .question-stage {
-    margin: auto 0 !important;
+    margin: clamp(1.2rem, 9vh, 3.4rem) 0 0 !important;
     padding-block-start: 0 !important;
     padding-block-end: 0 !important;
   }
 
   .question-spotlight--open.game-card-dynamic--timed .question-stage {
-    margin: auto 0 0 !important;
+    margin: clamp(1.2rem, 9vh, 3.4rem) 0 0 !important;
   }
 
   .question-spotlight--open.game-card-dynamic--with-action .question-stage {
-    margin: auto 0 0 !important;
+    margin: clamp(1.2rem, 9vh, 3.4rem) 0 0 !important;
   }
 
   .question-spotlight--open .timer-control {
