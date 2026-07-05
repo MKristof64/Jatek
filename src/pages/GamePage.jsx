@@ -5,13 +5,17 @@ import PrimaryButton from '../components/PrimaryButton.jsx';
 const feedbackCardModes = new Set(['bold', 'hardcore', 'university']);
 const feedbackPlayModes = new Set(['bold', 'hardcore', 'university']);
 
-function FeedbackActionBar({ card, feedbackState, mode, onFeedback }) {
-  const showFeedback =
+function shouldShowFeedback({ card, mode, onFeedback }) {
+  return Boolean(
     card?.id &&
-    typeof onFeedback === 'function' &&
-    feedbackPlayModes.has(mode?.id) &&
-    feedbackCardModes.has(card.mode);
-  if (!showFeedback) return null;
+      typeof onFeedback === 'function' &&
+      feedbackPlayModes.has(mode?.id) &&
+      feedbackCardModes.has(card.mode),
+  );
+}
+
+function FeedbackActionBar({ card, feedbackState, mode, onFeedback }) {
+  if (!shouldShowFeedback({ card, mode, onFeedback })) return null;
 
   const status = feedbackState?.cardId === card.id ? feedbackState.status : 'idle';
   const selectedVote = feedbackState?.cardId === card.id ? feedbackState.voteType : null;
@@ -49,7 +53,9 @@ function FeedbackActionBar({ card, feedbackState, mode, onFeedback }) {
           disabled={disabled}
           className={[
             'feedback-action-button',
-            selectedVote === 'like' && status === 'sent' ? 'feedback-action-button--selected' : '',
+            selectedVote === 'like' && status === 'sent'
+              ? 'feedback-action-button--selected'
+              : '',
           ]
             .filter(Boolean)
             .join(' ')}
@@ -63,7 +69,9 @@ function FeedbackActionBar({ card, feedbackState, mode, onFeedback }) {
           disabled={disabled}
           className={[
             'feedback-action-button',
-            selectedVote === 'dislike' && status === 'sent' ? 'feedback-action-button--selected' : '',
+            selectedVote === 'dislike' && status === 'sent'
+              ? 'feedback-action-button--selected'
+              : '',
           ]
             .filter(Boolean)
             .join(' ')}
@@ -94,21 +102,25 @@ export default function GamePage({
   onFeedback,
   onFinishGame,
 }) {
-  const actionCount = Number(Boolean(canControlGame)) + Number(Boolean(canFinishGame));
-  const panelClassName = [
-    'game-action-panel shrink-0 space-y-2',
-    canControlGame ? 'game-action-panel--controller' : 'game-action-panel--viewer',
-    canFinishGame ? 'game-action-panel--finisher' : '',
-  ]
-    .filter(Boolean)
-    .join(' ');
-  const actionRowClassName = [
-    'game-action-row grid gap-2',
-    actionCount > 1 ? 'game-action-row--split grid-cols-2' : 'game-action-row--single grid-cols-1',
+  const hasSideAction = Boolean(canFinishGame);
+  const showFeedback = shouldShowFeedback({ card, mode, onFeedback });
+  const screenClassName = [
+    'game-screen flex min-h-0 flex-1 flex-col gap-3',
+    hasSideAction ? 'game-screen--has-side-action' : 'game-screen--no-side-action',
   ].join(' ');
+  const nextAction = canControlGame ? (
+    <PrimaryButton
+      variant="warning"
+      icon={Shuffle}
+      className="next-pulse game-card-next-button"
+      onClick={onNext}
+    >
+      Következő
+    </PrimaryButton>
+  ) : null;
 
   return (
-    <section className="game-screen flex min-h-0 flex-1 flex-col gap-3">
+    <section className={screenClassName}>
       <div className="game-main mobile-scroll min-h-0 flex-1 space-y-3 overflow-y-auto pb-1 pr-1">
         <GameCard
           key={card?.id ?? cardText}
@@ -121,35 +133,29 @@ export default function GamePage({
           timerState={timerState}
           canControlTimer={canControlTimer}
           onToggleTimer={onToggleTimer}
-        />
-        <FeedbackActionBar
-          card={card}
-          feedbackState={feedbackState}
-          mode={mode}
-          onFeedback={onFeedback}
+          actionSlot={nextAction}
         />
       </div>
 
-      {actionCount > 0 ? (
-      <div className={panelClassName}>
-        <div className={actionRowClassName}>
-        {canControlGame ? (
-          <PrimaryButton
-            variant="warning"
-            icon={Shuffle}
-            className="next-pulse"
-            onClick={onNext}
-          >
-            Következő
-          </PrimaryButton>
-        ) : null}
-        {canFinishGame ? (
-          <PrimaryButton variant="ghost" icon={Crown} onClick={onFinishGame}>
-            Befejezés
-          </PrimaryButton>
-        ) : null}
+      {canFinishGame ? (
+        <div className="game-action-panel game-action-panel--finisher shrink-0 space-y-2">
+          <div className="game-action-row game-action-row--single grid grid-cols-1 gap-2">
+            <PrimaryButton variant="ghost" icon={Crown} onClick={onFinishGame}>
+              Befejezés
+            </PrimaryButton>
+          </div>
         </div>
-      </div>
+      ) : null}
+
+      {showFeedback ? (
+        <div className="game-feedback-dock shrink-0">
+          <FeedbackActionBar
+            card={card}
+            feedbackState={feedbackState}
+            mode={mode}
+            onFeedback={onFeedback}
+          />
+        </div>
       ) : null}
     </section>
   );

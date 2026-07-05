@@ -116,15 +116,18 @@ export default function GameCard({
   timerState,
   canControlTimer = true,
   onToggleTimer,
+  actionSlot = null,
 }) {
   const cardKind = card?.kind ?? 'never';
   const cardTitle = card?.title ?? 'Én még sosem...';
   const durationSeconds = card?.durationSeconds ?? 0;
   const hasTimer = durationSeconds > 0;
+  const hasActionSlot = Boolean(actionSlot);
   const questionSizeClass = getQuestionSizeClass(text);
   const cardClasses = [
     'question-spotlight question-spotlight--open game-card-dynamic animate-pop',
     hasTimer ? 'game-card-dynamic--timed' : '',
+    hasActionSlot ? 'game-card-dynamic--with-action' : '',
     currentTeam ? 'game-card-dynamic--team' : '',
   ]
     .filter(Boolean)
@@ -189,6 +192,12 @@ export default function GameCard({
           canControlTimer={canControlTimer}
           onToggleTimer={onToggleTimer}
         />
+      ) : null}
+
+      {hasActionSlot ? (
+        <div className="game-card-action-slot relative z-10">
+          {actionSlot}
+        </div>
       ) : null}
     </section>
   );
