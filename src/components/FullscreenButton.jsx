@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 const fallbackClass = 'app-fullscreen-fallback';
 
-function getFullscreenElement() {
+export function getFullscreenElement() {
   return (
     document.fullscreenElement ||
     document.webkitFullscreenElement ||
@@ -12,15 +12,15 @@ function getFullscreenElement() {
   );
 }
 
-function getFallbackFullscreen() {
+export function getFallbackFullscreen() {
   return document.documentElement.classList.contains(fallbackClass);
 }
 
-function setFallbackFullscreen(enabled) {
+export function setFallbackFullscreen(enabled) {
   document.documentElement.classList.toggle(fallbackClass, enabled);
 }
 
-async function enterFullscreen() {
+async function enterNativeFullscreen() {
   const element = document.documentElement;
 
   if (element.requestFullscreen) {
@@ -41,7 +41,7 @@ async function enterFullscreen() {
   window.scrollTo({ top: 1, behavior: 'smooth' });
 }
 
-async function exitFullscreen() {
+async function exitNativeFullscreen() {
   if (document.exitFullscreen) {
     await document.exitFullscreen();
     return;
@@ -55,6 +55,29 @@ async function exitFullscreen() {
   if (document.msExitFullscreen) {
     document.msExitFullscreen();
   }
+}
+
+export async function enterAppFullscreen() {
+  try {
+    await enterNativeFullscreen();
+    if (!getFullscreenElement()) {
+      setFallbackFullscreen(true);
+    }
+  } catch {
+    setFallbackFullscreen(true);
+  }
+}
+
+export async function exitAppFullscreen() {
+  try {
+    if (getFullscreenElement()) {
+      await exitNativeFullscreen();
+    }
+  } catch {
+    // Some mobile browsers report fullscreen exits inconsistently.
+  }
+
+  setFallbackFullscreen(false);
 }
 
 export default function FullscreenButton({ className = '' }) {
@@ -79,27 +102,13 @@ export default function FullscreenButton({ className = '' }) {
 
   const toggleFullscreen = async () => {
     if (getFullscreenElement() || getFallbackFullscreen()) {
-      try {
-        await exitFullscreen();
-      } catch {
-        // Some mobile browsers report fullscreen exits inconsistently.
-      }
-
-      setFallbackFullscreen(false);
+      await exitAppFullscreen();
       setIsFullscreen(Boolean(getFullscreenElement()));
       return;
     }
 
-    try {
-      await enterFullscreen();
-      if (!getFullscreenElement()) {
-        setFallbackFullscreen(true);
-      }
-      setIsFullscreen(Boolean(getFullscreenElement()) || getFallbackFullscreen());
-    } catch {
-      setFallbackFullscreen(true);
-      setIsFullscreen(true);
-    }
+    await enterAppFullscreen();
+    setIsFullscreen(Boolean(getFullscreenElement()) || getFallbackFullscreen());
   };
 
   const Icon = isFullscreen ? Minimize2 : Maximize2;

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Peer } from 'peerjs';
 import ConfirmDialog from './components/ConfirmDialog.jsx';
+import { enterAppFullscreen, exitAppFullscreen } from './components/FullscreenButton.jsx';
 import Layout from './components/Layout.jsx';
 import { cards } from './data/cards.js';
 import { getModeById } from './data/modes.js';
@@ -617,6 +618,7 @@ export default function App() {
   const advanceGameRef = useRef(null);
   const toggleTimerRef = useRef(null);
   const localPlayersRef = useRef(loadPlayers());
+  const gameHistoryGuardRef = useRef(false);
 
   useEffect(() => {
     clearStoredRoomState();
@@ -745,6 +747,17 @@ export default function App() {
       }
     }
   }, [currentRoomPlayerId, page, room]);
+
+  useEffect(() => {
+    if (page === pages.game) {
+      void enterAppFullscreen();
+      return undefined;
+    }
+
+    void exitAppFullscreen();
+    gameHistoryGuardRef.current = false;
+    return undefined;
+  }, [page]);
 
   const activeMode = useMemo(() => getModeById(selectedMode), [selectedMode]);
 
@@ -1439,6 +1452,7 @@ export default function App() {
   const startGame = () => {
     if (room && !isRoomHost) return;
     if (players.length < 2 || cardPool.length === 0) return;
+    void enterAppFullscreen();
     const picked = pickRandomCard(cardPool, []);
     const playerOrder = shufflePlayerIndexes(players);
     const firstPlayerIndex = playerOrder[0] ?? 0;
@@ -1603,9 +1617,61 @@ export default function App() {
     setPage(pages.home);
   };
 
-  const requestExitGame = () => {
-    setPendingConfirmation('exit-game');
+  const requestGameBackExit = () => {
+    if (page !== pages.game || pendingConfirmation) return false;
+
+    setPendingConfirmation(room && isRoomHost ? 'finish-room' : 'exit-game');
+    return true;
   };
+
+  useEffect(() => {
+    if (page !== pages.game) return undefined;
+
+    if (!gameHistoryGuardRef.current) {
+      window.history.pushState({ enMegSosemGameGuard: true }, '', window.location.href);
+      gameHistoryGuardRef.current = true;
+    }
+
+    const keepGameHistoryGuard = () => {
+      window.history.pushState({ enMegSosemGameGuard: true }, '', window.location.href);
+    };
+
+    const handlePopState = () => {
+      requestGameBackExit();
+      keepGameHistoryGuard();
+    };
+
+    const handleKeyDown = (event) => {
+      if (event.key !== 'Escape') return;
+      if (requestGameBackExit()) {
+        event.preventDefault();
+      }
+    };
+
+    const handleFullscreenChange = () => {
+      const fullscreenElement =
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.msFullscreenElement;
+      if (!fullscreenElement) {
+        requestGameBackExit();
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    window.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
+    };
+  }, [isRoomHost, page, pendingConfirmation, room]);
 
   const backFromRoom = () => {
     if (room) {
@@ -1686,7 +1752,6 @@ export default function App() {
           onNext={advanceGame}
           onToggleTimer={toggleTimer}
           onFeedback={sendCardFeedback}
-          onExit={requestExitGame}
           onFinishGame={finishRoomGame}
         />
       ) : null}

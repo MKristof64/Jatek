@@ -1,5 +1,4 @@
-import { Crown, LogOut, Shuffle, ThumbsDown, ThumbsUp } from 'lucide-react';
-import FullscreenButton from '../components/FullscreenButton.jsx';
+import { Crown, Shuffle, ThumbsDown, ThumbsUp } from 'lucide-react';
 import GameCard from '../components/GameCard.jsx';
 import PrimaryButton from '../components/PrimaryButton.jsx';
 
@@ -93,9 +92,9 @@ export default function GamePage({
   onNext,
   onToggleTimer,
   onFeedback,
-  onExit,
   onFinishGame,
 }) {
+  const actionCount = Number(Boolean(canControlGame)) + Number(Boolean(canFinishGame));
   const panelClassName = [
     'game-action-panel shrink-0 space-y-2',
     canControlGame ? 'game-action-panel--controller' : 'game-action-panel--viewer',
@@ -105,16 +104,12 @@ export default function GamePage({
     .join(' ');
   const actionRowClassName = [
     'game-action-row grid gap-2',
-    canControlGame ? 'game-action-row--split grid-cols-2' : 'grid-cols-1',
+    actionCount > 1 ? 'game-action-row--split grid-cols-2' : 'game-action-row--single grid-cols-1',
   ].join(' ');
 
   return (
     <section className="game-screen flex min-h-0 flex-1 flex-col gap-3">
       <div className="game-main mobile-scroll min-h-0 flex-1 space-y-3 overflow-y-auto pb-1 pr-1">
-        <div className="game-topic-bar game-topic-bar--minimal flex items-center">
-          <FullscreenButton className="game-fullscreen-button" />
-        </div>
-
         <GameCard
           key={card?.id ?? cardText}
           playerName={currentPlayer}
@@ -135,6 +130,7 @@ export default function GamePage({
         />
       </div>
 
+      {actionCount > 0 ? (
       <div className={panelClassName}>
         <div className={actionRowClassName}>
         {canControlGame ? (
@@ -151,13 +147,10 @@ export default function GamePage({
           <PrimaryButton variant="ghost" icon={Crown} onClick={onFinishGame}>
             Befejezés
           </PrimaryButton>
-        ) : (
-          <PrimaryButton variant="danger" icon={LogOut} onClick={onExit}>
-            Kilépés
-          </PrimaryButton>
-        )}
+        ) : null}
         </div>
       </div>
+      ) : null}
     </section>
   );
 }
