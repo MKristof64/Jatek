@@ -3056,7 +3056,7 @@ body,
 .question-spotlight--open .game-card-action-slot {
   width: min(100%, clamp(12.5rem, 58vw, 16rem));
   flex: 0 0 auto;
-  margin: clamp(1rem, 3vh, 1.45rem) auto auto !important;
+  margin: clamp(2.35rem, 1.5cm, 3.6rem) auto auto !important;
 }
 
 .question-spotlight--open .game-card-action-slot .party-button {
@@ -3124,7 +3124,7 @@ body,
 
   .question-spotlight--open .game-card-action-slot {
     width: min(100%, clamp(8.8rem, 24vw, 11.8rem));
-    margin: clamp(0.58rem, 1.9vh, 0.9rem) auto auto !important;
+    margin: clamp(2.15rem, 1.5cm, 3.5rem) auto auto !important;
   }
 
   .question-spotlight--open .game-card-action-slot .party-button {
@@ -3138,7 +3138,7 @@ body,
 @media (orientation: landscape) and (min-width: 560px) and (max-height: 390px) {
   .question-spotlight--open .game-card-action-slot {
     width: min(100%, clamp(8rem, 21vw, 10.4rem));
-    margin-top: clamp(0.42rem, 1.35vh, 0.62rem) !important;
+    margin-top: clamp(1.95rem, 1.5cm, 3.35rem) !important;
   }
 
   .question-spotlight--open .game-card-action-slot .party-button {
