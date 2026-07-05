@@ -58,11 +58,10 @@ async function exitNativeFullscreen() {
 }
 
 export async function enterAppFullscreen() {
+  setFallbackFullscreen(true);
+
   try {
     await enterNativeFullscreen();
-    if (!getFullscreenElement()) {
-      setFallbackFullscreen(true);
-    }
   } catch {
     setFallbackFullscreen(true);
   }

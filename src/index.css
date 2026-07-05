@@ -197,6 +197,32 @@ button,
   min-height: 100dvh;
 }
 
+.app-game-mode .app-shell {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+.app-game-mode .phone-frame--game {
+  width: 100%;
+  max-width: none;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  padding-block-start: max(0.5rem, env(safe-area-inset-top));
+  padding-block-end: max(0.5rem, env(safe-area-inset-bottom));
+  padding-inline-start: max(0.5rem, env(safe-area-inset-left));
+  padding-inline-end: max(0.5rem, env(safe-area-inset-right));
+}
+
 .fullscreen-button {
   box-shadow:
     0 14px 34px rgba(3, 7, 18, 0.26),

@@ -1,7 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Peer } from 'peerjs';
 import ConfirmDialog from './components/ConfirmDialog.jsx';
-import { enterAppFullscreen, exitAppFullscreen } from './components/FullscreenButton.jsx';
+import {
+  enterAppFullscreen,
+  exitAppFullscreen,
+  getFallbackFullscreen,
+} from './components/FullscreenButton.jsx';
 import Layout from './components/Layout.jsx';
 import { cards } from './data/cards.js';
 import { getModeById } from './data/modes.js';
@@ -746,8 +750,23 @@ export default function App() {
 
   useEffect(() => {
     if (page === pages.game) {
-      void enterAppFullscreen();
-      return undefined;
+      const keepGameFullscreen = () => {
+        if (document.visibilityState && document.visibilityState !== 'visible') return;
+        void enterAppFullscreen();
+      };
+
+      keepGameFullscreen();
+      window.addEventListener('focus', keepGameFullscreen);
+      window.addEventListener('pageshow', keepGameFullscreen);
+      window.addEventListener('orientationchange', keepGameFullscreen);
+      document.addEventListener('visibilitychange', keepGameFullscreen);
+
+      return () => {
+        window.removeEventListener('focus', keepGameFullscreen);
+        window.removeEventListener('pageshow', keepGameFullscreen);
+        window.removeEventListener('orientationchange', keepGameFullscreen);
+        document.removeEventListener('visibilitychange', keepGameFullscreen);
+      };
     }
 
     void exitAppFullscreen();
@@ -1666,7 +1685,7 @@ export default function App() {
         document.fullscreenElement ||
         document.webkitFullscreenElement ||
         document.msFullscreenElement;
-      if (!fullscreenElement) {
+      if (!fullscreenElement && !getFallbackFullscreen()) {
         requestGameBackExit();
       }
     };
@@ -1696,7 +1715,7 @@ export default function App() {
   };
 
   return (
-    <Layout darkMode={settings.darkMode}>
+    <Layout darkMode={settings.darkMode} gameMode={page === pages.game}>
       {page === pages.home ? (
         <HomePage
           playersCount={players.length}
