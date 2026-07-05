@@ -50,8 +50,8 @@ const defaultOnlineStatus = {
 const defaultSettings = {
   darkMode: true,
   sound: true,
-  vibration: true,
-  safeMode: true,
+  includeDuelCards: true,
+  includeRoundtableCards: true,
 };
 
 const limits = {
@@ -197,14 +197,14 @@ function loadSettings() {
       typeof savedSettings.sound === 'boolean'
         ? savedSettings.sound
         : defaultSettings.sound,
-    vibration:
-      typeof savedSettings.vibration === 'boolean'
-        ? savedSettings.vibration
-        : defaultSettings.vibration,
-    safeMode:
-      typeof savedSettings.safeMode === 'boolean'
-        ? savedSettings.safeMode
-        : defaultSettings.safeMode,
+    includeDuelCards:
+      typeof savedSettings.includeDuelCards === 'boolean'
+        ? savedSettings.includeDuelCards
+        : defaultSettings.includeDuelCards,
+    includeRoundtableCards:
+      typeof savedSettings.includeRoundtableCards === 'boolean'
+        ? savedSettings.includeRoundtableCards
+        : defaultSettings.includeRoundtableCards,
   };
 }
 
@@ -565,10 +565,6 @@ function mergeLocalAndRemoteCards(localCards, remoteCards, modeId) {
 }
 
 function playFeedback(settings) {
-  if (settings.vibration && 'vibrate' in navigator) {
-    navigator.vibrate(24);
-  }
-
   if (!settings.sound) return;
 
   try {
@@ -773,14 +769,31 @@ export default function App() {
     const sourceModes = getCardSourceModes(selectedMode);
     const filteredCards = cards.filter((card) => {
       const modeMatches = sourceModes.includes(card.mode);
-      const safetyMatches = settings.safeMode ? card.safe !== false : true;
-      return modeMatches && safetyMatches;
+      const kindMatches =
+        card.kind === 'duel'
+          ? settings.includeDuelCards
+          : card.kind === 'roundtable'
+            ? settings.includeRoundtableCards
+            : true;
+      return modeMatches && kindMatches;
     });
 
     const mergedCards = mergeLocalAndRemoteCards(filteredCards, remoteCards, selectedMode);
 
-    return mergedCards.filter((card) => (settings.safeMode ? card.safe !== false : true));
-  }, [customCards, remoteCards, selectedMode, settings.safeMode]);
+    return mergedCards.filter((card) =>
+      card.kind === 'duel'
+        ? settings.includeDuelCards
+        : card.kind === 'roundtable'
+          ? settings.includeRoundtableCards
+          : true,
+    );
+  }, [
+    customCards,
+    remoteCards,
+    selectedMode,
+    settings.includeDuelCards,
+    settings.includeRoundtableCards,
+  ]);
 
   const teams = useMemo(() => buildTeams(players), [players]);
   const currentPlayerObject = players[game.playerIndex];
@@ -1591,7 +1604,7 @@ export default function App() {
       [key]: value,
     }));
 
-    if ((key === 'sound' || key === 'vibration') && value) {
+    if (key === 'sound' && value) {
       window.setTimeout(() => playFeedback(nextSettings), 0);
     }
   };

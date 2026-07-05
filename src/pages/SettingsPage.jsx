@@ -1,4 +1,4 @@
-import { Moon, RotateCcw, ShieldCheck, Volume2, Vibrate } from 'lucide-react';
+import { Moon, RefreshCw, RotateCcw, UsersRound, Volume2 } from 'lucide-react';
 import { useState } from 'react';
 import Header from '../components/Header.jsx';
 import PrimaryButton from '../components/PrimaryButton.jsx';
@@ -43,20 +43,22 @@ export default function SettingsPage({
             icon={Volume2}
           />
           <SettingsToggle
-            label="Rezgés"
-            description="Finom haptikus jelzés támogatott telefonokon."
-            checked={settings.vibration}
-            onChange={(value) => updateSetting('vibration', value, 'Rezgés')}
-            icon={Vibrate}
+            label="Páros kártyák"
+            description="Két játékost érintő extra kártyák a pakliban."
+            checked={settings.includeDuelCards}
+            onChange={(value) =>
+              updateSetting('includeDuelCards', value, 'Páros kártyák')
+            }
+            icon={UsersRound}
           />
           <SettingsToggle
-            label="Biztonságos mód"
-            description="Csak ártalmatlan, könnyen vállalható feladatok."
-            checked={settings.safeMode}
+            label="Körbemenős"
+            description="Mindenkit bevonó, körben haladó extra kártyák."
+            checked={settings.includeRoundtableCards}
             onChange={(value) =>
-              updateSetting('safeMode', value, 'Biztonságos mód')
+              updateSetting('includeRoundtableCards', value, 'Körbemenős')
             }
-            icon={ShieldCheck}
+            icon={RefreshCw}
           />
 
           <div className="rounded-3xl border border-rose-200/18 bg-rose-400/10 p-4">
