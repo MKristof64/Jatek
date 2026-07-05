@@ -621,6 +621,8 @@ export default function App() {
   const toggleTimerRef = useRef(null);
   const localPlayersRef = useRef(loadPlayers());
   const gameHistoryGuardRef = useRef(false);
+  const nativeFullscreenWasActiveRef = useRef(false);
+  const pendingFullscreenExitConfirmationRef = useRef(false);
 
   useEffect(() => {
     clearStoredRoomState();
@@ -1717,6 +1719,9 @@ export default function App() {
   useEffect(() => {
     if (page !== pages.game) return undefined;
 
+    nativeFullscreenWasActiveRef.current = Boolean(getFullscreenElement());
+    pendingFullscreenExitConfirmationRef.current = false;
+
     if (!gameHistoryGuardRef.current) {
       window.history.pushState({ enMegSosemGameGuard: true }, '', window.location.href);
       gameHistoryGuardRef.current = true;
@@ -1726,9 +1731,24 @@ export default function App() {
       window.history.pushState({ enMegSosemGameGuard: true }, '', window.location.href);
     };
 
-    const handlePopState = () => {
-      requestGameBackExit();
+    const requestGameExitAndKeepGuard = () => {
+      const didOpenConfirmation = requestGameBackExit();
       keepGameHistoryGuard();
+      return didOpenConfirmation;
+    };
+
+    const requestGameExitFromFullscreenLoss = () => {
+      if (document.visibilityState && document.visibilityState !== 'visible') {
+        pendingFullscreenExitConfirmationRef.current = true;
+        return;
+      }
+
+      pendingFullscreenExitConfirmationRef.current = false;
+      requestGameExitAndKeepGuard();
+    };
+
+    const handlePopState = () => {
+      requestGameExitAndKeepGuard();
     };
 
     const handleKeyDown = (event) => {
@@ -1739,13 +1759,39 @@ export default function App() {
     };
 
     const handleFullscreenChange = () => {
-      if (!getFullscreenElement() && !getFallbackFullscreen()) {
-        requestGameBackExit();
+      const hasNativeFullscreen = Boolean(getFullscreenElement());
+
+      if (hasNativeFullscreen) {
+        nativeFullscreenWasActiveRef.current = true;
+        pendingFullscreenExitConfirmationRef.current = false;
+        return;
+      }
+
+      if (nativeFullscreenWasActiveRef.current) {
+        nativeFullscreenWasActiveRef.current = false;
+        requestGameExitFromFullscreenLoss();
+      } else if (!getFallbackFullscreen()) {
+        requestGameExitAndKeepGuard();
+      }
+    };
+
+    const handleVisibilityForFullscreenExit = () => {
+      if (document.visibilityState && document.visibilityState !== 'visible') return;
+
+      if (
+        pendingFullscreenExitConfirmationRef.current ||
+        (nativeFullscreenWasActiveRef.current && !getFullscreenElement())
+      ) {
+        nativeFullscreenWasActiveRef.current = Boolean(getFullscreenElement());
+        pendingFullscreenExitConfirmationRef.current = false;
+        requestGameExitAndKeepGuard();
       }
     };
 
     window.addEventListener('popstate', handlePopState);
     window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('pageshow', handleVisibilityForFullscreenExit);
+    document.addEventListener('visibilitychange', handleVisibilityForFullscreenExit);
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
     document.addEventListener('MSFullscreenChange', handleFullscreenChange);
@@ -1753,6 +1799,8 @@ export default function App() {
     return () => {
       window.removeEventListener('popstate', handlePopState);
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('pageshow', handleVisibilityForFullscreenExit);
+      document.removeEventListener('visibilitychange', handleVisibilityForFullscreenExit);
       document.removeEventListener('fullscreenchange', handleFullscreenChange);
       document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
       document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
