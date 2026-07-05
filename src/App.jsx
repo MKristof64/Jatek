@@ -1688,6 +1688,25 @@ export default function App() {
     setPage(pages.home);
   };
 
+  const restoreGameFullscreenNow = () => {
+    refreshFullscreenViewport();
+    void lockGameFullscreen();
+    window.setTimeout(refreshFullscreenViewport, 80);
+    window.setTimeout(() => {
+      refreshFullscreenViewport();
+      void lockGameFullscreen();
+    }, 220);
+  };
+
+  const cancelPendingConfirmation = () => {
+    const shouldRestoreFullscreen = page === pages.game;
+    setPendingConfirmation(null);
+
+    if (shouldRestoreFullscreen) {
+      restoreGameFullscreenNow();
+    }
+  };
+
   const requestGameBackExit = () => {
     if (page !== pages.game || pendingConfirmation) return false;
 
@@ -1846,7 +1865,7 @@ export default function App() {
           title="Befejezed a szobát?"
           description="Ez lezárja a játékot, bezárja a szobát, és minden csatlakozott játékost visszaküld a kezdőlapra."
           confirmLabel="Befejezés"
-          onCancel={() => setPendingConfirmation(null)}
+          onCancel={cancelPendingConfirmation}
           onConfirm={finishRoomNow}
         />
       ) : null}
@@ -1856,7 +1875,7 @@ export default function App() {
           title="Kilépsz a szobából?"
           description="Ezzel elhagyod a szobát, és visszakerülsz a kezdőlapra. A többiek játéka ettől még folytatódhat."
           confirmLabel="Kilépés"
-          onCancel={() => setPendingConfirmation(null)}
+          onCancel={cancelPendingConfirmation}
           onConfirm={leaveRoomNow}
         />
       ) : null}
@@ -1870,7 +1889,7 @@ export default function App() {
               : 'Ezzel megszakítod a jelenlegi játék nézetet, és visszakerülsz a kezdőlapra.'
           }
           confirmLabel="Kilépés"
-          onCancel={() => setPendingConfirmation(null)}
+          onCancel={cancelPendingConfirmation}
           onConfirm={exitGameToHomeNow}
         />
       ) : null}
