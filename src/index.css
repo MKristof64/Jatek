@@ -185,6 +185,7 @@ button,
   width: 100%;
   height: 100%;
   overflow: hidden;
+  overscroll-behavior: none;
   background: #090018;
 }
 
@@ -192,30 +193,38 @@ button,
   position: fixed;
   inset: 0;
   z-index: 9999;
-  width: 100%;
+  width: var(--app-game-width, 100%);
+  height: var(--app-game-height, 100dvh);
   min-height: 100vh;
   min-height: 100dvh;
+  min-height: var(--app-game-height, 100dvh);
+  overflow: hidden;
 }
 
 .app-game-mode .app-shell {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  width: 100%;
+  width: var(--app-game-width, 100%);
   height: 100vh;
   height: 100dvh;
+  height: var(--app-game-height, 100dvh);
   min-height: 100vh;
   min-height: 100dvh;
+  min-height: var(--app-game-height, 100dvh);
   overflow: hidden;
+  overscroll-behavior: none;
 }
 
 .app-game-mode .phone-frame--game {
-  width: 100%;
+  width: var(--app-game-width, 100%);
   max-width: none;
   height: 100vh;
   height: 100dvh;
+  height: var(--app-game-height, 100dvh);
   min-height: 100vh;
   min-height: 100dvh;
+  min-height: var(--app-game-height, 100dvh);
   overflow: hidden;
   padding-block-start: max(0.5rem, env(safe-area-inset-top));
   padding-block-end: max(0.5rem, env(safe-area-inset-bottom));

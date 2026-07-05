@@ -2,9 +2,11 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Peer } from 'peerjs';
 import ConfirmDialog from './components/ConfirmDialog.jsx';
 import {
-  enterAppFullscreen,
-  exitAppFullscreen,
+  getFullscreenElement,
   getFallbackFullscreen,
+  lockGameFullscreen,
+  refreshFullscreenViewport,
+  unlockGameFullscreen,
 } from './components/FullscreenButton.jsx';
 import Layout from './components/Layout.jsx';
 import { cards } from './data/cards.js';
@@ -750,26 +752,63 @@ export default function App() {
 
   useEffect(() => {
     if (page === pages.game) {
+      let viewportFrame = 0;
+
+      const syncGameViewport = () => {
+        window.cancelAnimationFrame(viewportFrame);
+        viewportFrame = window.requestAnimationFrame(refreshFullscreenViewport);
+      };
+
       const keepGameFullscreen = () => {
         if (document.visibilityState && document.visibilityState !== 'visible') return;
-        void enterAppFullscreen();
+        refreshFullscreenViewport();
+        void lockGameFullscreen();
+        window.setTimeout(refreshFullscreenViewport, 120);
+        window.setTimeout(refreshFullscreenViewport, 420);
+      };
+
+      const restoreNativeFullscreenAfterGesture = (event) => {
+        if (event?.type === 'keydown' && event.key === 'Escape') return;
+        if (document.visibilityState && document.visibilityState !== 'visible') return;
+
+        refreshFullscreenViewport();
+        if (!getFullscreenElement()) {
+          void lockGameFullscreen();
+        }
       };
 
       keepGameFullscreen();
       window.addEventListener('focus', keepGameFullscreen);
       window.addEventListener('pageshow', keepGameFullscreen);
+      window.addEventListener('resize', syncGameViewport);
       window.addEventListener('orientationchange', keepGameFullscreen);
+      window.addEventListener('pointerdown', restoreNativeFullscreenAfterGesture, true);
+      window.addEventListener('touchstart', restoreNativeFullscreenAfterGesture, true);
+      window.addEventListener('click', restoreNativeFullscreenAfterGesture, true);
+      window.addEventListener('keydown', restoreNativeFullscreenAfterGesture, true);
       document.addEventListener('visibilitychange', keepGameFullscreen);
+      document.addEventListener('resume', keepGameFullscreen);
+      window.visualViewport?.addEventListener('resize', syncGameViewport);
+      window.visualViewport?.addEventListener('scroll', syncGameViewport);
 
       return () => {
+        window.cancelAnimationFrame(viewportFrame);
         window.removeEventListener('focus', keepGameFullscreen);
         window.removeEventListener('pageshow', keepGameFullscreen);
+        window.removeEventListener('resize', syncGameViewport);
         window.removeEventListener('orientationchange', keepGameFullscreen);
+        window.removeEventListener('pointerdown', restoreNativeFullscreenAfterGesture, true);
+        window.removeEventListener('touchstart', restoreNativeFullscreenAfterGesture, true);
+        window.removeEventListener('click', restoreNativeFullscreenAfterGesture, true);
+        window.removeEventListener('keydown', restoreNativeFullscreenAfterGesture, true);
         document.removeEventListener('visibilitychange', keepGameFullscreen);
+        document.removeEventListener('resume', keepGameFullscreen);
+        window.visualViewport?.removeEventListener('resize', syncGameViewport);
+        window.visualViewport?.removeEventListener('scroll', syncGameViewport);
       };
     }
 
-    void exitAppFullscreen();
+    void unlockGameFullscreen();
     gameHistoryGuardRef.current = false;
     return undefined;
   }, [page]);
@@ -1484,7 +1523,7 @@ export default function App() {
   const startGame = () => {
     if (room && !isRoomHost) return;
     if (players.length < 2 || cardPool.length === 0) return;
-    void enterAppFullscreen();
+    void lockGameFullscreen();
     const picked = pickRandomCard(cardPool, []);
     const playerOrder = shufflePlayerIndexes(players);
     const firstPlayerIndex = playerOrder[0] ?? 0;
@@ -1681,11 +1720,7 @@ export default function App() {
     };
 
     const handleFullscreenChange = () => {
-      const fullscreenElement =
-        document.fullscreenElement ||
-        document.webkitFullscreenElement ||
-        document.msFullscreenElement;
-      if (!fullscreenElement && !getFallbackFullscreen()) {
+      if (!getFullscreenElement() && !getFallbackFullscreen()) {
         requestGameBackExit();
       }
     };
