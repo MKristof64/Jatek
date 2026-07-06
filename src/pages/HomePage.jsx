@@ -1,5 +1,4 @@
 import { Crown, Play, Settings, Sparkles, UserPlus, Wand2 } from 'lucide-react';
-import FullscreenButton from '../components/FullscreenButton.jsx';
 import PrimaryButton from '../components/PrimaryButton.jsx';
 
 export default function HomePage({
@@ -13,8 +12,7 @@ export default function HomePage({
 }) {
   return (
     <>
-      <div className="home-top-controls flex shrink-0 items-center justify-between">
-        <FullscreenButton className="h-10 w-10 rounded-[1.1rem]" />
+      <div className="home-top-controls flex shrink-0 items-center justify-end">
         <button
           type="button"
           onClick={onSettings}
