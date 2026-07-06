@@ -1842,7 +1842,7 @@ export default function App() {
     setPage(pages.home);
   };
 
-  const immersivePages = new Set([pages.home, pages.room, pages.modes, pages.game]);
+  const immersivePages = new Set(Object.values(pages));
 
   return (
     <Layout
