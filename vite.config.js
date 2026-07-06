@@ -23,9 +23,12 @@ function productionSecurityMeta() {
     transformIndexHtml(html, context) {
       if (context.server) return html;
 
+      const cspMeta = `<meta http-equiv="Content-Security-Policy" content="${productionCsp}" />`;
+      if (html.includes(cspMeta)) return html;
+
       return html.replace(
-        '<meta name="theme-color" content="#090018" />',
-        `<meta name="theme-color" content="#090018" />\n    <meta http-equiv="Content-Security-Policy" content="${productionCsp}" />`,
+        /<meta name="theme-color" content="[^"]*" \/>/,
+        `<meta name="theme-color" content="#090018" />\n    ${cspMeta}`,
       );
     },
   };
