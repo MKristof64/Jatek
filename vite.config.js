@@ -28,7 +28,7 @@ function productionSecurityMeta() {
 
       return html.replace(
         /<meta name="theme-color" content="[^"]*" \/>/,
-        `<meta name="theme-color" content="#090018" />\n    ${cspMeta}`,
+        `<meta name="theme-color" content="#4c001f" />\n    ${cspMeta}`,
       );
     },
   };

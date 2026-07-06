@@ -2915,6 +2915,31 @@ button,
   --party-amber: #ffd84d;
   --party-cyan: #67e8f9;
   --party-lime: #bef264;
+  --party-system-color: #4c001f;
+  --party-bg-image:
+    linear-gradient(118deg, rgba(255, 216, 77, 0.12) 0 10%, transparent 10% 31%, rgba(244, 63, 94, 0.13) 31% 43%, transparent 43%),
+    linear-gradient(24deg, transparent 0 52%, rgba(255, 90, 61, 0.18) 52% 63%, transparent 63%),
+    linear-gradient(154deg, transparent 0 60%, rgba(103, 232, 249, 0.08) 60% 65%, transparent 65%),
+    linear-gradient(rgba(255, 255, 255, 0.042) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.042) 1px, transparent 1px),
+    radial-gradient(circle at 78% 12%, rgba(255, 90, 61, 0.18), transparent 31%),
+    linear-gradient(135deg, var(--party-ink) 0%, var(--party-plum) 28%, var(--party-merlot) 62%, var(--party-crimson) 100%);
+  --party-bg-size:
+    180% 180%,
+    160% 160%,
+    190% 190%,
+    42px 42px,
+    42px 42px,
+    auto,
+    auto;
+  --party-bg-position:
+    0% 0%,
+    100% 0%,
+    0% 100%,
+    0 0,
+    0 0,
+    center,
+    center;
 }
 
 .app-game-mode {
@@ -2927,34 +2952,17 @@ body,
 :-webkit-full-screen,
 .app-fullscreen-fallback,
 .app-fullscreen-fallback body {
-  background: var(--party-ink);
+  background-color: var(--party-system-color);
+  background-image: var(--party-bg-image);
+  background-size: var(--party-bg-size);
+  background-position: var(--party-bg-position);
 }
 
 .party-bg {
-  background-image:
-    linear-gradient(118deg, rgba(255, 216, 77, 0.12) 0 10%, transparent 10% 31%, rgba(244, 63, 94, 0.13) 31% 43%, transparent 43%),
-    linear-gradient(24deg, transparent 0 52%, rgba(255, 90, 61, 0.18) 52% 63%, transparent 63%),
-    linear-gradient(154deg, transparent 0 60%, rgba(103, 232, 249, 0.08) 60% 65%, transparent 65%),
-    linear-gradient(rgba(255, 255, 255, 0.042) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.042) 1px, transparent 1px),
-    radial-gradient(circle at 78% 12%, rgba(255, 90, 61, 0.18), transparent 31%),
-    linear-gradient(135deg, var(--party-ink) 0%, var(--party-plum) 28%, var(--party-merlot) 62%, var(--party-crimson) 100%);
-  background-size:
-    180% 180%,
-    160% 160%,
-    190% 190%,
-    42px 42px,
-    42px 42px,
-    auto,
-    auto;
-  background-position:
-    0% 0%,
-    100% 0%,
-    0% 100%,
-    0 0,
-    0 0,
-    center,
-    center;
+  background-color: var(--party-system-color);
+  background-image: var(--party-bg-image);
+  background-size: var(--party-bg-size);
+  background-position: var(--party-bg-position);
 }
 
 .theme-light .party-bg {
