@@ -7,7 +7,7 @@ import {
   lockGameFullscreen,
   refreshFullscreenViewport,
   unlockGameFullscreen,
-} from './components/FullscreenButton.jsx';
+} from './lib/fullscreen.js';
 import Layout from './components/Layout.jsx';
 import { cards } from './data/cards.js';
 import { getModeById } from './data/modes.js';

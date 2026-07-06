@@ -232,12 +232,6 @@ button,
   padding-inline-end: max(0.5rem, env(safe-area-inset-right));
 }
 
-.fullscreen-button {
-  box-shadow:
-    0 14px 34px rgba(3, 7, 18, 0.26),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
-}
-
 .app-shell {
   min-height: 100vh;
   min-height: 100svh;

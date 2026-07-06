@@ -1,6 +1,3 @@
-import { Maximize2, Minimize2 } from 'lucide-react';
-import { useEffect, useState } from 'react';
-
 const fallbackClass = 'app-fullscreen-fallback';
 const gameFullscreenIntentKey = 'enmegsosem.gameFullscreenIntent';
 
@@ -148,54 +145,4 @@ export async function exitAppFullscreen({ clearGameIntent = false } = {}) {
 
 export async function unlockGameFullscreen() {
   await exitAppFullscreen({ clearGameIntent: true });
-}
-
-export default function FullscreenButton({ className = '' }) {
-  const [isFullscreen, setIsFullscreen] = useState(false);
-
-  useEffect(() => {
-    const syncFullscreenState = () => {
-      setIsFullscreen(Boolean(getFullscreenElement()) || getFallbackFullscreen());
-    };
-
-    syncFullscreenState();
-    document.addEventListener('fullscreenchange', syncFullscreenState);
-    document.addEventListener('webkitfullscreenchange', syncFullscreenState);
-    document.addEventListener('MSFullscreenChange', syncFullscreenState);
-
-    return () => {
-      document.removeEventListener('fullscreenchange', syncFullscreenState);
-      document.removeEventListener('webkitfullscreenchange', syncFullscreenState);
-      document.removeEventListener('MSFullscreenChange', syncFullscreenState);
-    };
-  }, []);
-
-  const toggleFullscreen = async () => {
-    if (getFullscreenElement() || getFallbackFullscreen()) {
-      await exitAppFullscreen();
-      setIsFullscreen(Boolean(getFullscreenElement()));
-      return;
-    }
-
-    await enterAppFullscreen();
-    setIsFullscreen(Boolean(getFullscreenElement()) || getFallbackFullscreen());
-  };
-
-  const Icon = isFullscreen ? Minimize2 : Maximize2;
-  const label = isFullscreen ? 'Kilépés teljes képernyőből' : 'Teljes képernyő';
-
-  return (
-    <button
-      type="button"
-      className={[
-        'fullscreen-button icon-button-dynamic grid h-12 w-12 shrink-0 touch-manipulation place-items-center rounded-[1.35rem] bg-white/12 text-white ring-1 ring-white/15 transition hover:bg-white/18 active:scale-[0.98]',
-        className,
-      ].join(' ')}
-      onClick={toggleFullscreen}
-      aria-label={label}
-      title={label}
-    >
-      <Icon className="h-5 w-5" />
-    </button>
-  );
 }
