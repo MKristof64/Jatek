@@ -108,6 +108,18 @@ const pages = {
   settings: 'settings',
 };
 
+function isInstalledAppDisplayMode() {
+  return Boolean(
+    window.matchMedia?.('(display-mode: fullscreen)').matches ||
+      window.matchMedia?.('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true,
+  );
+}
+
+function shouldRequestNativeGameFullscreen() {
+  return !isInstalledAppDisplayMode();
+}
+
 function loadJson(key, fallback) {
   try {
     const saved = localStorage.getItem(key);
@@ -600,11 +612,7 @@ export default function App() {
   const gameWasBackgroundedRef = useRef(false);
 
   useEffect(() => {
-    const isStandalone =
-      window.matchMedia?.('(display-mode: standalone)').matches ||
-      window.navigator.standalone === true;
-
-    if (isStandalone) return undefined;
+    if (isInstalledAppDisplayMode()) return undefined;
 
     const handleBeforeInstallPrompt = (event) => {
       event.preventDefault();
@@ -1542,7 +1550,7 @@ export default function App() {
   const startGame = () => {
     if (room && !isRoomHost) return;
     if (players.length < 2 || cardPool.length === 0) return;
-    void lockGameFullscreen({ requestNative: false });
+    void lockGameFullscreen({ requestNative: shouldRequestNativeGameFullscreen() });
     const picked = pickRandomCard(cardPool, []);
     const playerOrder = shufflePlayerIndexes(players);
     const firstPlayerIndex = playerOrder[0] ?? 0;
@@ -1721,11 +1729,11 @@ export default function App() {
 
   const restoreGameFullscreenNow = () => {
     refreshFullscreenViewport();
-    void lockGameFullscreen({ requestNative: false });
+    void lockGameFullscreen({ requestNative: shouldRequestNativeGameFullscreen() });
     window.setTimeout(refreshFullscreenViewport, 80);
     window.setTimeout(() => {
       refreshFullscreenViewport();
-      void lockGameFullscreen({ requestNative: false });
+      void lockGameFullscreen({ requestNative: shouldRequestNativeGameFullscreen() });
     }, 220);
   };
 
