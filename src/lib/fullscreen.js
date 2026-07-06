@@ -1,5 +1,46 @@
 const fallbackClass = 'app-fullscreen-fallback';
 const gameFullscreenIntentKey = 'enmegsosem.gameFullscreenIntent';
+let stableViewport = {
+  width: 0,
+  height: 0,
+  orientation: '',
+};
+
+function getOrientationKey(width, height) {
+  return window.screen?.orientation?.type || (width >= height ? 'landscape' : 'portrait');
+}
+
+function isEditingText() {
+  const element = document.activeElement;
+  if (!element) return false;
+
+  const tagName = element.tagName?.toLowerCase();
+  return (
+    tagName === 'input' ||
+    tagName === 'textarea' ||
+    tagName === 'select' ||
+    element.isContentEditable
+  );
+}
+
+function updateStableViewport(width, height) {
+  const orientation = getOrientationKey(width, height);
+  const orientationChanged = stableViewport.orientation && stableViewport.orientation !== orientation;
+  const widthChanged = stableViewport.width && Math.abs(stableViewport.width - width) > 48;
+
+  if (!stableViewport.width || !stableViewport.height || orientationChanged || widthChanged) {
+    stableViewport = { width, height, orientation };
+    return stableViewport;
+  }
+
+  stableViewport = {
+    width: Math.max(stableViewport.width, width),
+    height: Math.max(stableViewport.height, height),
+    orientation,
+  };
+
+  return stableViewport;
+}
 
 function writeStoredIntent(storage, enabled) {
   try {
@@ -49,27 +90,36 @@ export function setFallbackFullscreen(enabled) {
 
 export function refreshFullscreenViewport() {
   const viewport = window.visualViewport;
-  const width = Math.round(
-    viewport?.width || window.innerWidth || document.documentElement.clientWidth || 0,
-  );
-  const height = Math.round(
-    viewport?.height || window.innerHeight || document.documentElement.clientHeight || 0,
-  );
-  const offsetLeft = Math.max(0, Math.round(viewport?.offsetLeft || 0));
-  const offsetTop = Math.max(0, Math.round(viewport?.offsetTop || 0));
-  const bottomInset = Math.max(
-    0,
-    Math.round((window.innerHeight || height) - height - offsetTop),
-  );
+  const visualWidth = Math.round(viewport?.width || 0);
+  const visualHeight = Math.round(viewport?.height || 0);
+  const layoutWidth = Math.round(window.innerWidth || document.documentElement.clientWidth || visualWidth || 0);
+  const layoutHeight = Math.round(window.innerHeight || document.documentElement.clientHeight || visualHeight || 0);
+  const focusedInput = isEditingText();
+  const measuredWidth = Math.max(layoutWidth, visualWidth);
+  const measuredHeight = focusedInput
+    ? Math.max(1, visualHeight || layoutHeight)
+    : Math.max(layoutHeight, visualHeight);
+  const stable = focusedInput
+    ? {
+        width: measuredWidth,
+        height: measuredHeight,
+        orientation: getOrientationKey(measuredWidth, measuredHeight),
+      }
+    : updateStableViewport(measuredWidth, measuredHeight);
+  const offsetLeft = focusedInput ? Math.max(0, Math.round(viewport?.offsetLeft || 0)) : 0;
+  const offsetTop = focusedInput ? Math.max(0, Math.round(viewport?.offsetTop || 0)) : 0;
+  const bottomInset = focusedInput
+    ? Math.max(0, Math.round((layoutHeight || measuredHeight) - measuredHeight - offsetTop))
+    : 0;
 
-  if (width > 0) {
-    document.documentElement.style.setProperty('--app-game-width', `${width}px`);
-    document.documentElement.style.setProperty('--app-viewport-width', `${width}px`);
+  if (stable.width > 0) {
+    document.documentElement.style.setProperty('--app-game-width', `${stable.width}px`);
+    document.documentElement.style.setProperty('--app-viewport-width', `${stable.width}px`);
   }
 
-  if (height > 0) {
-    document.documentElement.style.setProperty('--app-game-height', `${height}px`);
-    document.documentElement.style.setProperty('--app-viewport-height', `${height}px`);
+  if (stable.height > 0) {
+    document.documentElement.style.setProperty('--app-game-height', `${stable.height}px`);
+    document.documentElement.style.setProperty('--app-viewport-height', `${stable.height}px`);
   }
 
   document.documentElement.style.setProperty('--app-viewport-left', `${offsetLeft}px`);
@@ -78,6 +128,11 @@ export function refreshFullscreenViewport() {
 }
 
 export function clearFullscreenViewport() {
+  stableViewport = {
+    width: 0,
+    height: 0,
+    orientation: '',
+  };
   document.documentElement.style.removeProperty('--app-game-width');
   document.documentElement.style.removeProperty('--app-game-height');
   document.documentElement.style.removeProperty('--app-viewport-width');

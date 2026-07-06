@@ -10,7 +10,7 @@
   --app-visual-bottom-inset: 0px;
   --app-system-bottom-space: max(
     1rem,
-    calc(env(safe-area-inset-bottom) + var(--app-visual-bottom-inset) + 0.85rem)
+    calc(env(safe-area-inset-bottom) + 0.85rem)
   );
   color-scheme: dark light;
   font-family:
@@ -252,7 +252,7 @@ button,
   padding-block-start: max(0.5rem, env(safe-area-inset-top));
   padding-block-end: max(
     0.65rem,
-    calc(env(safe-area-inset-bottom) + var(--app-visual-bottom-inset) + 0.45rem)
+    calc(env(safe-area-inset-bottom) + 0.45rem)
   );
   padding-inline-start: max(0.5rem, env(safe-area-inset-left));
   padding-inline-end: max(0.5rem, env(safe-area-inset-right));
@@ -932,7 +932,7 @@ button,
     padding-block-start: max(0.7rem, env(safe-area-inset-top));
     padding-block-end: max(
       0.9rem,
-      calc(env(safe-area-inset-bottom) + var(--app-visual-bottom-inset) + 0.65rem)
+      calc(env(safe-area-inset-bottom) + 0.65rem)
     );
     padding-inline-start: max(0.75rem, env(safe-area-inset-left));
     padding-inline-end: max(0.75rem, env(safe-area-inset-right));
@@ -1349,7 +1349,7 @@ button,
     padding-block-start: max(0.4rem, env(safe-area-inset-top));
     padding-block-end: max(
       0.7rem,
-      calc(env(safe-area-inset-bottom) + var(--app-visual-bottom-inset) + 0.35rem)
+      calc(env(safe-area-inset-bottom) + 0.35rem)
     );
     padding-inline-start: max(0.55rem, env(safe-area-inset-left));
     padding-inline-end: max(0.55rem, env(safe-area-inset-right));
