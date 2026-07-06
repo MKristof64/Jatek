@@ -8,7 +8,7 @@
   --app-viewport-left: 0px;
   --app-viewport-top: 0px;
   --app-visual-bottom-inset: 0px;
-  --app-top-bleed: 8px;
+  --app-top-bleed: 16px;
   --app-system-bottom-space: max(
     1rem,
     calc(env(safe-area-inset-bottom) + 0.85rem)
@@ -67,6 +67,25 @@ body {
   background-position: var(--party-bg-position, center);
   overflow-x: hidden;
   overscroll-behavior-y: none;
+}
+
+body::before {
+  display: none;
+}
+
+@media (display-mode: fullscreen), (display-mode: standalone) {
+  body::before {
+    content: "";
+    display: block;
+    position: fixed;
+    inset-inline: 0;
+    top: 0;
+    z-index: 2147483647;
+    width: 100vw;
+    height: 18px;
+    pointer-events: none;
+    background: var(--party-system-color, #5f0029);
+  }
 }
 
 button,
@@ -255,21 +274,12 @@ button,
   display: block;
   position: fixed;
   inset-inline: 0;
-  top: 0;
+  top: -2px;
   z-index: 2147483647;
   width: 100vw;
-  height: 12px;
+  height: 22px;
   pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(95, 0, 41, 1) 0 2px, rgba(95, 0, 41, 0.92) 2px 5px, rgba(95, 0, 41, 0) 100%),
-    var(--party-bg-image, linear-gradient(135deg, #080011 0%, #240018 35%, #5f0029 100%));
-  background-color: var(--party-system-color, #5f0029);
-  background-size:
-    100% 100%,
-    var(--party-bg-size, auto);
-  background-position:
-    center top,
-    var(--party-bg-position, center);
+  background: var(--party-system-color, #5f0029);
   transform: translateZ(0);
 }
 
