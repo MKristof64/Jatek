@@ -31,7 +31,7 @@ function FeedbackActionBar({ card, feedbackState, mode, onFeedback }) {
 
   if (status === 'sent') {
     return (
-      <div className="game-feedback-actions game-feedback-actions--thanks rounded-[1.25rem] bg-white/[0.08] p-2 ring-1 ring-white/10">
+      <div className="game-feedback-actions game-feedback-actions--thanks rounded-[1.25rem] p-2 ring-1 ring-white/10">
         <p className="game-feedback-thanks text-center text-sm font-black text-lime-100">
           {feedbackMessage}
         </p>
@@ -40,7 +40,7 @@ function FeedbackActionBar({ card, feedbackState, mode, onFeedback }) {
   }
 
   return (
-    <div className="game-feedback-actions rounded-[1.25rem] bg-white/[0.08] p-2 ring-1 ring-white/10">
+    <div className="game-feedback-actions rounded-[1.25rem] p-2 ring-1 ring-white/10">
       {feedbackMessage ? (
         <p className="game-feedback-summary mb-2 text-center text-[0.68rem] font-black uppercase tracking-[0.12em] text-white/58">
           {feedbackMessage}

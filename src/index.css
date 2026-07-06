@@ -594,9 +594,14 @@ button,
 
 .game-feedback-actions {
   flex-shrink: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    rgba(8, 0, 24, 0.34) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px) saturate(1.18);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 12px 28px rgba(3, 7, 18, 0.16);
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 12px 32px rgba(3, 7, 18, 0.18);
 }
 
 .game-feedback-dock {
@@ -676,7 +681,9 @@ button,
 }
 
 .theme-light .game-feedback-actions {
-  background-color: rgba(255, 255, 255, 0.68) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.025)),
+    rgba(74, 0, 46, 0.22) !important;
 }
 
 @keyframes spotlight-spin {
@@ -2908,6 +2915,10 @@ button,
   --party-amber: #ffd84d;
   --party-cyan: #67e8f9;
   --party-lime: #bef264;
+}
+
+.app-game-mode {
+  color-scheme: dark;
 }
 
 html,
