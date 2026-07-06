@@ -242,25 +242,8 @@ button,
   overscroll-behavior: none;
 }
 
-.app-fullscreen-fallback .app-shell::before,
-.app-immersive-mode .app-shell::before,
-.app-game-mode .app-shell::before {
-  content: "";
-  position: fixed;
-  inset-inline: 0;
-  top: -7rem;
-  z-index: 0;
-  height: calc(7rem + max(1rem, env(safe-area-inset-top)));
-  pointer-events: none;
-  background-color: var(--party-system-color, #5f0029);
-  background-image: var(--party-bg-image, linear-gradient(135deg, #080011 0%, #240018 35%, #5f0029 100%));
-  background-size: var(--party-bg-size, auto);
-  background-position: var(--party-bg-position, center);
-}
-
 .app-immersive-mode .phone-frame--immersive {
   position: relative;
-  z-index: 1;
   width: 100%;
   max-width: none;
   height: 100vh;
