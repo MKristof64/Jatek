@@ -249,6 +249,8 @@ button,
 .app-game-mode .phone-frame--game {
   width: var(--app-viewport-width, var(--app-game-width, 100%));
   max-width: none;
+  height: max(var(--app-viewport-height, 100dvh), 100lvh);
+  min-height: max(var(--app-viewport-height, 100dvh), 100lvh);
   padding-block-start: max(0.5rem, env(safe-area-inset-top));
   padding-block-end: max(
     0.65rem,
@@ -3305,5 +3307,92 @@ body,
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Game-only guard: transient phone navigation bars may overlay the bottom, but they must not resize or push gameplay. */
+:root {
+  --game-system-panel-clearance: clamp(3.35rem, 8lvh, 5.15rem);
+  --game-bottom-dock-gap: clamp(0.45rem, 1.35lvh, 0.75rem);
+  --game-feedback-dock-height: clamp(3.35rem, 8.5lvh, 4.25rem);
+  --game-finish-dock-height: clamp(3.15rem, 8lvh, 3.95rem);
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .app-game-mode .app-shell,
+  .app-game-mode .phone-frame--game {
+    height: max(var(--app-viewport-height, 100dvh), 100lvh) !important;
+    min-height: max(var(--app-viewport-height, 100dvh), 100lvh) !important;
+  }
+
+  .app-game-mode .phone-frame--game {
+    padding-block-end: max(0.35rem, env(safe-area-inset-bottom)) !important;
+  }
+
+  .app-game-mode .game-screen {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .app-game-mode .game-main {
+    overflow: hidden !important;
+  }
+
+  .app-game-mode .game-feedback-dock {
+    position: absolute;
+    z-index: 70;
+    right: max(0.25rem, env(safe-area-inset-right));
+    bottom: var(--game-system-panel-clearance);
+    left: max(0.25rem, env(safe-area-inset-left));
+    margin: 0 !important;
+    pointer-events: auto;
+  }
+
+  .app-game-mode .game-feedback-actions {
+    min-height: var(--game-feedback-dock-height);
+  }
+
+  .app-game-mode .game-action-panel--finisher {
+    position: absolute;
+    z-index: 69;
+    right: max(0.25rem, env(safe-area-inset-right));
+    bottom: var(--game-system-panel-clearance);
+    left: max(0.25rem, env(safe-area-inset-left));
+    margin: 0 !important;
+    pointer-events: auto;
+  }
+
+  .app-game-mode .game-screen:has(.game-feedback-dock) .game-action-panel--finisher {
+    bottom: calc(
+      var(--game-system-panel-clearance) + var(--game-feedback-dock-height) +
+        var(--game-bottom-dock-gap)
+    );
+  }
+
+  .app-game-mode .game-action-panel--finisher .party-button {
+    min-height: var(--game-finish-dock-height);
+  }
+}
+
+@media (hover: none) and (pointer: coarse) and (orientation: landscape) {
+  :root {
+    --game-system-panel-clearance: clamp(1.1rem, 5lvh, 2.45rem);
+    --game-feedback-dock-height: clamp(2.45rem, 9lvh, 3.2rem);
+    --game-finish-dock-height: clamp(2.45rem, 8.5lvh, 3.05rem);
+  }
+
+  .app-game-mode .game-action-panel--finisher,
+  .app-game-mode .game-screen:has(.game-feedback-dock) .game-action-panel--finisher {
+    position: relative;
+    z-index: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+  }
+
+  .app-game-mode .game-feedback-dock {
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
 }
