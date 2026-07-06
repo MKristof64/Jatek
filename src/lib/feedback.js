@@ -27,27 +27,6 @@ function safeText(value, maxLength) {
     .slice(0, maxLength);
 }
 
-function normalizeStat(row) {
-  const totalVotes = Number(row?.totalVotes ?? row?.total_votes) || 0;
-  const likes = Number(row?.likes) || 0;
-  const dislikes = Number(row?.dislikes) || 0;
-  const successPercent =
-    row?.successPercent === null ||
-    row?.successPercent === undefined ||
-    row?.success_percent === null ||
-    row?.success_percent === undefined
-      ? null
-      : Number(row.successPercent ?? row.success_percent);
-
-  return {
-    cardId: safeText(row?.cardId ?? row?.card_id, 120),
-    totalVotes,
-    likes,
-    dislikes,
-    successPercent: Number.isFinite(successPercent) ? successPercent : null,
-  };
-}
-
 function normalizeRemoteCard(row) {
   const kind = ['never', 'duel', 'roundtable'].includes(row?.kind) ? row.kind : 'never';
   const durationSeconds = Number(row?.durationSeconds ?? row?.duration_seconds);
@@ -152,44 +131,6 @@ export async function fetchRemoteCards() {
       ok: false,
       reason: error?.name === 'AbortError' ? 'timeout' : 'network-error',
       cards: [],
-    };
-  } finally {
-    window.clearTimeout(timeoutId);
-  }
-}
-
-export async function fetchBoldFeedbackStats() {
-  if (!isFeedbackConfigured()) {
-    return { ok: false, reason: 'not-configured', stats: {} };
-  }
-
-  const controller = new AbortController();
-  const timeoutId = window.setTimeout(() => controller.abort(), 8000);
-
-  try {
-    const response = await fetch(`${feedbackConfig.apiUrl}/api/public-stats?mode=bold`, {
-      signal: controller.signal,
-    });
-
-    if (!response.ok) {
-      return { ok: false, reason: 'cloudflare-error', status: response.status, stats: {} };
-    }
-
-    const data = await response.json();
-    const sourceStats = data?.stats && typeof data.stats === 'object' ? Object.values(data.stats) : [];
-    const stats = sourceStats.map(normalizeStat).reduce((statsByCardId, stat) => {
-      if (stat.cardId) {
-        statsByCardId[stat.cardId] = stat;
-      }
-      return statsByCardId;
-    }, {});
-
-    return { ok: true, stats };
-  } catch (error) {
-    return {
-      ok: false,
-      reason: error?.name === 'AbortError' ? 'timeout' : 'network-error',
-      stats: {},
     };
   } finally {
     window.clearTimeout(timeoutId);

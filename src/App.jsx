@@ -11,7 +11,7 @@ import {
 import Layout from './components/Layout.jsx';
 import { cards } from './data/cards.js';
 import { getModeById } from './data/modes.js';
-import { fetchBoldFeedbackStats, fetchRemoteCards, submitCardFeedback } from './lib/feedback.js';
+import { fetchRemoteCards, submitCardFeedback } from './lib/feedback.js';
 import CustomCardsPage from './pages/CustomCardsPage.jsx';
 import GamePage from './pages/GamePage.jsx';
 import HomePage from './pages/HomePage.jsx';
@@ -525,32 +525,6 @@ function buildTeams(players) {
   ].filter((team) => team.players.length > 0);
 }
 
-function applyFeedbackVote(statsByCardId, card, voteType) {
-  if (!card?.id || !feedbackCardModes.has(card.mode)) return statsByCardId;
-
-  const currentStats = statsByCardId[card.id] ?? {
-    cardId: card.id,
-    totalVotes: 0,
-    likes: 0,
-    dislikes: 0,
-    successPercent: null,
-  };
-  const likes = currentStats.likes + (voteType === 'like' ? 1 : 0);
-  const dislikes = currentStats.dislikes + (voteType === 'dislike' ? 1 : 0);
-  const totalVotes = likes + dislikes;
-
-  return {
-    ...statsByCardId,
-    [card.id]: {
-      ...currentStats,
-      totalVotes,
-      likes,
-      dislikes,
-      successPercent: totalVotes > 0 ? Math.round((likes / totalVotes) * 10000) / 100 : null,
-    },
-  };
-}
-
 function mergeLocalAndRemoteCards(localCards, remoteCards, modeId) {
   const sourceModes = getCardSourceModes(modeId);
   const remoteModeCards = remoteCards.filter((card) => sourceModes.includes(card.mode));
@@ -601,7 +575,6 @@ export default function App() {
   const [selectedMode, setSelectedMode] = useState(loadSelectedMode);
   const [game, setGame] = useState(initialGame);
   const [remoteCards, setRemoteCards] = useState([]);
-  const [boldFeedbackStats, setBoldFeedbackStats] = useState({});
   const [feedbackState, setFeedbackState] = useState({
     cardId: null,
     message: '',
@@ -683,22 +656,6 @@ export default function App() {
       currentRoomPlayerId,
     };
   }, [currentRoomPlayerId, game, players, room, selectedMode]);
-
-  useEffect(() => {
-    let ignore = false;
-
-    if (selectedMode !== 'bold') return undefined;
-
-    fetchBoldFeedbackStats().then((result) => {
-      if (!ignore && result.ok) {
-        setBoldFeedbackStats(result.stats);
-      }
-    });
-
-    return () => {
-      ignore = true;
-    };
-  }, [selectedMode]);
 
   useEffect(() => {
     setFeedbackState({
@@ -824,6 +781,8 @@ export default function App() {
       return customCards.map((card) => ({
         ...card,
         mode: 'custom',
+        kind: 'never',
+        title: 'Én még sosem...',
         safe: true,
       }));
     }
@@ -1630,7 +1589,6 @@ export default function App() {
       return;
     }
 
-    setBoldFeedbackStats((currentStats) => applyFeedbackVote(currentStats, game.card, voteType));
     setFeedbackState({
       cardId: game.card.id,
       message: 'Köszi!',
