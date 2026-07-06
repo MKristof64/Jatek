@@ -33,7 +33,10 @@ body,
 }
 
 html {
-  background: #090018;
+  background-color: var(--party-system-color, #5f0029);
+  background-image: var(--party-bg-image, linear-gradient(135deg, #080011 0%, #240018 35%, #5f0029 100%));
+  background-size: var(--party-bg-size, auto);
+  background-position: var(--party-bg-position, center);
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -57,7 +60,10 @@ body {
   min-height: 100svh;
   min-height: 100dvh;
   min-height: var(--app-viewport-height, 100dvh);
-  background: #090018;
+  background-color: var(--party-system-color, #5f0029);
+  background-image: var(--party-bg-image, linear-gradient(135deg, #080011 0%, #240018 35%, #5f0029 100%));
+  background-size: var(--party-bg-size, auto);
+  background-position: var(--party-bg-position, center);
   overflow-x: hidden;
   overscroll-behavior-y: none;
 }
@@ -193,7 +199,10 @@ button,
 
 :fullscreen,
 :-webkit-full-screen {
-  background: #090018;
+  background-color: var(--party-system-color, #5f0029);
+  background-image: var(--party-bg-image, linear-gradient(135deg, #080011 0%, #240018 35%, #5f0029 100%));
+  background-size: var(--party-bg-size, auto);
+  background-position: var(--party-bg-position, center);
 }
 
 :fullscreen .app-shell,
@@ -209,7 +218,10 @@ button,
   height: 100%;
   overflow: hidden;
   overscroll-behavior: none;
-  background: #090018;
+  background-color: var(--party-system-color, #5f0029);
+  background-image: var(--party-bg-image, linear-gradient(135deg, #080011 0%, #240018 35%, #5f0029 100%));
+  background-size: var(--party-bg-size, auto);
+  background-position: var(--party-bg-position, center);
 }
 
 .app-fullscreen-fallback .app-shell,
@@ -230,9 +242,27 @@ button,
   overscroll-behavior: none;
 }
 
+.app-fullscreen-fallback .app-shell::before,
+.app-immersive-mode .app-shell::before,
+.app-game-mode .app-shell::before {
+  content: "";
+  position: fixed;
+  inset-inline: 0;
+  top: -7rem;
+  z-index: 0;
+  height: calc(7rem + max(1rem, env(safe-area-inset-top)));
+  pointer-events: none;
+  background-color: var(--party-system-color, #5f0029);
+  background-image: var(--party-bg-image, linear-gradient(135deg, #080011 0%, #240018 35%, #5f0029 100%));
+  background-size: var(--party-bg-size, auto);
+  background-position: var(--party-bg-position, center);
+}
+
 .app-immersive-mode .phone-frame--immersive {
+  position: relative;
+  z-index: 1;
   width: 100%;
-  max-width: min(100%, 430px);
+  max-width: none;
   height: 100vh;
   height: 100dvh;
   height: var(--app-viewport-height, var(--app-game-height, 100dvh));
@@ -264,6 +294,10 @@ button,
   min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
+  background-color: var(--party-system-color, #5f0029);
+  background-image: var(--party-bg-image, linear-gradient(135deg, #080011 0%, #240018 35%, #5f0029 100%));
+  background-size: var(--party-bg-size, auto);
+  background-position: var(--party-bg-position, center);
 }
 
 .phone-frame {
@@ -2915,7 +2949,7 @@ button,
   --party-amber: #ffd84d;
   --party-cyan: #67e8f9;
   --party-lime: #bef264;
-  --party-system-color: #4c001f;
+  --party-system-color: #5f0029;
   --party-bg-image:
     linear-gradient(118deg, rgba(255, 216, 77, 0.12) 0 10%, transparent 10% 31%, rgba(244, 63, 94, 0.13) 31% 43%, transparent 43%),
     linear-gradient(24deg, transparent 0 52%, rgba(255, 90, 61, 0.18) 52% 63%, transparent 63%),

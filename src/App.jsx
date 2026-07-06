@@ -120,6 +120,15 @@ function shouldRequestNativeGameFullscreen() {
   return !isInstalledAppDisplayMode();
 }
 
+function syncAppChromeColor() {
+  const color = '#5f0029';
+  document
+    .querySelectorAll('meta[name="theme-color"], meta[name="msapplication-TileColor"]')
+    .forEach((meta) => meta.setAttribute('content', color));
+  document.documentElement.style.backgroundColor = color;
+  document.body.style.backgroundColor = color;
+}
+
 function loadJson(key, fallback) {
   try {
     const saved = localStorage.getItem(key);
@@ -610,6 +619,20 @@ export default function App() {
   const gameHistoryGuardRef = useRef(false);
   const nativeFullscreenWasActiveRef = useRef(false);
   const gameWasBackgroundedRef = useRef(false);
+
+  useEffect(() => {
+    syncAppChromeColor();
+
+    window.addEventListener('focus', syncAppChromeColor);
+    window.addEventListener('pageshow', syncAppChromeColor);
+    document.addEventListener('visibilitychange', syncAppChromeColor);
+
+    return () => {
+      window.removeEventListener('focus', syncAppChromeColor);
+      window.removeEventListener('pageshow', syncAppChromeColor);
+      document.removeEventListener('visibilitychange', syncAppChromeColor);
+    };
+  }, []);
 
   useEffect(() => {
     if (isInstalledAppDisplayMode()) return undefined;
