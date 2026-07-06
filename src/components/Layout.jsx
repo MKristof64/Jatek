@@ -18,6 +18,7 @@ export default function Layout({
 
   return (
     <div className={themeClass}>
+      <div className="app-top-seam-guard" aria-hidden="true" />
       <main
         className={[
           'party-bg app-shell overflow-x-hidden bg-gradient-to-br transition-colors',

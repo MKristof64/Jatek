@@ -1,4 +1,4 @@
-const cacheVersion = 'az-ivos-jatek-v17';
+const cacheVersion = 'az-ivos-jatek-v18';
 const appShell = [
   './',
   './index.html',
