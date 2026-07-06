@@ -623,6 +623,7 @@ export default function App() {
   const gameHistoryGuardRef = useRef(false);
   const nativeFullscreenWasActiveRef = useRef(false);
   const pendingFullscreenExitConfirmationRef = useRef(false);
+  const gameWasBackgroundedRef = useRef(false);
 
   useEffect(() => {
     clearStoredRoomState();
@@ -812,6 +813,7 @@ export default function App() {
 
     void unlockGameFullscreen();
     gameHistoryGuardRef.current = false;
+    gameWasBackgroundedRef.current = false;
     return undefined;
   }, [page]);
 
@@ -1721,6 +1723,7 @@ export default function App() {
 
     nativeFullscreenWasActiveRef.current = Boolean(getFullscreenElement());
     pendingFullscreenExitConfirmationRef.current = false;
+    gameWasBackgroundedRef.current = false;
 
     if (!gameHistoryGuardRef.current) {
       window.history.pushState({ enMegSosemGameGuard: true }, '', window.location.href);
@@ -1740,6 +1743,7 @@ export default function App() {
     const requestGameExitFromFullscreenLoss = () => {
       if (document.visibilityState && document.visibilityState !== 'visible') {
         pendingFullscreenExitConfirmationRef.current = true;
+        gameWasBackgroundedRef.current = true;
         return;
       }
 
@@ -1775,13 +1779,22 @@ export default function App() {
       }
     };
 
+    const markGameBackgrounded = () => {
+      gameWasBackgroundedRef.current = true;
+    };
+
     const handleVisibilityForFullscreenExit = () => {
-      if (document.visibilityState && document.visibilityState !== 'visible') return;
+      if (document.visibilityState && document.visibilityState !== 'visible') {
+        markGameBackgrounded();
+        return;
+      }
 
       if (
+        gameWasBackgroundedRef.current ||
         pendingFullscreenExitConfirmationRef.current ||
         (nativeFullscreenWasActiveRef.current && !getFullscreenElement())
       ) {
+        gameWasBackgroundedRef.current = false;
         nativeFullscreenWasActiveRef.current = Boolean(getFullscreenElement());
         pendingFullscreenExitConfirmationRef.current = false;
         requestGameExitAndKeepGuard();
@@ -1790,6 +1803,8 @@ export default function App() {
 
     window.addEventListener('popstate', handlePopState);
     window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('blur', markGameBackgrounded);
+    window.addEventListener('focus', handleVisibilityForFullscreenExit);
     window.addEventListener('pageshow', handleVisibilityForFullscreenExit);
     document.addEventListener('visibilitychange', handleVisibilityForFullscreenExit);
     document.addEventListener('fullscreenchange', handleFullscreenChange);
@@ -1799,6 +1814,8 @@ export default function App() {
     return () => {
       window.removeEventListener('popstate', handlePopState);
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('blur', markGameBackgrounded);
+      window.removeEventListener('focus', handleVisibilityForFullscreenExit);
       window.removeEventListener('pageshow', handleVisibilityForFullscreenExit);
       document.removeEventListener('visibilitychange', handleVisibilityForFullscreenExit);
       document.removeEventListener('fullscreenchange', handleFullscreenChange);
