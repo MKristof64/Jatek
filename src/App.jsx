@@ -790,7 +790,7 @@ export default function App() {
       const keepGameViewportLock = () => {
         if (document.visibilityState && document.visibilityState !== 'visible') return;
         refreshFullscreenViewport();
-        void lockGameFullscreen({ requestNative: false });
+        void lockGameFullscreen({ requestNative: shouldRequestNativeGameFullscreen() });
         window.setTimeout(refreshFullscreenViewport, 120);
         window.setTimeout(refreshFullscreenViewport, 420);
       };
@@ -799,6 +799,9 @@ export default function App() {
         if (event?.type === 'keydown' && event.key === 'Escape') return;
         if (document.visibilityState && document.visibilityState !== 'visible') return;
         refreshFullscreenViewport();
+        if (shouldRequestNativeGameFullscreen() && !getFullscreenElement()) {
+          void lockGameFullscreen({ requestNative: true });
+        }
       };
 
       keepGameViewportLock();
