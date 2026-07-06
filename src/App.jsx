@@ -597,7 +597,6 @@ export default function App() {
   const localPlayersRef = useRef(loadPlayers());
   const gameHistoryGuardRef = useRef(false);
   const nativeFullscreenWasActiveRef = useRef(false);
-  const pendingFullscreenExitConfirmationRef = useRef(false);
   const gameWasBackgroundedRef = useRef(false);
 
   useEffect(() => {
@@ -780,50 +779,46 @@ export default function App() {
         viewportFrame = window.requestAnimationFrame(refreshFullscreenViewport);
       };
 
-      const keepGameFullscreen = () => {
+      const keepGameViewportLock = () => {
         if (document.visibilityState && document.visibilityState !== 'visible') return;
         refreshFullscreenViewport();
-        void lockGameFullscreen();
+        void lockGameFullscreen({ requestNative: false });
         window.setTimeout(refreshFullscreenViewport, 120);
         window.setTimeout(refreshFullscreenViewport, 420);
       };
 
-      const restoreNativeFullscreenAfterGesture = (event) => {
+      const refreshViewportAfterGesture = (event) => {
         if (event?.type === 'keydown' && event.key === 'Escape') return;
         if (document.visibilityState && document.visibilityState !== 'visible') return;
-
         refreshFullscreenViewport();
-        if (!getFullscreenElement()) {
-          void lockGameFullscreen();
-        }
       };
 
-      keepGameFullscreen();
-      window.addEventListener('focus', keepGameFullscreen);
-      window.addEventListener('pageshow', keepGameFullscreen);
+      keepGameViewportLock();
+      window.addEventListener('focus', keepGameViewportLock);
+      window.addEventListener('pageshow', keepGameViewportLock);
       window.addEventListener('resize', syncGameViewport);
-      window.addEventListener('orientationchange', keepGameFullscreen);
-      window.addEventListener('pointerdown', restoreNativeFullscreenAfterGesture, true);
-      window.addEventListener('touchstart', restoreNativeFullscreenAfterGesture, true);
-      window.addEventListener('click', restoreNativeFullscreenAfterGesture, true);
-      window.addEventListener('keydown', restoreNativeFullscreenAfterGesture, true);
-      document.addEventListener('visibilitychange', keepGameFullscreen);
-      document.addEventListener('resume', keepGameFullscreen);
+      window.addEventListener('orientationchange', keepGameViewportLock);
+      window.addEventListener('pointerdown', refreshViewportAfterGesture, true);
+      window.addEventListener('touchstart', refreshViewportAfterGesture, true);
+      window.addEventListener('click', refreshViewportAfterGesture, true);
+      window.addEventListener('keydown', refreshViewportAfterGesture, true);
+      document.addEventListener('visibilitychange', keepGameViewportLock);
+      document.addEventListener('resume', keepGameViewportLock);
       window.visualViewport?.addEventListener('resize', syncGameViewport);
       window.visualViewport?.addEventListener('scroll', syncGameViewport);
 
       return () => {
         window.cancelAnimationFrame(viewportFrame);
-        window.removeEventListener('focus', keepGameFullscreen);
-        window.removeEventListener('pageshow', keepGameFullscreen);
+        window.removeEventListener('focus', keepGameViewportLock);
+        window.removeEventListener('pageshow', keepGameViewportLock);
         window.removeEventListener('resize', syncGameViewport);
-        window.removeEventListener('orientationchange', keepGameFullscreen);
-        window.removeEventListener('pointerdown', restoreNativeFullscreenAfterGesture, true);
-        window.removeEventListener('touchstart', restoreNativeFullscreenAfterGesture, true);
-        window.removeEventListener('click', restoreNativeFullscreenAfterGesture, true);
-        window.removeEventListener('keydown', restoreNativeFullscreenAfterGesture, true);
-        document.removeEventListener('visibilitychange', keepGameFullscreen);
-        document.removeEventListener('resume', keepGameFullscreen);
+        window.removeEventListener('orientationchange', keepGameViewportLock);
+        window.removeEventListener('pointerdown', refreshViewportAfterGesture, true);
+        window.removeEventListener('touchstart', refreshViewportAfterGesture, true);
+        window.removeEventListener('click', refreshViewportAfterGesture, true);
+        window.removeEventListener('keydown', refreshViewportAfterGesture, true);
+        document.removeEventListener('visibilitychange', keepGameViewportLock);
+        document.removeEventListener('resume', keepGameViewportLock);
         window.visualViewport?.removeEventListener('resize', syncGameViewport);
         window.visualViewport?.removeEventListener('scroll', syncGameViewport);
       };
@@ -1547,7 +1542,7 @@ export default function App() {
   const startGame = () => {
     if (room && !isRoomHost) return;
     if (players.length < 2 || cardPool.length === 0) return;
-    void lockGameFullscreen();
+    void lockGameFullscreen({ requestNative: false });
     const picked = pickRandomCard(cardPool, []);
     const playerOrder = shufflePlayerIndexes(players);
     const firstPlayerIndex = playerOrder[0] ?? 0;
@@ -1726,11 +1721,11 @@ export default function App() {
 
   const restoreGameFullscreenNow = () => {
     refreshFullscreenViewport();
-    void lockGameFullscreen();
+    void lockGameFullscreen({ requestNative: false });
     window.setTimeout(refreshFullscreenViewport, 80);
     window.setTimeout(() => {
       refreshFullscreenViewport();
-      void lockGameFullscreen();
+      void lockGameFullscreen({ requestNative: false });
     }, 220);
   };
 
@@ -1754,7 +1749,6 @@ export default function App() {
     if (page !== pages.game) return undefined;
 
     nativeFullscreenWasActiveRef.current = Boolean(getFullscreenElement());
-    pendingFullscreenExitConfirmationRef.current = false;
     gameWasBackgroundedRef.current = false;
 
     if (!gameHistoryGuardRef.current) {
@@ -1770,17 +1764,6 @@ export default function App() {
       const didOpenConfirmation = requestGameBackExit();
       keepGameHistoryGuard();
       return didOpenConfirmation;
-    };
-
-    const requestGameExitFromFullscreenLoss = () => {
-      if (document.visibilityState && document.visibilityState !== 'visible') {
-        pendingFullscreenExitConfirmationRef.current = true;
-        gameWasBackgroundedRef.current = true;
-        return;
-      }
-
-      pendingFullscreenExitConfirmationRef.current = false;
-      requestGameExitAndKeepGuard();
     };
 
     const handlePopState = () => {
@@ -1799,14 +1782,13 @@ export default function App() {
 
       if (hasNativeFullscreen) {
         nativeFullscreenWasActiveRef.current = true;
-        pendingFullscreenExitConfirmationRef.current = false;
         return;
       }
 
-      if (nativeFullscreenWasActiveRef.current) {
-        nativeFullscreenWasActiveRef.current = false;
-        requestGameExitFromFullscreenLoss();
-      } else if (!getFallbackFullscreen()) {
+      nativeFullscreenWasActiveRef.current = false;
+      refreshFullscreenViewport();
+
+      if (!getFallbackFullscreen()) {
         requestGameExitAndKeepGuard();
       }
     };
@@ -1821,14 +1803,9 @@ export default function App() {
         return;
       }
 
-      if (
-        gameWasBackgroundedRef.current ||
-        pendingFullscreenExitConfirmationRef.current ||
-        (nativeFullscreenWasActiveRef.current && !getFullscreenElement())
-      ) {
+      if (gameWasBackgroundedRef.current) {
         gameWasBackgroundedRef.current = false;
         nativeFullscreenWasActiveRef.current = Boolean(getFullscreenElement());
-        pendingFullscreenExitConfirmationRef.current = false;
         requestGameExitAndKeepGuard();
       }
     };

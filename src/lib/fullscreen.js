@@ -179,13 +179,15 @@ async function exitNativeFullscreen() {
   }
 }
 
-export async function enterAppFullscreen({ persistGame = false } = {}) {
+export async function enterAppFullscreen({ persistGame = false, requestNative = true } = {}) {
   if (persistGame) {
     setGameFullscreenIntent(true);
   }
 
   setFallbackFullscreen(true);
   refreshFullscreenViewport();
+
+  if (!requestNative) return;
 
   try {
     await enterNativeFullscreen();
@@ -194,8 +196,8 @@ export async function enterAppFullscreen({ persistGame = false } = {}) {
   }
 }
 
-export async function lockGameFullscreen() {
-  await enterAppFullscreen({ persistGame: true });
+export async function lockGameFullscreen({ requestNative = true } = {}) {
+  await enterAppFullscreen({ persistGame: true, requestNative });
 }
 
 export async function exitAppFullscreen({ clearGameIntent = false } = {}) {
