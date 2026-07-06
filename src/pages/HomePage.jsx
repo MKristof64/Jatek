@@ -1,4 +1,4 @@
-import { Crown, Play, Settings, Sparkles, UserPlus, Wand2 } from 'lucide-react';
+import { Crown, Download, Play, Settings, Sparkles, UserPlus, Wand2 } from 'lucide-react';
 import PrimaryButton from '../components/PrimaryButton.jsx';
 
 export default function HomePage({
@@ -9,10 +9,22 @@ export default function HomePage({
   onCustomCards,
   onRoom,
   onSettings,
+  canInstall = false,
+  onInstall,
 }) {
   return (
     <>
-      <div className="home-top-controls flex shrink-0 items-center justify-end">
+      <div className="home-top-controls flex shrink-0 items-center justify-end gap-2">
+        {canInstall ? (
+          <button
+            type="button"
+            onClick={onInstall}
+            className="icon-button-dynamic grid h-10 w-10 shrink-0 touch-manipulation place-items-center rounded-[1.1rem] bg-white/12 text-white ring-1 ring-white/15 transition hover:bg-white/18 active:scale-[0.98]"
+            aria-label="Alkalmazás telepítése"
+          >
+            <Download className="h-5 w-5" />
+          </button>
+        ) : null}
         <button
           type="button"
           onClick={onSettings}

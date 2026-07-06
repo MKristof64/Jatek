@@ -581,6 +581,7 @@ export default function App() {
     status: 'idle',
     voteType: null,
   });
+  const [installPrompt, setInstallPrompt] = useState(null);
   const [room, setRoom] = useState(null);
   const [currentRoomPlayerId, setCurrentRoomPlayerId] = useState(null);
   const [onlineStatus, setOnlineStatus] = useState(defaultOnlineStatus);
@@ -597,6 +598,31 @@ export default function App() {
   const nativeFullscreenWasActiveRef = useRef(false);
   const pendingFullscreenExitConfirmationRef = useRef(false);
   const gameWasBackgroundedRef = useRef(false);
+
+  useEffect(() => {
+    const isStandalone =
+      window.matchMedia?.('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true;
+
+    if (isStandalone) return undefined;
+
+    const handleBeforeInstallPrompt = (event) => {
+      event.preventDefault();
+      setInstallPrompt(event);
+    };
+
+    const handleAppInstalled = () => {
+      setInstallPrompt(null);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', handleAppInstalled);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
+    };
+  }, []);
 
   useEffect(() => {
     clearStoredRoomState();
@@ -1638,6 +1664,19 @@ export default function App() {
     setPage(players.length >= 2 ? pages.modes : pages.players);
   };
 
+  const installApp = async () => {
+    if (!installPrompt) return;
+
+    try {
+      await installPrompt.prompt();
+      await installPrompt.userChoice;
+    } catch {
+      // Browsers can reject the prompt if it is no longer available.
+    } finally {
+      setInstallPrompt(null);
+    }
+  };
+
   const exitGameToHomeNow = () => {
     setPendingConfirmation(null);
 
@@ -1802,6 +1841,8 @@ export default function App() {
           onCustomCards={() => setPage(pages.custom)}
           onRoom={() => setPage(pages.room)}
           onSettings={() => setPage(pages.settings)}
+          canInstall={Boolean(installPrompt)}
+          onInstall={installApp}
         />
       ) : null}
 

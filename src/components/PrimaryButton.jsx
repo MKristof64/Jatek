@@ -1,3 +1,5 @@
+import { forwardRef } from 'react';
+
 const variants = {
   primary:
     'bg-gradient-to-r from-yellow-300 via-orange-500 to-rose-500 text-slate-950 shadow-glow hover:brightness-110 active:scale-[0.98]',
@@ -13,7 +15,7 @@ const variants = {
     'bg-transparent text-white/80 hover:bg-white/10 active:scale-[0.98]',
 };
 
-export default function PrimaryButton({
+const PrimaryButton = forwardRef(function PrimaryButton({
   children,
   variant = 'primary',
   icon: Icon,
@@ -21,9 +23,10 @@ export default function PrimaryButton({
   disabled = false,
   type = 'button',
   ...props
-}) {
+}, ref) {
   return (
     <button
+      ref={ref}
       type={type}
       disabled={disabled}
       className={[
@@ -41,4 +44,6 @@ export default function PrimaryButton({
       </span>
     </button>
   );
-}
+});
+
+export default PrimaryButton;
