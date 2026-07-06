@@ -8,6 +8,7 @@
   --app-viewport-left: 0px;
   --app-viewport-top: 0px;
   --app-visual-bottom-inset: 0px;
+  --app-top-bleed: 8px;
   --app-system-bottom-space: max(
     1rem,
     calc(env(safe-area-inset-bottom) + 0.85rem)
@@ -228,16 +229,18 @@ button,
 .app-immersive-mode .app-shell,
 .app-game-mode .app-shell {
   position: fixed;
-  top: var(--app-viewport-top, 0);
+  top: calc(var(--app-viewport-top, 0px) - var(--app-top-bleed, 0px));
   left: var(--app-viewport-left, 0);
   right: auto;
   bottom: auto;
   z-index: 9999;
   width: var(--app-viewport-width, var(--app-game-width, 100%));
-  height: var(--app-viewport-height, var(--app-game-height, 100dvh));
+  height: calc(var(--app-viewport-height, var(--app-game-height, 100dvh)) + var(--app-top-bleed, 0px));
   min-height: 100vh;
   min-height: 100dvh;
-  min-height: var(--app-viewport-height, var(--app-game-height, 100dvh));
+  min-height: calc(var(--app-viewport-height, var(--app-game-height, 100dvh)) + var(--app-top-bleed, 0px));
+  border: 0;
+  outline: 0;
   overflow: hidden;
   overscroll-behavior: none;
 }
@@ -246,14 +249,10 @@ button,
   position: relative;
   width: 100%;
   max-width: none;
-  height: 100vh;
-  height: 100dvh;
-  height: var(--app-viewport-height, var(--app-game-height, 100dvh));
-  min-height: 100vh;
-  min-height: 100dvh;
-  min-height: var(--app-viewport-height, var(--app-game-height, 100dvh));
+  height: calc(var(--app-viewport-height, var(--app-game-height, 100dvh)) + var(--app-top-bleed, 0px));
+  min-height: calc(var(--app-viewport-height, var(--app-game-height, 100dvh)) + var(--app-top-bleed, 0px));
   overflow: hidden;
-  padding-block-start: max(0.875rem, env(safe-area-inset-top));
+  padding-block-start: calc(max(0.875rem, env(safe-area-inset-top)) + var(--app-top-bleed, 0px));
   padding-block-end: var(--app-system-bottom-space);
   padding-inline-start: max(1rem, env(safe-area-inset-left));
   padding-inline-end: max(1rem, env(safe-area-inset-right));
@@ -262,9 +261,9 @@ button,
 .app-game-mode .phone-frame--game {
   width: var(--app-viewport-width, var(--app-game-width, 100%));
   max-width: none;
-  height: max(var(--app-viewport-height, 100dvh), 100lvh);
-  min-height: max(var(--app-viewport-height, 100dvh), 100lvh);
-  padding-block-start: max(0.5rem, env(safe-area-inset-top));
+  height: calc(max(var(--app-viewport-height, 100dvh), 100lvh) + var(--app-top-bleed, 0px));
+  min-height: calc(max(var(--app-viewport-height, 100dvh), 100lvh) + var(--app-top-bleed, 0px));
+  padding-block-start: calc(max(0.5rem, env(safe-area-inset-top)) + var(--app-top-bleed, 0px));
   padding-block-end: max(
     0.65rem,
     calc(env(safe-area-inset-bottom) + 0.45rem)
@@ -955,7 +954,7 @@ button,
   }
 
   .app-immersive-mode .phone-frame--immersive {
-    padding-block-start: max(0.7rem, env(safe-area-inset-top));
+    padding-block-start: calc(max(0.7rem, env(safe-area-inset-top)) + var(--app-top-bleed, 0px));
     padding-block-end: max(
       0.9rem,
       calc(env(safe-area-inset-bottom) + 0.65rem)
@@ -1372,7 +1371,7 @@ button,
 
   .app-immersive-mode .phone-frame--immersive {
     max-width: min(100%, 1180px);
-    padding-block-start: max(0.4rem, env(safe-area-inset-top));
+    padding-block-start: calc(max(0.4rem, env(safe-area-inset-top)) + var(--app-top-bleed, 0px));
     padding-block-end: max(
       0.7rem,
       calc(env(safe-area-inset-bottom) + 0.35rem)
@@ -3350,8 +3349,8 @@ body,
 @media (hover: none) and (pointer: coarse) {
   .app-game-mode .app-shell,
   .app-game-mode .phone-frame--game {
-    height: max(var(--app-viewport-height, 100dvh), 100lvh) !important;
-    min-height: max(var(--app-viewport-height, 100dvh), 100lvh) !important;
+    height: calc(max(var(--app-viewport-height, 100dvh), 100lvh) + var(--app-top-bleed, 0px)) !important;
+    min-height: calc(max(var(--app-viewport-height, 100dvh), 100lvh) + var(--app-top-bleed, 0px)) !important;
   }
 
   .app-game-mode .phone-frame--game {
