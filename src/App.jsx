@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Peer } from 'peerjs';
 import ConfirmDialog from './components/ConfirmDialog.jsx';
 import {
+  clearFullscreenViewport,
   getFullscreenElement,
   getFallbackFullscreen,
   lockGameFullscreen,
@@ -627,6 +628,40 @@ export default function App() {
   useEffect(() => {
     clearStoredRoomState();
   }, [currentRoomPlayerId, game, room]);
+
+  useEffect(() => {
+    let viewportFrame = 0;
+
+    const syncAppViewport = () => {
+      window.cancelAnimationFrame(viewportFrame);
+      viewportFrame = window.requestAnimationFrame(refreshFullscreenViewport);
+    };
+
+    const syncAppViewportSoon = () => {
+      syncAppViewport();
+      window.setTimeout(refreshFullscreenViewport, 120);
+      window.setTimeout(refreshFullscreenViewport, 420);
+    };
+
+    syncAppViewportSoon();
+    window.addEventListener('focus', syncAppViewportSoon);
+    window.addEventListener('pageshow', syncAppViewportSoon);
+    window.addEventListener('resize', syncAppViewport);
+    window.addEventListener('orientationchange', syncAppViewportSoon);
+    window.visualViewport?.addEventListener('resize', syncAppViewport);
+    window.visualViewport?.addEventListener('scroll', syncAppViewport);
+
+    return () => {
+      window.cancelAnimationFrame(viewportFrame);
+      window.removeEventListener('focus', syncAppViewportSoon);
+      window.removeEventListener('pageshow', syncAppViewportSoon);
+      window.removeEventListener('resize', syncAppViewport);
+      window.removeEventListener('orientationchange', syncAppViewportSoon);
+      window.visualViewport?.removeEventListener('resize', syncAppViewport);
+      window.visualViewport?.removeEventListener('scroll', syncAppViewport);
+      clearFullscreenViewport();
+    };
+  }, []);
 
   useEffect(() => {
     if (room) return;
@@ -1830,8 +1865,14 @@ export default function App() {
     setPage(pages.home);
   };
 
+  const immersivePages = new Set([pages.home, pages.room, pages.modes, pages.game]);
+
   return (
-    <Layout darkMode={settings.darkMode} gameMode={page === pages.game}>
+    <Layout
+      darkMode={settings.darkMode}
+      gameMode={page === pages.game}
+      immersiveMode={immersivePages.has(page)}
+    >
       {page === pages.home ? (
         <HomePage
           playersCount={players.length}

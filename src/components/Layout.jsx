@@ -1,9 +1,16 @@
-export default function Layout({ children, darkMode = true, gameMode = false }) {
+export default function Layout({
+  children,
+  darkMode = true,
+  gameMode = false,
+  immersiveMode = false,
+}) {
   const background = darkMode
     ? 'from-[#080011] via-[#3a001f] to-[#7a0736]'
     : 'from-[#fff3e7] via-[#fff0f4] to-[#ffe4ec]';
+  const isImmersive = immersiveMode || gameMode;
   const themeClass = [
     darkMode ? 'theme-dark' : 'theme-light',
+    isImmersive ? 'app-immersive-mode' : '',
     gameMode ? 'app-game-mode' : '',
   ]
     .filter(Boolean)
@@ -21,7 +28,11 @@ export default function Layout({ children, darkMode = true, gameMode = false }) 
         <div
           className={[
             'phone-frame mx-auto flex w-full flex-col',
-            gameMode ? 'phone-frame--game max-w-none' : 'max-w-[430px]',
+            gameMode
+              ? 'phone-frame--game phone-frame--immersive max-w-none'
+              : isImmersive
+                ? 'phone-frame--immersive max-w-none'
+                : 'max-w-[430px]',
           ].join(' ')}
         >
           {children}
