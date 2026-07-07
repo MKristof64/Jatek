@@ -4,9 +4,6 @@ const feedbackConfig = {
   apiUrl: String(import.meta.env.VITE_FEEDBACK_API_URL ?? defaultFeedbackApiUrl).replace(/\/+$/, ''),
 };
 
-const feedbackCardModes = new Set(['bold', 'hardcore', 'university']);
-const feedbackPlayModes = new Set(['bold', 'hardcore', 'university']);
-
 function isValidFeedbackUrl(value) {
   try {
     const url = new URL(value);
@@ -47,58 +44,6 @@ function normalizeRemoteCard(row) {
     safe: row?.safe !== false,
     source: safeText(row?.source, 40) || 'remote',
   };
-}
-
-export async function submitCardFeedback({
-  appContext,
-  appVersion = import.meta.env.VITE_APP_VERSION ?? 'local',
-  card,
-  mode,
-  voteType,
-}) {
-  const normalizedVote = voteType === 'like' || voteType === 'dislike' ? voteType : null;
-  const cardMode = feedbackCardModes.has(card?.mode) ? card.mode : mode?.id;
-  if (!normalizedVote || !card?.id || !feedbackPlayModes.has(mode?.id) || !feedbackCardModes.has(cardMode)) {
-    return { ok: false, reason: 'invalid-feedback' };
-  }
-
-  if (!isFeedbackConfigured()) {
-    return { ok: false, reason: 'not-configured' };
-  }
-
-  const controller = new AbortController();
-  const timeoutId = window.setTimeout(() => controller.abort(), 8000);
-
-  try {
-    const response = await fetch(`${feedbackConfig.apiUrl}/api/vote`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        appContext: safeText(appContext ?? 'local', 40),
-        appVersion: safeText(appVersion, 40),
-        cardId: safeText(card.id, 120),
-        kind: safeText(card.kind ?? 'never', 40),
-        mode: cardMode,
-        voteType: normalizedVote,
-      }),
-      signal: controller.signal,
-    });
-
-    if (!response.ok) {
-      return { ok: false, reason: 'cloudflare-error', status: response.status };
-    }
-
-    return { ok: true };
-  } catch (error) {
-    return {
-      ok: false,
-      reason: error?.name === 'AbortError' ? 'timeout' : 'network-error',
-    };
-  } finally {
-    window.clearTimeout(timeoutId);
-  }
 }
 
 export async function fetchRemoteCards() {

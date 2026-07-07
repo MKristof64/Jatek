@@ -13,7 +13,7 @@ import {
 import Layout from './components/Layout.jsx';
 import { cards } from './data/cards.js';
 import { getModeById } from './data/modes.js';
-import { fetchRemoteCards, submitCardFeedback } from './lib/feedback.js';
+import { fetchRemoteCards } from './lib/feedback.js';
 import CustomCardsPage from './pages/CustomCardsPage.jsx';
 import GamePage from './pages/GamePage.jsx';
 import HomePage from './pages/HomePage.jsx';
@@ -89,14 +89,8 @@ const initialGame = {
   timer: initialTimer,
 };
 
-const feedbackCardModes = new Set(['bold', 'hardcore', 'university']);
-
 function getCardSourceModes(modeId) {
   return modeId === 'university' ? ['bold', 'hardcore', 'university'] : [modeId];
-}
-
-function canUseCardFeedback(card, mode) {
-  return Boolean(card?.id && (feedbackCardModes.has(card.mode) || mode?.id === 'university'));
 }
 
 const pages = {
@@ -602,12 +596,6 @@ export default function App() {
   const [selectedMode, setSelectedMode] = useState(loadSelectedMode);
   const [game, setGame] = useState(initialGame);
   const [remoteCards, setRemoteCards] = useState([]);
-  const [feedbackState, setFeedbackState] = useState({
-    cardId: null,
-    message: '',
-    status: 'idle',
-    voteType: null,
-  });
   const [installPrompt, setInstallPrompt] = useState(null);
   const [room, setRoom] = useState(null);
   const [currentRoomPlayerId, setCurrentRoomPlayerId] = useState(null);
@@ -752,15 +740,6 @@ export default function App() {
       currentRoomPlayerId,
     };
   }, [currentRoomPlayerId, game, players, room, selectedMode]);
-
-  useEffect(() => {
-    setFeedbackState({
-      cardId: game.card?.id ?? null,
-      message: '',
-      status: 'idle',
-      voteType: null,
-    });
-  }, [game.card?.id]);
 
   useEffect(() => {
     const syncFromStorage = (event) => {
@@ -1672,41 +1651,6 @@ export default function App() {
   };
 
   toggleTimerRef.current = toggleTimer;
-
-  const sendCardFeedback = async (voteType) => {
-    if (!canUseCardFeedback(game.card, activeMode) || feedbackState.status === 'sending') return;
-
-    setFeedbackState({
-      cardId: game.card.id,
-      message: '',
-      status: 'sending',
-      voteType,
-    });
-
-    const result = await submitCardFeedback({
-      appContext: room ? 'room' : 'local',
-      card: game.card,
-      mode: activeMode,
-      voteType,
-    });
-
-    if (!result.ok) {
-      setFeedbackState({
-        cardId: game.card.id,
-        message: 'Nem sikerült elküldeni.',
-        status: 'error',
-        voteType,
-      });
-      return;
-    }
-
-    setFeedbackState({
-      cardId: game.card.id,
-      message: 'Köszi!',
-      status: 'sent',
-      voteType,
-    });
-  };
 
   const clearData = () => {
     Object.values(storageKeys).forEach((key) => removeStoredKey(key));
