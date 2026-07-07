@@ -8,7 +8,7 @@
   --app-viewport-left: 0px;
   --app-viewport-top: 0px;
   --app-visual-bottom-inset: 0px;
-  --app-top-bleed: 16px;
+  --app-top-bleed: 3px;
   --app-system-bottom-space: max(
     1rem,
     calc(env(safe-area-inset-bottom) + 0.85rem)
@@ -82,9 +82,12 @@ body::before {
     top: 0;
     z-index: 2147483647;
     width: 100vw;
-    height: 18px;
+    height: 3px;
     pointer-events: none;
-    background: var(--party-system-color, #5f0029);
+    background-color: var(--party-system-color, #5f0029);
+    background-image: var(--party-bg-image, linear-gradient(135deg, #080011 0%, #240018 35%, #5f0029 100%));
+    background-size: var(--party-bg-size, auto);
+    background-position: var(--party-bg-position, center);
   }
 }
 
@@ -274,12 +277,15 @@ button,
   display: block;
   position: fixed;
   inset-inline: 0;
-  top: -2px;
+  top: 0;
   z-index: 2147483647;
   width: 100vw;
-  height: 22px;
+  height: 3px;
   pointer-events: none;
-  background: var(--party-system-color, #5f0029);
+  background-color: var(--party-system-color, #5f0029);
+  background-image: var(--party-bg-image, linear-gradient(135deg, #080011 0%, #240018 35%, #5f0029 100%));
+  background-size: var(--party-bg-size, auto);
+  background-position: var(--party-bg-position, center);
   transform: translateZ(0);
 }
 
@@ -646,46 +652,6 @@ button,
   font-size: 1.96rem;
 }
 
-.game-feedback-actions {
-  flex-shrink: 0;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
-    rgba(8, 0, 24, 0.34) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(18px) saturate(1.18);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 12px 32px rgba(3, 7, 18, 0.18);
-}
-
-.game-feedback-dock {
-  width: 100%;
-}
-
-.game-feedback-dock .game-feedback-actions {
-  width: 100%;
-}
-
-.game-feedback-actions .party-button {
-  min-height: 2.7rem;
-}
-
-.game-feedback-actions--thanks {
-  display: grid;
-  min-height: 2.35rem;
-  place-items: center;
-}
-
-.game-feedback-thanks {
-  margin: 0;
-}
-
-.feedback-action-button--selected {
-  opacity: 1 !important;
-  outline: 2px solid rgba(255, 255, 255, 0.62);
-  outline-offset: -2px;
-}
-
 .game-question-copy::after {
   content: "";
   position: absolute;
@@ -732,12 +698,6 @@ button,
 .theme-light .player-chip,
 .theme-light .timer-control {
   background-color: rgba(255, 255, 255, 0.72) !important;
-}
-
-.theme-light .game-feedback-actions {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.025)),
-    rgba(74, 0, 46, 0.22) !important;
 }
 
 @keyframes spotlight-spin {
@@ -2397,34 +2357,6 @@ button,
     display: contents !important;
   }
 
-  .game-feedback-actions {
-    border-radius: 1rem;
-    padding: 0.45rem;
-  }
-
-  .game-feedback-summary {
-    margin-bottom: 0.35rem;
-    font-size: 0.56rem;
-    letter-spacing: 0.08em;
-  }
-
-  .game-feedback-buttons {
-    gap: 0.45rem;
-  }
-
-  .game-feedback-actions .party-button {
-    min-height: 2.25rem;
-    border-radius: 0.85rem;
-    padding: 0.25rem 0.45rem;
-    font-size: 0.75rem;
-    line-height: 1.05;
-  }
-
-  .game-feedback-actions .party-button svg {
-    width: 1rem;
-    height: 1rem;
-  }
-
   .game-action-panel .party-button {
     width: 100%;
     min-width: 0;
@@ -2433,39 +2365,10 @@ button,
   }
 }
 
-@media (orientation: landscape) and (min-width: 560px) and (max-height: 390px) {
-  .game-feedback-actions {
-    padding: 0.28rem;
-  }
-
-  .game-feedback-summary {
-    display: none;
-  }
-
-  .game-feedback-actions .party-button {
-    min-height: 1.85rem;
-    border-radius: 0.75rem;
-    padding: 0.16rem 0.35rem;
-    font-size: 0.68rem;
-  }
-}
-
 @media (orientation: landscape) and (min-width: 560px) {
   .question-copy--compact .question-sentence {
     font-size: 1rem;
     line-height: 1.12;
-  }
-
-  .game-feedback-actions {
-    padding: 0.32rem;
-  }
-
-  .game-feedback-actions--thanks {
-    min-height: 2rem;
-  }
-
-  .game-feedback-thanks {
-    font-size: 0.72rem;
   }
 
   .game-action-panel--controller {
@@ -2479,9 +2382,6 @@ button,
     line-height: 1.12;
   }
 
-  .game-feedback-actions--thanks {
-    min-height: 1.65rem;
-  }
 }
 
 .question-copy--free {
@@ -3062,7 +2962,6 @@ body,
 .mode-card-dynamic,
 .home-hero-card,
 .room-card,
-.game-feedback-actions,
 .confirm-dialog section {
   box-shadow:
     0 18px 48px rgba(54, 0, 28, 0.36),
@@ -3256,12 +3155,6 @@ body,
   .game-screen .game-action-panel {
     grid-column: 2;
     grid-row: 1;
-  }
-
-  .game-feedback-dock {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    align-self: end;
   }
 
   .question-spotlight--open,

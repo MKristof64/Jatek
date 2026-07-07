@@ -1967,14 +1967,12 @@ export default function App() {
           cardText={cardText}
           currentTeam={currentTeam}
           timerState={timerState}
-          feedbackState={feedbackState}
           canControlGame={canControlRoomGame}
           canControlTimer={canControlRoomGame}
           isHost={isRoomHost}
           canFinishGame={isRoomHost}
           onNext={advanceGame}
           onToggleTimer={toggleTimer}
-          onFeedback={sendCardFeedback}
           onFinishGame={finishRoomGame}
         />
       ) : null}
