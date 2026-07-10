@@ -13,24 +13,50 @@ export default function ConfirmDialog({
   const titleId = useId();
   const descriptionId = useId();
   const cancelButtonRef = useRef(null);
+  const dialogRef = useRef(null);
 
   useEffect(() => {
+    const previouslyFocused = document.activeElement;
     cancelButtonRef.current?.focus();
 
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
         event.preventDefault();
         onCancel?.();
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+
+      const focusableElements = Array.from(
+        dialogRef.current?.querySelectorAll('button:not(:disabled), [href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])') ?? [],
+      ).filter((element) => !element.hidden);
+      if (focusableElements.length === 0) return;
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      if (previouslyFocused instanceof HTMLElement && previouslyFocused.isConnected) {
+        previouslyFocused.focus();
+      }
+    };
   }, [onCancel]);
 
   return (
     <div className="confirm-dialog fixed inset-0 z-50 grid place-items-center bg-slate-950/72 p-4 backdrop-blur-md">
       <section
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}

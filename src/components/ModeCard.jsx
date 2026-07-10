@@ -25,6 +25,7 @@ export default function ModeCard({ mode, selected, disabled, onClick }) {
     <button
       type="button"
       disabled={disabled}
+      aria-pressed={selected}
       onClick={onClick}
       className={[
         'mode-card-dynamic group w-full touch-manipulation rounded-3xl border p-3 text-left shadow-card transition min-[390px]:p-4',

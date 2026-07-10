@@ -14,6 +14,15 @@ import Layout from './components/Layout.jsx';
 import { cards } from './data/cards.js';
 import { getModeById } from './data/modes.js';
 import { fetchRemoteCards } from './lib/feedback.js';
+import {
+  buildTeams,
+  createRoomCode,
+  getCardSourceModes,
+  getParticipantIndexes,
+  pickRandomCard,
+  pickTargetIndex,
+  shufflePlayerIndexes,
+} from './lib/gameEngine.js';
 import CustomCardsPage from './pages/CustomCardsPage.jsx';
 import GamePage from './pages/GamePage.jsx';
 import HomePage from './pages/HomePage.jsx';
@@ -89,10 +98,6 @@ const initialGame = {
   timer: initialTimer,
 };
 
-function getCardSourceModes(modeId) {
-  return modeId === 'university' ? ['bold', 'hardcore', 'university'] : [modeId];
-}
-
 const pages = {
   home: 'home',
   players: 'players',
@@ -112,18 +117,19 @@ function isInstalledAppDisplayMode() {
 }
 
 function shouldRequestNativeGameFullscreen() {
-  return true;
+  return !isInstalledAppDisplayMode();
 }
 
 function shouldRequestNativePageFullscreen(page) {
   return isInstalledAppDisplayMode() || page === pages.game;
 }
 
-function syncAppChromeColor() {
-  const color = '#5f0029';
+function syncAppChromeColor(darkMode = true) {
+  const color = darkMode ? '#5f0029' : '#fff0f4';
   document
     .querySelectorAll('meta[name="theme-color"], meta[name="msapplication-TileColor"]')
     .forEach((meta) => meta.setAttribute('content', color));
+  document.documentElement.dataset.appTheme = darkMode ? 'dark' : 'light';
   document.documentElement.style.backgroundColor = color;
   document.body.style.backgroundColor = color;
 }
@@ -455,10 +461,6 @@ function createId(prefix) {
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
-function createRoomCode() {
-  return String(Math.floor(100000 + Math.random() * 900000));
-}
-
 function createRoomPeerId(code) {
   return `enmegsosem-${String(code ?? '').replace(/\D/g, '').slice(0, 6)}`;
 }
@@ -478,72 +480,6 @@ function sendPeerMessage(connection, message) {
   }
 
   return false;
-}
-
-function pickRandomCard(pool, usedIds = []) {
-  if (pool.length === 0) return { card: null, usedIds };
-  const availableCards = pool.filter((card) => !usedIds.includes(card.id));
-  const hasUnusedCards = availableCards.length > 0;
-  const nextPool = hasUnusedCards ? availableCards : pool;
-  const card = nextPool[Math.floor(Math.random() * nextPool.length)];
-  return {
-    card,
-    usedIds: hasUnusedCards ? [...usedIds, card.id] : [card.id],
-  };
-}
-
-function pickTargetIndex(players, playerIndex, modeId = 'classic') {
-  const playerIndexes = players.map((_, index) => index);
-  const oppositeTeamTargets =
-    modeId === 'team'
-      ? playerIndexes.filter((index) => index !== playerIndex && index % 2 !== playerIndex % 2)
-      : [];
-  const targets =
-    oppositeTeamTargets.length > 0
-      ? oppositeTeamTargets
-      : playerIndexes.filter((index) => index !== playerIndex);
-
-  if (targets.length === 0) return playerIndex;
-  return targets[Math.floor(Math.random() * targets.length)];
-}
-
-function shufflePlayerIndexes(players) {
-  const indexes = players.map((_, index) => index);
-  for (let index = indexes.length - 1; index > 0; index -= 1) {
-    const randomIndex = Math.floor(Math.random() * (index + 1));
-    [indexes[index], indexes[randomIndex]] = [indexes[randomIndex], indexes[index]];
-  }
-
-  return indexes;
-}
-
-function pickRandomPlayerIndexes(players, count) {
-  const indexes = shufflePlayerIndexes(players);
-  return indexes.slice(0, Math.min(count, indexes.length));
-}
-
-function getParticipantIndexes(card, players, playerIndex) {
-  if (!card) return [];
-  if (card.kind === 'roundtable') return [];
-  if (card.kind === 'duel') return pickRandomPlayerIndexes(players, 2);
-  return [playerIndex];
-}
-
-function buildTeams(players) {
-  if (players.length < 2) return [];
-
-  return [
-    {
-      id: 'neon',
-      name: 'Neon csapat',
-      players: players.filter((_, index) => index % 2 === 0),
-    },
-    {
-      id: 'lime',
-      name: 'Lime csapat',
-      players: players.filter((_, index) => index % 2 === 1),
-    },
-  ].filter((team) => team.players.length > 0);
 }
 
 function mergeLocalAndRemoteCards(localCards, remoteCards, modeId) {
@@ -610,22 +546,22 @@ export default function App() {
   const toggleTimerRef = useRef(null);
   const localPlayersRef = useRef(loadPlayers());
   const gameHistoryGuardRef = useRef(false);
-  const nativeFullscreenWasActiveRef = useRef(false);
   const gameWasBackgroundedRef = useRef(false);
 
   useEffect(() => {
-    syncAppChromeColor();
+    const syncChrome = () => syncAppChromeColor(settings.darkMode);
+    syncChrome();
 
-    window.addEventListener('focus', syncAppChromeColor);
-    window.addEventListener('pageshow', syncAppChromeColor);
-    document.addEventListener('visibilitychange', syncAppChromeColor);
+    window.addEventListener('focus', syncChrome);
+    window.addEventListener('pageshow', syncChrome);
+    document.addEventListener('visibilitychange', syncChrome);
 
     return () => {
-      window.removeEventListener('focus', syncAppChromeColor);
-      window.removeEventListener('pageshow', syncAppChromeColor);
-      document.removeEventListener('visibilitychange', syncAppChromeColor);
+      window.removeEventListener('focus', syncChrome);
+      window.removeEventListener('pageshow', syncChrome);
+      document.removeEventListener('visibilitychange', syncChrome);
     };
-  }, []);
+  }, [settings.darkMode]);
 
   useEffect(() => {
     if (isInstalledAppDisplayMode()) return undefined;
@@ -650,7 +586,7 @@ export default function App() {
 
   useEffect(() => {
     clearStoredRoomState();
-  }, [currentRoomPlayerId, game, room]);
+  }, []);
 
   useEffect(() => {
     let viewportFrame = 0;
@@ -706,20 +642,25 @@ export default function App() {
 
   useEffect(() => {
     let ignore = false;
+    let loading = false;
 
-    const loadRemoteCards = () => {
-      fetchRemoteCards().then((result) => {
-        if (!ignore && result.ok) {
-          setRemoteCards(result.cards);
-        }
-      });
+    const loadRemoteCards = async () => {
+      if (ignore || loading || document.visibilityState === 'hidden') return;
+
+      loading = true;
+      const result = await fetchRemoteCards();
+      loading = false;
+
+      if (!ignore && result.ok) {
+        setRemoteCards(result.cards);
+      }
     };
 
-    loadRemoteCards();
-    const intervalId = window.setInterval(loadRemoteCards, 45000);
+    void loadRemoteCards();
+    const intervalId = window.setInterval(loadRemoteCards, 300000);
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
-        loadRemoteCards();
+        void loadRemoteCards();
       }
     };
 
@@ -797,6 +738,8 @@ export default function App() {
 
     let viewportFrame = 0;
     const persistGameFullscreen = page === pages.game;
+    const requestNativeFullscreen =
+      persistGameFullscreen && shouldRequestNativeGameFullscreen();
 
     const syncViewport = () => {
       window.cancelAnimationFrame(viewportFrame);
@@ -806,13 +749,13 @@ export default function App() {
     const enterFullscreenForCurrentPage = () => {
       if (document.visibilityState && document.visibilityState !== 'visible') return;
 
-      syncAppChromeColor();
+      syncAppChromeColor(settings.darkMode);
       refreshFullscreenViewport();
 
       if (persistGameFullscreen) {
-        void lockGameFullscreen({ requestNative: true });
+        void lockGameFullscreen({ requestNative: requestNativeFullscreen });
       } else {
-        void enterAppFullscreen({ persistGame: false, requestNative: true });
+        void enterAppFullscreen({ persistGame: false, requestNative: false });
       }
 
       window.setTimeout(refreshFullscreenViewport, 120);
@@ -824,12 +767,8 @@ export default function App() {
       if (document.visibilityState && document.visibilityState !== 'visible') return;
 
       refreshFullscreenViewport();
-      if (!getFullscreenElement()) {
-        if (persistGameFullscreen) {
-          void lockGameFullscreen({ requestNative: true });
-        } else {
-          void enterAppFullscreen({ persistGame: false, requestNative: true });
-        }
+      if (requestNativeFullscreen && !getFullscreenElement()) {
+        void lockGameFullscreen({ requestNative: true });
       }
     };
 
@@ -838,10 +777,12 @@ export default function App() {
     window.addEventListener('pageshow', enterFullscreenForCurrentPage);
     window.addEventListener('resize', syncViewport);
     window.addEventListener('orientationchange', enterFullscreenForCurrentPage);
-    window.addEventListener('pointerdown', requestFullscreenAfterGesture, true);
-    window.addEventListener('touchstart', requestFullscreenAfterGesture, true);
-    window.addEventListener('click', requestFullscreenAfterGesture, true);
-    window.addEventListener('keydown', requestFullscreenAfterGesture, true);
+    if (requestNativeFullscreen) {
+      window.addEventListener('pointerdown', requestFullscreenAfterGesture, true);
+      window.addEventListener('touchstart', requestFullscreenAfterGesture, true);
+      window.addEventListener('click', requestFullscreenAfterGesture, true);
+      window.addEventListener('keydown', requestFullscreenAfterGesture, true);
+    }
     document.addEventListener('visibilitychange', enterFullscreenForCurrentPage);
     document.addEventListener('resume', enterFullscreenForCurrentPage);
     window.visualViewport?.addEventListener('resize', syncViewport);
@@ -853,16 +794,18 @@ export default function App() {
       window.removeEventListener('pageshow', enterFullscreenForCurrentPage);
       window.removeEventListener('resize', syncViewport);
       window.removeEventListener('orientationchange', enterFullscreenForCurrentPage);
-      window.removeEventListener('pointerdown', requestFullscreenAfterGesture, true);
-      window.removeEventListener('touchstart', requestFullscreenAfterGesture, true);
-      window.removeEventListener('click', requestFullscreenAfterGesture, true);
-      window.removeEventListener('keydown', requestFullscreenAfterGesture, true);
+      if (requestNativeFullscreen) {
+        window.removeEventListener('pointerdown', requestFullscreenAfterGesture, true);
+        window.removeEventListener('touchstart', requestFullscreenAfterGesture, true);
+        window.removeEventListener('click', requestFullscreenAfterGesture, true);
+        window.removeEventListener('keydown', requestFullscreenAfterGesture, true);
+      }
       document.removeEventListener('visibilitychange', enterFullscreenForCurrentPage);
       document.removeEventListener('resume', enterFullscreenForCurrentPage);
       window.visualViewport?.removeEventListener('resize', syncViewport);
       window.visualViewport?.removeEventListener('scroll', syncViewport);
     };
-  }, [page]);
+  }, [page, settings.darkMode]);
 
   const activeMode = useMemo(() => getModeById(selectedMode), [selectedMode]);
 
@@ -1104,6 +1047,15 @@ export default function App() {
   };
 
   const handleHostConnection = (connection) => {
+    const removeDisconnectedParticipant = () => {
+      const participantId = connection.partyrushPlayerId;
+      if (!participantId) return;
+
+      hostConnectionsRef.current.delete(participantId);
+      removeParticipantById(participantId);
+      connection.partyrushPlayerId = null;
+    };
+
     connection.on('data', (message) => {
       if (!message || typeof message !== 'object') return;
 
@@ -1182,11 +1134,8 @@ export default function App() {
       }
     });
 
-    connection.on('close', () => {
-      if (connection.partyrushPlayerId) {
-        hostConnectionsRef.current.delete(connection.partyrushPlayerId);
-      }
-    });
+    connection.on('close', removeDisconnectedParticipant);
+    connection.on('error', removeDisconnectedParticipant);
   };
 
   useEffect(() => {
@@ -1200,6 +1149,7 @@ export default function App() {
     clearPeerConnections();
     peerModeRef.current = 'host';
     const peer = new Peer(peerId, { debug: 1 });
+    let reconnectTimer = 0;
     peerRef.current = peer;
     setOnlineStatus({
       mode: 'host',
@@ -1216,6 +1166,27 @@ export default function App() {
     });
 
     peer.on('connection', handleHostConnection);
+
+    peer.on('disconnected', () => {
+      setOnlineStatus({
+        mode: 'host',
+        state: 'connecting',
+        message: 'Kapcsolat helyreállítása...',
+      });
+      window.clearTimeout(reconnectTimer);
+      reconnectTimer = window.setTimeout(() => {
+        if (peerRef.current !== peer || peer.destroyed) return;
+        try {
+          peer.reconnect();
+        } catch {
+          setOnlineStatus({
+            mode: 'host',
+            state: 'error',
+            message: 'A szoba kapcsolata megszakadt.',
+          });
+        }
+      }, 1500);
+    });
 
     peer.on('error', (error) => {
       if (error?.type === 'unavailable-id') {
@@ -1244,6 +1215,7 @@ export default function App() {
     });
 
     return () => {
+      window.clearTimeout(reconnectTimer);
       if (peerRef.current === peer) {
         clearPeerConnections();
       }
@@ -1258,12 +1230,21 @@ export default function App() {
 
   const addPlayer = (name) => {
     const safeName = sanitizeText(name, limits.playerNameLength);
-    if (!safeName) return;
+    if (!safeName) return 'Adj meg egy nevet.';
+    if (players.length >= limits.players) {
+      return `Legfeljebb ${limits.players} játékost adhatsz hozzá.`;
+    }
+
+    const alreadyExists = players.some(
+      (player) => player.name.toLocaleLowerCase('hu-HU') === safeName.toLocaleLowerCase('hu-HU'),
+    );
+    if (alreadyExists) return 'Ez a név már szerepel a játékosok között.';
 
     setPlayers((currentPlayers) => [
-      ...currentPlayers.slice(0, limits.players - 1),
+      ...currentPlayers,
       { id: createId('player'), name: safeName },
     ]);
+    return null;
   };
 
   const removePlayer = (id) => {
@@ -1278,12 +1259,16 @@ export default function App() {
 
   const addCustomCard = (text) => {
     const safeText = sanitizeText(text, limits.customCardLength);
-    if (!safeText) return;
+    if (!safeText) return 'Írj szöveget a kártyára.';
+    if (customCards.length >= limits.customCards) {
+      return `Legfeljebb ${limits.customCards} saját kártyát tárolhatsz.`;
+    }
 
     setCustomCards((currentCards) => [
       { id: createId('custom'), text: safeText, safe: true },
-      ...currentCards.slice(0, limits.customCards - 1),
+      ...currentCards,
     ]);
+    return null;
   };
 
   const deleteCustomCard = (id) => {
@@ -1653,6 +1638,7 @@ export default function App() {
   toggleTimerRef.current = toggleTimer;
 
   const clearData = () => {
+    setPendingConfirmation(null);
     Object.values(storageKeys).forEach((key) => removeStoredKey(key));
     clearStoredRoomState();
     clearPeerConnections();
@@ -1747,7 +1733,6 @@ export default function App() {
   useEffect(() => {
     if (page !== pages.game) return undefined;
 
-    nativeFullscreenWasActiveRef.current = Boolean(getFullscreenElement());
     gameWasBackgroundedRef.current = false;
 
     if (!gameHistoryGuardRef.current) {
@@ -1779,12 +1764,8 @@ export default function App() {
     const handleFullscreenChange = () => {
       const hasNativeFullscreen = Boolean(getFullscreenElement());
 
-      if (hasNativeFullscreen) {
-        nativeFullscreenWasActiveRef.current = true;
-        return;
-      }
+      if (hasNativeFullscreen) return;
 
-      nativeFullscreenWasActiveRef.current = false;
       refreshFullscreenViewport();
 
       if (!getFallbackFullscreen()) {
@@ -1804,7 +1785,6 @@ export default function App() {
 
       if (gameWasBackgroundedRef.current) {
         gameWasBackgroundedRef.current = false;
-        nativeFullscreenWasActiveRef.current = Boolean(getFullscreenElement());
         requestGameExitAndKeepGuard();
       }
     };
@@ -1934,7 +1914,7 @@ export default function App() {
         <SettingsPage
           settings={settings}
           onToggle={toggleSetting}
-          onClearData={clearData}
+          onClearData={() => setPendingConfirmation('clear-data')}
           onBack={() => setPage(pages.home)}
         />
       ) : null}
@@ -1970,6 +1950,16 @@ export default function App() {
           confirmLabel="Kilépés"
           onCancel={cancelPendingConfirmation}
           onConfirm={exitGameToHomeNow}
+        />
+      ) : null}
+
+      {pendingConfirmation === 'clear-data' ? (
+        <ConfirmDialog
+          title="Törlöd az összes adatot?"
+          description="Ez végleg törli a játékosokat és a saját kártyákat, majd visszaállítja az alapbeállításokat."
+          confirmLabel="Adatok törlése"
+          onCancel={cancelPendingConfirmation}
+          onConfirm={clearData}
         />
       ) : null}
     </Layout>

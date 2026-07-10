@@ -1,5 +1,6 @@
 import { Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
+import ConfirmDialog from '../components/ConfirmDialog.jsx';
 import Header from '../components/Header.jsx';
 import PrimaryButton from '../components/PrimaryButton.jsx';
 
@@ -10,13 +11,26 @@ export default function CustomCardsPage({
   onBack,
 }) {
   const [text, setText] = useState('');
+  const [message, setMessage] = useState('');
+  const [pendingDeleteId, setPendingDeleteId] = useState(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const trimmedText = text.trim();
     if (!trimmedText) return;
-    onAddCard(trimmedText);
+    const error = onAddCard(trimmedText);
+    if (error) {
+      setMessage(error);
+      return;
+    }
+
     setText('');
+    setMessage('');
+  };
+
+  const confirmDelete = () => {
+    if (pendingDeleteId) onDeleteCard(pendingDeleteId);
+    setPendingDeleteId(null);
   };
 
   return (
@@ -51,6 +65,15 @@ export default function CustomCardsPage({
           </PrimaryButton>
         </form>
 
+        {message ? (
+          <p
+            role="alert"
+            className="shrink-0 rounded-2xl bg-rose-500/16 px-4 py-3 text-sm font-bold text-rose-50 ring-1 ring-rose-200/20"
+          >
+            {message}
+          </p>
+        ) : null}
+
         <div className="mobile-scroll min-h-0 flex-1 space-y-2 overflow-y-auto pb-1 pr-1">
           {customCards.length === 0 ? (
             <p className="rounded-3xl bg-white/8 p-5 text-center text-sm leading-6 text-white/58">
@@ -71,8 +94,8 @@ export default function CustomCardsPage({
                 </p>
                 <button
                   type="button"
-                  onClick={() => onDeleteCard(card.id)}
-                  className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-rose-400/14 text-rose-100 ring-1 ring-rose-200/20"
+                  onClick={() => setPendingDeleteId(card.id)}
+                  className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-rose-400/14 text-rose-100 ring-1 ring-rose-200/20"
                   aria-label="Saját feladat törlése"
                 >
                   <Trash2 className="h-5 w-5" />
@@ -82,6 +105,16 @@ export default function CustomCardsPage({
           )}
         </div>
       </section>
+
+      {pendingDeleteId ? (
+        <ConfirmDialog
+          title="Törlöd ezt a kártyát?"
+          description="A kártya végleg eltűnik a saját paklidból."
+          confirmLabel="Törlés"
+          onCancel={() => setPendingDeleteId(null)}
+          onConfirm={confirmDelete}
+        />
+      ) : null}
     </>
   );
 }

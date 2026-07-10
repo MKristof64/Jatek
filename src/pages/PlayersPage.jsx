@@ -6,11 +6,18 @@ import PrimaryButton from '../components/PrimaryButton.jsx';
 
 export default function PlayersPage({ players, onAdd, onRemove, onNext, onBack }) {
   const [name, setName] = useState('');
+  const [message, setMessage] = useState('');
   const hasEnoughPlayers = players.length >= 2;
 
   const handleAdd = (trimmedName) => {
-    onAdd(trimmedName);
+    const error = onAdd(trimmedName);
+    if (error) {
+      setMessage(error);
+      return;
+    }
+
     setName('');
+    setMessage('');
   };
 
   return (
@@ -19,14 +26,23 @@ export default function PlayersPage({ players, onAdd, onRemove, onNext, onBack }
       <section className="flex min-h-0 flex-1 flex-col gap-4">
         <PlayerInput value={name} onChange={setName} onAdd={handleAdd} />
 
+        {message ? (
+          <p
+            role="alert"
+            className="shrink-0 rounded-2xl bg-rose-500/16 px-4 py-3 text-sm font-bold text-rose-50 ring-1 ring-rose-200/20"
+          >
+            {message}
+          </p>
+        ) : null}
+
         <div className="shrink-0 rounded-3xl border border-white/10 bg-white/10 p-4">
           <div className="mb-3 flex items-center gap-3 text-white">
             <UsersRound className="h-5 w-5 text-amber-200" />
             <p className="font-black">Legalább 2 játékos kell</p>
           </div>
           <p className="text-sm leading-6 text-white/62">
-            Most {players.length} játékos van felvéve. A sorrend alapján haladnak
-            majd a körök.
+            Most {players.length} játékos van felvéve. A játék kezdetén véletlenszerű
+            sorrend készül.
           </p>
         </div>
 

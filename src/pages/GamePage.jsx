@@ -1,4 +1,5 @@
 import { Crown, Shuffle } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 import GameCard from '../components/GameCard.jsx';
 import PrimaryButton from '../components/PrimaryButton.jsx';
 
@@ -18,6 +19,7 @@ export default function GamePage({
   onToggleTimer,
   onFinishGame,
 }) {
+  const gameMainRef = useRef(null);
   const hasSideAction = Boolean(canFinishGame);
   const screenClassName = [
     'game-screen flex min-h-0 flex-1 flex-col gap-3',
@@ -34,9 +36,20 @@ export default function GamePage({
     </PrimaryButton>
   ) : null;
 
+  useEffect(() => {
+    const frameId = window.requestAnimationFrame(() => {
+      if (gameMainRef.current) gameMainRef.current.scrollTop = 0;
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [card?.id]);
+
   return (
     <section className={screenClassName}>
-      <div className="game-main mobile-scroll min-h-0 flex-1 space-y-3 overflow-y-auto pb-1 pr-1">
+      <div
+        ref={gameMainRef}
+        className="game-main mobile-scroll min-h-0 flex-1 space-y-3 overflow-y-auto pb-1 pr-1"
+      >
         <GameCard
           key={card?.id ?? cardText}
           playerName={currentPlayer}

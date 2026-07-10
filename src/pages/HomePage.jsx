@@ -19,7 +19,7 @@ export default function HomePage({
           <button
             type="button"
             onClick={onInstall}
-            className="icon-button-dynamic grid h-10 w-10 shrink-0 touch-manipulation place-items-center rounded-[1.1rem] bg-white/12 text-white ring-1 ring-white/15 transition hover:bg-white/18 active:scale-[0.98]"
+            className="icon-button-dynamic grid h-11 w-11 shrink-0 touch-manipulation place-items-center rounded-[1.1rem] bg-white/12 text-white ring-1 ring-white/15 transition hover:bg-white/18 active:scale-[0.98]"
             aria-label="Alkalmazás telepítése"
           >
             <Download className="h-5 w-5" />
@@ -28,7 +28,7 @@ export default function HomePage({
         <button
           type="button"
           onClick={onSettings}
-          className="icon-button-dynamic grid h-10 w-10 shrink-0 touch-manipulation place-items-center rounded-[1.1rem] bg-white/12 text-white ring-1 ring-white/15 transition hover:bg-white/18 active:scale-[0.98]"
+          className="icon-button-dynamic grid h-11 w-11 shrink-0 touch-manipulation place-items-center rounded-[1.1rem] bg-white/12 text-white ring-1 ring-white/15 transition hover:bg-white/18 active:scale-[0.98]"
           aria-label="Beállítások"
         >
           <Settings className="h-5 w-5" />

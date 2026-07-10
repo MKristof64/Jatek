@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
+    "test": "node --test scripts/*.test.mjs",
     "validate:data": "node scripts/validate-data.mjs",
     "preview": "vite preview --host 127.0.0.1",
     "cloudflare:deploy": "wrangler deploy --cwd cloudflare/feedback-worker",

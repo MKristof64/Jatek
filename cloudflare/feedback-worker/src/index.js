@@ -26,6 +26,18 @@ const combinedModeSources = {
 const validKinds = new Set(Object.keys(kindLabels));
 const validModes = new Set(Object.keys(modeLabels));
 const defaultSuccessPercent = 50;
+const securityHeaders = {
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
+  'Referrer-Policy': 'no-referrer',
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+};
+const allowedOriginPatterns = [
+  /^https:\/\/mkristof64\.github\.io$/i,
+  /^https:\/\/(?:[a-z0-9-]+\.)?jatek-teszt\.pages\.dev$/i,
+  /^https:\/\/jatek(?:-[a-z0-9-]+)?\.kristof-madarasz159\.workers\.dev$/i,
+  /^http:\/\/(?:127\.0\.0\.1|localhost)(?::\d+)?$/i,
+];
 
 function getModeSourceIds(mode) {
   return combinedModeSources[mode] ?? [mode];
@@ -36,15 +48,24 @@ function countCardsForMode(cards, mode) {
   return cards.filter((card) => sourceIds.includes(card.mode)).length;
 }
 
+function isAllowedOrigin(origin) {
+  return !origin || allowedOriginPatterns.some((pattern) => pattern.test(origin));
+}
+
 function corsHeaders(request) {
-  const origin = request.headers.get('Origin') ?? '*';
-  return {
-    'Access-Control-Allow-Origin': origin,
+  const origin = request.headers.get('Origin');
+  const headers = {
     'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Token',
     'Access-Control-Max-Age': '86400',
     Vary: 'Origin',
   };
+
+  if (origin && isAllowedOrigin(origin)) {
+    headers['Access-Control-Allow-Origin'] = origin;
+  }
+
+  return headers;
 }
 
 function jsonResponse(request, data, init = {}) {
@@ -53,6 +74,7 @@ function jsonResponse(request, data, init = {}) {
     headers: {
       ...jsonHeaders,
       'Cache-Control': 'no-store',
+      ...securityHeaders,
       ...corsHeaders(request),
       ...(init.headers ?? {}),
     },
@@ -255,10 +277,9 @@ async function saveManagedCard(env, card, source = 'custom', deletedAt = null) {
 
 function isAdminRequest(request, env) {
   const token = String(env.ADMIN_TOKEN ?? '');
-  if (!token) return true;
+  if (!token) return false;
 
-  const url = new URL(request.url);
-  const providedToken = request.headers.get('X-Admin-Token') ?? url.searchParams.get('token') ?? '';
+  const providedToken = request.headers.get('X-Admin-Token') ?? '';
   return providedToken === token;
 }
 
@@ -271,6 +292,7 @@ function withAdminGuard(request, env) {
       headers: {
         'Content-Type': 'text/html; charset=utf-8',
         'Cache-Control': 'no-store',
+        ...securityHeaders,
       },
     });
   }
@@ -1136,7 +1158,18 @@ function adminHtml() {
 export default {
   async fetch(request, env) {
     if (request.method === 'OPTIONS') {
-      return new Response(null, { headers: corsHeaders(request) });
+      const origin = request.headers.get('Origin');
+      if (origin && !isAllowedOrigin(origin)) {
+        return new Response(null, { status: 403, headers: securityHeaders });
+      }
+
+      return new Response(null, {
+        status: 204,
+        headers: {
+          ...securityHeaders,
+          ...corsHeaders(request),
+        },
+      });
     }
 
     const url = new URL(request.url);
@@ -1185,10 +1218,25 @@ export default {
       return jsonResponse(request, { ok: true });
     }
 
+    if (url.pathname.startsWith('/api/')) {
+      return jsonResponse(request, { error: 'not-found' }, { status: 404 });
+    }
+
+    if (request.method !== 'GET' && request.method !== 'HEAD') {
+      return new Response('Method Not Allowed', {
+        status: 405,
+        headers: {
+          Allow: 'GET, HEAD',
+          ...securityHeaders,
+        },
+      });
+    }
+
     return new Response(adminHtml(), {
       headers: {
         'Content-Type': 'text/html; charset=utf-8',
         'Cache-Control': 'no-store',
+        ...securityHeaders,
       },
     });
   },

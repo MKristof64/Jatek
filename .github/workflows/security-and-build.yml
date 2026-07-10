@@ -30,5 +30,11 @@ jobs:
       - name: Audit production and build dependencies
         run: npm audit --audit-level=high
 
+      - name: Test game engine
+        run: npm test
+
+      - name: Validate card data
+        run: npm run validate:data
+
       - name: Build
         run: npm run build
