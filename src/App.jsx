@@ -1135,7 +1135,13 @@ export default function App() {
     });
 
     connection.on('close', removeDisconnectedParticipant);
-    connection.on('error', removeDisconnectedParticipant);
+    connection.on('error', () => {
+      try {
+        connection.close();
+      } finally {
+        removeDisconnectedParticipant();
+      }
+    });
   };
 
   useEffect(() => {
