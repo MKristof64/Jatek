@@ -34,7 +34,7 @@ function productionSecurityMeta() {
   };
 }
 
-export default defineConfig({
-  base: '/Jatek/',
+export default defineConfig(({ mode }) => ({
+  base: mode === 'android' ? './' : '/Jatek/',
   plugins: [react(), productionSecurityMeta()],
-});
+}));

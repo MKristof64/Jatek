@@ -1,0 +1,17 @@
+{
+  "appId": "hu.mkristof64.azivosjatek",
+  "appName": "Az ivós játék",
+  "webDir": "dist",
+  "loggingBehavior": "none",
+  "backgroundColor": "#5f0029",
+  "zoomEnabled": false,
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": false,
+    "backgroundColor": "#5f0029",
+    "webContentsDebuggingEnabled": false,
+    "useLegacyBridge": false
+  }
+}

@@ -4,3 +4,11 @@ node_modules
 .env.local
 *.zip
 *.tar.gz
+android/.gradle/
+android/local.properties
+android/**/build/
+android/captures/
+android/keystore.properties
+*.jks
+*.keystore
+artifacts/

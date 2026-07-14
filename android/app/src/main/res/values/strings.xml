@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Az ivós játék</string>
+    <string name="title_activity_main">Az ivós játék</string>
+    <string name="package_name">hu.mkristof64.azivosjatek</string>
+    <string name="custom_url_scheme">hu.mkristof64.azivosjatek</string>
+</resources>

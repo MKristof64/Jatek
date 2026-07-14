@@ -1,3 +1,6 @@
+import { Capacitor } from '@capacitor/core';
+import { ScreenOrientation } from '@capacitor/screen-orientation';
+
 const fallbackClass = 'app-fullscreen-fallback';
 const gameFullscreenIntentKey = 'enmegsosem.gameFullscreenIntent';
 let stableViewport = {
@@ -72,6 +75,20 @@ export function setGameFullscreenIntent(enabled) {
 }
 
 export async function lockPortraitOrientation() {
+  if (Capacitor.isNativePlatform()) {
+    try {
+      await ScreenOrientation.lock({ orientation: 'portrait-primary' });
+      return true;
+    } catch {
+      try {
+        await ScreenOrientation.lock({ orientation: 'portrait' });
+        return true;
+      } catch {
+        return false;
+      }
+    }
+  }
+
   const orientation = window.screen?.orientation;
   if (typeof orientation?.lock !== 'function') return false;
 

@@ -1,11 +1,16 @@
 {
   "name": "en-meg-sosem",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
+    "build:android": "vite build --mode android",
+    "android:sync": "npm run build:android && cap sync android",
+    "android:check": "npm run test && npm run validate:data && npm run android:sync && cd android && gradlew.bat lintDebug testDebugUnitTest assembleDebug",
+    "android:release": "npm run android:sync && cd android && gradlew.bat lintDebug testDebugUnitTest assembleRelease",
+    "android:open": "cap open android",
     "test": "node --test scripts/*.test.mjs",
     "validate:data": "node scripts/validate-data.mjs",
     "preview": "vite preview --host 127.0.0.1",
@@ -13,12 +18,17 @@
     "cloudflare:migrate": "wrangler d1 migrations apply jatek --remote --cwd cloudflare/feedback-worker"
   },
   "dependencies": {
+    "@capacitor/android": "8.4.2",
+    "@capacitor/app": "8.1.0",
+    "@capacitor/core": "8.4.2",
+    "@capacitor/screen-orientation": "8.0.1",
     "lucide-react": "1.14.0",
     "peerjs": "^1.5.5",
     "react": "19.2.6",
     "react-dom": "19.2.6"
   },
   "devDependencies": {
+    "@capacitor/cli": "8.4.2",
     "@vitejs/plugin-react": "6.0.3",
     "autoprefixer": "10.5.0",
     "postcss": "8.5.14",

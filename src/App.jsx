@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { App as CapacitorApp } from '@capacitor/app';
+import { Capacitor } from '@capacitor/core';
 import { Peer } from 'peerjs';
 import ConfirmDialog from './components/ConfirmDialog.jsx';
 import {
@@ -111,7 +113,8 @@ const pages = {
 
 function isInstalledAppDisplayMode() {
   return Boolean(
-    window.matchMedia?.('(display-mode: fullscreen)').matches ||
+    Capacitor.isNativePlatform() ||
+      window.matchMedia?.('(display-mode: fullscreen)').matches ||
       window.matchMedia?.('(display-mode: standalone)').matches ||
       window.navigator.standalone === true,
   );
@@ -1771,9 +1774,10 @@ export default function App() {
   useEffect(() => {
     if (page !== pages.game) return undefined;
 
+    const nativePlatform = Capacitor.isNativePlatform();
     gameWasBackgroundedRef.current = false;
 
-    if (!gameHistoryGuardRef.current) {
+    if (!nativePlatform && !gameHistoryGuardRef.current) {
       window.history.pushState({ enMegSosemGameGuard: true }, '', window.location.href);
       gameHistoryGuardRef.current = true;
     }
@@ -1827,26 +1831,51 @@ export default function App() {
       }
     };
 
-    window.addEventListener('popstate', handlePopState);
+    let nativeAppStateHandle;
+    let nativeListenerDisposed = false;
+
+    if (nativePlatform) {
+      void CapacitorApp.addListener('appStateChange', ({ isActive }) => {
+        if (!isActive) {
+          markGameBackgrounded();
+          return;
+        }
+
+        handleVisibilityForFullscreenExit();
+      }).then((handle) => {
+        if (nativeListenerDisposed) {
+          void handle.remove();
+          return;
+        }
+        nativeAppStateHandle = handle;
+      });
+    } else {
+      window.addEventListener('popstate', handlePopState);
+      document.addEventListener('fullscreenchange', handleFullscreenChange);
+      document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+      document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+    }
+
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('blur', markGameBackgrounded);
     window.addEventListener('focus', handleVisibilityForFullscreenExit);
     window.addEventListener('pageshow', handleVisibilityForFullscreenExit);
     document.addEventListener('visibilitychange', handleVisibilityForFullscreenExit);
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
 
     return () => {
-      window.removeEventListener('popstate', handlePopState);
+      nativeListenerDisposed = true;
+      void nativeAppStateHandle?.remove();
+      if (!nativePlatform) {
+        window.removeEventListener('popstate', handlePopState);
+        document.removeEventListener('fullscreenchange', handleFullscreenChange);
+        document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+        document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
+      }
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('blur', markGameBackgrounded);
       window.removeEventListener('focus', handleVisibilityForFullscreenExit);
       window.removeEventListener('pageshow', handleVisibilityForFullscreenExit);
       document.removeEventListener('visibilitychange', handleVisibilityForFullscreenExit);
-      document.removeEventListener('fullscreenchange', handleFullscreenChange);
-      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
-      document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
     };
   }, [isRoomHost, page, pendingConfirmation, room]);
 
@@ -1858,6 +1887,53 @@ export default function App() {
 
     setPage(pages.home);
   };
+
+  useEffect(() => {
+    if (!Capacitor.isNativePlatform()) return undefined;
+
+    let backButtonHandle;
+    let listenerDisposed = false;
+
+    void CapacitorApp.addListener('backButton', () => {
+      if (pendingConfirmation) {
+        cancelPendingConfirmation();
+        return;
+      }
+
+      if (page === pages.game) {
+        requestGameBackExit();
+        return;
+      }
+
+      if (page === pages.room) {
+        backFromRoom();
+        return;
+      }
+
+      if (page === pages.modes) {
+        setPage(room ? pages.room : pages.players);
+        return;
+      }
+
+      if (page === pages.players || page === pages.custom || page === pages.settings) {
+        setPage(pages.home);
+        return;
+      }
+
+      void CapacitorApp.minimizeApp();
+    }).then((handle) => {
+      if (listenerDisposed) {
+        void handle.remove();
+        return;
+      }
+      backButtonHandle = handle;
+    });
+
+    return () => {
+      listenerDisposed = true;
+      void backButtonHandle?.remove();
+    };
+  }, [page, pendingConfirmation, room]);
 
   const immersivePages = new Set(Object.values(pages));
 
