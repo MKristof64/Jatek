@@ -12,7 +12,6 @@ const productionCsp = [
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'none'",
-  "manifest-src 'self'",
   "worker-src 'self'",
   'upgrade-insecure-requests',
 ].join('; ');

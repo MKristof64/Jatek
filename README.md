@@ -1,6 +1,6 @@
 # Az ivós játék
 
-Mobil-first React + Vite partyjáték webes, PWA és natív Android-kiadással.
+Mobil-first React + Vite partyjáték webes és natív Android-kiadással.
 Egy telefonon és legfeljebb 15 résztvevős, PeerJS-alapú online szobában is
 használható.
 
@@ -64,6 +64,6 @@ production buildet.
 - `src/data`: beépített paklik és játékmódok
 - `src/lib`: játékmenet-, teljesképernyő- és távoli kártyalogika
 - `cloudflare/feedback-worker`: D1-alapú kártyakezelő és vezérlőközpont
-- `public`: PWA manifest, service worker és alkalmazásikonok
+- `public`: webes ikonok és statikus fájlok
 - `android`: natív Capacitor Android-projekt
 - `assets`: a natív ikon- és splash-generálás forrásképe

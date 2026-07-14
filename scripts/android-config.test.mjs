@@ -45,8 +45,8 @@ test('Android release is minimized and never commits signing secrets', async () 
   const buildGradle = await readProjectFile('android/app/build.gradle');
   const ignoreRules = await readProjectFile('.gitignore');
 
-  assert.match(buildGradle, /versionCode 1/);
-  assert.match(buildGradle, /versionName "1\.0\.0"/);
+  assert.match(buildGradle, /versionCode 2/);
+  assert.match(buildGradle, /versionName "1\.0\.1"/);
   assert.match(buildGradle, /minifyEnabled true/);
   assert.match(buildGradle, /shrinkResources true/);
   assert.match(ignoreRules, /android\/keystore\.properties/);
@@ -54,11 +54,11 @@ test('Android release is minimized and never commits signing secrets', async () 
   assert.match(ignoreRules, /\*\.keystore/);
 });
 
-test('native startup does not register the browser service worker', async () => {
+test('native startup uses the Android asset base without web installation hooks', async () => {
   const mainSource = await readProjectFile('src/main.jsx');
   const viteConfig = await readProjectFile('vite.config.js');
 
-  assert.match(mainSource, /!Capacitor\.isNativePlatform\(\)/);
-  assert.match(mainSource, /serviceWorker/);
+  assert.doesNotMatch(mainSource, /serviceWorker\.register/);
+  assert.doesNotMatch(mainSource, /beforeinstallprompt/);
   assert.match(viteConfig, /base: mode === 'android' \? '\.\/' : '\/Jatek\/'/);
 });

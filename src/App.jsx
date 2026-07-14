@@ -111,27 +111,18 @@ const pages = {
   settings: 'settings',
 };
 
-function isInstalledAppDisplayMode() {
-  return Boolean(
-    Capacitor.isNativePlatform() ||
-      window.matchMedia?.('(display-mode: fullscreen)').matches ||
-      window.matchMedia?.('(display-mode: standalone)').matches ||
-      window.navigator.standalone === true,
-  );
-}
-
 function shouldRequestNativeGameFullscreen() {
-  return !isInstalledAppDisplayMode();
+  return !Capacitor.isNativePlatform();
 }
 
 function shouldRequestNativePageFullscreen(page) {
-  return isInstalledAppDisplayMode() || page === pages.game;
+  return Capacitor.isNativePlatform() || page === pages.game;
 }
 
 function syncAppChromeColor(darkMode = true) {
   const color = darkMode ? '#5f0029' : '#fff0f4';
   document
-    .querySelectorAll('meta[name="theme-color"], meta[name="msapplication-TileColor"]')
+    .querySelectorAll('meta[name="theme-color"]')
     .forEach((meta) => meta.setAttribute('content', color));
   document.documentElement.dataset.appTheme = darkMode ? 'dark' : 'light';
   document.documentElement.style.backgroundColor = color;
@@ -536,7 +527,6 @@ export default function App() {
   const [selectedMode, setSelectedMode] = useState(loadSelectedMode);
   const [game, setGame] = useState(initialGame);
   const [remoteCards, setRemoteCards] = useState([]);
-  const [installPrompt, setInstallPrompt] = useState(null);
   const [room, setRoom] = useState(null);
   const [currentRoomPlayerId, setCurrentRoomPlayerId] = useState(null);
   const [onlineStatus, setOnlineStatus] = useState(defaultOnlineStatus);
@@ -568,32 +558,11 @@ export default function App() {
   }, [settings.darkMode]);
 
   useEffect(() => {
-    if (isInstalledAppDisplayMode()) return undefined;
-
-    const handleBeforeInstallPrompt = (event) => {
-      event.preventDefault();
-      setInstallPrompt(event);
-    };
-
-    const handleAppInstalled = () => {
-      setInstallPrompt(null);
-    };
-
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    window.addEventListener('appinstalled', handleAppInstalled);
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-      window.removeEventListener('appinstalled', handleAppInstalled);
-    };
-  }, []);
-
-  useEffect(() => {
     clearStoredRoomState();
   }, []);
 
   useEffect(() => {
-    if (!isInstalledAppDisplayMode()) return undefined;
+    if (!Capacitor.isNativePlatform()) return undefined;
 
     let retryTimer = 0;
     const enforcePortrait = () => {
@@ -1720,19 +1689,6 @@ export default function App() {
     setPage(players.length >= 2 ? pages.modes : pages.players);
   };
 
-  const installApp = async () => {
-    if (!installPrompt) return;
-
-    try {
-      await installPrompt.prompt();
-      await installPrompt.userChoice;
-    } catch {
-      // Browsers can reject the prompt if it is no longer available.
-    } finally {
-      setInstallPrompt(null);
-    }
-  };
-
   const exitGameToHomeNow = () => {
     setPendingConfirmation(null);
 
@@ -1952,8 +1908,6 @@ export default function App() {
           onCustomCards={() => setPage(pages.custom)}
           onRoom={() => setPage(pages.room)}
           onSettings={() => setPage(pages.settings)}
-          canInstall={Boolean(installPrompt)}
-          onInstall={installApp}
         />
       ) : null}
 
