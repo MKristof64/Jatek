@@ -7,6 +7,7 @@ import {
   getFullscreenElement,
   getFallbackFullscreen,
   lockGameFullscreen,
+  lockPortraitOrientation,
   refreshFullscreenViewport,
   unlockGameFullscreen,
 } from './lib/fullscreen.js';
@@ -586,6 +587,37 @@ export default function App() {
 
   useEffect(() => {
     clearStoredRoomState();
+  }, []);
+
+  useEffect(() => {
+    if (!isInstalledAppDisplayMode()) return undefined;
+
+    let retryTimer = 0;
+    const enforcePortrait = () => {
+      if (document.visibilityState === 'hidden') return;
+
+      window.clearTimeout(retryTimer);
+      void lockPortraitOrientation();
+      retryTimer = window.setTimeout(() => void lockPortraitOrientation(), 250);
+    };
+
+    enforcePortrait();
+    window.addEventListener('focus', enforcePortrait);
+    window.addEventListener('pageshow', enforcePortrait);
+    window.addEventListener('orientationchange', enforcePortrait);
+    window.addEventListener('pointerdown', enforcePortrait, { capture: true, once: true });
+    document.addEventListener('visibilitychange', enforcePortrait);
+    window.screen?.orientation?.addEventListener?.('change', enforcePortrait);
+
+    return () => {
+      window.clearTimeout(retryTimer);
+      window.removeEventListener('focus', enforcePortrait);
+      window.removeEventListener('pageshow', enforcePortrait);
+      window.removeEventListener('orientationchange', enforcePortrait);
+      window.removeEventListener('pointerdown', enforcePortrait, true);
+      document.removeEventListener('visibilitychange', enforcePortrait);
+      window.screen?.orientation?.removeEventListener?.('change', enforcePortrait);
+    };
   }, []);
 
   useEffect(() => {

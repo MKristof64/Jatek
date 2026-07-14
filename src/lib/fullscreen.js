@@ -71,6 +71,23 @@ export function setGameFullscreenIntent(enabled) {
   writeStoredIntent(localStorage, enabled);
 }
 
+export async function lockPortraitOrientation() {
+  const orientation = window.screen?.orientation;
+  if (typeof orientation?.lock !== 'function') return false;
+
+  try {
+    await orientation.lock('portrait-primary');
+    return true;
+  } catch {
+    try {
+      await orientation.lock('portrait');
+      return true;
+    } catch {
+      return false;
+    }
+  }
+}
+
 export function getFullscreenElement() {
   return (
     document.fullscreenElement ||
