@@ -113,6 +113,7 @@ const pages = {
 
 const androidDownloadUrl =
   'https://github.com/MKristof64/Jatek/releases/latest/download/Az-ivos-jatek.apk';
+const isNativeAppBuild = import.meta.env.MODE === 'android';
 
 function shouldRequestNativeGameFullscreen() {
   return !Capacitor.isNativePlatform();
@@ -1911,7 +1912,9 @@ export default function App() {
           onCustomCards={() => setPage(pages.custom)}
           onRoom={() => setPage(pages.room)}
           onSettings={() => setPage(pages.settings)}
-          appDownloadUrl={androidDownloadUrl}
+          appDownloadUrl={
+            isNativeAppBuild || Capacitor.isNativePlatform() ? null : androidDownloadUrl
+          }
         />
       ) : null}
 
