@@ -30,7 +30,8 @@ test('the web download button points to the signed Android release', async () =>
     appSource,
     /https:\/\/github\.com\/MKristof64\/Jatek\/releases\/latest\/download\/Az-ivos-jatek\.apk/,
   );
-  assert.match(appSource, /Capacitor\.isNativePlatform\(\) \? null : androidDownloadUrl/);
+  assert.match(appSource, /appDownloadUrl=\{androidDownloadUrl\}/);
+  assert.doesNotMatch(appSource, /appDownloadUrl=\{Capacitor\.isNativePlatform/);
   assert.match(homeSource, /download="Az-ivos-jatek\.apk"/);
 });
 

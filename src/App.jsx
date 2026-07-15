@@ -1911,7 +1911,7 @@ export default function App() {
           onCustomCards={() => setPage(pages.custom)}
           onRoom={() => setPage(pages.room)}
           onSettings={() => setPage(pages.settings)}
-          appDownloadUrl={Capacitor.isNativePlatform() ? null : androidDownloadUrl}
+          appDownloadUrl={androidDownloadUrl}
         />
       ) : null}
 
