@@ -943,6 +943,16 @@ function cardAdminHtml() {
 
     async function loadStats() {
       const list = document.getElementById('cardList');
+      const token = localStorage.getItem(tokenKey) || '';
+
+      if (!token) {
+        document.getElementById('loginDialog').classList.add('show');
+        list.innerHTML = '<div class="empty">Add meg az admin tokent az adatok betöltéséhez.</div>';
+        setRefreshStatus('Admin token szükséges.');
+        setRefreshLoading(false);
+        return;
+      }
+
       setRefreshLoading(true);
       setRefreshStatus('Frissítés folyamatban...');
       list.innerHTML = '<div class="empty">Adatok betöltése...</div>';
