@@ -1,4 +1,4 @@
-import { Crown, Play, Settings, Sparkles, UserPlus, Wand2 } from 'lucide-react';
+import { Crown, Download, Play, Settings, Sparkles, UserPlus, Wand2 } from 'lucide-react';
 import PrimaryButton from '../components/PrimaryButton.jsx';
 
 export default function HomePage({
@@ -9,10 +9,22 @@ export default function HomePage({
   onCustomCards,
   onRoom,
   onSettings,
+  appDownloadUrl,
 }) {
   return (
     <>
       <div className="home-top-controls flex shrink-0 items-center justify-end gap-2">
+        {appDownloadUrl ? (
+          <a
+            href={appDownloadUrl}
+            download="Az-ivos-jatek.apk"
+            className="icon-button-dynamic grid h-11 w-11 shrink-0 touch-manipulation place-items-center rounded-[1.1rem] bg-white/12 text-white ring-1 ring-white/15 transition hover:bg-white/18 active:scale-[0.98]"
+            aria-label="Android alkalmazás letöltése"
+            title="Android alkalmazás letöltése"
+          >
+            <Download className="h-5 w-5" />
+          </a>
+        ) : null}
         <button
           type="button"
           onClick={onSettings}

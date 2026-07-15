@@ -16,9 +16,22 @@ test('the website is no longer installable as a PWA', async () => {
   assert.doesNotMatch(mainSource, /serviceWorker\.register/);
   assert.doesNotMatch(mainSource, /beforeinstallprompt/);
   assert.doesNotMatch(homeSource, /Alkalmazás telepítése/);
+  assert.match(homeSource, /Android alkalmazás letöltése/);
 
   await assert.rejects(access(projectUrl('public/manifest.webmanifest')), { code: 'ENOENT' });
   await assert.rejects(access(projectUrl('public/sw.js')), { code: 'ENOENT' });
+});
+
+test('the web download button points to the signed Android release', async () => {
+  const appSource = await readFile(projectUrl('src/App.jsx'), 'utf8');
+  const homeSource = await readFile(projectUrl('src/pages/HomePage.jsx'), 'utf8');
+
+  assert.match(
+    appSource,
+    /https:\/\/github\.com\/MKristof64\/Jatek\/releases\/latest\/download\/Az-ivos-jatek\.apk/,
+  );
+  assert.match(appSource, /Capacitor\.isNativePlatform\(\) \? null : androidDownloadUrl/);
+  assert.match(homeSource, /download="Az-ivos-jatek\.apk"/);
 });
 
 test('legacy cleanup removes only this game service worker and caches', async () => {
