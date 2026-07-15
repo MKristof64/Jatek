@@ -9,7 +9,8 @@ export default {
         card: '0 18px 44px rgba(54, 0, 28, 0.34)',
       },
       fontFamily: {
-        display: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['"Source Sans 3"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['"Source Sans 3"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       keyframes: {
         floaty: {

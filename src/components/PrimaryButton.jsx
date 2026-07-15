@@ -30,7 +30,7 @@ const PrimaryButton = forwardRef(function PrimaryButton({
       type={type}
       disabled={disabled}
       className={[
-        'party-button inline-flex min-h-[3.35rem] w-full touch-manipulation select-none items-center justify-center gap-2.5 rounded-[1.35rem] px-4 py-3 text-center text-[1rem] font-extrabold leading-tight tracking-normal transition focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-200 disabled:pointer-events-none disabled:opacity-45',
+        'party-button font-display inline-flex min-h-[3.35rem] w-full touch-manipulation select-none items-center justify-center gap-2.5 rounded-[1.35rem] px-4 py-3 text-center text-[1rem] font-extrabold leading-tight tracking-normal transition focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-200 disabled:pointer-events-none disabled:opacity-45',
         variants[variant],
         className,
       ].join(' ')}

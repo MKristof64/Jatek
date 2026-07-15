@@ -29,16 +29,10 @@ export function pickRandomCard(pool, usedIds = []) {
   };
 }
 
-export function pickTargetIndex(players, playerIndex, modeId = 'classic') {
-  const playerIndexes = players.map((_, index) => index);
-  const oppositeTeamTargets =
-    modeId === 'team'
-      ? playerIndexes.filter((index) => index !== playerIndex && index % 2 !== playerIndex % 2)
-      : [];
-  const targets =
-    oppositeTeamTargets.length > 0
-      ? oppositeTeamTargets
-      : playerIndexes.filter((index) => index !== playerIndex);
+export function pickTargetIndex(players, playerIndex) {
+  const targets = players
+    .map((_, index) => index)
+    .filter((index) => index !== playerIndex);
 
   if (targets.length === 0) return playerIndex;
   return targets[Math.floor(Math.random() * targets.length)];
@@ -64,21 +58,4 @@ export function getParticipantIndexes(card, players, playerIndex) {
   if (card.kind === 'roundtable') return [];
   if (card.kind === 'duel') return pickRandomPlayerIndexes(players, 2);
   return [playerIndex];
-}
-
-export function buildTeams(players) {
-  if (players.length < 2) return [];
-
-  return [
-    {
-      id: 'neon',
-      name: 'Neon csapat',
-      players: players.filter((_, index) => index % 2 === 0),
-    },
-    {
-      id: 'lime',
-      name: 'Lime csapat',
-      players: players.filter((_, index) => index % 2 === 1),
-    },
-  ].filter((team) => team.players.length > 0);
 }

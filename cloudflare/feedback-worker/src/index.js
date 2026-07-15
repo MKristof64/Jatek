@@ -16,7 +16,6 @@ const modeLabels = {
   bold: { id: 'bold', name: 'Merész', category: 'Pikáns', ready: true },
   hardcore: { id: 'hardcore', name: 'Hardcore', category: 'Nagyobb kihívás', ready: true },
   university: { id: 'university', name: 'Egyetemista', category: 'Pikáns + Hardcore', ready: true },
-  team: { id: 'team', name: 'Csapat', category: 'Csapatjáték', ready: true },
 };
 
 const combinedModeSources = {
@@ -824,7 +823,6 @@ function cardAdminHtml() {
       { id: 'bold', name: 'Pikáns', modeName: 'Merész', totalCards: 0, ready: true },
       { id: 'hardcore', name: 'Nagyobb kihívás', modeName: 'Hardcore', totalCards: 0, ready: true },
       { id: 'university', name: 'Pikáns + Hardcore', modeName: 'Egyetemista', totalCards: 0, ready: true },
-      { id: 'team', name: 'Csapatjáték', modeName: 'Csapat', totalCards: 0, ready: true },
     ];
 
     function adminHeaders(extra) {

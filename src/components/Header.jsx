@@ -27,7 +27,7 @@ export default function Header({
         ) : null}
         <h1
           className={[
-            'truncate font-black tracking-normal text-white',
+            'font-display truncate font-black tracking-normal text-white',
             compact ? 'text-2xl' : 'text-2xl min-[390px]:text-3xl',
           ].join(' ')}
         >

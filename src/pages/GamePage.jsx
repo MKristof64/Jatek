@@ -9,7 +9,6 @@ export default function GamePage({
   mode,
   card,
   cardText,
-  currentTeam,
   timerState,
   canControlGame = true,
   canControlTimer = true,
@@ -57,7 +56,6 @@ export default function GamePage({
           mode={mode}
           card={card}
           text={cardText}
-          currentTeam={currentTeam}
           timerState={timerState}
           canControlTimer={canControlTimer}
           onToggleTimer={onToggleTimer}

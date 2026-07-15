@@ -7,15 +7,11 @@ import { modes } from '../data/modes.js';
 export default function ModeSelectPage({
   selectedMode,
   playersCount,
-  customCount,
   onSelectMode,
   onStartGame,
   onBack,
 }) {
   const hasEnoughPlayers = playersCount >= 2;
-  const customSelected = selectedMode === 'custom';
-  const customReady = !customSelected || customCount > 0;
-  const canStart = hasEnoughPlayers && customReady;
 
   return (
     <>
@@ -36,16 +32,15 @@ export default function ModeSelectPage({
               A kezdéshez legalább 2 játékos szükséges.
             </p>
           ) : null}
-
-          {customSelected && !customReady ? (
-            <p className="rounded-3xl bg-amber-300/12 p-4 text-sm leading-6 text-amber-50 ring-1 ring-amber-200/20">
-              A saját paklihoz hozz létre legalább egy saját feladatot.
-            </p>
-          ) : null}
         </div>
 
         <div className="mode-start-panel shrink-0">
-          <PrimaryButton className="mode-start-button" icon={Play} disabled={!canStart} onClick={onStartGame}>
+          <PrimaryButton
+            className="mode-start-button"
+            icon={Play}
+            disabled={!hasEnoughPlayers}
+            onClick={onStartGame}
+          >
             Kezdés
           </PrimaryButton>
         </div>

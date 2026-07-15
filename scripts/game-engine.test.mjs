@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
-  buildTeams,
   createRoomCode,
   getCardSourceModes,
   getParticipantIndexes,
@@ -48,25 +47,12 @@ test('a céljátékos nem lehet az aktuális játékos', () => {
   }
 });
 
-test('csapatmódban lehetőség szerint az ellenfél csapatából jön a céljátékos', () => {
-  for (let index = 0; index < 50; index += 1) {
-    assert.equal(pickTargetIndex(players, 2, 'team') % 2, 1);
-  }
-});
-
 test('a kártyatípus a megfelelő számú résztvevőt emeli ki', () => {
   assert.deepEqual(getParticipantIndexes({ kind: 'never' }, players, 4), [4]);
   assert.deepEqual(getParticipantIndexes({ kind: 'roundtable' }, players, 4), []);
   const duel = getParticipantIndexes({ kind: 'duel' }, players, 4);
   assert.equal(duel.length, 2);
   assert.equal(new Set(duel).size, 2);
-});
-
-test('a csapatok kiegyensúlyozottan készülnek el', () => {
-  const teams = buildTeams(players.slice(0, 7));
-  assert.equal(teams.length, 2);
-  assert.equal(teams[0].players.length, 4);
-  assert.equal(teams[1].players.length, 3);
 });
 
 test('az Egyetemista mód a Merész és Hardcore paklit is használja', () => {

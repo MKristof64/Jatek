@@ -47,31 +47,6 @@ export const modes = [
     accent: 'from-amber-300 via-red-500 to-pink-600',
     icon: 'Beer',
   },
-  {
-    id: 'team',
-    name: 'Csapat',
-    level: 'csapatjáték',
-    type: '2 csapat',
-    tagline: 'Játékosok két csapatba osztva.',
-    description: 'A játékosok automatikusan két csapatba kerülnek, a feladatok közösen mozgatják a társaságot.',
-    playStyle: 'Váltott csapatkörök és közös döntések, rangsor nélkül.',
-    rhythm: 'Közös tempó',
-    accent: 'from-teal-300 via-lime-300 to-orange-400',
-    icon: 'UsersRound',
-    teamMode: true,
-  },
-  {
-    id: 'custom',
-    name: 'Saját pakli',
-    level: 'saját',
-    type: 'Egyedi',
-    tagline: 'A saját feladataid kerülnek játékba.',
-    description: 'A te kártyáid saját ritmussal és placeholder támogatással.',
-    playStyle: 'Használható: {player} és {target}.',
-    rhythm: 'Saját tempó',
-    accent: 'from-cyan-300 via-rose-400 to-orange-400',
-    icon: 'Layers3',
-  },
 ];
 
 export const getModeById = (modeId) =>

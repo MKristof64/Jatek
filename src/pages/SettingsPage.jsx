@@ -64,7 +64,7 @@ export default function SettingsPage({
           <div className="rounded-3xl border border-rose-200/18 bg-rose-400/10 p-4">
             <p className="text-base font-black text-rose-50">Adatok törlése</p>
             <p className="mt-1 text-sm leading-6 text-rose-50/70">
-              Törli a játékosokat, a saját paklit és visszaállítja a beállításokat.
+              Törli a játékosokat és visszaállítja az alapbeállításokat.
             </p>
             <PrimaryButton
               variant="danger"

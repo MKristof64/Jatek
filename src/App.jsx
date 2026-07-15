@@ -18,7 +18,6 @@ import { cards } from './data/cards.js';
 import { getModeById } from './data/modes.js';
 import { fetchRemoteCards } from './lib/feedback.js';
 import {
-  buildTeams,
   createRoomCode,
   getCardSourceModes,
   getParticipantIndexes,
@@ -26,7 +25,6 @@ import {
   pickTargetIndex,
   shufflePlayerIndexes,
 } from './lib/gameEngine.js';
-import CustomCardsPage from './pages/CustomCardsPage.jsx';
 import GamePage from './pages/GamePage.jsx';
 import HomePage from './pages/HomePage.jsx';
 import ModeSelectPage from './pages/ModeSelectPage.jsx';
@@ -36,12 +34,15 @@ import SettingsPage from './pages/SettingsPage.jsx';
 
 const storageKeys = {
   players: 'enmegsosem.players',
-  customCards: 'enmegsosem.customCards',
   settings: 'enmegsosem.settings',
   selectedMode: 'enmegsosem.selectedMode',
   game: 'enmegsosem.game',
   room: 'enmegsosem.room',
   currentRoomPlayerId: 'enmegsosem.currentRoomPlayerId',
+};
+
+const legacyStorageKeys = {
+  customCards: 'enmegsosem.customCards',
 };
 
 const roomRoles = {
@@ -78,8 +79,6 @@ const limits = {
   players: 24,
   roomParticipants: 15,
   playerNameLength: 24,
-  customCards: 120,
-  customCardLength: 180,
 };
 
 const initialTimer = {
@@ -107,7 +106,6 @@ const pages = {
   room: 'room',
   modes: 'modes',
   game: 'game',
-  custom: 'custom',
   settings: 'settings',
 };
 
@@ -198,20 +196,6 @@ function sanitizePlayers(value, limit = limits.players) {
 
 function loadPlayers() {
   return sanitizePlayers(loadJson(storageKeys.players, []));
-}
-
-function loadCustomCards() {
-  const savedCards = loadJson(storageKeys.customCards, []);
-  if (!Array.isArray(savedCards)) return [];
-
-  return savedCards
-    .slice(0, limits.customCards)
-    .map((card) => ({
-      id: sanitizeId(card?.id, 'custom'),
-      text: sanitizeText(card?.text, limits.customCardLength),
-      safe: true,
-    }))
-    .filter((card) => card.text.length > 0);
 }
 
 function loadSettings() {
@@ -526,7 +510,6 @@ function playFeedback(settings) {
 export default function App() {
   const [page, setPage] = useState(pages.home);
   const [players, setPlayers] = useState(loadPlayers);
-  const [customCards, setCustomCards] = useState(loadCustomCards);
   const [settings, setSettings] = useState(loadSettings);
   const [selectedMode, setSelectedMode] = useState(loadSelectedMode);
   const [game, setGame] = useState(initialGame);
@@ -563,6 +546,7 @@ export default function App() {
 
   useEffect(() => {
     clearStoredRoomState();
+    removeStoredKey(legacyStorageKeys.customCards);
   }, []);
 
   useEffect(() => {
@@ -635,10 +619,6 @@ export default function App() {
     localPlayersRef.current = players;
     saveJson(storageKeys.players, players);
   }, [players, room]);
-
-  useEffect(() => {
-    saveJson(storageKeys.customCards, customCards);
-  }, [customCards]);
 
   useEffect(() => {
     saveJson(storageKeys.settings, settings);
@@ -818,16 +798,6 @@ export default function App() {
   const activeMode = useMemo(() => getModeById(selectedMode), [selectedMode]);
 
   const cardPool = useMemo(() => {
-    if (selectedMode === 'custom') {
-      return customCards.map((card) => ({
-        ...card,
-        mode: 'custom',
-        kind: 'never',
-        title: 'Én még sosem...',
-        safe: true,
-      }));
-    }
-
     const sourceModes = getCardSourceModes(selectedMode);
     const filteredCards = cards.filter((card) => {
       const modeMatches = sourceModes.includes(card.mode);
@@ -850,25 +820,17 @@ export default function App() {
           : true,
     );
   }, [
-    customCards,
     remoteCards,
     selectedMode,
     settings.includeDuelCards,
     settings.includeRoundtableCards,
   ]);
 
-  const teams = useMemo(() => buildTeams(players), [players]);
-  const currentPlayerObject = players[game.playerIndex];
-  const currentPlayer = currentPlayerObject?.name ?? 'Játékos';
+  const currentPlayer = players[game.playerIndex]?.name ?? 'Játékos';
   const targetPlayer = players[game.targetIndex]?.name ?? 'valaki';
   const participants = game.participantIndexes
     .map((index) => players[index])
     .filter(Boolean);
-  const currentTeam = activeMode.teamMode
-    ? teams.find((team) =>
-        team.players.some((player) => player.id === currentPlayerObject?.id),
-      )
-    : null;
   const timerState = useMemo(() => sanitizeTimer(game.timer, game.card), [game.card, game.timer]);
   const cardText = (game.card?.text ?? 'Nincs betöltött kártya ehhez a módhoz.')
     .replaceAll('{player}', currentPlayer)
@@ -1271,24 +1233,6 @@ export default function App() {
     }
   };
 
-  const addCustomCard = (text) => {
-    const safeText = sanitizeText(text, limits.customCardLength);
-    if (!safeText) return 'Írj szöveget a kártyára.';
-    if (customCards.length >= limits.customCards) {
-      return `Legfeljebb ${limits.customCards} saját kártyát tárolhatsz.`;
-    }
-
-    setCustomCards((currentCards) => [
-      { id: createId('custom'), text: safeText, safe: true },
-      ...currentCards,
-    ]);
-    return null;
-  };
-
-  const deleteCustomCard = (id) => {
-    setCustomCards((currentCards) => currentCards.filter((card) => card.id !== id));
-  };
-
   const createRoom = (hostName) => {
     const safeName = sanitizeText(hostName, limits.playerNameLength) || 'Házigazda';
     const hostId = createId('player');
@@ -1583,7 +1527,7 @@ export default function App() {
       ...initialGame,
       playerOrder,
       playerIndex: firstPlayerIndex,
-      targetIndex: pickTargetIndex(players, firstPlayerIndex, selectedMode),
+      targetIndex: pickTargetIndex(players, firstPlayerIndex),
       participantIndexes: getParticipantIndexes(picked.card, players, firstPlayerIndex),
       card: picked.card,
       usedIds: picked.usedIds,
@@ -1622,7 +1566,7 @@ export default function App() {
       playerOrder,
       orderPosition: nextOrderPosition,
       playerIndex: nextPlayerIndex,
-      targetIndex: pickTargetIndex(players, nextPlayerIndex, selectedMode),
+      targetIndex: pickTargetIndex(players, nextPlayerIndex),
       participantIndexes: getParticipantIndexes(picked.card, players, nextPlayerIndex),
       card: picked.card,
       usedIds: picked.usedIds,
@@ -1659,7 +1603,7 @@ export default function App() {
     setOnlineStatus(defaultOnlineStatus);
     setPlayers([]);
     localPlayersRef.current = [];
-    setCustomCards([]);
+    removeStoredKey(legacyStorageKeys.customCards);
     setSettings(defaultSettings);
     setSelectedMode('classic');
     setGame(initialGame);
@@ -1875,7 +1819,7 @@ export default function App() {
         return;
       }
 
-      if (page === pages.players || page === pages.custom || page === pages.settings) {
+      if (page === pages.players || page === pages.settings) {
         setPage(pages.home);
         return;
       }
@@ -1906,10 +1850,8 @@ export default function App() {
       {page === pages.home ? (
         <HomePage
           playersCount={players.length}
-          customCount={customCards.length}
           onStart={goToStartFlow}
           onPlayers={() => setPage(pages.players)}
-          onCustomCards={() => setPage(pages.custom)}
           onRoom={() => setPage(pages.room)}
           onSettings={() => setPage(pages.settings)}
           appDownloadUrl={
@@ -1950,7 +1892,6 @@ export default function App() {
         <ModeSelectPage
           selectedMode={selectedMode}
           playersCount={players.length}
-          customCount={customCards.length}
           onSelectMode={setSelectedMode}
           onStartGame={startGame}
           onBack={() => setPage(room ? pages.room : pages.players)}
@@ -1964,7 +1905,6 @@ export default function App() {
           mode={activeMode}
           card={game.card}
           cardText={cardText}
-          currentTeam={currentTeam}
           timerState={timerState}
           canControlGame={canControlRoomGame}
           canControlTimer={canControlRoomGame}
@@ -1973,15 +1913,6 @@ export default function App() {
           onNext={advanceGame}
           onToggleTimer={toggleTimer}
           onFinishGame={finishRoomGame}
-        />
-      ) : null}
-
-      {page === pages.custom ? (
-        <CustomCardsPage
-          customCards={customCards}
-          onAddCard={addCustomCard}
-          onDeleteCard={deleteCustomCard}
-          onBack={() => setPage(pages.home)}
         />
       ) : null}
 
@@ -2031,7 +1962,7 @@ export default function App() {
       {pendingConfirmation === 'clear-data' ? (
         <ConfirmDialog
           title="Törlöd az összes adatot?"
-          description="Ez végleg törli a játékosokat és a saját kártyákat, majd visszaállítja az alapbeállításokat."
+          description="Ez végleg törli a játékosokat, majd visszaállítja az alapbeállításokat."
           confirmLabel="Adatok törlése"
           onCancel={cancelPendingConfirmation}
           onConfirm={clearData}

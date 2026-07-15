@@ -2,13 +2,11 @@ import {
   Beer,
   Bolt,
   Flame,
-  Layers3,
   Pause,
   Play,
   Sparkles,
   UserRound,
   UsersRound,
-  Zap,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -16,10 +14,7 @@ const modeIcons = {
   Beer,
   Bolt,
   Flame,
-  Layers3,
   Sparkles,
-  UsersRound,
-  Zap,
 };
 
 function formatTimer(seconds) {
@@ -112,7 +107,6 @@ export default function GameCard({
   mode,
   card,
   text,
-  currentTeam,
   timerState,
   canControlTimer = true,
   onToggleTimer,
@@ -128,7 +122,6 @@ export default function GameCard({
     'question-spotlight question-spotlight--open game-card-dynamic animate-pop',
     hasTimer ? 'game-card-dynamic--timed' : '',
     hasActionSlot ? 'game-card-dynamic--with-action' : '',
-    currentTeam ? 'game-card-dynamic--team' : '',
   ]
     .filter(Boolean)
     .join(' ');
@@ -171,12 +164,6 @@ export default function GameCard({
           <ModeIcon className="h-6 w-6 min-[390px]:h-7 min-[390px]:w-7" />
         </div>
       </div>
-
-      {currentTeam ? (
-        <p className="team-ribbon relative z-10 mt-4 rounded-2xl bg-lime-300/10 px-3 py-2 text-sm font-black text-lime-50 ring-1 ring-lime-200/15">
-          {currentTeam.name} közös feladata
-        </p>
-      ) : null}
 
       <div className="question-stage question-stage--open relative z-10 mt-4 min-[390px]:mt-5">
         <div className={['question-copy question-copy--free game-question-copy', questionSizeClass].join(' ')}>

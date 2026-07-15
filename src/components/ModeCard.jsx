@@ -2,20 +2,14 @@ import {
   Beer,
   Bolt,
   Flame,
-  Layers3,
   Sparkles,
-  UsersRound,
-  Zap,
 } from 'lucide-react';
 
 const icons = {
   Beer,
   Bolt,
   Flame,
-  Layers3,
   Sparkles,
-  UsersRound,
-  Zap,
 };
 
 export default function ModeCard({ mode, selected, disabled, onClick }) {

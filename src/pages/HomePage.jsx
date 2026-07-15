@@ -1,12 +1,10 @@
-import { Crown, Download, Play, Settings, Sparkles, UserPlus, Wand2 } from 'lucide-react';
+import { Crown, Download, Play, Settings, Sparkles, UserPlus } from 'lucide-react';
 import PrimaryButton from '../components/PrimaryButton.jsx';
 
 export default function HomePage({
   playersCount,
-  customCount,
   onStart,
   onPlayers,
-  onCustomCards,
   onRoom,
   onSettings,
   appDownloadUrl,
@@ -48,20 +46,16 @@ export default function HomePage({
                 Az ivós játék.
               </h2>
               <p className="home-hero-description mt-3 text-base leading-6 text-white/70 min-[390px]:mt-4 min-[390px]:leading-7">
-                Gyors körök, saját pakli, céljátékosok és csapatmód egy telefonra
+                Gyors körök, céljátékosok és többféle hangulat egy telefonra
                 szabott kártyás felületen.
               </p>
             </div>
           </div>
 
-          <div className="home-stat-grid grid grid-cols-2 gap-3 p-4 min-[390px]:p-5">
+          <div className="home-stat-grid grid grid-cols-1 gap-3 p-4 min-[390px]:p-5">
             <div className="home-stat-card rounded-3xl bg-slate-950/38 p-3 ring-1 ring-white/10 min-[390px]:p-4">
               <p className="home-stat-number text-3xl font-black text-amber-200">{playersCount}</p>
               <p className="home-stat-label text-sm font-bold text-white/55">játékos</p>
-            </div>
-            <div className="home-stat-card rounded-3xl bg-slate-950/38 p-3 ring-1 ring-white/10 min-[390px]:p-4">
-              <p className="home-stat-number text-3xl font-black text-lime-200">{customCount}</p>
-              <p className="home-stat-label text-sm font-bold text-white/55">saját kártya</p>
             </div>
           </div>
         </div>
@@ -73,22 +67,14 @@ export default function HomePage({
           <PrimaryButton variant="secondary" icon={Crown} onClick={onRoom}>
             Szoba
           </PrimaryButton>
-          <div className="home-secondary-actions grid grid-cols-2 gap-3">
+          <div className="home-secondary-actions grid grid-cols-1 gap-3">
             <PrimaryButton
               variant="secondary"
               icon={UserPlus}
               className="min-h-14 px-2"
               onClick={onPlayers}
             >
-              <span className="sr-only">Játékosok</span>
-            </PrimaryButton>
-            <PrimaryButton
-              variant="secondary"
-              icon={Wand2}
-              className="min-h-14 px-2"
-              onClick={onCustomCards}
-            >
-              <span className="sr-only">Saját kártyák</span>
+              Játékosok
             </PrimaryButton>
           </div>
         </div>
