@@ -60,6 +60,20 @@ test('az ismeretlen API útvonal szabályos 404 választ ad', async () => {
   assert.deepEqual(await response.json(), { error: 'not-found' });
 });
 
+test('a megszüntetett szavazási végpont nem fogad adatot', async () => {
+  const response = await worker.fetch(
+    new Request('https://jatek.example/api/vote', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cardId: 'card-1', voteType: 'like' }),
+    }),
+    {},
+  );
+
+  assert.equal(response.status, 404);
+  assert.deepEqual(await response.json(), { error: 'not-found' });
+});
+
 test('a vezérlőközpont biztonsági fejléceket küld', async () => {
   const response = await worker.fetch(new Request('https://jatek.example/'), {});
 
@@ -67,4 +81,6 @@ test('a vezérlőközpont biztonsági fejléceket küld', async () => {
   assert.equal(response.headers.get('X-Frame-Options'), 'DENY');
   assert.equal(response.headers.get('X-Content-Type-Options'), 'nosniff');
   assert.equal(response.headers.get('Referrer-Policy'), 'no-referrer');
+  assert.match(response.headers.get('Content-Security-Policy'), /frame-ancestors 'none'/);
+  assert.equal(response.headers.get('Cross-Origin-Opener-Policy'), 'same-origin');
 });

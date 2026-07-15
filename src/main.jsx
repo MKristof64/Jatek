@@ -6,6 +6,7 @@ import { removeLegacyPwaArtifacts } from './lib/legacyPwaCleanup.js';
 import './index.css';
 
 const isNativePlatform = Capacitor.isNativePlatform();
+const isEmbedded = window.self !== window.top;
 
 if (isNativePlatform) {
   document.documentElement.classList.add('native-platform');
@@ -14,8 +15,16 @@ if (isNativePlatform) {
   void removeLegacyPwaArtifacts({ scopeUrl });
 }
 
-createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-);
+const rootElement = document.getElementById('root');
+
+if (isEmbedded) {
+  const notice = document.createElement('p');
+  notice.textContent = 'A játék biztonsági okból csak önálló ablakban nyitható meg.';
+  rootElement.replaceChildren(notice);
+} else {
+  createRoot(rootElement).render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+  );
+}

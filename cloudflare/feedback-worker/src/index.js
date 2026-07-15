@@ -26,6 +26,19 @@ const validKinds = new Set(Object.keys(kindLabels));
 const validModes = new Set(Object.keys(modeLabels));
 const defaultSuccessPercent = 50;
 const securityHeaders = {
+  'Content-Security-Policy': [
+    "default-src 'none'",
+    "script-src 'unsafe-inline'",
+    "style-src 'unsafe-inline'",
+    "connect-src 'self'",
+    "img-src 'self' data:",
+    "font-src 'self'",
+    "object-src 'none'",
+    "base-uri 'none'",
+    "frame-ancestors 'none'",
+    "form-action 'none'",
+  ].join('; '),
+  'Cross-Origin-Opener-Policy': 'same-origin',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
   'Referrer-Policy': 'no-referrer',
   'X-Content-Type-Options': 'nosniff',
@@ -85,10 +98,6 @@ function sanitizeText(value, maxLength) {
     .replace(/[\u0000-\u001f\u007f<>]/g, '')
     .trim()
     .slice(0, maxLength);
-}
-
-function createId() {
-  return crypto.randomUUID();
 }
 
 function createCardId(mode, kind) {
@@ -297,46 +306,6 @@ function withAdminGuard(request, env) {
   }
 
   return jsonResponse(request, { error: 'unauthorized' }, { status: 401 });
-}
-
-async function handleVote(request, env) {
-  let payload;
-  try {
-    payload = await request.json();
-  } catch {
-    return jsonResponse(request, { error: 'invalid-json' }, { status: 400 });
-  }
-
-  const cardId = sanitizeText(payload.cardId ?? payload.card_id, 120);
-  const voteType = payload.voteType ?? payload.vote_type;
-  const card = await findCard(cardId, env);
-
-  if (!card) {
-    return jsonResponse(request, { error: 'unknown-card' }, { status: 400 });
-  }
-
-  if (voteType !== 'like' && voteType !== 'dislike') {
-    return jsonResponse(request, { error: 'invalid-vote' }, { status: 400 });
-  }
-
-  await env.DB.prepare(
-    `INSERT INTO feedback_votes
-      (id, card_id, mode, kind, vote_type, app_context, app_version, page_origin)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-  )
-    .bind(
-      createId(),
-      card.id,
-      card.mode,
-      card.kind,
-      voteType,
-      sanitizeText(payload.appContext ?? payload.app_context ?? 'local', 40) || 'local',
-      sanitizeText(payload.appVersion ?? payload.app_version ?? '', 40),
-      sanitizeText(request.headers.get('Origin') ?? payload.pageOrigin ?? payload.page_origin ?? '', 160),
-    )
-    .run();
-
-  return jsonResponse(request, { ok: true });
 }
 
 async function getVoteStats(env, mode = 'bold') {
@@ -1172,10 +1141,6 @@ export default {
 
     const url = new URL(request.url);
     const cardRouteMatch = url.pathname.match(/^\/api\/cards\/([^/]+)$/);
-
-    if (url.pathname === '/api/vote' && request.method === 'POST') {
-      return handleVote(request, env);
-    }
 
     if (url.pathname === '/api/cards' && request.method === 'GET') {
       return handleCards(request, env);

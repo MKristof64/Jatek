@@ -1030,6 +1030,14 @@ export default function App() {
       if (!message || typeof message !== 'object') return;
 
       if (message.type === onlineMessageTypes.joinRoom) {
+        if (connection.partyrushPlayerId) {
+          sendPeerMessage(connection, {
+            type: onlineMessageTypes.joinRejected,
+            message: 'Ez a kapcsolat már belépett a szobába.',
+          });
+          return;
+        }
+
         const current = latestStateRef.current;
         const safeCode = sanitizeRoomCode(message.code);
         const safeName = sanitizeText(message.player?.name, limits.playerNameLength);
@@ -1124,7 +1132,7 @@ export default function App() {
 
     clearPeerConnections();
     peerModeRef.current = 'host';
-    const peer = new Peer(peerId, { debug: 1 });
+    const peer = new Peer(peerId, { debug: 0 });
     let reconnectTimer = 0;
     peerRef.current = peer;
     setOnlineStatus({
@@ -1277,7 +1285,7 @@ export default function App() {
       });
 
       const playerId = createId('player');
-      const peer = new Peer(undefined, { debug: 1 });
+      const peer = new Peer(undefined, { debug: 0 });
       let settled = false;
       let timeoutId = null;
 

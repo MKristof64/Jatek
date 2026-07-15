@@ -9,17 +9,27 @@ on:
 
 permissions:
   contents: read
+  security-events: write
+  actions: read
 
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@1ad29ea4a422cce9a242a9fae469541dcd08addc # v4
+        with:
+          languages: javascript-typescript
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 24
           cache: npm
@@ -28,7 +38,7 @@ jobs:
         run: npm ci
 
       - name: Audit production and build dependencies
-        run: npm audit --audit-level=high
+        run: npm audit --audit-level=low
 
       - name: Test game engine
         run: npm test
@@ -38,3 +48,6 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Analyze with CodeQL
+        uses: github/codeql-action/analyze@1ad29ea4a422cce9a242a9fae469541dcd08addc # v4

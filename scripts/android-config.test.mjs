@@ -26,6 +26,8 @@ test('Android manifest keeps the app portrait-only and blocks cleartext traffic'
   assert.match(manifest, /android:launchMode="singleTask"/);
   assert.match(manifest, /android:usesCleartextTraffic="false"/);
   assert.match(manifest, /android:allowBackup="false"/);
+  assert.match(manifest, /android:dataExtractionRules="@xml\/data_extraction_rules"/);
+  assert.match(manifest, /android:fullBackupContent="@xml\/backup_rules"/);
   assert.match(manifest, /android:name="android\.permission\.INTERNET"/);
 });
 
@@ -43,12 +45,15 @@ test('Android activity uses edge-to-edge immersive system bars', async () => {
 
 test('Android release is minimized and never commits signing secrets', async () => {
   const buildGradle = await readProjectFile('android/app/build.gradle');
+  const gradleWrapper = await readProjectFile('android/gradle/wrapper/gradle-wrapper.properties');
   const ignoreRules = await readProjectFile('.gitignore');
 
   assert.match(buildGradle, /versionCode 5/);
   assert.match(buildGradle, /versionName "1\.0\.4"/);
   assert.match(buildGradle, /minifyEnabled true/);
   assert.match(buildGradle, /shrinkResources true/);
+  assert.match(gradleWrapper, /gradle-8\.14\.5-bin\.zip/);
+  assert.match(gradleWrapper, /distributionSha256Sum=[a-f0-9]{64}/);
   assert.match(ignoreRules, /android\/keystore\.properties/);
   assert.match(ignoreRules, /\*\.jks/);
   assert.match(ignoreRules, /\*\.keystore/);
@@ -60,5 +65,6 @@ test('native startup uses the Android asset base without web installation hooks'
 
   assert.doesNotMatch(mainSource, /serviceWorker\.register/);
   assert.doesNotMatch(mainSource, /beforeinstallprompt/);
+  assert.match(mainSource, /window\.self !== window\.top/);
   assert.match(viteConfig, /base: mode === 'android' \? '\.\/' : '\/Jatek\/'/);
 });
