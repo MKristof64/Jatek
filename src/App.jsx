@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { App as CapacitorApp } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
 import { Peer } from 'peerjs';
+import AppIntro from './components/AppIntro.jsx';
 import ConfirmDialog from './components/ConfirmDialog.jsx';
 import {
   clearFullscreenViewport,
@@ -9,12 +10,17 @@ import {
   getFullscreenElement,
   getFallbackFullscreen,
   lockGameFullscreen,
+  lockLandscapeOrientation,
   lockPortraitOrientation,
   refreshFullscreenViewport,
   unlockGameFullscreen,
 } from './lib/fullscreen.js';
 import Layout from './components/Layout.jsx';
 import { cards } from './data/cards.js';
+import {
+  normalizeLandscapeRatio,
+  toggleLandscapeRatio,
+} from './data/displayRatios.js';
 import { getModeById } from './data/modes.js';
 import { fetchRemoteCards } from './lib/feedback.js';
 import {
@@ -73,6 +79,7 @@ const defaultSettings = {
   sound: true,
   includeDuelCards: true,
   includeRoundtableCards: true,
+  landscapeRatio: null,
 };
 
 const limits = {
@@ -111,7 +118,9 @@ const pages = {
 
 const androidDownloadUrl =
   'https://github.com/MKristof64/Jatek/releases/latest/download/Az-ivos-jatek.apk';
-const isNativeAppBuild = import.meta.env.MODE === 'android';
+const isNativeAppBuild = import.meta.env.MODE.startsWith('android');
+const isDevPagesBuild = import.meta.env.MODE === 'devpages';
+const isDevMotionBuild = isDevPagesBuild || import.meta.env.MODE === 'android-dev';
 
 function shouldRequestNativeGameFullscreen() {
   return !Capacitor.isNativePlatform();
@@ -119,6 +128,12 @@ function shouldRequestNativeGameFullscreen() {
 
 function shouldRequestNativePageFullscreen(page) {
   return Capacitor.isNativePlatform() || page === pages.game;
+}
+
+function lockSelectedOrientation(landscapeRatio) {
+  return landscapeRatio
+    ? lockLandscapeOrientation()
+    : lockPortraitOrientation();
 }
 
 function syncAppChromeColor(darkMode = true) {
@@ -221,6 +236,7 @@ function loadSettings() {
       typeof savedSettings.includeRoundtableCards === 'boolean'
         ? savedSettings.includeRoundtableCards
         : defaultSettings.includeRoundtableCards,
+    landscapeRatio: normalizeLandscapeRatio(savedSettings.landscapeRatio),
   };
 }
 
@@ -518,6 +534,7 @@ export default function App() {
   const [currentRoomPlayerId, setCurrentRoomPlayerId] = useState(null);
   const [onlineStatus, setOnlineStatus] = useState(defaultOnlineStatus);
   const [pendingConfirmation, setPendingConfirmation] = useState(null);
+  const [introState, setIntroState] = useState(isDevMotionBuild ? 'visible' : null);
   const peerRef = useRef(null);
   const peerModeRef = useRef('offline');
   const hostConnectionsRef = useRef(new Map());
@@ -528,6 +545,24 @@ export default function App() {
   const localPlayersRef = useRef(loadPlayers());
   const gameHistoryGuardRef = useRef(false);
   const gameWasBackgroundedRef = useRef(false);
+
+  useEffect(() => {
+    if (!isDevMotionBuild) return undefined;
+
+    const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const visibleDuration = reducedMotion ? 0 : 720;
+    const exitDuration = reducedMotion ? 0 : 230;
+    const exitTimer = window.setTimeout(() => setIntroState('leaving'), visibleDuration);
+    const removeTimer = window.setTimeout(
+      () => setIntroState(null),
+      visibleDuration + exitDuration,
+    );
+
+    return () => {
+      window.clearTimeout(exitTimer);
+      window.clearTimeout(removeTimer);
+    };
+  }, []);
 
   useEffect(() => {
     const syncChrome = () => syncAppChromeColor(settings.darkMode);
@@ -553,32 +588,38 @@ export default function App() {
     if (!Capacitor.isNativePlatform()) return undefined;
 
     let retryTimer = 0;
-    const enforcePortrait = () => {
+    const enforcePreferredOrientation = () => {
       if (document.visibilityState === 'hidden') return;
 
       window.clearTimeout(retryTimer);
-      void lockPortraitOrientation();
-      retryTimer = window.setTimeout(() => void lockPortraitOrientation(), 250);
+      void lockSelectedOrientation(settings.landscapeRatio);
+      retryTimer = window.setTimeout(
+        () => void lockSelectedOrientation(settings.landscapeRatio),
+        250,
+      );
     };
 
-    enforcePortrait();
-    window.addEventListener('focus', enforcePortrait);
-    window.addEventListener('pageshow', enforcePortrait);
-    window.addEventListener('orientationchange', enforcePortrait);
-    window.addEventListener('pointerdown', enforcePortrait, { capture: true, once: true });
-    document.addEventListener('visibilitychange', enforcePortrait);
-    window.screen?.orientation?.addEventListener?.('change', enforcePortrait);
+    enforcePreferredOrientation();
+    window.addEventListener('focus', enforcePreferredOrientation);
+    window.addEventListener('pageshow', enforcePreferredOrientation);
+    window.addEventListener('orientationchange', enforcePreferredOrientation);
+    window.addEventListener('pointerdown', enforcePreferredOrientation, {
+      capture: true,
+      once: true,
+    });
+    document.addEventListener('visibilitychange', enforcePreferredOrientation);
+    window.screen?.orientation?.addEventListener?.('change', enforcePreferredOrientation);
 
     return () => {
       window.clearTimeout(retryTimer);
-      window.removeEventListener('focus', enforcePortrait);
-      window.removeEventListener('pageshow', enforcePortrait);
-      window.removeEventListener('orientationchange', enforcePortrait);
-      window.removeEventListener('pointerdown', enforcePortrait, true);
-      document.removeEventListener('visibilitychange', enforcePortrait);
-      window.screen?.orientation?.removeEventListener?.('change', enforcePortrait);
+      window.removeEventListener('focus', enforcePreferredOrientation);
+      window.removeEventListener('pageshow', enforcePreferredOrientation);
+      window.removeEventListener('orientationchange', enforcePreferredOrientation);
+      window.removeEventListener('pointerdown', enforcePreferredOrientation, true);
+      document.removeEventListener('visibilitychange', enforcePreferredOrientation);
+      window.screen?.orientation?.removeEventListener?.('change', enforcePreferredOrientation);
     };
-  }, []);
+  }, [settings.landscapeRatio]);
 
   useEffect(() => {
     let viewportFrame = 0;
@@ -741,7 +782,9 @@ export default function App() {
       refreshFullscreenViewport();
 
       if (persistGameFullscreen) {
-        void lockGameFullscreen({ requestNative: requestNativeFullscreen });
+        void lockGameFullscreen({ requestNative: requestNativeFullscreen }).then(() =>
+          lockSelectedOrientation(settings.landscapeRatio),
+        );
       } else {
         void enterAppFullscreen({ persistGame: false, requestNative: false });
       }
@@ -756,7 +799,11 @@ export default function App() {
 
       refreshFullscreenViewport();
       if (requestNativeFullscreen && !getFullscreenElement()) {
-        void lockGameFullscreen({ requestNative: true });
+        void lockGameFullscreen({ requestNative: true }).then(() =>
+          lockSelectedOrientation(settings.landscapeRatio),
+        );
+      } else if (persistGameFullscreen) {
+        void lockSelectedOrientation(settings.landscapeRatio);
       }
     };
 
@@ -793,7 +840,7 @@ export default function App() {
       window.visualViewport?.removeEventListener('resize', syncViewport);
       window.visualViewport?.removeEventListener('scroll', syncViewport);
     };
-  }, [page, settings.darkMode]);
+  }, [page, settings.darkMode, settings.landscapeRatio]);
 
   const activeMode = useMemo(() => getModeById(selectedMode), [selectedMode]);
 
@@ -1527,7 +1574,9 @@ export default function App() {
   const startGame = () => {
     if (room && !isRoomHost) return;
     if (players.length < 2 || cardPool.length === 0) return;
-    void lockGameFullscreen({ requestNative: shouldRequestNativeGameFullscreen() });
+    void lockGameFullscreen({ requestNative: shouldRequestNativeGameFullscreen() }).then(() =>
+      lockSelectedOrientation(settings.landscapeRatio),
+    );
     const picked = pickRandomCard(cardPool, []);
     const playerOrder = shufflePlayerIndexes(players);
     const firstPlayerIndex = playerOrder[0] ?? 0;
@@ -1636,6 +1685,26 @@ export default function App() {
     }
   };
 
+  const changeLandscapeRatio = async (ratio) => {
+    const normalizedRatio = normalizeLandscapeRatio(ratio);
+    if (!normalizedRatio) return settings.landscapeRatio;
+
+    const nextRatio = toggleLandscapeRatio(settings.landscapeRatio, normalizedRatio);
+    setSettings((currentSettings) => ({
+      ...currentSettings,
+      landscapeRatio: nextRatio,
+    }));
+
+    if (nextRatio && !Capacitor.isNativePlatform()) {
+      await enterAppFullscreen({ persistGame: false, requestNative: true });
+    }
+
+    await lockSelectedOrientation(nextRatio);
+    refreshFullscreenViewport();
+    window.setTimeout(refreshFullscreenViewport, 180);
+    return nextRatio;
+  };
+
   const goToStartFlow = () => {
     if (room && players.length < 2) {
       setPage(pages.room);
@@ -1659,11 +1728,15 @@ export default function App() {
 
   const restoreGameFullscreenNow = () => {
     refreshFullscreenViewport();
-    void lockGameFullscreen({ requestNative: shouldRequestNativeGameFullscreen() });
+    void lockGameFullscreen({ requestNative: shouldRequestNativeGameFullscreen() }).then(() =>
+      lockSelectedOrientation(settings.landscapeRatio),
+    );
     window.setTimeout(refreshFullscreenViewport, 80);
     window.setTimeout(() => {
       refreshFullscreenViewport();
-      void lockGameFullscreen({ requestNative: shouldRequestNativeGameFullscreen() });
+      void lockGameFullscreen({ requestNative: shouldRequestNativeGameFullscreen() }).then(() =>
+        lockSelectedOrientation(settings.landscapeRatio),
+      );
     }, 220);
   };
 
@@ -1850,11 +1923,15 @@ export default function App() {
   const immersivePages = new Set(Object.values(pages));
 
   return (
+    <>
     <Layout
       darkMode={settings.darkMode}
       gameMode={page === pages.game}
       immersiveMode={immersivePages.has(page)}
+      devMotion={isDevMotionBuild}
+      landscapeRatio={settings.landscapeRatio}
     >
+      <div key={page} className={`app-page-stage app-page-stage--${page}`}>
       {page === pages.home ? (
         <HomePage
           playersCount={players.length}
@@ -1863,7 +1940,11 @@ export default function App() {
           onRoom={() => setPage(pages.room)}
           onSettings={() => setPage(pages.settings)}
           appDownloadUrl={
-            isNativeAppBuild || Capacitor.isNativePlatform() ? null : androidDownloadUrl
+            isNativeAppBuild || Capacitor.isNativePlatform()
+              ? null
+              : isDevPagesBuild
+                ? `${import.meta.env.BASE_URL}Az-ivos-jatek-dev.apk`
+                : androidDownloadUrl
           }
         />
       ) : null}
@@ -1928,10 +2009,12 @@ export default function App() {
         <SettingsPage
           settings={settings}
           onToggle={toggleSetting}
+          onLandscapeRatioChange={changeLandscapeRatio}
           onClearData={() => setPendingConfirmation('clear-data')}
           onBack={() => setPage(pages.home)}
         />
       ) : null}
+      </div>
 
       {pendingConfirmation === 'finish-room' ? (
         <ConfirmDialog
@@ -1977,5 +2060,7 @@ export default function App() {
         />
       ) : null}
     </Layout>
+    {introState ? <AppIntro leaving={introState === 'leaving'} /> : null}
+    </>
   );
 }

@@ -1,12 +1,14 @@
 import { Moon, RefreshCw, RotateCcw, UsersRound, Volume2 } from 'lucide-react';
 import { useState } from 'react';
 import Header from '../components/Header.jsx';
+import LandscapeRatioPicker from '../components/LandscapeRatioPicker.jsx';
 import PrimaryButton from '../components/PrimaryButton.jsx';
 import SettingsToggle from '../components/SettingsToggle.jsx';
 
 export default function SettingsPage({
   settings,
   onToggle,
+  onLandscapeRatioChange,
   onClearData,
   onBack,
 }) {
@@ -15,6 +17,15 @@ export default function SettingsPage({
   const updateSetting = (key, value, label) => {
     onToggle(key, value);
     setNotice(`${label}: ${value ? 'bekapcsolva' : 'kikapcsolva'}`);
+  };
+
+  const updateLandscapeRatio = async (ratio) => {
+    const nextRatio = await onLandscapeRatioChange(ratio);
+    setNotice(
+      nextRatio
+        ? `${nextRatio} fekvő nézet bekapcsolva`
+        : 'Alap álló nézet visszaállítva',
+    );
   };
 
   return (
@@ -59,6 +70,11 @@ export default function SettingsPage({
               updateSetting('includeRoundtableCards', value, 'Körbemenős')
             }
             icon={RefreshCw}
+          />
+
+          <LandscapeRatioPicker
+            value={settings.landscapeRatio}
+            onChange={(ratio) => void updateLandscapeRatio(ratio)}
           />
 
           <div className="rounded-3xl border border-rose-200/18 bg-rose-400/10 p-4">

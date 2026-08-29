@@ -218,7 +218,7 @@ export default function RoomPage({
               </div>
 
               <div className="room-members mobile-scroll min-h-0 flex-1 space-y-2 overflow-y-auto pr-1">
-                {players.map((player) => {
+                {players.map((player, index) => {
                   const role = room.rolesByPlayerId?.[player.id] ?? 'player';
                   const isRoomOwner = room.hostPlayerId === player.id;
                   const meta = roleMeta[role] ?? roleMeta.player;
@@ -227,7 +227,8 @@ export default function RoomPage({
                   return (
                     <div
                       key={player.id}
-                      className="room-member rounded-[1.35rem] border border-white/10 bg-slate-950/38 p-3 shadow-card backdrop-blur"
+                      className="room-member room-member-motion rounded-[1.35rem] border border-white/10 bg-slate-950/38 p-3 shadow-card backdrop-blur"
+                      style={{ '--motion-index': index }}
                     >
                       <div className="flex items-center gap-3">
                         <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-white/10 text-white ring-1 ring-white/10">

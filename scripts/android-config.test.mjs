@@ -19,10 +19,11 @@ test('Capacitor production settings keep the native shell private and secure', a
   assert.equal(config.android.useLegacyBridge, false);
 });
 
-test('Android manifest keeps the app portrait-only and blocks cleartext traffic', async () => {
+test('Android manifest permits controlled rotation and blocks cleartext traffic', async () => {
   const manifest = await readProjectFile('android/app/src/main/AndroidManifest.xml');
 
-  assert.match(manifest, /android:screenOrientation="portrait"/);
+  assert.match(manifest, /android:screenOrientation="unspecified"/);
+  assert.doesNotMatch(manifest, /android:screenOrientation="portrait"/);
   assert.match(manifest, /android:launchMode="singleTask"/);
   assert.match(manifest, /android:usesCleartextTraffic="false"/);
   assert.match(manifest, /android:allowBackup="false"/);
@@ -48,8 +49,8 @@ test('Android release is minimized and never commits signing secrets', async () 
   const gradleWrapper = await readProjectFile('android/gradle/wrapper/gradle-wrapper.properties');
   const ignoreRules = await readProjectFile('.gitignore');
 
-  assert.match(buildGradle, /versionCode 5/);
-  assert.match(buildGradle, /versionName "1\.0\.4"/);
+  assert.match(buildGradle, /versionCode 6/);
+  assert.match(buildGradle, /versionName "1\.1\.0"/);
   assert.match(buildGradle, /minifyEnabled true/);
   assert.match(buildGradle, /shrinkResources true/);
   assert.match(gradleWrapper, /gradle-8\.14\.5-bin\.zip/);
@@ -66,5 +67,7 @@ test('native startup uses the Android asset base without web installation hooks'
   assert.doesNotMatch(mainSource, /serviceWorker\.register/);
   assert.doesNotMatch(mainSource, /beforeinstallprompt/);
   assert.match(mainSource, /window\.self !== window\.top/);
-  assert.match(viteConfig, /base: mode === 'android' \? '\.\/' : '\/Jatek\/'/);
+  assert.match(viteConfig, /mode === 'android' \|\| mode === 'android-dev'/);
+  assert.match(viteConfig, /mode === 'devpages' \? '\/'/);
+  assert.match(viteConfig, /'\/Jatek\/'/);
 });

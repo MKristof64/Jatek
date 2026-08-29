@@ -20,10 +20,22 @@ npm run dev
 
 Az alapértelmezett fejlesztői cím: `http://127.0.0.1:5173/Jatek/`.
 
+## Átvitel másik gépre
+
+Másik gépre a projekt forrásmappáját, a `package-lock.json` fájlt és – ha szükséges – a `releases/` mappában megőrzött APK-kat vidd át. Az új gépen futtasd:
+
+```bash
+npm ci
+```
+
+A `node_modules/`, `android/.gradle/` és `android/**/build/` könyvtárak újragenerálható függőségek és build-gyorsítótárak. Ezeket ne vidd át kézzel: nagyon hosszú útvonalakat tartalmazhatnak, és a mentést vagy másolást megnehezíthetik.
+
 ## Android-alkalmazás
 
 A natív alkalmazás Capacitor 8 alapú. Android 7.0 vagy újabb rendszeren fut,
-álló tájolású, és a játékfelületen valódi, élre húzott teljes képernyőt használ.
+és a játékfelületen valódi, élre húzott teljes képernyőt használ. Alapból álló
+nézetű, a beállításokban pedig 16:9, 4:3, 3:2 vagy 16:10 fekvő elrendezés
+választható; az aktív képarány ismételt megnyomása visszaállítja az álló nézetet.
 
 ```bash
 npm run android:check

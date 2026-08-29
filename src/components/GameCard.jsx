@@ -63,7 +63,12 @@ function TimerControl({ durationSeconds, timerState, canControlTimer, onToggleTi
   const disabled = !canControlTimer;
 
   return (
-    <div className="timer-control relative z-10 mt-3 flex items-center justify-between gap-3 rounded-2xl bg-slate-950/54 p-3 ring-1 ring-white/10">
+    <div
+      className={[
+        'timer-control relative z-10 mt-3 flex items-center justify-between gap-3 rounded-2xl bg-slate-950/54 p-3 ring-1 ring-white/10',
+        running ? 'timer-control--running' : '',
+      ].join(' ')}
+    >
       <div>
         <p className="text-[0.68rem] font-black uppercase tracking-[0.16em] text-white/52">
           Időzítő
@@ -119,7 +124,7 @@ export default function GameCard({
   const hasActionSlot = Boolean(actionSlot);
   const questionSizeClass = getQuestionSizeClass(text);
   const cardClasses = [
-    'question-spotlight question-spotlight--open game-card-dynamic animate-pop',
+    'question-spotlight question-spotlight--open game-card-dynamic game-card-motion animate-pop',
     hasTimer ? 'game-card-dynamic--timed' : '',
     hasActionSlot ? 'game-card-dynamic--with-action' : '',
   ]

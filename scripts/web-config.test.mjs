@@ -22,7 +22,7 @@ test('the website is no longer installable as a PWA', async () => {
   await assert.rejects(access(projectUrl('public/sw.js')), { code: 'ENOENT' });
 });
 
-test('the web download button points to the signed Android release', async () => {
+test('the web download button selects the signed release or the Dev Pages test APK', async () => {
   const appSource = await readFile(projectUrl('src/App.jsx'), 'utf8');
   const homeSource = await readFile(projectUrl('src/pages/HomePage.jsx'), 'utf8');
 
@@ -30,10 +30,12 @@ test('the web download button points to the signed Android release', async () =>
     appSource,
     /https:\/\/github\.com\/MKristof64\/Jatek\/releases\/latest\/download\/Az-ivos-jatek\.apk/,
   );
-  assert.match(appSource, /const isNativeAppBuild = import\.meta\.env\.MODE === 'android'/);
+  assert.match(appSource, /const isNativeAppBuild = import\.meta\.env\.MODE\.startsWith\('android'\)/);
+  assert.match(appSource, /const isDevPagesBuild = import\.meta\.env\.MODE === 'devpages'/);
+  assert.match(appSource, /Az-ivos-jatek-dev\.apk/);
   assert.match(
     appSource,
-    /isNativeAppBuild \|\| Capacitor\.isNativePlatform\(\) \? null : androidDownloadUrl/,
+    /isNativeAppBuild \|\| Capacitor\.isNativePlatform\(\)/,
   );
   assert.match(homeSource, /download="Az-ivos-jatek\.apk"/);
 });

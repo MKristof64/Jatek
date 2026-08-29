@@ -32,8 +32,8 @@ export default function HomePage({
           <Settings className="h-5 w-5" />
         </button>
       </div>
-      <section className="home-screen home-screen--compact-top flex min-h-0 flex-1 flex-col justify-between gap-4">
-        <div className="home-hero-card overflow-hidden rounded-[1.75rem] border border-rose-100/14 bg-rose-950/[0.18] shadow-card backdrop-blur">
+      <section className="home-screen home-screen--compact-top home-screen--motion flex min-h-0 flex-1 flex-col justify-between gap-4">
+        <div className="home-hero-card home-hero-card--motion overflow-hidden rounded-[1.75rem] border border-rose-100/14 bg-rose-950/[0.18] shadow-card backdrop-blur">
           <div className="home-hero-content bg-gradient-to-br from-rose-500/42 via-orange-500/28 to-cyan-300/14 p-4 min-[390px]:p-5">
             <div className="home-logo-tile mb-5 grid h-16 w-16 place-items-center rounded-[1.35rem] bg-gradient-to-br from-yellow-300 via-orange-500 to-rose-500 text-slate-950 shadow-glow animate-floaty min-[390px]:mb-7 min-[390px]:h-20 min-[390px]:w-20 min-[390px]:rounded-[1.75rem]">
               <Sparkles className="h-8 w-8 min-[390px]:h-10 min-[390px]:w-10" />
@@ -60,7 +60,7 @@ export default function HomePage({
           </div>
         </div>
 
-        <div className="home-action-panel shrink-0 space-y-3">
+        <div className="home-action-panel home-action-panel--motion shrink-0 space-y-3">
           <PrimaryButton icon={Play} onClick={onStart}>
             Játék indítása
           </PrimaryButton>

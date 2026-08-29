@@ -3322,3 +3322,662 @@ html[data-app-theme="light"] body {
     overflow: hidden !important;
   }
 }
+
+/* Dev Pages motion profile: energetic enough for a party game, calm enough to keep the cards readable. */
+.app-page-stage {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.app-dev-motion .app-page-stage {
+  animation: party-page-enter 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.app-dev-motion .app-header-motion {
+  animation: party-header-enter 460ms 35ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.app-dev-motion .home-hero-card--motion {
+  animation: party-hero-enter 620ms 80ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.app-dev-motion .home-hero-card--motion::before {
+  content: "";
+  position: absolute;
+  inset: -35% auto -35% -22%;
+  width: 32%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+  transform: skewX(-20deg) translateX(-280%);
+  animation: party-hero-sweep 3.9s 760ms cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  pointer-events: none;
+}
+
+.app-dev-motion .home-action-panel--motion {
+  animation: party-actions-enter 500ms 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.app-dev-motion .mode-card-motion {
+  animation: party-list-enter 440ms calc(90ms + (var(--motion-index, 0) * 65ms)) cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.app-dev-motion .mode-card--selected {
+  box-shadow:
+    0 20px 44px rgba(244, 63, 94, 0.22),
+    0 0 0 1px rgba(255, 216, 77, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.app-dev-motion .mode-card--selected::after {
+  opacity: 1;
+  transform: scaleX(1);
+  animation: party-selection-line 1.9s ease-in-out infinite;
+}
+
+.app-dev-motion .player-row-motion,
+.app-dev-motion .room-member-motion {
+  animation: party-list-enter 400ms calc(70ms + (var(--motion-index, 0) * 55ms)) cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.app-dev-motion .game-card-motion .game-card-top {
+  animation: party-game-meta-in 430ms 35ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.app-dev-motion .game-card-motion .spark-tile {
+  animation: party-mode-mark-in 620ms 100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.app-dev-motion .game-card-motion .question-copy {
+  animation:
+    party-question-deal 540ms 90ms cubic-bezier(0.16, 1, 0.3, 1) both,
+    question-focus-glow 3.8s 700ms ease-in-out infinite alternate;
+}
+
+.app-dev-motion .game-card-motion .question-prefix {
+  animation: party-copy-rise 390ms 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.app-dev-motion .game-card-motion .question-sentence {
+  animation: party-copy-rise 500ms 285ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.app-dev-motion .game-card-motion .timer-control {
+  animation: party-timer-enter 430ms 350ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.app-dev-motion .game-card-motion .game-card-action-slot {
+  animation: party-action-enter 450ms 390ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.app-dev-motion .timer-control--running {
+  animation:
+    party-timer-enter 430ms 350ms cubic-bezier(0.22, 1, 0.36, 1) both,
+    party-timer-running 1.5s 800ms ease-in-out infinite;
+}
+
+.app-boot {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(8, 0, 17, 0.98), rgba(61, 0, 35, 0.96) 54%, rgba(129, 5, 54, 0.95)),
+    #170014;
+  color: white;
+  isolation: isolate;
+}
+
+.app-boot::before,
+.app-boot::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.app-boot::before {
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 2.5rem 2.5rem;
+  opacity: 0.72;
+  animation: party-boot-grid 8s linear infinite;
+}
+
+.app-boot::after {
+  inset: 12% -35%;
+  background: linear-gradient(120deg, transparent 34%, rgba(255, 214, 77, 0.16) 46%, rgba(244, 63, 94, 0.19) 54%, transparent 68%);
+  transform: translateX(-28%);
+  animation: party-boot-beam 1.15s 100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.app-boot--leaving {
+  animation: party-boot-exit 230ms ease-in both;
+}
+
+.app-boot__content {
+  display: grid;
+  justify-items: center;
+  width: min(18rem, calc(100vw - 3rem));
+  text-align: center;
+}
+
+.app-boot__mark {
+  display: grid;
+  width: 5.25rem;
+  height: 5.25rem;
+  place-items: center;
+  border-radius: 1.65rem;
+  background: linear-gradient(135deg, #ffe34b, #ff833d 52%, #f43f8e);
+  color: #190016;
+  box-shadow: 0 24px 52px rgba(0, 0, 0, 0.34), 0 0 32px rgba(255, 214, 77, 0.26);
+  animation: party-boot-mark 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.app-boot__eyebrow {
+  margin-top: 1.4rem;
+  color: #ffe7a9;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  animation: party-boot-copy 480ms 160ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.app-boot__title {
+  margin-top: 0.4rem;
+  font-family: var(--font-party-display);
+  font-size: clamp(1.75rem, 8vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.05;
+  animation: party-boot-copy 520ms 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.app-boot__meter {
+  display: block;
+  width: 8.8rem;
+  height: 0.3rem;
+  margin-top: 1.5rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  animation: party-boot-copy 380ms 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.app-boot__meter > span {
+  display: block;
+  width: 42%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #d9ff67, #ffe34b, #ff5c7f);
+  animation: party-boot-meter 740ms 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.app-boot__rail {
+  position: absolute;
+  right: 12%;
+  left: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+  opacity: 0.7;
+}
+
+.app-boot__rail--top { top: 16%; }
+.app-boot__rail--bottom { bottom: 16%; }
+
+@keyframes party-page-enter {
+  from { opacity: 0; transform: translateY(0.7rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes party-header-enter {
+  from { opacity: 0; transform: translateY(-0.45rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes party-hero-enter {
+  from { opacity: 0; transform: translateY(1rem) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes party-hero-sweep {
+  0%, 24% { transform: skewX(-20deg) translateX(-280%); opacity: 0; }
+  32% { opacity: 0.78; }
+  52%, 100% { transform: skewX(-20deg) translateX(540%); opacity: 0; }
+}
+
+@keyframes party-actions-enter {
+  from { opacity: 0; transform: translateY(0.75rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes party-list-enter {
+  from { opacity: 0; transform: translateY(0.65rem) scale(0.992); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes party-selection-line {
+  0%, 100% { filter: saturate(1); opacity: 0.78; }
+  50% { filter: saturate(1.28) brightness(1.16); opacity: 1; }
+}
+
+@keyframes party-game-meta-in {
+  from { opacity: 0; transform: translateY(-0.55rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes party-mode-mark-in {
+  0% { opacity: 0; transform: scale(0.72) rotate(-13deg); }
+  66% { opacity: 1; transform: scale(1.06) rotate(3deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes party-question-deal {
+  from { opacity: 0; transform: translateY(1.05rem) scale(0.985); filter: blur(5px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+@keyframes party-copy-rise {
+  from { opacity: 0; transform: translateY(0.42rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes party-timer-enter {
+  from { opacity: 0; transform: translateY(0.45rem) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes party-action-enter {
+  from { opacity: 0; transform: translateX(-50%) translateY(0.75rem); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes party-timer-running {
+  0%, 100% { box-shadow: 0 22px 46px rgba(54, 0, 28, 0.38), 0 0 24px rgba(255, 138, 42, 0.12); }
+  50% { box-shadow: 0 24px 52px rgba(54, 0, 28, 0.48), 0 0 38px rgba(255, 216, 77, 0.28); }
+}
+
+@keyframes party-boot-grid {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 2.5rem 2.5rem, 2.5rem 2.5rem; }
+}
+
+@keyframes party-boot-beam {
+  from { opacity: 0; transform: translateX(-42%); }
+  to { opacity: 1; transform: translateX(14%); }
+}
+
+@keyframes party-boot-mark {
+  from { opacity: 0; transform: translateY(1rem) scale(0.68) rotate(-14deg); }
+  to { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+}
+
+@keyframes party-boot-copy {
+  from { opacity: 0; transform: translateY(0.6rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes party-boot-meter {
+  from { transform: translateX(-130%); }
+  to { transform: translateX(230%); }
+}
+
+@keyframes party-boot-exit {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.015); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-boot { display: none; }
+}
+
+/* Settings: explicit landscape presets with a small, readable gameplay preview. */
+.orientation-picker {
+  border: 1px solid rgba(255, 236, 193, 0.18);
+  border-radius: 1.5rem;
+  padding: 0.9rem;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.045)),
+    rgba(20, 0, 28, 0.46);
+  box-shadow:
+    0 18px 42px rgba(23, 0, 27, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.orientation-picker-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.orientation-picker-icon {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 0.9rem;
+  color: #fff2b7;
+  background: linear-gradient(145deg, rgba(255, 216, 77, 0.2), rgba(244, 63, 94, 0.16));
+}
+
+.orientation-picker-icon svg {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+.orientation-picker-title,
+.orientation-picker-description {
+  display: block;
+}
+
+.orientation-picker-title {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 750;
+  line-height: 1.2;
+}
+
+.orientation-picker-description {
+  margin-top: 0.2rem;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.orientation-picker-status {
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 216, 77, 0.22);
+  border-radius: 999px;
+  padding: 0.32rem 0.55rem;
+  color: #fff2b7;
+  background: rgba(255, 216, 77, 0.1);
+  font-size: 0.66rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.orientation-option-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-top: 0.85rem;
+}
+
+.orientation-option {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 11.2rem;
+  touch-action: manipulation;
+  flex-direction: column;
+  align-items: stretch;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 1.1rem;
+  padding: 0.68rem;
+  overflow: hidden;
+  text-align: left;
+  color: #fff;
+  background: rgba(9, 0, 20, 0.5);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.orientation-option:hover {
+  border-color: rgba(255, 216, 77, 0.34);
+  background: rgba(49, 3, 42, 0.65);
+}
+
+.orientation-option:active {
+  transform: scale(0.98);
+}
+
+.orientation-option:focus-visible {
+  outline: 2px solid #fde68a;
+  outline-offset: 2px;
+}
+
+.orientation-option--selected {
+  border-color: rgba(255, 225, 112, 0.78);
+  background:
+    linear-gradient(145deg, rgba(255, 216, 77, 0.15), rgba(244, 63, 94, 0.14)),
+    rgba(35, 0, 29, 0.72);
+  box-shadow:
+    0 12px 28px rgba(244, 63, 94, 0.16),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.orientation-preview {
+  position: relative;
+  display: block;
+  width: auto;
+  height: 4.15rem;
+  aspect-ratio: var(--orientation-preview-ratio);
+  align-self: center;
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 238, 190, 0.32);
+  border-radius: 0.55rem;
+  overflow: hidden;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(135deg, #24001f 0%, #77143b 60%, #ef3f58 100%);
+  background-size: 0.65rem 0.65rem, 0.65rem 0.65rem, auto;
+  box-shadow: 0 8px 18px rgba(17, 0, 24, 0.3);
+}
+
+.orientation-preview::after {
+  content: '';
+  position: absolute;
+  inset: auto 8% 8% 8%;
+  height: 0.23rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #d9ff57, #ffd84d, #f43f7a);
+  opacity: 0.78;
+}
+
+.orientation-preview-player {
+  position: absolute;
+  top: 11%;
+  left: 7%;
+  width: 22%;
+  height: 18%;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.orientation-preview-copy {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  display: grid;
+  width: 58%;
+  gap: 0.28rem;
+  transform: translateX(-50%);
+}
+
+.orientation-preview-copy span {
+  height: 0.28rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.orientation-preview-copy span:last-child {
+  width: 72%;
+  justify-self: center;
+}
+
+.orientation-preview-action {
+  position: absolute;
+  top: 9%;
+  right: 6%;
+  width: 13%;
+  aspect-ratio: 1;
+  border-radius: 0.26rem;
+  background: linear-gradient(135deg, #ffd84d, #f43f7a);
+}
+
+.orientation-option-copy {
+  display: grid;
+  min-width: 0;
+  margin-top: 0.62rem;
+}
+
+.orientation-option-ratio {
+  color: #fff3b2;
+  font-size: 1.03rem;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.orientation-option-label {
+  margin-top: 0.28rem;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.76rem;
+  font-weight: 750;
+  line-height: 1.2;
+}
+
+.orientation-option-description {
+  margin-top: 0.22rem;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.64rem;
+  line-height: 1.3;
+}
+
+.orientation-option-check {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.45rem;
+  display: grid;
+  width: 1.45rem;
+  height: 1.45rem;
+  place-items: center;
+  border-radius: 999px;
+  color: #190019;
+  background: #ffd84d;
+  box-shadow: 0 5px 12px rgba(22, 0, 22, 0.28);
+}
+
+.orientation-option-check:empty {
+  display: none;
+}
+
+.orientation-option-check svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  stroke-width: 3;
+}
+
+.orientation-picker-help {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.7rem;
+  line-height: 1.35;
+}
+
+.orientation-picker-help svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  flex: 0 0 auto;
+  margin-top: 0.02rem;
+}
+
+.theme-light .orientation-picker {
+  border-color: rgba(113, 34, 69, 0.16);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.theme-light .orientation-picker-title,
+.theme-light .orientation-option {
+  color: #2c1026;
+}
+
+.theme-light .orientation-picker-description,
+.theme-light .orientation-picker-help,
+.theme-light .orientation-option-description {
+  color: rgba(55, 19, 46, 0.62);
+}
+
+.theme-light .orientation-option {
+  border-color: rgba(113, 34, 69, 0.14);
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.theme-light .orientation-option--selected {
+  border-color: rgba(190, 69, 82, 0.58);
+  background: linear-gradient(145deg, rgba(255, 216, 77, 0.2), rgba(244, 63, 94, 0.13));
+}
+
+.theme-light .orientation-option-label {
+  color: rgba(44, 16, 38, 0.86);
+}
+
+.theme-light .orientation-picker-status,
+.theme-light .orientation-option-ratio {
+  color: #8c2d4d;
+}
+
+@media (max-width: 350px) {
+  .orientation-picker {
+    padding: 0.72rem;
+  }
+
+  .orientation-picker-heading {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .orientation-picker-status {
+    margin-left: 3.5rem;
+  }
+
+  .orientation-option {
+    min-height: 10.7rem;
+    padding: 0.55rem;
+  }
+
+  .orientation-preview {
+    height: 3.55rem;
+  }
+}
+
+@media (orientation: landscape) and (min-width: 680px) {
+  .orientation-option-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .orientation-option {
+    min-height: 9.5rem;
+  }
+
+  .orientation-preview {
+    height: 3.7rem;
+  }
+}
+
+/* The chosen ratio frames the whole landscape experience without changing the device viewport. */
+@media (orientation: landscape) {
+  .app-landscape-layout .phone-frame--immersive,
+  .app-landscape-layout .phone-frame--game {
+    width: min(
+      100%,
+      calc(var(--app-viewport-height, var(--app-game-height, 100dvh)) * var(--app-landscape-ratio))
+    ) !important;
+    max-width: min(
+      100%,
+      calc(var(--app-viewport-height, var(--app-game-height, 100dvh)) * var(--app-landscape-ratio))
+    ) !important;
+    margin-inline: auto;
+  }
+}

@@ -12,7 +12,7 @@ const icons = {
   Sparkles,
 };
 
-export default function ModeCard({ mode, selected, disabled, onClick }) {
+export default function ModeCard({ mode, selected, disabled, onClick, index = 0 }) {
   const Icon = icons[mode.icon] ?? Sparkles;
 
   return (
@@ -23,11 +23,14 @@ export default function ModeCard({ mode, selected, disabled, onClick }) {
       onClick={onClick}
       className={[
         'mode-card-dynamic group w-full touch-manipulation rounded-3xl border p-3 text-left shadow-card transition min-[390px]:p-4',
+        'mode-card-motion',
+        selected ? 'mode-card--selected' : '',
         selected
           ? 'border-amber-200/80 bg-white/20'
           : 'border-white/10 bg-white/10 hover:bg-white/15',
         disabled ? 'opacity-45' : 'active:scale-[0.99]',
       ].join(' ')}
+      style={{ '--motion-index': index }}
     >
       <span className="flex items-center gap-4">
         <span

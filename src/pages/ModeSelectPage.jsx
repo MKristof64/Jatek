@@ -18,10 +18,11 @@ export default function ModeSelectPage({
       <Header title="Játékmód" onBack={onBack} compact />
       <section className="mode-select-screen flex min-h-0 flex-1 flex-col gap-3">
         <div className="mode-list mobile-scroll min-h-0 flex-1 space-y-3 overflow-y-auto pb-1 pr-1">
-          {modes.map((mode) => (
+          {modes.map((mode, index) => (
             <ModeCard
               key={mode.id}
               mode={mode}
+              index={index}
               selected={mode.id === selectedMode}
               onClick={() => onSelectMode(mode.id)}
             />

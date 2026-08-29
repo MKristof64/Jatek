@@ -55,7 +55,8 @@ export default function PlayersPage({ players, onAdd, onRemove, onNext, onBack }
             players.map((player, index) => (
               <div
                 key={player.id}
-                className="flex items-center gap-3 rounded-3xl border border-white/10 bg-white/10 p-3"
+                className="player-row-motion flex items-center gap-3 rounded-3xl border border-white/10 bg-white/10 p-3"
+                style={{ '--motion-index': index }}
               >
                 <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-amber-300 to-pink-500 text-lg font-black text-slate-950">
                   {index + 1}

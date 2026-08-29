@@ -12,3 +12,7 @@ android/keystore.properties
 *.jks
 *.keystore
 artifacts/
+artifacts-*.png
+releases/
+.codex-remote-attachments/
+scripts/__pycache__/

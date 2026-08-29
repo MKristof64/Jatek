@@ -105,6 +105,37 @@ export async function lockPortraitOrientation() {
   }
 }
 
+export async function lockLandscapeOrientation() {
+  if (Capacitor.isNativePlatform()) {
+    try {
+      await ScreenOrientation.lock({ orientation: 'landscape-primary' });
+      return true;
+    } catch {
+      try {
+        await ScreenOrientation.lock({ orientation: 'landscape' });
+        return true;
+      } catch {
+        return false;
+      }
+    }
+  }
+
+  const orientation = window.screen?.orientation;
+  if (typeof orientation?.lock !== 'function') return false;
+
+  try {
+    await orientation.lock('landscape-primary');
+    return true;
+  } catch {
+    try {
+      await orientation.lock('landscape');
+      return true;
+    } catch {
+      return false;
+    }
+  }
+}
+
 export function getFullscreenElement() {
   return (
     document.fullscreenElement ||

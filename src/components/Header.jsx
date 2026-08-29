@@ -8,7 +8,7 @@ export default function Header({
   compact = false,
 }) {
   return (
-    <header className="mb-4 flex shrink-0 items-center gap-3 pt-1">
+    <header className="app-header-motion mb-4 flex shrink-0 items-center gap-3 pt-1">
       {onBack ? (
         <button
           type="button"
