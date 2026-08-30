@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { App as CapacitorApp } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
+import { Settings } from 'lucide-react';
 import { Peer } from 'peerjs';
 import AppIntro from './components/AppIntro.jsx';
 import ConfirmDialog from './components/ConfirmDialog.jsx';
+import LandscapeRatioPicker from './components/LandscapeRatioPicker.jsx';
 import {
   clearFullscreenViewport,
   enterAppFullscreen,
@@ -535,6 +537,7 @@ export default function App() {
   const [currentRoomPlayerId, setCurrentRoomPlayerId] = useState(null);
   const [onlineStatus, setOnlineStatus] = useState(defaultOnlineStatus);
   const [pendingConfirmation, setPendingConfirmation] = useState(null);
+  const [gameExitSettingsOpen, setGameExitSettingsOpen] = useState(false);
   const [introState, setIntroState] = useState(isDevMotionBuild ? 'visible' : null);
   const { appUpdate, installUpdate } = useNativeAppUpdater();
   const peerRef = useRef(null);
@@ -1717,6 +1720,7 @@ export default function App() {
   };
 
   const exitGameToHomeNow = () => {
+    setGameExitSettingsOpen(false);
     setPendingConfirmation(null);
 
     if (room && !isRoomHost) {
@@ -1744,6 +1748,7 @@ export default function App() {
 
   const cancelPendingConfirmation = () => {
     const shouldRestoreFullscreen = page === pages.game;
+    setGameExitSettingsOpen(false);
     setPendingConfirmation(null);
 
     if (shouldRestoreFullscreen) {
@@ -1754,9 +1759,40 @@ export default function App() {
   const requestGameBackExit = () => {
     if (page !== pages.game || pendingConfirmation) return false;
 
+    setGameExitSettingsOpen(false);
     setPendingConfirmation(room && isRoomHost ? 'finish-room' : 'exit-game');
     return true;
   };
+
+  const gameExitSettingsAction = (
+    <button
+      type="button"
+      className={`confirm-dialog-settings-button${
+        gameExitSettingsOpen ? ' confirm-dialog-settings-button--active' : ''
+      }`}
+      aria-label={
+        gameExitSettingsOpen
+          ? 'Játéknézet beállításainak bezárása'
+          : 'Játéknézet beállítása'
+      }
+      aria-expanded={gameExitSettingsOpen}
+      aria-controls="game-exit-layout-settings"
+      title="Játéknézet beállítása"
+      onClick={() => setGameExitSettingsOpen((open) => !open)}
+    >
+      <Settings aria-hidden="true" />
+    </button>
+  );
+
+  const gameExitSettingsPanel = gameExitSettingsOpen ? (
+    <div id="game-exit-layout-settings">
+      <LandscapeRatioPicker
+        compact
+        value={settings.landscapeRatio}
+        onChange={(ratio) => void changeLandscapeRatio(ratio)}
+      />
+    </div>
+  ) : null;
 
   useEffect(() => {
     if (page !== pages.game) return undefined;
@@ -2027,7 +2063,10 @@ export default function App() {
           confirmLabel="Befejezés"
           onCancel={cancelPendingConfirmation}
           onConfirm={finishRoomNow}
-        />
+          headerAction={page === pages.game ? gameExitSettingsAction : null}
+        >
+          {page === pages.game ? gameExitSettingsPanel : null}
+        </ConfirmDialog>
       ) : null}
 
       {pendingConfirmation === 'leave-room' ? (
@@ -2051,7 +2090,10 @@ export default function App() {
           confirmLabel="Kilépés"
           onCancel={cancelPendingConfirmation}
           onConfirm={exitGameToHomeNow}
-        />
+          headerAction={gameExitSettingsAction}
+        >
+          {gameExitSettingsPanel}
+        </ConfirmDialog>
       ) : null}
 
       {pendingConfirmation === 'clear-data' ? (

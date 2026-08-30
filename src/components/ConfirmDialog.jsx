@@ -9,11 +9,17 @@ export default function ConfirmDialog({
   cancelLabel = 'Mégse',
   onConfirm,
   onCancel,
+  headerAction = null,
+  children = null,
 }) {
   const titleId = useId();
   const descriptionId = useId();
   const cancelButtonRef = useRef(null);
   const dialogRef = useRef(null);
+  const onCancelRef = useRef(onCancel);
+  const hasDetails = Boolean(children);
+
+  onCancelRef.current = onCancel;
 
   useEffect(() => {
     const previouslyFocused = document.activeElement;
@@ -22,7 +28,7 @@ export default function ConfirmDialog({
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
         event.preventDefault();
-        onCancel?.();
+        onCancelRef.current?.();
         return;
       }
 
@@ -51,19 +57,27 @@ export default function ConfirmDialog({
         previouslyFocused.focus();
       }
     };
-  }, [onCancel]);
+  }, []);
 
   return (
-    <div className="confirm-dialog fixed inset-0 z-50 grid place-items-center bg-slate-950/72 p-4 backdrop-blur-md">
+    <div
+      className={`confirm-dialog fixed inset-0 z-50 grid place-items-center bg-slate-950/72 p-4 backdrop-blur-md${
+        hasDetails ? ' confirm-dialog--expanded' : ''
+      }`}
+    >
       <section
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
         aria-describedby={descriptionId}
-        className="w-full max-w-sm rounded-[1.75rem] border border-white/12 bg-slate-950/92 p-5 text-white shadow-card"
+        className="confirm-dialog-surface w-full max-w-sm overflow-y-auto overscroll-contain rounded-[1.75rem] border border-white/12 bg-slate-950/92 p-5 text-white shadow-card"
       >
-        <div className="mb-4 flex items-start gap-3">
+        <div
+          className={`confirm-dialog-header relative mb-4 flex items-start gap-3${
+            headerAction ? ' confirm-dialog-header--with-action pr-12' : ''
+          }`}
+        >
           <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-amber-300 text-slate-950">
             <AlertTriangle className="h-6 w-6" />
           </div>
@@ -73,8 +87,14 @@ export default function ConfirmDialog({
               {description}
             </p>
           </div>
+          {headerAction ? (
+            <div className="confirm-dialog-header-action">{headerAction}</div>
+          ) : null}
         </div>
-        <div className="grid grid-cols-2 gap-2">
+        {hasDetails ? (
+          <div className="confirm-dialog-details mb-4">{children}</div>
+        ) : null}
+        <div className="confirm-dialog-actions grid grid-cols-2 gap-2">
           <PrimaryButton ref={cancelButtonRef} variant="secondary" onClick={onCancel}>
             {cancelLabel}
           </PrimaryButton>

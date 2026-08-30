@@ -3966,6 +3966,283 @@ html[data-app-theme="light"] body {
   color: #8c2d4d;
 }
 
+/* The in-game exit sheet can adjust the same saved viewport preset without leaving play. */
+.confirm-dialog {
+  padding-top: max(1rem, env(safe-area-inset-top));
+  padding-right: max(1rem, env(safe-area-inset-right));
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  padding-left: max(1rem, env(safe-area-inset-left));
+}
+
+.confirm-dialog-surface {
+  max-height: calc(var(--app-viewport-height, 100dvh) - 2rem);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 216, 77, 0.45) transparent;
+}
+
+.confirm-dialog--expanded .confirm-dialog-surface {
+  max-width: 42rem;
+}
+
+.confirm-dialog-header-action {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.confirm-dialog-settings-button {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  touch-action: manipulation;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 0.9rem;
+  color: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.07);
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.confirm-dialog-settings-button:hover {
+  border-color: rgba(255, 225, 112, 0.5);
+  color: #fff4bd;
+  background: rgba(255, 216, 77, 0.12);
+}
+
+.confirm-dialog-settings-button:active {
+  transform: scale(0.94);
+}
+
+.confirm-dialog-settings-button:focus-visible {
+  outline: 2px solid #fde68a;
+  outline-offset: 2px;
+}
+
+.confirm-dialog-settings-button--active {
+  border-color: rgba(255, 225, 112, 0.72);
+  color: #210017;
+  background: #ffd84d;
+  box-shadow: 0 8px 22px rgba(255, 109, 67, 0.22);
+}
+
+.confirm-dialog-settings-button svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  stroke-width: 2.25;
+}
+
+.confirm-dialog-details {
+  animation: party-copy-rise 180ms ease-out both;
+}
+
+.orientation-picker--compact {
+  border-radius: 1.15rem;
+  padding: 0.72rem;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.035)),
+    rgba(16, 0, 24, 0.64);
+}
+
+.orientation-picker--compact .orientation-picker-heading {
+  gap: 0.55rem;
+}
+
+.orientation-picker--compact .orientation-picker-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.72rem;
+}
+
+.orientation-picker--compact .orientation-picker-icon svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.orientation-picker--compact .orientation-picker-title {
+  font-size: 0.88rem;
+}
+
+.orientation-picker--compact .orientation-picker-description {
+  font-size: 0.68rem;
+}
+
+.orientation-picker--compact .orientation-picker-status {
+  padding: 0.28rem 0.45rem;
+  font-size: 0.6rem;
+}
+
+.orientation-picker--compact .orientation-option-grid {
+  gap: 0.5rem;
+  margin-top: 0.62rem;
+}
+
+.orientation-picker--compact .orientation-option {
+  min-height: 5.5rem;
+  border-radius: 0.85rem;
+  padding: 0.48rem;
+}
+
+.orientation-picker--compact .orientation-preview {
+  height: 2.15rem;
+  border-radius: 0.38rem;
+}
+
+.orientation-picker--compact .orientation-option-copy {
+  margin-top: 0.38rem;
+}
+
+.orientation-picker--compact .orientation-option-ratio {
+  font-size: 0.86rem;
+}
+
+.orientation-picker--compact .orientation-option-label {
+  margin-top: 0.18rem;
+  font-size: 0.64rem;
+}
+
+.orientation-picker--compact .orientation-option-description {
+  display: none;
+}
+
+.orientation-picker--compact .orientation-option-check {
+  top: 0.3rem;
+  right: 0.3rem;
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.orientation-picker--compact .orientation-option-check svg {
+  width: 0.7rem;
+  height: 0.7rem;
+}
+
+.orientation-picker--compact .orientation-picker-help {
+  margin-top: 0.55rem;
+  font-size: 0.63rem;
+}
+
+@media (max-width: 350px) {
+  .confirm-dialog--expanded .confirm-dialog-surface {
+    padding: 0.8rem;
+  }
+
+  .confirm-dialog-header--with-action {
+    gap: 0.55rem;
+    margin-bottom: 0.7rem;
+    padding-right: 2.6rem;
+  }
+
+  .confirm-dialog-header--with-action h2 {
+    font-size: 1.22rem;
+    line-height: 1.12;
+  }
+
+  .confirm-dialog-header--with-action > div:first-child {
+    width: 2.35rem;
+    height: 2.35rem;
+    border-radius: 0.72rem;
+  }
+
+  .confirm-dialog-header--with-action > div:first-child svg {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .confirm-dialog-header--with-action p {
+    margin-top: 0.3rem;
+    font-size: 0.7rem;
+    line-height: 1rem;
+  }
+
+  .confirm-dialog--expanded .confirm-dialog-details {
+    margin-bottom: 0.7rem;
+  }
+
+  .orientation-picker--compact {
+    padding: 0.58rem;
+  }
+
+  .orientation-picker--compact .orientation-picker-description {
+    display: none;
+  }
+
+  .orientation-picker--compact .orientation-picker-status {
+    margin-left: 0;
+  }
+
+  .orientation-picker--compact .orientation-option {
+    min-height: 4.7rem;
+  }
+
+  .orientation-picker--compact .orientation-preview {
+    height: 1.75rem;
+  }
+
+  .orientation-picker--compact .orientation-picker-help {
+    margin-top: 0.4rem;
+    line-height: 1.2;
+  }
+}
+
+@media (orientation: landscape) and (min-width: 640px) and (max-height: 620px) {
+  .confirm-dialog {
+    padding-top: max(0.5rem, env(safe-area-inset-top));
+    padding-right: max(0.75rem, env(safe-area-inset-right));
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+    padding-left: max(0.75rem, env(safe-area-inset-left));
+  }
+
+  .confirm-dialog--expanded .confirm-dialog-surface {
+    display: grid;
+    grid-template-areas:
+      'header details'
+      'actions details';
+    grid-template-columns: minmax(13rem, 0.88fr) minmax(20rem, 1.12fr);
+    gap: 0.75rem 0.9rem;
+    width: min(48rem, 100%);
+    max-width: 48rem;
+    max-height: calc(var(--app-viewport-height, 100dvh) - 1rem);
+    padding: 0.9rem;
+  }
+
+  .confirm-dialog--expanded .confirm-dialog-header {
+    grid-area: header;
+    margin-bottom: 0;
+  }
+
+  .confirm-dialog--expanded .confirm-dialog-details {
+    grid-area: details;
+    align-self: center;
+    margin-bottom: 0;
+  }
+
+  .confirm-dialog--expanded .confirm-dialog-actions {
+    grid-area: actions;
+    align-self: end;
+  }
+
+  .confirm-dialog--expanded .orientation-picker--compact .orientation-option {
+    min-height: 4.9rem;
+  }
+
+  .confirm-dialog--expanded .orientation-picker--compact .orientation-option-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .confirm-dialog--expanded .orientation-picker--compact .orientation-preview {
+    height: 1.75rem;
+  }
+
+  .confirm-dialog--expanded .orientation-picker--compact .orientation-picker-description {
+    display: none;
+  }
+}
+
 @media (max-width: 350px) {
   .orientation-picker {
     padding: 0.72rem;

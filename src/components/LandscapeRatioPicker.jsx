@@ -1,19 +1,25 @@
 import { Check, Monitor, RotateCcw } from 'lucide-react';
+import { useId } from 'react';
 import { landscapeRatios } from '../data/displayRatios.js';
 
-export default function LandscapeRatioPicker({ value, onChange }) {
+export default function LandscapeRatioPicker({ value, onChange, compact = false }) {
+  const titleId = useId();
+
   return (
-    <section className="orientation-picker" aria-labelledby="orientation-picker-title">
+    <section
+      className={`orientation-picker${compact ? ' orientation-picker--compact' : ''}`}
+      aria-labelledby={titleId}
+    >
       <div className="orientation-picker-heading">
         <span className="orientation-picker-icon" aria-hidden="true">
           <Monitor />
         </span>
         <span className="min-w-0 flex-1">
-          <span id="orientation-picker-title" className="orientation-picker-title">
+          <span id={titleId} className="orientation-picker-title">
             Fekvő játéknézet
           </span>
           <span className="orientation-picker-description">
-            Válassz képarányt a fekvő elrendezéshez.
+            {compact ? 'Válassz képarányt.' : 'Válassz képarányt a fekvő elrendezéshez.'}
           </span>
         </span>
         <span className="orientation-picker-status">
@@ -58,7 +64,9 @@ export default function LandscapeRatioPicker({ value, onChange }) {
 
       <p className="orientation-picker-help">
         <RotateCcw aria-hidden="true" />
-        Az aktív képarányra újra koppintva visszaáll az alap álló nézet.
+        {compact
+          ? 'Újabb koppintás az aktív arányra: álló nézet.'
+          : 'Az aktív képarányra újra koppintva visszaáll az alap álló nézet.'}
       </p>
     </section>
   );

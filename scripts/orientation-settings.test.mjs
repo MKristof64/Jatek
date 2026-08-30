@@ -35,10 +35,12 @@ test('selecting the active ratio returns to portrait while another ratio switche
 });
 
 test('settings and fullscreen sources wire persisted dynamic orientation', async () => {
-  const [appSource, settingsSource, fullscreenSource] = await Promise.all([
+  const [appSource, settingsSource, fullscreenSource, dialogSource, pickerSource] = await Promise.all([
     readProjectFile('src/App.jsx'),
     readProjectFile('src/pages/SettingsPage.jsx'),
     readProjectFile('src/lib/fullscreen.js'),
+    readProjectFile('src/components/ConfirmDialog.jsx'),
+    readProjectFile('src/components/LandscapeRatioPicker.jsx'),
   ]);
 
   assert.match(appSource, /landscapeRatio: normalizeLandscapeRatio/);
@@ -47,6 +49,30 @@ test('settings and fullscreen sources wire persisted dynamic orientation', async
   assert.match(settingsSource, /<LandscapeRatioPicker/);
   assert.match(fullscreenSource, /orientation: 'landscape-primary'/);
   assert.match(fullscreenSource, /orientation\.lock\('landscape-primary'\)/);
+  assert.match(
+    appSource,
+    /aria-label=\{\s*gameExitSettingsOpen\s*\?\s*'Játéknézet beállításainak bezárása'\s*:\s*'Játéknézet beállítása'\s*\}/,
+  );
+  assert.match(appSource, /<LandscapeRatioPicker\s+compact/);
+  assert.match(appSource, /headerAction=\{page === pages\.game \? gameExitSettingsAction : null\}/);
+  assert.match(dialogSource, /headerAction = null/);
+  assert.match(dialogSource, /confirm-dialog-header-action/);
+  assert.match(pickerSource, /orientation-picker--compact/);
+});
+
+test('the in-game ratio sheet remains compact and responsive in both orientations', async () => {
+  const styles = await readProjectFile('src/index.css');
+
+  assert.match(styles, /\.confirm-dialog--expanded \.confirm-dialog-surface \{\s*max-width: 42rem;/);
+  assert.match(styles, /\.orientation-picker--compact \.orientation-option \{\s*min-height: 5\.5rem;/);
+  assert.match(
+    styles,
+    /@media \(orientation: landscape\) and \(min-width: 640px\) and \(max-height: 620px\)/,
+  );
+  assert.match(
+    styles,
+    /\.confirm-dialog--expanded \.orientation-picker--compact \.orientation-option-grid \{\s*grid-template-columns: repeat\(2, minmax\(0, 1fr\)\);/,
+  );
 });
 
 test('landscape mode selection stays single-column with a compact start action', async () => {
