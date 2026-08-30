@@ -23,6 +23,7 @@ import {
 } from './data/displayRatios.js';
 import { getModeById } from './data/modes.js';
 import { fetchRemoteCards } from './lib/feedback.js';
+import useNativeAppUpdater from './lib/useNativeAppUpdater.js';
 import {
   createRoomCode,
   getCardSourceModes,
@@ -535,6 +536,7 @@ export default function App() {
   const [onlineStatus, setOnlineStatus] = useState(defaultOnlineStatus);
   const [pendingConfirmation, setPendingConfirmation] = useState(null);
   const [introState, setIntroState] = useState(isDevMotionBuild ? 'visible' : null);
+  const { appUpdate, installUpdate } = useNativeAppUpdater();
   const peerRef = useRef(null);
   const peerModeRef = useRef('offline');
   const hostConnectionsRef = useRef(new Map());
@@ -1946,6 +1948,8 @@ export default function App() {
                 ? `${import.meta.env.BASE_URL}Az-ivos-jatek-dev.apk`
                 : androidDownloadUrl
           }
+          appUpdate={appUpdate}
+          onInstallUpdate={installUpdate}
         />
       ) : null}
 

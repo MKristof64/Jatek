@@ -1,5 +1,24 @@
-import { Crown, Download, Play, Settings, Sparkles, UserPlus } from 'lucide-react';
+import {
+  Crown,
+  Download,
+  Play,
+  RefreshCw,
+  Settings,
+  Sparkles,
+  UserPlus,
+} from 'lucide-react';
 import PrimaryButton from '../components/PrimaryButton.jsx';
+
+function getUpdateLabel(appUpdate) {
+  if (appUpdate.status === 'downloading') {
+    return appUpdate.progress > 0 ? `Letöltés ${appUpdate.progress}%` : 'Letöltés…';
+  }
+  if (appUpdate.status === 'preparing') return 'Előkészítés…';
+  if (appUpdate.status === 'permission-required') return 'Engedélyezés…';
+  if (appUpdate.status === 'installer-opened') return 'Telepítés…';
+  if (appUpdate.status === 'error') return 'Újrapróbálom';
+  return `Frissítés ${appUpdate.release.version}`;
+}
 
 export default function HomePage({
   playersCount,
@@ -8,10 +27,35 @@ export default function HomePage({
   onRoom,
   onSettings,
   appDownloadUrl,
+  appUpdate,
+  onInstallUpdate,
 }) {
+  const updateBusy = appUpdate
+    ? ['preparing', 'downloading', 'permission-required', 'installer-opened'].includes(
+        appUpdate.status,
+      )
+    : false;
+
   return (
     <>
       <div className="home-top-controls flex shrink-0 items-center justify-end gap-2">
+        {appUpdate ? (
+          <button
+            type="button"
+            onClick={onInstallUpdate}
+            disabled={updateBusy}
+            className="app-update-control icon-button-dynamic inline-flex h-11 min-w-0 max-w-[12.5rem] shrink items-center justify-center gap-2 rounded-[1.1rem] bg-amber-300 px-3 font-extrabold text-slate-950 ring-1 ring-amber-100/70 transition hover:bg-amber-200 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-80"
+            aria-label={`${getUpdateLabel(appUpdate)}. ${appUpdate.message}`}
+            title={appUpdate.message}
+            aria-live="polite"
+            style={{ '--app-update-progress': `${appUpdate.progress}%` }}
+          >
+            <RefreshCw
+              className={`relative z-10 h-4 w-4 shrink-0 ${updateBusy ? 'animate-spin' : ''}`}
+            />
+            <span className="relative z-10 truncate text-sm">{getUpdateLabel(appUpdate)}</span>
+          </button>
+        ) : null}
         {appDownloadUrl ? (
           <a
             href={appDownloadUrl}

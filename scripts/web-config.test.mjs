@@ -40,6 +40,19 @@ test('the web download button selects the signed release or the Dev Pages test A
   assert.match(homeSource, /download="Az-ivos-jatek\.apk"/);
 });
 
+test('native builds check GitHub releases without exposing the web download icon', async () => {
+  const updaterSource = await readFile(projectUrl('src/lib/useNativeAppUpdater.js'), 'utf8');
+  const releaseSource = await readFile(projectUrl('src/lib/appRelease.js'), 'utf8');
+  const viteConfig = await readFile(projectUrl('vite.config.js'), 'utf8');
+
+  assert.match(releaseSource, /api\.github\.com\/repos\/MKristof64\/Jatek\/releases\/latest/);
+  assert.match(releaseSource, /sha256/);
+  assert.match(updaterSource, /downloadAndInstall/);
+  assert.match(updaterSource, /appStateChange/);
+  assert.match(updaterSource, /canInstallPackages/);
+  assert.match(viteConfig, /https:\/\/api\.github\.com/);
+});
+
 test('legacy cleanup removes only this game service worker and caches', async () => {
   const calls = [];
   const serviceWorker = {

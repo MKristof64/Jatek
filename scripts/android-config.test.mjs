@@ -30,6 +30,8 @@ test('Android manifest permits controlled rotation and blocks cleartext traffic'
   assert.match(manifest, /android:dataExtractionRules="@xml\/data_extraction_rules"/);
   assert.match(manifest, /android:fullBackupContent="@xml\/backup_rules"/);
   assert.match(manifest, /android:name="android\.permission\.INTERNET"/);
+  assert.match(manifest, /android:name="android\.permission\.REQUEST_INSTALL_PACKAGES"/);
+  assert.match(manifest, /android:name="androidx\.core\.content\.FileProvider"/);
 });
 
 test('Android activity uses edge-to-edge immersive system bars', async () => {
@@ -42,6 +44,25 @@ test('Android activity uses edge-to-edge immersive system bars', async () => {
   assert.match(activity, /WindowInsets\.Type\.statusBars\(\)/);
   assert.match(activity, /WindowInsets\.Type\.navigationBars\(\)/);
   assert.match(activity, /SYSTEM_UI_FLAG_IMMERSIVE_STICKY/);
+  assert.match(activity, /registerPlugin\(AppUpdaterPlugin\.class\)/);
+});
+
+test('Android updater verifies the release before opening the package installer', async () => {
+  const updater = await readProjectFile(
+    'android/app/src/main/java/hu/mkristof64/azivosjatek/AppUpdaterPlugin.java',
+  );
+  const filePaths = await readProjectFile('android/app/src/main/res/xml/file_paths.xml');
+
+  assert.match(updater, /github\.com/);
+  assert.match(updater, /MAX_APK_BYTES/);
+  assert.match(updater, /HASH_MISMATCH/);
+  assert.match(updater, /PackageInfoCompat\.getLongVersionCode/);
+  assert.match(updater, /getApkContentsSigners/);
+  assert.match(updater, /SIGNATURE_MISMATCH/);
+  assert.match(updater, /Intent\.ACTION_INSTALL_PACKAGE/);
+  assert.match(filePaths, /<cache-path name="verified_app_updates" path="updates\/" \/>/);
+  assert.doesNotMatch(filePaths, /external-path/);
+  assert.doesNotMatch(filePaths, /path="\."/);
 });
 
 test('Android release is minimized and never commits signing secrets', async () => {
@@ -49,8 +70,8 @@ test('Android release is minimized and never commits signing secrets', async () 
   const gradleWrapper = await readProjectFile('android/gradle/wrapper/gradle-wrapper.properties');
   const ignoreRules = await readProjectFile('.gitignore');
 
-  assert.match(buildGradle, /versionCode 7/);
-  assert.match(buildGradle, /versionName "1\.1\.1"/);
+  assert.match(buildGradle, /versionCode 8/);
+  assert.match(buildGradle, /versionName "1\.1\.2"/);
   assert.match(buildGradle, /minifyEnabled true/);
   assert.match(buildGradle, /shrinkResources true/);
   assert.match(gradleWrapper, /gradle-8\.14\.5-bin\.zip/);
