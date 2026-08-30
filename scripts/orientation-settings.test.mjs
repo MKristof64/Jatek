@@ -48,3 +48,21 @@ test('settings and fullscreen sources wire persisted dynamic orientation', async
   assert.match(fullscreenSource, /orientation: 'landscape-primary'/);
   assert.match(fullscreenSource, /orientation\.lock\('landscape-primary'\)/);
 });
+
+test('landscape mode selection stays single-column with a compact start action', async () => {
+  const styles = await readProjectFile('src/index.css');
+
+  assert.match(
+    styles,
+    /\.mode-list \{\s*display: grid !important;\s*grid-template-columns: minmax\(0, 1fr\);\s*grid-auto-rows: max-content;/,
+  );
+  assert.match(styles, /\.mode-list \.mode-card-dynamic \{\s*min-height: max-content;/);
+  assert.match(
+    styles,
+    /\.mode-start-button \{\s*width: clamp\(11rem, 30vw, 15rem\);\s*min-height: 3\.25rem;\s*height: 3\.25rem;/,
+  );
+  assert.doesNotMatch(
+    styles,
+    /\.mode-list \{\s*display: grid !important;\s*grid-template-columns: repeat\(2,/,
+  );
+});
