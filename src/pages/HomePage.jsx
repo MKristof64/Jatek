@@ -1,6 +1,7 @@
 import {
   Crown,
   Download,
+  History,
   Play,
   RefreshCw,
   Settings,
@@ -24,11 +25,13 @@ export default function HomePage({
   playersCount,
   onStart,
   onPlayers,
+  onSavedGames,
   onRoom,
   onSettings,
   appDownloadUrl,
   appUpdate,
   onInstallUpdate,
+  savedGamesCount,
 }) {
   const updateBusy = appUpdate
     ? ['preparing', 'downloading', 'permission-required', 'installer-opened'].includes(
@@ -89,10 +92,6 @@ export default function HomePage({
               <h2 className="home-hero-title mt-2 text-4xl font-black leading-none tracking-normal text-white min-[390px]:text-5xl">
                 Az ivós játék.
               </h2>
-              <p className="home-hero-description mt-3 text-base leading-6 text-white/70 min-[390px]:mt-4 min-[390px]:leading-7">
-                Gyors körök, céljátékosok és többféle hangulat egy telefonra
-                szabott kártyás felületen.
-              </p>
             </div>
           </div>
 
@@ -119,6 +118,16 @@ export default function HomePage({
               onClick={onPlayers}
             >
               Játékosok
+            </PrimaryButton>
+            <PrimaryButton
+              variant="secondary"
+              icon={History}
+              className="min-h-14 px-2"
+              onClick={onSavedGames}
+            >
+              {savedGamesCount > 0
+                ? `Korábbi játékok (${savedGamesCount})`
+                : 'Korábbi játékok'}
             </PrimaryButton>
           </div>
         </div>

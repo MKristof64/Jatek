@@ -25,6 +25,15 @@ import {
 } from './data/displayRatios.js';
 import { getModeById } from './data/modes.js';
 import { fetchRemoteCards } from './lib/feedback.js';
+import {
+  SAVED_GAMES_STORAGE_KEY,
+  createSavedGameId,
+  createSavedGameSnapshot,
+  deleteSavedGame,
+  loadSavedGames,
+  storeSavedGames,
+  upsertSavedGame,
+} from './lib/savedGames.js';
 import useNativeAppUpdater from './lib/useNativeAppUpdater.js';
 import {
   createRoomCode,
@@ -39,6 +48,7 @@ import HomePage from './pages/HomePage.jsx';
 import ModeSelectPage from './pages/ModeSelectPage.jsx';
 import PlayersPage from './pages/PlayersPage.jsx';
 import RoomPage from './pages/RoomPage.jsx';
+import SavedGamesPage from './pages/SavedGamesPage.jsx';
 import SettingsPage from './pages/SettingsPage.jsx';
 
 const storageKeys = {
@@ -48,6 +58,7 @@ const storageKeys = {
   game: 'enmegsosem.game',
   room: 'enmegsosem.room',
   currentRoomPlayerId: 'enmegsosem.currentRoomPlayerId',
+  savedGames: SAVED_GAMES_STORAGE_KEY,
 };
 
 const legacyStorageKeys = {
@@ -79,7 +90,7 @@ const defaultOnlineStatus = {
 
 const defaultSettings = {
   darkMode: true,
-  sound: true,
+  saveGames: false,
   includeDuelCards: true,
   includeRoundtableCards: true,
   landscapeRatio: null,
@@ -117,6 +128,7 @@ const pages = {
   modes: 'modes',
   game: 'game',
   settings: 'settings',
+  savedGames: 'saved-games',
 };
 
 const androidDownloadUrl =
@@ -227,10 +239,10 @@ function loadSettings() {
       typeof savedSettings.darkMode === 'boolean'
         ? savedSettings.darkMode
         : defaultSettings.darkMode,
-    sound:
-      typeof savedSettings.sound === 'boolean'
-        ? savedSettings.sound
-        : defaultSettings.sound,
+    saveGames:
+      typeof savedSettings.saveGames === 'boolean'
+        ? savedSettings.saveGames
+        : defaultSettings.saveGames,
     includeDuelCards:
       typeof savedSettings.includeDuelCards === 'boolean'
         ? savedSettings.includeDuelCards
@@ -503,9 +515,7 @@ function mergeLocalAndRemoteCards(localCards, remoteCards, modeId) {
   });
 }
 
-function playFeedback(settings) {
-  if (!settings.sound) return;
-
+function playFeedback() {
   try {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     if (!AudioContext) return;
@@ -519,6 +529,7 @@ function playFeedback(settings) {
     gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.12);
     oscillator.connect(gain);
     gain.connect(context.destination);
+    oscillator.addEventListener('ended', () => void context.close(), { once: true });
     oscillator.start();
     oscillator.stop(context.currentTime + 0.13);
   } catch {
@@ -532,11 +543,14 @@ export default function App() {
   const [settings, setSettings] = useState(loadSettings);
   const [selectedMode, setSelectedMode] = useState(loadSelectedMode);
   const [game, setGame] = useState(initialGame);
+  const [savedGames, setSavedGames] = useState(loadSavedGames);
+  const [activeSavedGameId, setActiveSavedGameId] = useState(null);
   const [remoteCards, setRemoteCards] = useState([]);
   const [room, setRoom] = useState(null);
   const [currentRoomPlayerId, setCurrentRoomPlayerId] = useState(null);
   const [onlineStatus, setOnlineStatus] = useState(defaultOnlineStatus);
   const [pendingConfirmation, setPendingConfirmation] = useState(null);
+  const [savedGamePendingDeleteId, setSavedGamePendingDeleteId] = useState(null);
   const [gameExitSettingsOpen, setGameExitSettingsOpen] = useState(false);
   const [introState, setIntroState] = useState(isDevMotionBuild ? 'visible' : null);
   const { appUpdate, installUpdate } = useNativeAppUpdater();
@@ -548,6 +562,9 @@ export default function App() {
   const advanceGameRef = useRef(null);
   const toggleTimerRef = useRef(null);
   const localPlayersRef = useRef(loadPlayers());
+  const savedGamesRef = useRef(savedGames);
+  const activeSavedGameIdRef = useRef(activeSavedGameId);
+  const persistCurrentGameRef = useRef(null);
   const gameHistoryGuardRef = useRef(false);
   const gameWasBackgroundedRef = useRef(false);
 
@@ -675,6 +692,14 @@ export default function App() {
   }, [selectedMode]);
 
   useEffect(() => {
+    savedGamesRef.current = savedGames;
+  }, [savedGames]);
+
+  useEffect(() => {
+    activeSavedGameIdRef.current = activeSavedGameId;
+  }, [activeSavedGameId]);
+
+  useEffect(() => {
     let ignore = false;
     let loading = false;
 
@@ -731,6 +756,11 @@ export default function App() {
       }
       if (event.key === null || event.key === storageKeys.selectedMode) {
         setSelectedMode(loadSelectedMode());
+      }
+      if (event.key === null || event.key === storageKeys.savedGames) {
+        const nextSavedGames = loadSavedGames();
+        savedGamesRef.current = nextSavedGames;
+        setSavedGames(nextSavedGames);
       }
     };
 
@@ -895,6 +925,79 @@ export default function App() {
   const canControlRoomGame =
     !room || currentRoomRole === roomRoles.host || currentRoomRole === roomRoles.narrator;
   const isOnlineGuest = onlineStatus.mode === 'guest';
+
+  const setCurrentSavedGameId = (savedGameId) => {
+    activeSavedGameIdRef.current = savedGameId;
+    setActiveSavedGameId(savedGameId);
+  };
+
+  const commitSavedGames = (nextSavedGames) => {
+    const result = storeSavedGames(nextSavedGames);
+    savedGamesRef.current = result.games;
+    setSavedGames(result.games);
+    return result.ok;
+  };
+
+  const persistCurrentGameNow = () => {
+    const savedGameId = activeSavedGameIdRef.current;
+    if (
+      !settings.saveGames ||
+      room ||
+      page !== pages.game ||
+      !savedGameId ||
+      !game.card
+    ) {
+      return false;
+    }
+
+    const previous = savedGamesRef.current.find((entry) => entry.id === savedGameId) ?? null;
+    const snapshot = createSavedGameSnapshot({
+      id: savedGameId,
+      players,
+      modeId: selectedMode,
+      game,
+      cardOptions: {
+        includeDuelCards: settings.includeDuelCards,
+        includeRoundtableCards: settings.includeRoundtableCards,
+      },
+      renderedCardText: cardText,
+      previous,
+    });
+    if (!snapshot) return false;
+
+    return commitSavedGames(upsertSavedGame(savedGamesRef.current, snapshot));
+  };
+
+  persistCurrentGameRef.current = persistCurrentGameNow;
+
+  useEffect(() => {
+    persistCurrentGameRef.current?.();
+  }, [
+    activeSavedGameId,
+    cardText,
+    game,
+    page,
+    players,
+    room,
+    selectedMode,
+    settings.includeDuelCards,
+    settings.includeRoundtableCards,
+    settings.saveGames,
+  ]);
+
+  useEffect(() => {
+    const persistBeforeSuspension = () => persistCurrentGameRef.current?.();
+    const persistWhenHidden = () => {
+      if (document.visibilityState === 'hidden') persistBeforeSuspension();
+    };
+
+    window.addEventListener('pagehide', persistBeforeSuspension);
+    document.addEventListener('visibilitychange', persistWhenHidden);
+    return () => {
+      window.removeEventListener('pagehide', persistBeforeSuspension);
+      document.removeEventListener('visibilitychange', persistWhenHidden);
+    };
+  }, []);
 
   const createSharedState = (overrides = {}) => {
     const nextState = {
@@ -1585,7 +1688,7 @@ export default function App() {
     const picked = pickRandomCard(cardPool, []);
     const playerOrder = shufflePlayerIndexes(players);
     const firstPlayerIndex = playerOrder[0] ?? 0;
-    setGame({
+    const nextGame = {
       ...initialGame,
       playerOrder,
       playerIndex: firstPlayerIndex,
@@ -1594,8 +1697,10 @@ export default function App() {
       card: picked.card,
       usedIds: picked.usedIds,
       timer: createTimerState(picked.card),
-    });
-    playFeedback(settings);
+    };
+    setCurrentSavedGameId(settings.saveGames && !room ? createSavedGameId() : null);
+    setGame(nextGame);
+    playFeedback();
     setPage(pages.game);
   };
 
@@ -1606,7 +1711,7 @@ export default function App() {
         type: onlineMessageTypes.control,
         action: 'next',
       });
-      playFeedback(settings);
+      playFeedback();
       return;
     }
 
@@ -1634,7 +1739,7 @@ export default function App() {
       usedIds: picked.usedIds,
       timer: createTimerState(picked.card),
     });
-    playFeedback(settings);
+    playFeedback();
   };
 
   advanceGameRef.current = advanceGame;
@@ -1647,12 +1752,12 @@ export default function App() {
         type: onlineMessageTypes.control,
         action: 'timer-toggle',
       });
-      playFeedback(settings);
+      playFeedback();
       return;
     }
 
     setGame((currentGame) => toggleTimerState(currentGame));
-    playFeedback(settings);
+    playFeedback();
   };
 
   toggleTimerRef.current = toggleTimer;
@@ -1665,6 +1770,10 @@ export default function App() {
     setOnlineStatus(defaultOnlineStatus);
     setPlayers([]);
     localPlayersRef.current = [];
+    savedGamesRef.current = [];
+    setSavedGames([]);
+    setCurrentSavedGameId(null);
+    setSavedGamePendingDeleteId(null);
     removeStoredKey(legacyStorageKeys.customCards);
     setSettings(defaultSettings);
     setSelectedMode('classic');
@@ -1675,19 +1784,10 @@ export default function App() {
   };
 
   const toggleSetting = (key, value) => {
-    const nextSettings = {
-      ...settings,
-      [key]: value,
-    };
-
     setSettings((currentSettings) => ({
       ...currentSettings,
       [key]: value,
     }));
-
-    if (key === 'sound' && value) {
-      window.setTimeout(() => playFeedback(nextSettings), 0);
-    }
   };
 
   const changeLandscapeRatio = async (ratio) => {
@@ -1719,6 +1819,60 @@ export default function App() {
     setPage(players.length >= 2 ? pages.modes : pages.players);
   };
 
+  const resumeSavedGame = (savedGameId) => {
+    const savedGame = savedGamesRef.current.find((entry) => entry.id === savedGameId);
+    if (!savedGame || savedGame.players.length < 2 || !savedGame.game.card || room) {
+      return false;
+    }
+
+    const resumedPlayers = sanitizePlayers(savedGame.players);
+    const resumedGame = sanitizeGame(savedGame.game);
+    if (resumedPlayers.length < 2 || !resumedGame.card) return false;
+
+    localPlayersRef.current = resumedPlayers;
+    setPlayers(resumedPlayers);
+    setSelectedMode(getModeById(savedGame.modeId).id);
+    setSettings((currentSettings) => ({
+      ...currentSettings,
+      includeDuelCards: savedGame.cardOptions.includeDuelCards,
+      includeRoundtableCards: savedGame.cardOptions.includeRoundtableCards,
+    }));
+    setGameExitSettingsOpen(false);
+    setPendingConfirmation(null);
+    setCurrentSavedGameId(savedGame.id);
+    setGame(resumedGame);
+    void lockGameFullscreen({ requestNative: shouldRequestNativeGameFullscreen() }).then(() =>
+      lockSelectedOrientation(settings.landscapeRatio),
+    );
+    playFeedback();
+    setPage(pages.game);
+    return true;
+  };
+
+  const requestDeleteSavedGame = (savedGameId) => {
+    if (!savedGamesRef.current.some((entry) => entry.id === savedGameId)) return;
+    setSavedGamePendingDeleteId(savedGameId);
+    setPendingConfirmation('delete-saved-game');
+  };
+
+  const deleteSavedGameNow = () => {
+    if (!savedGamePendingDeleteId) {
+      setPendingConfirmation(null);
+      return;
+    }
+
+    const nextSavedGames = deleteSavedGame(
+      savedGamesRef.current,
+      savedGamePendingDeleteId,
+    );
+    commitSavedGames(nextSavedGames);
+    if (activeSavedGameIdRef.current === savedGamePendingDeleteId) {
+      setCurrentSavedGameId(null);
+    }
+    setSavedGamePendingDeleteId(null);
+    setPendingConfirmation(null);
+  };
+
   const exitGameToHomeNow = () => {
     setGameExitSettingsOpen(false);
     setPendingConfirmation(null);
@@ -1728,6 +1882,8 @@ export default function App() {
       return;
     }
 
+    persistCurrentGameRef.current?.();
+    setCurrentSavedGameId(null);
     setGame(initialGame);
     setPage(pages.home);
   };
@@ -1749,6 +1905,7 @@ export default function App() {
   const cancelPendingConfirmation = () => {
     const shouldRestoreFullscreen = page === pages.game;
     setGameExitSettingsOpen(false);
+    setSavedGamePendingDeleteId(null);
     setPendingConfirmation(null);
 
     if (shouldRestoreFullscreen) {
@@ -1938,7 +2095,11 @@ export default function App() {
         return;
       }
 
-      if (page === pages.players || page === pages.settings) {
+      if (
+        page === pages.players ||
+        page === pages.settings ||
+        page === pages.savedGames
+      ) {
         setPage(pages.home);
         return;
       }
@@ -1959,6 +2120,9 @@ export default function App() {
   }, [page, pendingConfirmation, room]);
 
   const immersivePages = new Set(Object.values(pages));
+  const savedGamePendingDelete = savedGames.find(
+    (entry) => entry.id === savedGamePendingDeleteId,
+  );
 
   return (
     <>
@@ -1973,8 +2137,10 @@ export default function App() {
       {page === pages.home ? (
         <HomePage
           playersCount={players.length}
+          savedGamesCount={savedGames.length}
           onStart={goToStartFlow}
           onPlayers={() => setPage(pages.players)}
+          onSavedGames={() => setPage(pages.savedGames)}
           onRoom={() => setPage(pages.room)}
           onSettings={() => setPage(pages.settings)}
           appDownloadUrl={
@@ -2054,6 +2220,16 @@ export default function App() {
           onBack={() => setPage(pages.home)}
         />
       ) : null}
+
+      {page === pages.savedGames ? (
+        <SavedGamesPage
+          savedGames={savedGames}
+          savingEnabled={settings.saveGames}
+          onResume={resumeSavedGame}
+          onDelete={requestDeleteSavedGame}
+          onBack={() => setPage(pages.home)}
+        />
+      ) : null}
       </div>
 
       {pendingConfirmation === 'finish-room' ? (
@@ -2099,10 +2275,24 @@ export default function App() {
       {pendingConfirmation === 'clear-data' ? (
         <ConfirmDialog
           title="Törlöd az összes adatot?"
-          description="Ez végleg törli a játékosokat, majd visszaállítja az alapbeállításokat."
+          description="Ez végleg törli a játékosokat és a korábbi játékokat, majd visszaállítja az alapbeállításokat."
           confirmLabel="Adatok törlése"
           onCancel={cancelPendingConfirmation}
           onConfirm={clearData}
+        />
+      ) : null}
+
+      {pendingConfirmation === 'delete-saved-game' ? (
+        <ConfirmDialog
+          title="Törlöd ezt a mentést?"
+          description={`A ${
+            savedGamePendingDelete
+              ? getModeById(savedGamePendingDelete.modeId).name
+              : 'kiválasztott'
+          } játék mentése és a kijátszott kártyák előzménye végleg törlődik.`}
+          confirmLabel="Mentés törlése"
+          onCancel={cancelPendingConfirmation}
+          onConfirm={deleteSavedGameNow}
         />
       ) : null}
     </Layout>

@@ -1,4 +1,4 @@
-import { Moon, RefreshCw, RotateCcw, UsersRound, Volume2 } from 'lucide-react';
+import { Moon, RefreshCw, RotateCcw, Save, UsersRound } from 'lucide-react';
 import { useState } from 'react';
 import Header from '../components/Header.jsx';
 import LandscapeRatioPicker from '../components/LandscapeRatioPicker.jsx';
@@ -47,11 +47,11 @@ export default function SettingsPage({
             icon={Moon}
           />
           <SettingsToggle
-            label="Hang"
-            description="Rövid visszajelzés kártyaváltásnál."
-            checked={settings.sound}
-            onChange={(value) => updateSetting('sound', value, 'Hang')}
-            icon={Volume2}
+            label="Játék mentése"
+            description="Megőrzi a játékosokat, a haladást és a kijátszott kártyákat."
+            checked={settings.saveGames}
+            onChange={(value) => updateSetting('saveGames', value, 'Játék mentése')}
+            icon={Save}
           />
           <SettingsToggle
             label="Páros kártyák"
@@ -80,7 +80,8 @@ export default function SettingsPage({
           <div className="rounded-3xl border border-rose-200/18 bg-rose-400/10 p-4">
             <p className="text-base font-black text-rose-50">Adatok törlése</p>
             <p className="mt-1 text-sm leading-6 text-rose-50/70">
-              Törli a játékosokat és visszaállítja az alapbeállításokat.
+              Törli a játékosokat, a korábbi játékokat és visszaállítja az
+              alapbeállításokat.
             </p>
             <PrimaryButton
               variant="danger"
