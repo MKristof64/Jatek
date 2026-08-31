@@ -2781,6 +2781,86 @@ export const boldCards = [
     "sortOrder": 278
   },
   {
+    "id": "bold-pikans-v2-never-279",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "láttam a Tinderen olyan személyt, akit élőben ismertem",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 279
+  },
+  {
+    "id": "bold-pikans-v2-never-280",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "matcheltem két emberrel egy baráti társaságból",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 280
+  },
+  {
+    "id": "bold-pikans-v2-never-281",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "kerültem olyan helyzetbe, ahol a kiszemeltem mással is randizgatott",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 281
+  },
+  {
+    "id": "bold-pikans-v2-never-282",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "kértem óvszert családtagtól",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 282
+  },
+  {
+    "id": "bold-pikans-v2-never-283",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "szerveztem ugyanarra a napra két randit két emberrel",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 283
+  },
+  {
+    "id": "bold-pikans-v2-never-284",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "néztem Tindert randi közben",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 284
+  },
+  {
+    "id": "bold-pikans-v2-never-285",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "küldtem ugyanazt a nude-ot több embernek",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 285
+  },
+  {
+    "id": "bold-pikans-v2-never-286",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "játszottam vetkőzős játékot",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 286
+  },
+  {
     "id": "bold-pikans-v2-duel-001",
     "mode": "bold",
     "kind": "duel",

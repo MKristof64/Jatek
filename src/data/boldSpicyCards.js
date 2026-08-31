@@ -2225,6 +2225,70 @@ export const boldSpicyCards = [
     "safe": true
   },
   {
+    "id": "bold-pikans-v2-never-279",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "láttam a Tinderen olyan személyt, akit élőben ismertem",
+    "safe": true
+  },
+  {
+    "id": "bold-pikans-v2-never-280",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "matcheltem két emberrel egy baráti társaságból",
+    "safe": true
+  },
+  {
+    "id": "bold-pikans-v2-never-281",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "kerültem olyan helyzetbe, ahol a kiszemeltem mással is randizgatott",
+    "safe": true
+  },
+  {
+    "id": "bold-pikans-v2-never-282",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "kértem óvszert családtagtól",
+    "safe": true
+  },
+  {
+    "id": "bold-pikans-v2-never-283",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "szerveztem ugyanarra a napra két randit két emberrel",
+    "safe": true
+  },
+  {
+    "id": "bold-pikans-v2-never-284",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "néztem Tindert randi közben",
+    "safe": true
+  },
+  {
+    "id": "bold-pikans-v2-never-285",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "küldtem ugyanazt a nude-ot több embernek",
+    "safe": true
+  },
+  {
+    "id": "bold-pikans-v2-never-286",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "játszottam vetkőzős játékot",
+    "safe": true
+  },
+  {
     "id": "bold-pikans-v2-duel-001",
     "mode": "bold",
     "kind": "duel",
