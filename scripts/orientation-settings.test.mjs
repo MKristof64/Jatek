@@ -92,3 +92,18 @@ test('landscape mode selection stays single-column with a compact start action',
     /\.mode-list \{\s*display: grid !important;\s*grid-template-columns: repeat\(2,/,
   );
 });
+
+test('landscape ratio uses a centered game canvas with pure black side bars', async () => {
+  const [layoutSource, styles] = await Promise.all([
+    readProjectFile('src/components/Layout.jsx'),
+    readProjectFile('src/index.css'),
+  ]);
+
+  assert.match(layoutSource, /landscapePreset \? 'party-bg phone-frame--ratio-canvas' : ''/);
+  assert.match(
+    styles,
+    /\.app-landscape-layout \.app-shell\.party-bg \{[\s\S]*?background-color: #000 !important;[\s\S]*?background-image: none !important;/,
+  );
+  assert.match(styles, /aspect-ratio: var\(--app-landscape-ratio\);/);
+  assert.match(styles, /\.app-landscape-layout \.phone-frame--immersive,[\s\S]*?overflow: hidden;/);
+});

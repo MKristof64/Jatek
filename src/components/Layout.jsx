@@ -43,6 +43,7 @@ export default function Layout({
         <div
           className={[
             'phone-frame mx-auto flex w-full flex-col',
+            landscapePreset ? 'party-bg phone-frame--ratio-canvas' : '',
             gameMode
               ? 'phone-frame--game phone-frame--immersive max-w-none'
               : isImmersive

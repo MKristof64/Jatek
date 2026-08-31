@@ -4281,10 +4281,22 @@ html[data-app-theme="light"] body {
   }
 }
 
-/* The chosen ratio frames the whole landscape experience without changing the device viewport. */
+/* The chosen ratio is a self-contained projection canvas; unused display space stays pure black. */
 @media (orientation: landscape) {
+  .app-landscape-layout .app-shell.party-bg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000 !important;
+    background-image: none !important;
+    background-size: auto !important;
+    background-position: center !important;
+    animation: none !important;
+  }
+
   .app-landscape-layout .phone-frame--immersive,
   .app-landscape-layout .phone-frame--game {
+    flex: 0 0 auto;
     width: min(
       100%,
       calc(var(--app-viewport-height, var(--app-game-height, 100dvh)) * var(--app-landscape-ratio))
@@ -4293,6 +4305,8 @@ html[data-app-theme="light"] body {
       100%,
       calc(var(--app-viewport-height, var(--app-game-height, 100dvh)) * var(--app-landscape-ratio))
     ) !important;
+    aspect-ratio: var(--app-landscape-ratio);
     margin-inline: auto;
+    overflow: hidden;
   }
 }
