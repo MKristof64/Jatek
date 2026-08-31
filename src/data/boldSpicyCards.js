@@ -2289,6 +2289,46 @@ export const boldSpicyCards = [
     "safe": true
   },
   {
+    "id": "bold-pikans-v2-never-287",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "jártam vissza az exemhez szexelni",
+    "safe": true
+  },
+  {
+    "id": "bold-pikans-v2-never-288",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "voltam olyan buliban, ahol egyszerre volt jelen a kiszemeltem és az exem",
+    "safe": true
+  },
+  {
+    "id": "bold-pikans-v2-never-289",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "próbáltam fel a párom alsóneműjét",
+    "safe": true
+  },
+  {
+    "id": "bold-pikans-v2-never-290",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "rongáltam meg bármit szex közben",
+    "safe": true
+  },
+  {
+    "id": "bold-pikans-v2-never-291",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "fizettem pornóért",
+    "safe": true
+  },
+  {
     "id": "bold-pikans-v2-duel-001",
     "mode": "bold",
     "kind": "duel",

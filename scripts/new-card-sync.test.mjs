@@ -14,11 +14,22 @@ const addedCards = [
   ['bold-pikans-v2-never-284', 'bold'],
   ['bold-pikans-v2-never-285', 'bold'],
   ['bold-pikans-v2-never-286', 'bold'],
+  ['bold-pikans-v2-never-287', 'bold'],
+  ['bold-pikans-v2-never-288', 'bold'],
+  ['bold-pikans-v2-never-289', 'bold'],
+  ['bold-pikans-v2-never-290', 'bold'],
+  ['bold-pikans-v2-never-291', 'bold'],
   ['hardcore-v1-never-115', 'hardcore'],
   ['hardcore-v1-never-116', 'hardcore'],
   ['hardcore-v1-never-117', 'hardcore'],
   ['hardcore-v1-never-118', 'hardcore'],
   ['hardcore-v1-never-119', 'hardcore'],
+  ['hardcore-v1-never-120', 'hardcore'],
+  ['hardcore-v1-never-121', 'hardcore'],
+  ['hardcore-v1-never-122', 'hardcore'],
+  ['hardcore-v1-never-123', 'hardcore'],
+  ['hardcore-v1-never-124', 'hardcore'],
+  ['hardcore-v1-never-125', 'hardcore'],
 ];
 
 test('the new bold and hardcore cards are identical in the game and controller sources', () => {
@@ -27,7 +38,7 @@ test('the new bold and hardcore cards are identical in the game and controller s
     [...boldCards, ...workerHardcoreCards].map((card) => [card.id, card]),
   );
 
-  assert.equal(addedCards.length, 13);
+  assert.equal(addedCards.length, 24);
 
   addedCards.forEach(([id, mode]) => {
     const gameCard = gameCards.get(id);

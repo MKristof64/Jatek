@@ -953,6 +953,54 @@ export const hardcoreCards = [
     "safe": true
   },
   {
+    "id": "hardcore-v1-never-120",
+    "mode": "hardcore",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "játszottam ivós sakkot",
+    "safe": true
+  },
+  {
+    "id": "hardcore-v1-never-121",
+    "mode": "hardcore",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "mostam sörrel fogat",
+    "safe": true
+  },
+  {
+    "id": "hardcore-v1-never-122",
+    "mode": "hardcore",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "aludtam el buli közben",
+    "safe": true
+  },
+  {
+    "id": "hardcore-v1-never-123",
+    "mode": "hardcore",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "másztam be valahova ablakon",
+    "safe": true
+  },
+  {
+    "id": "hardcore-v1-never-124",
+    "mode": "hardcore",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "próbáltam piát becsempészni valahova",
+    "safe": true
+  },
+  {
+    "id": "hardcore-v1-never-125",
+    "mode": "hardcore",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "aludtam fürdőkádban",
+    "safe": true
+  },
+  {
     "id": "hardcore-v1-duel-001",
     "mode": "hardcore",
     "kind": "duel",
