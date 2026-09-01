@@ -1895,7 +1895,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "én voltam az, aki szakított",
+    "text": "kezdeményeztem szakítást",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 190
@@ -2325,7 +2325,7 @@ export const boldCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "szedtem fel pultost, és sosem feküdtem le vele",
+    "text": "szedtem fel, vagy feküdtem le pultossal",
     "durationSeconds": 0,
     "category": "Pikáns",
     "sortOrder": 233

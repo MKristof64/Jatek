@@ -32,6 +32,31 @@ const addedCards = [
   ['hardcore-v1-never-125', 'hardcore'],
 ];
 
+const normalizedCard = (card) => ({
+  id: card.id,
+  mode: card.mode,
+  kind: card.kind,
+  title: card.title,
+  text: card.text,
+  durationSeconds:
+    Number.isFinite(Number(card.durationSeconds))
+      ? Number(card.durationSeconds)
+      : card.kind === 'never'
+        ? 0
+        : 30,
+});
+
+test('all built-in bold and hardcore cards match the controller sources', () => {
+  const gameCards = [...boldSpicyCards, ...hardcoreCards]
+    .map(normalizedCard)
+    .sort((firstCard, secondCard) => firstCard.id.localeCompare(secondCard.id));
+  const controllerCards = [...boldCards, ...workerHardcoreCards]
+    .map(normalizedCard)
+    .sort((firstCard, secondCard) => firstCard.id.localeCompare(secondCard.id));
+
+  assert.deepEqual(controllerCards, gameCards);
+});
+
 test('the new bold and hardcore cards are identical in the game and controller sources', () => {
   const gameCards = new Map([...boldSpicyCards, ...hardcoreCards].map((card) => [card.id, card]));
   const controllerCards = new Map(

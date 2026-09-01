@@ -1517,7 +1517,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "én voltam az, aki szakított",
+    "text": "kezdeményeztem szakítást",
     "safe": true
   },
   {
@@ -1861,7 +1861,7 @@ export const boldSpicyCards = [
     "mode": "bold",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "szedtem fel pultost, és sosem feküdtem le vele",
+    "text": "szedtem fel, vagy feküdtem le pultossal",
     "safe": true
   },
   {

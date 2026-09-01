@@ -225,7 +225,7 @@ export const hardcoreCards = [
     "mode": "hardcore",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "buktam le AI használata miatt, aminek következménye is lett",
+    "text": "buktam le AI használat miatt, aminek következménye is lett",
     "durationSeconds": 0,
     "category": "Hardcore",
     "sortOrder": 23
@@ -235,7 +235,7 @@ export const hardcoreCards = [
     "mode": "hardcore",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "hittem rossz felsőbb éves tanácsnak",
+    "text": "hittem egy felsőbb éves rossz tanácsnak",
     "durationSeconds": 0,
     "category": "Hardcore",
     "sortOrder": 24
@@ -295,7 +295,7 @@ export const hardcoreCards = [
     "mode": "hardcore",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "hazudtam csendes estét a szüleimnek, miközben buliban voltam",
+    "text": "kamuztam a szüleimnek arról, hogy buliba mentem",
     "durationSeconds": 0,
     "category": "Hardcore",
     "sortOrder": 30
@@ -535,7 +535,7 @@ export const hardcoreCards = [
     "mode": "hardcore",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "adtam ki másnak, csak hogy valahova bejussak",
+    "text": "adtam ki magam másnak, csak hogy valahova bejussak",
     "durationSeconds": 0,
     "category": "Hardcore",
     "sortOrder": 54
@@ -615,7 +615,7 @@ export const hardcoreCards = [
     "mode": "hardcore",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "kerültem, akinek tartoztam",
+    "text": "kerültem azt, akinek tartoztam",
     "durationSeconds": 0,
     "category": "Hardcore",
     "sortOrder": 62
@@ -705,7 +705,7 @@ export const hardcoreCards = [
     "mode": "hardcore",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "ittam hugymeleg sört",
+    "text": "ittam húgymeleg sört",
     "durationSeconds": 0,
     "category": "Hardcore",
     "sortOrder": 71
@@ -715,7 +715,7 @@ export const hardcoreCards = [
     "mode": "hardcore",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "töltöttem éjszakát egy koliszobában, ahol hivatalosan lehettem volna",
+    "text": "töltöttem éjszakát egy koliszobában, ahol nem lehettem volna",
     "durationSeconds": 0,
     "category": "Hardcore",
     "sortOrder": 72
@@ -775,7 +775,7 @@ export const hardcoreCards = [
     "mode": "hardcore",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "bilincseltek meg (nem a rendőrök)",
+    "text": "voltam megbilincselve",
     "durationSeconds": 0,
     "category": "Hardcore",
     "sortOrder": 78
@@ -965,7 +965,7 @@ export const hardcoreCards = [
     "mode": "hardcore",
     "kind": "never",
     "title": "Én még sosem...",
-    "text": "nyitottak rám szarás közben buliban",
+    "text": "jártam úgy, hogy rámnyitottak szarás közben buliban",
     "durationSeconds": 0,
     "category": "Hardcore",
     "sortOrder": 97
