@@ -13,17 +13,17 @@ import java.util.regex.Pattern;
 @CapacitorPlugin(name = "AppUpdater")
 public class AppUpdaterPlugin extends Plugin {
 
-    private static final Pattern RELEASE_PATH = Pattern.compile(
-        "^/MKristof64/Jatek/releases/tag/v?\\d+\\.\\d+\\.\\d+$"
+    private static final Pattern APK_DOWNLOAD_PATH = Pattern.compile(
+        "^/MKristof64/Jatek/releases/download/v?\\d+\\.\\d+\\.\\d+/Az-ivos-jatek\\.apk$"
     );
 
     @PluginMethod
-    public void openReleasePage(PluginCall call) {
-        String releaseUrl = call.getString("url");
-        Uri uri = parseTrustedReleaseUri(releaseUrl);
+    public void openUpdateDownload(PluginCall call) {
+        String downloadUrl = call.getString("url");
+        Uri uri = parseTrustedDownloadUri(downloadUrl);
 
         if (uri == null) {
-            call.reject("A frissítési oldal címe érvénytelen.", "INVALID_RELEASE_URL");
+            call.reject("A frissítés letöltési címe érvénytelen.", "INVALID_DOWNLOAD_URL");
             return;
         }
 
@@ -33,14 +33,14 @@ public class AppUpdaterPlugin extends Plugin {
         try {
             getActivity().startActivity(intent);
             JSObject result = new JSObject();
-            result.put("status", "releaseOpened");
+            result.put("status", "downloadOpened");
             call.resolve(result);
         } catch (ActivityNotFoundException error) {
-            call.reject("A frissítési oldal nem nyitható meg ezen a készüléken.", "BROWSER_UNAVAILABLE", error);
+            call.reject("A frissítés letöltése nem indítható el ezen a készüléken.", "DOWNLOAD_UNAVAILABLE", error);
         }
     }
 
-    private Uri parseTrustedReleaseUri(String value) {
+    private Uri parseTrustedDownloadUri(String value) {
         if (value == null) return null;
 
         try {
@@ -52,7 +52,7 @@ public class AppUpdaterPlugin extends Plugin {
                 uri.getPort() != -1 ||
                 uri.getQuery() != null ||
                 uri.getFragment() != null ||
-                !RELEASE_PATH.matcher(uri.getPath()).matches()
+                !APK_DOWNLOAD_PATH.matcher(uri.getPath()).matches()
             ) {
                 return null;
             }

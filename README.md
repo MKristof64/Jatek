@@ -47,9 +47,10 @@ Az aláírt APK helye:
 feltölthető AAB itt készül el:
 `android/app/build/outputs/bundle/release/app-release.aab`.
 
-A natív frissítésjelző kizárólag a hitelesített GitHub-kiadási oldalt nyitja meg
-a rendszer böngészőjében. Az alkalmazás nem kér csomagtelepítési jogosultságot,
-nem tölt le APK-t a saját tárhelyére, és nem indít telepítőt.
+A natív frissítésjelző kizárólag a hitelesített, verziózott GitHub APK közvetlen
+letöltését nyitja meg a rendszer letöltéskezelőjében. Az alkalmazás nem kér
+csomagtelepítési jogosultságot, nem ír APK-t a saját tárhelyére, és nem indít
+telepítőt.
 
 Az Android Studio projekt frissítése és megnyitása:
 

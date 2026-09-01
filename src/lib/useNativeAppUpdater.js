@@ -12,10 +12,10 @@ const initialState = {
 };
 
 function getErrorMessage(error) {
-  if (error?.code === 'BROWSER_UNAVAILABLE') {
-    return 'A frissítési oldal nem nyitható meg ezen a készüléken.';
+  if (error?.code === 'DOWNLOAD_UNAVAILABLE') {
+    return 'A frissítés letöltése nem indítható el ezen a készüléken.';
   }
-  return error?.message || 'A frissítési oldal nem nyílt meg. Próbáld újra.';
+  return error?.message || 'A frissítés letöltése nem indult el. Próbáld újra.';
 }
 
 export default function useNativeAppUpdater() {
@@ -36,15 +36,15 @@ export default function useNativeAppUpdater() {
     setState((current) => ({
       ...current,
       status: 'opening',
-      message: 'A hitelesített GitHub-kiadás megnyitása…',
+      message: 'A hitelesített frissítés letöltésének indítása…',
     }));
 
     try {
-      await NativeAppUpdater.openReleasePage({ url: release.releaseUrl });
+      await NativeAppUpdater.openUpdateDownload({ url: release.url });
       setState((current) => ({
         ...current,
-        status: 'release-opened',
-        message: 'A hivatalos kiadási oldal megnyílt a böngészőben.',
+        status: 'download-opened',
+        message: 'A frissítés letöltése elindult.',
       }));
     } catch (error) {
       setState((current) => ({
@@ -88,7 +88,7 @@ export default function useNativeAppUpdater() {
     };
 
     void CapacitorApp.addListener('appStateChange', ({ isActive }) => {
-      if (!isActive || disposed || stateRef.current.status !== 'release-opened') return;
+      if (!isActive || disposed || stateRef.current.status !== 'download-opened') return;
 
       window.clearTimeout(resumeTimer);
       resumeTimer = window.setTimeout(() => void checkForUpdate(), 600);

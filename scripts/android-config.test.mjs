@@ -47,13 +47,15 @@ test('Android activity uses edge-to-edge immersive system bars', async () => {
   assert.match(activity, /registerPlugin\(AppUpdaterPlugin\.class\)/);
 });
 
-test('Android updater opens only a trusted release page without package-install access', async () => {
+test('Android updater opens only the trusted APK download without package-install access', async () => {
   const updater = await readProjectFile(
     'android/app/src/main/java/hu/mkristof64/azivosjatek/AppUpdaterPlugin.java',
   );
 
   assert.match(updater, /github\.com/);
-  assert.match(updater, /RELEASE_PATH/);
+  assert.match(updater, /APK_DOWNLOAD_PATH/);
+  assert.match(updater, /Az-ivos-jatek\\\\\.apk/);
+  assert.match(updater, /openUpdateDownload/);
   assert.match(updater, /Intent\.ACTION_VIEW/);
   assert.match(updater, /Intent\.CATEGORY_BROWSABLE/);
   assert.match(updater, /"https"\.equalsIgnoreCase/);
@@ -74,8 +76,8 @@ test('Android release is minimized and never commits signing secrets', async () 
   const ignoreRules = await readProjectFile('.gitignore');
   const packageJson = JSON.parse(await readProjectFile('package.json'));
 
-  assert.match(buildGradle, /versionCode 17/);
-  assert.match(buildGradle, /versionName "1\.2\.1"/);
+  assert.match(buildGradle, /versionCode 18/);
+  assert.match(buildGradle, /versionName "1\.2\.2"/);
   assert.match(buildGradle, /minifyEnabled true/);
   assert.match(buildGradle, /shrinkResources true/);
   assert.match(gradleWrapper, /gradle-8\.14\.5-bin\.zip/);
