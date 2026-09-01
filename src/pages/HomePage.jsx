@@ -14,8 +14,7 @@ function getUpdateLabel(appUpdate) {
     return appUpdate.progress > 0 ? `Letöltés ${appUpdate.progress}%` : 'Letöltés…';
   }
   if (appUpdate.status === 'preparing') return 'Előkészítés…';
-  if (appUpdate.status === 'permission-required') return 'Engedélyezés…';
-  if (appUpdate.status === 'installer-opened') return 'Telepítés…';
+  if (appUpdate.status === 'downloads-opened') return 'Letöltve';
   if (appUpdate.status === 'error') return 'Újrapróbálom';
   return `Frissítés ${appUpdate.release.version}`;
 }
@@ -32,9 +31,7 @@ export default function HomePage({
   savedGamesCount,
 }) {
   const updateBusy = appUpdate
-    ? ['preparing', 'downloading', 'permission-required', 'installer-opened'].includes(
-        appUpdate.status,
-      )
+    ? ['preparing', 'downloading'].includes(appUpdate.status)
     : false;
 
   return (

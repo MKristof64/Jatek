@@ -21,8 +21,8 @@ const errorMessages = {
   VERSION_MISMATCH: 'A letöltött telepítő verziója nem egyezik a kiadással.',
   SIGNATURE_MISMATCH: 'A telepítő kiadói aláírása nem egyezik az alkalmazáséval.',
   VERSION_NOT_NEWER: 'A letöltött kiadás nem újabb a telepített változatnál.',
-  INSTALL_PERMISSION_REQUIRED: 'A frissítéshez engedélyezned kell az alkalmazástelepítést.',
-  INSTALLER_UNAVAILABLE: 'Az Android telepítője nem nyitható meg ezen a készüléken.',
+  EXPORT_FAILED: 'A frissítés nem menthető a rendszer Letöltések mappájába.',
+  DOWNLOADS_UNAVAILABLE: 'Az Android Letöltések felülete nem nyitható meg ezen a készüléken.',
   UPDATE_IN_PROGRESS: 'A frissítés letöltése már folyamatban van.',
 };
 
@@ -35,7 +35,6 @@ export default function useNativeAppUpdater() {
   const [state, setState] = useState(initialState);
   const stateRef = useRef(initialState);
   const installInProgressRef = useRef(false);
-  const permissionReturnPendingRef = useRef(false);
 
   useEffect(() => {
     stateRef.current = state;
@@ -46,7 +45,6 @@ export default function useNativeAppUpdater() {
     if (!isNative || !release || installInProgressRef.current) return;
 
     installInProgressRef.current = true;
-    permissionReturnPendingRef.current = false;
     setState((current) => ({
       ...current,
       status: 'preparing',
@@ -55,28 +53,17 @@ export default function useNativeAppUpdater() {
     }));
 
     try {
-      const result = await NativeAppUpdater.downloadAndInstall({
+      const result = await NativeAppUpdater.downloadAndPrepare({
         url: release.url,
         sha256: release.sha256,
         version: release.version,
-        openPermissionSettings: true,
       });
-
-      if (result?.status === 'permissionRequired') {
-        permissionReturnPendingRef.current = true;
-        setState((current) => ({
-          ...current,
-          status: 'permission-required',
-          message: 'Engedélyezd a frissítést; visszatéréskor automatikusan folytatódik.',
-        }));
-        return;
-      }
 
       setState((current) => ({
         ...current,
-        status: 'installer-opened',
+        status: result?.status === 'downloadsOpened' ? 'downloads-opened' : 'ready',
         progress: 100,
-        message: 'A frissítés ellenőrizve. Hagyd jóvá az Android megerősítő ablakában.',
+        message: 'A frissítés ellenőrizve. A Letöltésekben koppints az APK-ra a telepítéshez.',
       }));
     } catch (error) {
       setState((current) => ({
@@ -140,38 +127,10 @@ export default function useNativeAppUpdater() {
     void CapacitorApp.addListener('appStateChange', ({ isActive }) => {
       if (!isActive || disposed) return;
 
-      if (stateRef.current.status === 'installer-opened') {
+      if (stateRef.current.status === 'downloads-opened') {
         window.clearTimeout(resumeTimer);
         resumeTimer = window.setTimeout(() => void checkForUpdate(), 500);
-        return;
       }
-
-      if (!permissionReturnPendingRef.current) return;
-
-      permissionReturnPendingRef.current = false;
-      window.clearTimeout(resumeTimer);
-      resumeTimer = window.setTimeout(async () => {
-        try {
-          const permission = await NativeAppUpdater.canInstallPackages();
-          if (permission?.allowed) {
-            await installUpdate();
-          } else if (!disposed) {
-            setState((current) => ({
-              ...current,
-              status: 'error',
-              message: 'A frissítéshez engedélyezned kell az alkalmazástelepítést.',
-            }));
-          }
-        } catch (error) {
-          if (!disposed) {
-            setState((current) => ({
-              ...current,
-              status: 'error',
-              message: getErrorMessage(error),
-            }));
-          }
-        }
-      }, 500);
     }).then((handle) => {
       if (disposed) void handle.remove();
       else appStateHandle = handle;

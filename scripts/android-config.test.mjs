@@ -30,10 +30,9 @@ test('Android manifest permits controlled rotation and blocks cleartext traffic'
   assert.match(manifest, /android:dataExtractionRules="@xml\/data_extraction_rules"/);
   assert.match(manifest, /android:fullBackupContent="@xml\/backup_rules"/);
   assert.match(manifest, /android:name="android\.permission\.INTERNET"/);
-  assert.match(manifest, /android\.permission\.REQUEST_INSTALL_PACKAGES/);
-  assert.match(manifest, /androidx\.core\.content\.FileProvider/);
-  assert.match(manifest, /android:exported="false"/);
-  assert.match(manifest, /android:resource="@xml\/file_paths"/);
+  assert.doesNotMatch(manifest, /android\.permission\.REQUEST_INSTALL_PACKAGES/);
+  assert.doesNotMatch(manifest, /androidx\.core\.content\.FileProvider/);
+  assert.doesNotMatch(manifest, /android:resource="@xml\/file_paths"/);
 });
 
 test('Android activity uses edge-to-edge immersive system bars', async () => {
@@ -49,28 +48,29 @@ test('Android activity uses edge-to-edge immersive system bars', async () => {
   assert.match(activity, /registerPlugin\(AppUpdaterPlugin\.class\)/);
 });
 
-test('Android updater downloads, verifies and installs without opening a browser', async () => {
+test('Android updater verifies releases and hands them to system Downloads without install access', async () => {
   const updater = await readProjectFile(
     'android/app/src/main/java/hu/mkristof64/azivosjatek/AppUpdaterPlugin.java',
   );
-  const filePaths = await readProjectFile('android/app/src/main/res/xml/file_paths.xml');
-
   assert.match(updater, /github\.com/);
   assert.match(updater, /APK_DOWNLOAD_PATH/);
   assert.match(updater, /Az-ivos-jatek\\\\\.apk/);
-  assert.match(updater, /downloadAndInstall/);
+  assert.match(updater, /downloadAndPrepare/);
   assert.match(updater, /MessageDigest\.getInstance\("SHA-256"\)/);
   assert.match(updater, /validateDownloadedApk/);
   assert.match(updater, /getSignerDigests/);
   assert.match(updater, /PackageInfoCompat\.getLongVersionCode/);
-  assert.match(updater, /ACTION_INSTALL_PACKAGE/);
-  assert.match(updater, /FileProvider\.getUriForFile/);
-  assert.match(updater, /ACTION_MANAGE_UNKNOWN_APP_SOURCES/);
+  assert.match(updater, /MediaStore\.Downloads\.EXTERNAL_CONTENT_URI/);
+  assert.match(updater, /MediaStore\.MediaColumns\.IS_PENDING/);
+  assert.match(updater, /addCompletedDownload/);
+  assert.match(updater, /DownloadManager\.ACTION_VIEW_DOWNLOADS/);
   assert.match(updater, /release-assets\.githubusercontent\.com/);
+  assert.doesNotMatch(updater, /ACTION_INSTALL_PACKAGE/);
+  assert.doesNotMatch(updater, /ACTION_MANAGE_UNKNOWN_APP_SOURCES/);
+  assert.doesNotMatch(updater, /FileProvider/);
+  assert.doesNotMatch(updater, /canRequestPackageInstalls/);
   assert.doesNotMatch(updater, /Intent\.ACTION_VIEW/);
   assert.doesNotMatch(updater, /Intent\.CATEGORY_BROWSABLE/);
-  assert.match(filePaths, /<cache-path name="verified_app_updates" path="updates\/" \/>/);
-  assert.doesNotMatch(filePaths, /external-path|external-files-path|root-path/);
 });
 
 test('Android release is minimized and never commits signing secrets', async () => {
@@ -79,8 +79,8 @@ test('Android release is minimized and never commits signing secrets', async () 
   const ignoreRules = await readProjectFile('.gitignore');
   const packageJson = JSON.parse(await readProjectFile('package.json'));
 
-  assert.match(buildGradle, /versionCode 20/);
-  assert.match(buildGradle, /versionName "1\.2\.4"/);
+  assert.match(buildGradle, /versionCode 21/);
+  assert.match(buildGradle, /versionName "1\.2\.5"/);
   assert.match(buildGradle, /minifyEnabled true/);
   assert.match(buildGradle, /shrinkResources true/);
   assert.match(gradleWrapper, /gradle-8\.14\.5-bin\.zip/);
