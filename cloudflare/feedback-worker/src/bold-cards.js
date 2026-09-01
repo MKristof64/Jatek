@@ -3261,16 +3261,6 @@ export const boldCards = [
     "sortOrder": 313
   },
   {
-    "id": "bold-pikans-v2-duel-036",
-    "mode": "bold",
-    "kind": "duel",
-    "title": "Ki romantikus, de ijesztő mellékhatásokkal?",
-    "text": "Soroljatok dolgokat, amik nagyon romantikusak lennének filmben, de élőben furák",
-    "durationSeconds": 30,
-    "category": "Pikáns",
-    "sortOrder": 314
-  },
-  {
     "id": "bold-pikans-v2-duel-037",
     "mode": "bold",
     "kind": "duel",
