@@ -1,10 +1,10 @@
-import { Trash2, UsersRound } from 'lucide-react';
+import { Crown, Trash2, UsersRound } from 'lucide-react';
 import { useState } from 'react';
 import Header from '../components/Header.jsx';
 import PlayerInput from '../components/PlayerInput.jsx';
 import PrimaryButton from '../components/PrimaryButton.jsx';
 
-export default function PlayersPage({ players, onAdd, onRemove, onNext, onBack }) {
+export default function PlayersPage({ players, onAdd, onRemove, onRoom, onNext, onBack }) {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const hasEnoughPlayers = players.length >= 2;
@@ -77,9 +77,14 @@ export default function PlayersPage({ players, onAdd, onRemove, onNext, onBack }
           )}
         </div>
 
-        <PrimaryButton className="shrink-0" disabled={!hasEnoughPlayers} onClick={onNext}>
-          Tovább a módokhoz
-        </PrimaryButton>
+        <div className="shrink-0 space-y-3">
+          <PrimaryButton variant="secondary" icon={Crown} onClick={onRoom}>
+            Szoba
+          </PrimaryButton>
+          <PrimaryButton disabled={!hasEnoughPlayers} onClick={onNext}>
+            Tovább a módokhoz
+          </PrimaryButton>
+        </div>
       </section>
     </>
   );

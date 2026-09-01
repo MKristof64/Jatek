@@ -2141,7 +2141,6 @@ export default function App() {
           onStart={goToStartFlow}
           onPlayers={() => setPage(pages.players)}
           onSavedGames={() => setPage(pages.savedGames)}
-          onRoom={() => setPage(pages.room)}
           onSettings={() => setPage(pages.settings)}
           appDownloadUrl={
             isNativeAppBuild || Capacitor.isNativePlatform()
@@ -2160,6 +2159,7 @@ export default function App() {
           players={players}
           onAdd={addPlayer}
           onRemove={removePlayer}
+          onRoom={() => setPage(pages.room)}
           onNext={() => setPage(pages.modes)}
           onBack={() => setPage(pages.home)}
         />

@@ -40,6 +40,22 @@ test('the web download button selects the signed release or the Dev Pages test A
   assert.match(homeSource, /download="Az-ivos-jatek\.apk"/);
 });
 
+test('the room action is on the players page above mode continuation', async () => {
+  const appSource = await readFile(projectUrl('src/App.jsx'), 'utf8');
+  const homeSource = await readFile(projectUrl('src/pages/HomePage.jsx'), 'utf8');
+  const playersSource = await readFile(projectUrl('src/pages/PlayersPage.jsx'), 'utf8');
+  const playersRoute = appSource.slice(
+    appSource.indexOf('<PlayersPage'),
+    appSource.indexOf('/>', appSource.indexOf('<PlayersPage')) + 2,
+  );
+
+  assert.doesNotMatch(homeSource, /\bonRoom\b/);
+  assert.doesNotMatch(homeSource, />\s*Szoba\s*</);
+  assert.match(playersRoute, /onRoom=\{\(\) => setPage\(pages\.room\)\}/);
+  assert.match(playersSource, /icon=\{Crown\}/);
+  assert.ok(playersSource.indexOf('Szoba') < playersSource.indexOf('Tovább a módokhoz'));
+});
+
 test('native builds check GitHub releases without exposing the web download icon', async () => {
   const updaterSource = await readFile(projectUrl('src/lib/useNativeAppUpdater.js'), 'utf8');
   const releaseSource = await readFile(projectUrl('src/lib/appRelease.js'), 'utf8');

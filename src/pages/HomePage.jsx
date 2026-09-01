@@ -1,5 +1,4 @@
 import {
-  Crown,
   Download,
   History,
   Play,
@@ -21,7 +20,6 @@ export default function HomePage({
   onStart,
   onPlayers,
   onSavedGames,
-  onRoom,
   onSettings,
   appDownloadUrl,
   appUpdate,
@@ -96,9 +94,6 @@ export default function HomePage({
         <div className="home-action-panel home-action-panel--motion shrink-0 space-y-3">
           <PrimaryButton icon={Play} onClick={onStart}>
             Játék indítása
-          </PrimaryButton>
-          <PrimaryButton variant="secondary" icon={Crown} onClick={onRoom}>
-            Szoba
           </PrimaryButton>
           <div className="home-secondary-actions grid grid-cols-1 gap-3">
             <PrimaryButton
