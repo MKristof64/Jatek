@@ -8,43 +8,75 @@ const NativeAppUpdater = registerPlugin('AppUpdater');
 const initialState = {
   status: 'idle',
   release: null,
+  progress: 0,
   message: '',
 };
 
+const errorMessages = {
+  DOWNLOAD_FAILED: 'A letöltés megszakadt. Ellenőrizd az internetkapcsolatot, majd próbáld újra.',
+  HASH_MISMATCH:
+    'A letöltött fájl ellenőrzése sikertelen volt. A telepítés biztonsági okból leállt.',
+  INVALID_APK: 'A letöltött telepítő érvénytelen.',
+  PACKAGE_MISMATCH: 'A telepítő nem ehhez az alkalmazáshoz tartozik.',
+  VERSION_MISMATCH: 'A letöltött telepítő verziója nem egyezik a kiadással.',
+  SIGNATURE_MISMATCH: 'A telepítő kiadói aláírása nem egyezik az alkalmazáséval.',
+  VERSION_NOT_NEWER: 'A letöltött kiadás nem újabb a telepített változatnál.',
+  INSTALL_PERMISSION_REQUIRED: 'A frissítéshez engedélyezned kell az alkalmazástelepítést.',
+  INSTALLER_UNAVAILABLE: 'Az Android telepítője nem nyitható meg ezen a készüléken.',
+  UPDATE_IN_PROGRESS: 'A frissítés letöltése már folyamatban van.',
+};
+
 function getErrorMessage(error) {
-  if (error?.code === 'DOWNLOAD_UNAVAILABLE') {
-    return 'A frissítés letöltése nem indítható el ezen a készüléken.';
-  }
-  return error?.message || 'A frissítés letöltése nem indult el. Próbáld újra.';
+  return errorMessages[error?.code] || error?.message || 'A frissítés nem indult el. Próbáld újra.';
 }
 
 export default function useNativeAppUpdater() {
   const isNative = Capacitor.isNativePlatform();
   const [state, setState] = useState(initialState);
   const stateRef = useRef(initialState);
-  const openingRef = useRef(false);
+  const installInProgressRef = useRef(false);
+  const permissionReturnPendingRef = useRef(false);
 
   useEffect(() => {
     stateRef.current = state;
   }, [state]);
 
-  const openUpdate = useCallback(async () => {
+  const installUpdate = useCallback(async () => {
     const release = stateRef.current.release;
-    if (!isNative || !release || openingRef.current) return;
+    if (!isNative || !release || installInProgressRef.current) return;
 
-    openingRef.current = true;
+    installInProgressRef.current = true;
+    permissionReturnPendingRef.current = false;
     setState((current) => ({
       ...current,
-      status: 'opening',
-      message: 'A hitelesített frissítés letöltésének indítása…',
+      status: 'preparing',
+      progress: 0,
+      message: 'A biztonságos frissítés előkészítése…',
     }));
 
     try {
-      await NativeAppUpdater.openUpdateDownload({ url: release.url });
+      const result = await NativeAppUpdater.downloadAndInstall({
+        url: release.url,
+        sha256: release.sha256,
+        version: release.version,
+        openPermissionSettings: true,
+      });
+
+      if (result?.status === 'permissionRequired') {
+        permissionReturnPendingRef.current = true;
+        setState((current) => ({
+          ...current,
+          status: 'permission-required',
+          message: 'Engedélyezd a frissítést; visszatéréskor automatikusan folytatódik.',
+        }));
+        return;
+      }
+
       setState((current) => ({
         ...current,
-        status: 'download-opened',
-        message: 'A frissítés letöltése elindult.',
+        status: 'installer-opened',
+        progress: 100,
+        message: 'A frissítés ellenőrizve. Hagyd jóvá az Android megerősítő ablakában.',
       }));
     } catch (error) {
       setState((current) => ({
@@ -53,7 +85,7 @@ export default function useNativeAppUpdater() {
         message: getErrorMessage(error),
       }));
     } finally {
-      openingRef.current = false;
+      installInProgressRef.current = false;
     }
   }, [isNative]);
 
@@ -61,6 +93,7 @@ export default function useNativeAppUpdater() {
     if (!isNative) return undefined;
 
     let disposed = false;
+    let progressHandle;
     let appStateHandle;
     let resumeTimer = 0;
     let checkTimer = 0;
@@ -78,6 +111,7 @@ export default function useNativeAppUpdater() {
             ? {
                 status: 'available',
                 release,
+                progress: 0,
                 message: `Elérhető az ${release.version} verzió.`,
               }
             : initialState,
@@ -87,11 +121,57 @@ export default function useNativeAppUpdater() {
       }
     };
 
-    void CapacitorApp.addListener('appStateChange', ({ isActive }) => {
-      if (!isActive || disposed || stateRef.current.status !== 'download-opened') return;
+    void NativeAppUpdater.addListener('downloadProgress', (progress) => {
+      if (disposed) return;
+      const percent = Number.isFinite(progress?.percent)
+        ? Math.max(0, Math.min(100, Math.round(progress.percent)))
+        : 0;
+      setState((current) => ({
+        ...current,
+        status: 'downloading',
+        progress: percent,
+        message: percent > 0 ? `Frissítés letöltése: ${percent}%` : 'Frissítés letöltése…',
+      }));
+    }).then((handle) => {
+      if (disposed) void handle.remove();
+      else progressHandle = handle;
+    });
 
+    void CapacitorApp.addListener('appStateChange', ({ isActive }) => {
+      if (!isActive || disposed) return;
+
+      if (stateRef.current.status === 'installer-opened') {
+        window.clearTimeout(resumeTimer);
+        resumeTimer = window.setTimeout(() => void checkForUpdate(), 500);
+        return;
+      }
+
+      if (!permissionReturnPendingRef.current) return;
+
+      permissionReturnPendingRef.current = false;
       window.clearTimeout(resumeTimer);
-      resumeTimer = window.setTimeout(() => void checkForUpdate(), 600);
+      resumeTimer = window.setTimeout(async () => {
+        try {
+          const permission = await NativeAppUpdater.canInstallPackages();
+          if (permission?.allowed) {
+            await installUpdate();
+          } else if (!disposed) {
+            setState((current) => ({
+              ...current,
+              status: 'error',
+              message: 'A frissítéshez engedélyezned kell az alkalmazástelepítést.',
+            }));
+          }
+        } catch (error) {
+          if (!disposed) {
+            setState((current) => ({
+              ...current,
+              status: 'error',
+              message: getErrorMessage(error),
+            }));
+          }
+        }
+      }, 500);
     }).then((handle) => {
       if (disposed) void handle.remove();
       else appStateHandle = handle;
@@ -103,12 +183,13 @@ export default function useNativeAppUpdater() {
       disposed = true;
       window.clearTimeout(checkTimer);
       window.clearTimeout(resumeTimer);
+      void progressHandle?.remove();
       void appStateHandle?.remove();
     };
-  }, [isNative]);
+  }, [installUpdate, isNative]);
 
   return {
     appUpdate: state.release ? state : null,
-    openUpdate,
+    installUpdate,
   };
 }

@@ -63,12 +63,15 @@ test('native builds check GitHub releases without exposing the web download icon
 
   assert.match(releaseSource, /api\.github\.com\/repos\/MKristof64\/Jatek\/releases\/latest/);
   assert.match(releaseSource, /sha256/);
-  assert.match(updaterSource, /openUpdateDownload/);
+  assert.match(updaterSource, /downloadAndInstall/);
   assert.match(updaterSource, /url: release\.url/);
+  assert.match(updaterSource, /sha256: release\.sha256/);
+  assert.match(updaterSource, /version: release\.version/);
+  assert.match(updaterSource, /downloadProgress/);
+  assert.match(updaterSource, /canInstallPackages/);
   assert.match(updaterSource, /appStateChange/);
   assert.doesNotMatch(updaterSource, /url: release\.releaseUrl/);
-  assert.doesNotMatch(updaterSource, /downloadAndInstall/);
-  assert.doesNotMatch(updaterSource, /canInstallPackages/);
+  assert.doesNotMatch(updaterSource, /openUpdateDownload/);
   assert.match(viteConfig, /https:\/\/api\.github\.com/);
 });
 
