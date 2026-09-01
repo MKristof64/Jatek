@@ -5,6 +5,7 @@ export const releaseApkName = 'Az-ivos-jatek.apk';
 
 const releaseDownloadPath =
   /^\/MKristof64\/Jatek\/releases\/download\/[^/]+\/Az-ivos-jatek\.apk$/;
+const releasePagePath = /^\/MKristof64\/Jatek\/releases\/tag\/v?\d+\.\d+\.\d+$/;
 const sha256Pattern = /^(?:sha256:)?([a-f0-9]{64})$/i;
 
 function parseVersion(version) {
@@ -47,6 +48,25 @@ function validateDownloadUrl(value) {
   return url.href;
 }
 
+function validateReleaseUrl(value) {
+  const url = new URL(value);
+
+  if (
+    url.protocol !== 'https:' ||
+    url.hostname !== 'github.com' ||
+    !releasePagePath.test(url.pathname) ||
+    url.username ||
+    url.password ||
+    url.port ||
+    url.search ||
+    url.hash
+  ) {
+    throw new Error('A kiadási oldal címe nem megbízható.');
+  }
+
+  return url.href;
+}
+
 export function parseLatestAppRelease(payload, currentVersion) {
   if (!payload || payload.draft || payload.prerelease) return null;
 
@@ -67,7 +87,7 @@ export function parseLatestAppRelease(payload, currentVersion) {
     url: validateDownloadUrl(asset.browser_download_url),
     sha256: digestMatch[1].toLowerCase(),
     size: Number.isFinite(asset.size) ? asset.size : 0,
-    releaseUrl: String(payload.html_url ?? ''),
+    releaseUrl: validateReleaseUrl(payload.html_url),
   };
 }
 

@@ -43,7 +43,13 @@ npm run android:release
 ```
 
 Az aláírt APK helye:
-`android/app/build/outputs/apk/release/app-release.apk`.
+`android/app/build/outputs/apk/release/app-release.apk`. A Google Play Console-ba
+feltölthető AAB itt készül el:
+`android/app/build/outputs/bundle/release/app-release.aab`.
+
+A natív frissítésjelző kizárólag a hitelesített GitHub-kiadási oldalt nyitja meg
+a rendszer böngészőjében. Az alkalmazás nem kér csomagtelepítési jogosultságot,
+nem tölt le APK-t a saját tárhelyére, és nem indít telepítőt.
 
 Az Android Studio projekt frissítése és megnyitása:
 

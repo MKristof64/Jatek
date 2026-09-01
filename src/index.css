@@ -89,22 +89,9 @@ textarea {
 
 .app-update-control {
   position: relative;
-  isolation: isolate;
-  overflow: hidden;
   box-shadow:
     0 10px 28px rgba(251, 191, 36, 0.24),
     inset 0 1px 0 rgba(255, 255, 255, 0.55);
-}
-
-.app-update-control::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  width: var(--app-update-progress, 0%);
-  background: linear-gradient(90deg, rgba(244, 63, 94, 0.34), rgba(251, 113, 133, 0.52));
-  transition: width 180ms ease;
-  pointer-events: none;
 }
 
 button,

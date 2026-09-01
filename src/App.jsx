@@ -553,7 +553,7 @@ export default function App() {
   const [savedGamePendingDeleteId, setSavedGamePendingDeleteId] = useState(null);
   const [gameExitSettingsOpen, setGameExitSettingsOpen] = useState(false);
   const [introState, setIntroState] = useState(isDevMotionBuild ? 'visible' : null);
-  const { appUpdate, installUpdate } = useNativeAppUpdater();
+  const { appUpdate, openUpdate } = useNativeAppUpdater();
   const peerRef = useRef(null);
   const peerModeRef = useRef('offline');
   const hostConnectionsRef = useRef(new Map());
@@ -2151,7 +2151,7 @@ export default function App() {
                 : androidDownloadUrl
           }
           appUpdate={appUpdate}
-          onInstallUpdate={installUpdate}
+          onOpenUpdate={openUpdate}
         />
       ) : null}
 

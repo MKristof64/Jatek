@@ -1,7 +1,7 @@
 {
   "name": "en-meg-sosem",
   "private": true,
-  "version": "1.1.9",
+  "version": "1.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
@@ -12,7 +12,7 @@
     "android:sync": "npm run build:android && cap sync android",
     "android:sync:dev": "npm run build:android:dev && cap sync android",
     "android:check": "npm run test && npm run validate:data && npm run android:sync && cd android && gradlew.bat lintDebug testDebugUnitTest assembleDebug",
-    "android:release": "npm run android:sync && cd android && gradlew.bat lintDebug testDebugUnitTest assembleRelease",
+    "android:release": "npm run android:sync && cd android && gradlew.bat lintDebug testDebugUnitTest assembleRelease bundleRelease",
     "android:open": "cap open android",
     "test": "node --test scripts/*.test.mjs",
     "validate:data": "node scripts/validate-data.mjs",

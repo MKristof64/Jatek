@@ -78,4 +78,20 @@ test('latest release parser rejects an unverified or foreign APK', () => {
       '1.1.2',
     ),
   );
+
+  assert.throws(() =>
+    parseLatestAppRelease(
+      releasePayload({ html_url: 'https://example.com/releases/tag/v1.2.0' }),
+      '1.1.2',
+    ),
+  );
+
+  assert.throws(() =>
+    parseLatestAppRelease(
+      releasePayload({
+        html_url: 'https://github.com/MKristof64/Jatek/releases/tag/v1.2.0?unsafe=1',
+      }),
+      '1.1.2',
+    ),
+  );
 });
