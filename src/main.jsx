@@ -4,6 +4,7 @@ import { Capacitor } from '@capacitor/core';
 import App from './App.jsx';
 import { removeLegacyPwaArtifacts } from './lib/legacyPwaCleanup.js';
 import './index.css';
+import './responsive.css';
 
 const isNativePlatform = Capacitor.isNativePlatform();
 const isEmbedded = window.self !== window.top;

@@ -1,3 +1,5 @@
+import { CARD_TEXT_LIMIT, CARD_ID_LIMIT, CARD_DURATION_LIMIT } from '../data/cardLimits.js';
+
 const defaultFeedbackApiUrl = 'https://jatek.kristof-madarasz159.workers.dev';
 
 const feedbackConfig = {
@@ -29,13 +31,13 @@ function normalizeRemoteCard(row) {
   const durationSeconds = Number(row?.durationSeconds ?? row?.duration_seconds);
 
   return {
-    id: safeText(row?.id, 120),
+    id: safeText(row?.id, CARD_ID_LIMIT),
     mode: safeText(row?.mode, 40),
     kind,
     title: safeText(row?.title, 80) || 'Én még sosem...',
-    text: safeText(row?.text, 420),
+    text: safeText(row?.text, CARD_TEXT_LIMIT),
     durationSeconds: Number.isFinite(durationSeconds)
-      ? Math.max(0, Math.min(300, Math.floor(durationSeconds)))
+      ? Math.max(0, Math.min(CARD_DURATION_LIMIT, Math.floor(durationSeconds)))
       : kind === 'never'
         ? 0
         : 30,

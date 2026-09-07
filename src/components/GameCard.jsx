@@ -8,7 +8,8 @@ import {
   UserRound,
   UsersRound,
 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { CARD_DURATION_LIMIT } from '../data/cardLimits.js';
 
 const modeIcons = {
   Beer,
@@ -26,7 +27,7 @@ function formatTimer(seconds) {
 
 function getSyncedRemaining(timerState, durationSeconds) {
   const duration = Number.isFinite(durationSeconds)
-    ? Math.max(0, Math.min(120, Math.floor(durationSeconds)))
+    ? Math.max(0, Math.min(CARD_DURATION_LIMIT, Math.floor(durationSeconds)))
     : 0;
   const baseRemaining = Number.isFinite(timerState?.remainingSeconds)
     ? Math.max(0, Math.min(duration, Math.ceil(timerState.remainingSeconds)))
@@ -52,7 +53,9 @@ function TimerControl({ durationSeconds, timerState, canControlTimer, onToggleTi
     if (!timerState?.running) return undefined;
 
     const intervalId = window.setInterval(() => {
-      setRemaining(getSyncedRemaining(timerState, durationSeconds));
+      const nextRemaining = getSyncedRemaining(timerState, durationSeconds);
+      setRemaining(nextRemaining);
+      if (nextRemaining === 0) window.clearInterval(intervalId);
     }, 250);
 
     return () => window.clearInterval(intervalId);
@@ -81,6 +84,7 @@ function TimerControl({ durationSeconds, timerState, canControlTimer, onToggleTi
         type="button"
         onClick={onToggleTimer}
         disabled={disabled}
+        aria-label={running ? 'Időzítő szüneteltetése' : remaining === 0 ? 'Időzítő újraindítása' : 'Időzítő indítása'}
         title={disabled ? 'Csak a házigazda vagy a mesélő vezérelheti.' : undefined}
         className={[
           'party-mini-button inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl bg-amber-300 px-4 py-2 text-sm font-black text-slate-950 transition active:scale-[0.98]',
@@ -90,7 +94,7 @@ function TimerControl({ durationSeconds, timerState, canControlTimer, onToggleTi
           .join(' ')}
       >
         <Icon className="h-4 w-4" />
-        {running ? 'Pause' : 'Indítás'}
+        {running ? 'Szünet' : 'Indítás'}
       </button>
     </div>
   );
@@ -122,6 +126,7 @@ export default function GameCard({
   const durationSeconds = card?.durationSeconds ?? 0;
   const hasTimer = durationSeconds > 0;
   const hasActionSlot = Boolean(actionSlot);
+  const contentRef = useRef(null);
   const questionSizeClass = getQuestionSizeClass(text);
   const cardClasses = [
     'question-spotlight question-spotlight--open game-card-dynamic game-card-motion animate-pop',
@@ -146,6 +151,42 @@ export default function GameCard({
   const ParticipantIcon = isRoundtable || isDuel ? UsersRound : UserRound;
   const ModeIcon = modeIcons[mode?.icon] ?? Sparkles;
 
+  useLayoutEffect(() => {
+    const content = contentRef.current;
+    if (!content) return undefined;
+    let disposed = false;
+    let frame = 0;
+    content.scrollTop = 0;
+    const fitCopy = () => {
+      if (disposed || !content.isConnected) return;
+      // Fit to the reserved play area, never move the action over the question.
+      content.style.setProperty('--card-copy-scale', '1');
+      const fits = () => content.scrollHeight <= content.clientHeight + 1;
+      if (fits()) return;
+      let low = 0.5;
+      let high = 1;
+      for (let step = 0; step < 7; step += 1) {
+        const middle = (low + high) / 2;
+        content.style.setProperty('--card-copy-scale', String(middle));
+        if (fits()) low = middle;
+        else high = middle;
+      }
+      content.style.setProperty('--card-copy-scale', String(low));
+    };
+    fitCopy();
+    const observer = new ResizeObserver(() => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(fitCopy);
+    });
+    observer.observe(content);
+    void document.fonts.ready.then(fitCopy);
+    return () => {
+      disposed = true;
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
+  }, [text, cardTitle, hasTimer]);
+
   return (
     <section className={cardClasses}>
       <div className="game-card-top relative z-10 flex items-center justify-between gap-3">
@@ -155,7 +196,7 @@ export default function GameCard({
           </p>
           <div className="player-chip mt-2 inline-flex max-w-full items-center gap-2 rounded-full bg-white/10 px-3 py-2 ring-1 ring-white/10">
             <ParticipantIcon className="h-4 w-4 shrink-0 text-lime-200" />
-            <h2 className="truncate text-lg font-black text-white min-[390px]:text-xl">
+            <h2 title={participantText} className="truncate text-lg font-black text-white min-[390px]:text-xl">
               {participantText}
             </h2>
           </div>
@@ -170,21 +211,23 @@ export default function GameCard({
         </div>
       </div>
 
-      <div className="question-stage question-stage--open relative z-10 mt-4 min-[390px]:mt-5">
-        <div className={['question-copy question-copy--free game-question-copy', questionSizeClass].join(' ')}>
-          <p className="question-prefix">{cardTitle}</p>
-          <p className="question-sentence">{text}</p>
+      <div ref={contentRef} className="game-card-content">
+        <div key={card?.id ?? text} className="question-stage question-stage--open relative z-10 mt-4 min-[390px]:mt-5">
+          <div className={['question-copy question-copy--free game-question-copy', questionSizeClass].join(' ')}>
+            <p className="question-prefix">{cardTitle}</p>
+            <p className="question-sentence">{text}</p>
+          </div>
         </div>
-      </div>
 
-      {hasTimer ? (
-        <TimerControl
-          durationSeconds={durationSeconds}
-          timerState={timerState}
-          canControlTimer={canControlTimer}
-          onToggleTimer={onToggleTimer}
-        />
-      ) : null}
+        {hasTimer ? (
+          <TimerControl
+            durationSeconds={durationSeconds}
+            timerState={timerState}
+            canControlTimer={canControlTimer}
+            onToggleTimer={onToggleTimer}
+          />
+        ) : null}
+      </div>
 
       {hasActionSlot ? (
         <div className="game-card-action-slot relative z-10">

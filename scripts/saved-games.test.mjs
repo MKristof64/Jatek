@@ -121,6 +121,35 @@ test('timer-only saves do not duplicate the current card and pause elapsed time'
   assert.equal(timerUpdate.playedCards.length, 1);
 });
 
+test('controller-length cards and five-minute timers survive saving and resuming', () => {
+  const cardId = 'controller-card-' + 'x'.repeat(104);
+  const cardText = 'a'.repeat(420);
+  const snapshot = createSavedGameSnapshot({
+    ...snapshotOptions,
+    game: makeGame({
+      cardId,
+      cardText,
+      timer: { cardId, durationSeconds: 300, remainingSeconds: 300, running: true, updatedAt: 1_000 },
+    }),
+    renderedCardText: cardText,
+    now: 11_000,
+  });
+  const resumed = loadSavedGames({ getItem: () => JSON.stringify([snapshot]) })[0];
+  assert.equal(resumed.game.card.text, cardText);
+  assert.equal(resumed.playedCards[0].text, cardText);
+  assert.equal(resumed.game.card.id, cardId);
+  assert.deepEqual(resumed.game.usedIds, [cardId]);
+  assert.equal(resumed.game.timer.durationSeconds, 300);
+  assert.equal(resumed.game.timer.remainingSeconds, 290);
+});
+
+test('full storage reports a failed save without throwing away in-memory progress', () => {
+  const snapshot = createSavedGameSnapshot({ ...snapshotOptions, game: makeGame(), now: 1_000 });
+  const result = storeSavedGames([snapshot], { setItem() { throw new Error('QuotaExceededError'); } });
+  assert.equal(result.ok, false);
+  assert.equal(result.games[0].game.card.id, 'card-1');
+});
+
 test('storage round-trip rejects corrupt entries and delete removes only the chosen save', () => {
   const values = new Map();
   const storage = {

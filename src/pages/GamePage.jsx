@@ -50,7 +50,6 @@ export default function GamePage({
         className="game-main mobile-scroll min-h-0 flex-1 space-y-3 overflow-y-auto pb-1 pr-1"
       >
         <GameCard
-          key={card?.id ?? cardText}
           playerName={currentPlayer}
           participants={participants}
           mode={mode}

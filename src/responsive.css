@@ -1,0 +1,205 @@
+/* Measure the actual projection canvas, including letterboxing, not the device. */
+.phone-frame--immersive {
+  container: app-canvas / size;
+}
+
+@media (orientation: landscape) {
+  .app-landscape-layout .phone-frame--immersive {
+    height: min(var(--app-viewport-height, 100dvh), calc(var(--app-viewport-width, 100vw) / var(--app-landscape-ratio))) !important;
+    min-height: 0 !important;
+  }
+}
+
+.game-screen .game-main {
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+}
+
+.game-screen .question-spotlight--open {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-rows: auto minmax(0, 1fr) 3.4rem !important;
+  gap: 1rem;
+  height: 100%;
+  min-height: 0 !important;
+  max-height: 100%;
+  padding: 0.5rem 0.4rem clamp(2rem, 13cqh, 8rem) !important;
+}
+
+.game-card-content {
+  --card-copy-scale: 1;
+  min-width: 0;
+  min-height: 0;
+  margin-top: clamp(1rem, 13cqh, 7rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.game-screen .question-spotlight--open .question-stage {
+  display: block;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 0.4rem !important;
+}
+
+.game-screen .question-spotlight--open .question-copy--free {
+  display: block;
+  min-height: 0;
+  width: 100%;
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 0 !important;
+  overflow-wrap: anywhere;
+}
+
+.game-screen .question-spotlight--open .question-prefix {
+  transition: none !important;
+  margin: 0 0 0.65rem;
+  font-size: max(1rem, calc(1.5rem * var(--card-copy-scale))) !important;
+  line-height: 1.15 !important;
+  letter-spacing: 0;
+}
+
+.game-screen .question-spotlight--open .question-sentence {
+  transition: none !important;
+  width: 100%;
+  max-width: 36ch;
+  margin: 0 auto;
+  font-size: max(1rem, calc(2.3rem * var(--card-copy-scale))) !important;
+  line-height: 1.08 !important;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+
+.game-screen .question-spotlight--open .timer-control {
+  width: 12rem;
+  min-width: 0;
+  min-height: 4.6rem;
+  margin: 0.65rem auto 0 !important;
+  padding: 0.6rem 0.85rem !important;
+}
+
+.game-screen .question-spotlight--open .timer-control p:last-child {
+  font-size: 2rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.game-screen .question-spotlight--open .timer-control .party-mini-button {
+  width: 3rem;
+  height: 3rem;
+  min-width: 3rem;
+  min-height: 3rem;
+}
+
+.game-screen .question-spotlight--open .game-card-action-slot {
+  position: relative !important;
+  grid-row: 3;
+  inset: auto;
+  justify-self: center;
+  width: min(100%, 16rem);
+  height: 3.4rem;
+  min-height: 0;
+  transform: none;
+}
+
+.game-screen .question-spotlight--open .game-card-action-slot .party-button {
+  min-height: 0;
+  height: 100%;
+  padding: 0.5rem 1rem;
+  font-size: 1.05rem;
+}
+
+.players-actions .party-button {
+  min-height: 3rem;
+}
+
+:where(button, a, select):focus-visible {
+  outline: 2px solid #ffd84d;
+  outline-offset: 3px;
+}
+
+.theme-light .game-screen .question-spotlight--open .question-copy--free {
+  background: none;
+}
+
+.theme-light .game-screen .question-spotlight--open .question-prefix {
+  color: #782544;
+  text-shadow: none;
+}
+
+.theme-light .game-screen .question-spotlight--open .question-sentence {
+  text-shadow: none;
+}
+
+.theme-light .question-spotlight--open .player-chip {
+  background: rgba(255, 255, 255, 0.75) !important;
+}
+
+.theme-light .question-spotlight--open .timer-control p:last-child {
+  color: #fff !important;
+}
+
+@container app-canvas (max-width: 350px) {
+  .game-screen .question-spotlight--open .question-sentence {
+    font-size: max(1rem, calc(2rem * var(--card-copy-scale))) !important;
+  }
+}
+
+@container app-canvas (min-width: 600px) and (min-height: 500px) {
+  .game-screen .question-spotlight--open .question-sentence {
+    font-size: max(1.1rem, calc(3rem * var(--card-copy-scale))) !important;
+  }
+  .game-screen .question-spotlight--open .question-prefix {
+    font-size: max(1rem, calc(1.8rem * var(--card-copy-scale))) !important;
+  }
+}
+
+@container app-canvas (max-height: 500px) {
+  .game-screen .question-spotlight--open {
+    grid-template-rows: auto minmax(0, 1fr) 2.75rem !important;
+    gap: 0.65rem;
+    padding: 0.25rem 0.4rem 0.75rem !important;
+  }
+  .game-card-content {
+    margin-top: 0.5rem;
+  }
+  .game-screen .question-spotlight--open .question-prefix {
+    margin-bottom: 0.4rem;
+    font-size: max(1rem, calc(1.3rem * var(--card-copy-scale))) !important;
+  }
+  .game-screen .question-spotlight--open .question-sentence {
+    font-size: max(1rem, calc(1.9rem * var(--card-copy-scale))) !important;
+  }
+  .game-screen .question-spotlight--open .timer-control {
+    width: 10rem;
+    min-height: 3rem;
+    margin-top: 0.4rem !important;
+    padding: 0.25rem 0.6rem !important;
+  }
+  .game-screen .question-spotlight--open .timer-control p:last-child {
+    font-size: 1.6rem;
+  }
+  .game-screen .question-spotlight--open .timer-control .party-mini-button {
+    width: 2.75rem;
+    height: 2.75rem;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+  }
+  .game-screen .question-spotlight--open .game-card-action-slot {
+    height: 2.75rem;
+  }
+  .players-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 0.6fr) minmax(0, 1fr);
+    gap: 0.6rem;
+  }
+  .players-actions > * {
+    margin: 0 !important;
+  }
+  .players-actions .party-button {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+}

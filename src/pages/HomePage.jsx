@@ -74,6 +74,11 @@ export default function HomePage({
           <Settings className="h-5 w-5" />
         </button>
       </div>
+      {appUpdate?.status === 'error' ? (
+        <p role="alert" className="app-update-notice shrink-0 rounded-xl bg-rose-950/80 px-3 py-2 text-sm text-white">
+          {appUpdate.message}
+        </p>
+      ) : null}
       <section className="home-screen home-screen--compact-top home-screen--motion flex min-h-0 flex-1 flex-col justify-between gap-4">
         <div className="home-hero-card home-hero-card--motion overflow-hidden rounded-[1.75rem] border border-rose-100/14 bg-rose-950/[0.18] shadow-card backdrop-blur">
           <div className="home-hero-content bg-gradient-to-br from-rose-500/42 via-orange-500/28 to-cyan-300/14 p-4 min-[390px]:p-5">

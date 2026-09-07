@@ -1,4 +1,5 @@
 import { getModeById } from '../data/modes.js';
+import { CARD_TEXT_LIMIT, CARD_ID_LIMIT, CARD_DURATION_LIMIT } from '../data/cardLimits.js';
 
 export const SAVED_GAMES_STORAGE_KEY = 'enmegsosem.savedGames.v1';
 export const SAVED_GAMES_SCHEMA_VERSION = 1;
@@ -60,8 +61,8 @@ function sanitizePlayers(value) {
 function sanitizeCard(value) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
 
-  const id = sanitizeId(value.id, 80);
-  const text = sanitizeText(value.text, 320);
+  const id = sanitizeId(value.id, CARD_ID_LIMIT);
+  const text = sanitizeText(value.text, CARD_TEXT_LIMIT);
   if (!id || !text) return null;
 
   return {
@@ -71,7 +72,7 @@ function sanitizeCard(value) {
     title: sanitizeText(value.title, 80) || 'Én még sosem...',
     text,
     durationSeconds: Number.isFinite(value.durationSeconds)
-      ? Math.max(0, Math.min(120, Math.floor(value.durationSeconds)))
+      ? Math.max(0, Math.min(CARD_DURATION_LIMIT, Math.floor(value.durationSeconds)))
       : 0,
     safe: value.safe !== false,
   };
@@ -79,7 +80,7 @@ function sanitizeCard(value) {
 
 function sanitizeTimer(value, card, now) {
   const durationSeconds = Number.isFinite(value?.durationSeconds)
-    ? Math.max(0, Math.min(120, Math.floor(value.durationSeconds)))
+    ? Math.max(0, Math.min(CARD_DURATION_LIMIT, Math.floor(value.durationSeconds)))
     : card?.durationSeconds ?? 0;
   let remainingSeconds = Number.isFinite(value?.remainingSeconds)
     ? Math.max(0, Math.min(durationSeconds, Math.ceil(value.remainingSeconds)))
@@ -123,7 +124,7 @@ function sanitizeGame(value, playerCount, now) {
     : Math.max(0, completedPlayerOrder.indexOf(playerIndex));
   const usedIds = Array.isArray(value.usedIds)
     ? value.usedIds
-        .map((id) => sanitizeId(id, 80))
+        .map((id) => sanitizeId(id, CARD_ID_LIMIT))
         .filter(Boolean)
         .slice(0, 2000)
     : [card.id];
@@ -145,8 +146,8 @@ function sanitizeGame(value, playerCount, now) {
 function sanitizePlayedCard(value, index, fallbackTime) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
 
-  const id = sanitizeId(value.id, 80);
-  const text = sanitizeText(value.text, 320);
+  const id = sanitizeId(value.id, CARD_ID_LIMIT);
+  const text = sanitizeText(value.text, CARD_TEXT_LIMIT);
   if (!id || !text) return null;
 
   return {
@@ -270,7 +271,7 @@ export function createSavedGameSnapshot({
           mode: safeGame.card.mode,
           kind: safeGame.card.kind,
           title: safeGame.card.title,
-          text: sanitizeText(renderedCardText, 320) || safeGame.card.text,
+          text: sanitizeText(renderedCardText, CARD_TEXT_LIMIT) || safeGame.card.text,
           sequence: (previousPlayedCards.at(-1)?.sequence ?? 0) + 1,
           playedAt: now,
         },

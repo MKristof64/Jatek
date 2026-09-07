@@ -49,8 +49,9 @@ feltölthető AAB itt készül el:
 
 A natív frissítő az alkalmazáson belül tölti le a hitelesített, verziózott GitHub
 APK-t egy elkülönített gyorsítótárba. A fájl SHA-256 lenyomatát, csomagnevét,
-verzióját és kiadói aláírását is ellenőrzi, majd közvetlenül az Android rendszer
-telepítési megerősítésének adja át. Böngészőt vagy GitHub-oldalt nem nyit meg.
+verzióját és kiadói aláírását is ellenőrzi, majd az Android Letöltések mappájába
+menti. A felhasználó innen indítja el a telepítést; az app nem kap önálló
+csomagtelepítési jogosultságot. Böngészőt vagy GitHub-oldalt nem nyit meg.
 
 Az Android Studio projekt frissítése és megnyitása:
 
@@ -75,6 +76,24 @@ npm run android:check
 A GitHub Actions minden feltöltésnél lefuttatja a függőségi auditot, a
 játékmenet- és Worker-biztonsági teszteket, a kártyaadatok validálását és a
 production buildet.
+
+### Böngészős regressziós tesztek
+
+Futó helyi Vite szerver és Playwright szükséges. A `UI_BASE_URL` adja meg a
+tesztelt alkalmazás címét (alapból `http://127.0.0.1:5180/Jatek/`). Külön
+telepített Playwright esetén a `PLAYWRIGHT_MODULE_PATH`, meglévő Chromium
+böngészőhöz a `UI_BROWSER_PATH` is megadható.
+
+```bash
+npm run test:ui
+npm run test:flows
+```
+
+Az első teszt az összes beépített kártyát ellenőrzi 11 képernyő/képarány
+kombináción, a második a játékoskezelést, szűrést, mentést, folytatást és
+billentyűzetes kezelést. A `UI_TEST_ONLINE=1` a második tesztben egy ideiglenes
+házigazda/vendég szobát is ellenőriz. A képek és a mérési jelentés az
+`artifacts/ui-audit/` mappába kerülnek. A tesztfixture nem része a buildnek.
 
 ## Felépítés
 

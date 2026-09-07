@@ -19,6 +19,7 @@ import {
 } from './lib/fullscreen.js';
 import Layout from './components/Layout.jsx';
 import { cards } from './data/cards.js';
+import { CARD_TEXT_LIMIT, CARD_ID_LIMIT, CARD_DURATION_LIMIT } from './data/cardLimits.js';
 import {
   normalizeLandscapeRatio,
   toggleLandscapeRatio,
@@ -206,9 +207,9 @@ function sanitizeText(value, maxLength) {
     .slice(0, maxLength);
 }
 
-function sanitizeId(value, fallbackPrefix) {
+function sanitizeId(value, fallbackPrefix, maxLength = 80) {
   if (typeof value !== 'string') return createId(fallbackPrefix);
-  const safeId = value.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 80);
+  const safeId = value.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, maxLength);
   return safeId || createId(fallbackPrefix);
 }
 
@@ -296,15 +297,15 @@ function sanitizeCard(value) {
 
   const safeKind = ['never', 'duel', 'roundtable'].includes(value.kind) ? value.kind : 'never';
   const durationSeconds = Number.isFinite(value.durationSeconds)
-    ? Math.max(0, Math.min(120, Math.floor(value.durationSeconds)))
+    ? Math.max(0, Math.min(CARD_DURATION_LIMIT, Math.floor(value.durationSeconds)))
     : 0;
 
   return {
-    id: sanitizeId(value.id, 'card'),
+    id: sanitizeId(value.id, 'card', CARD_ID_LIMIT),
     mode: getModeById(value.mode).id,
     kind: safeKind,
     title: sanitizeText(value.title, 80) || 'Én még sosem...',
-    text: sanitizeText(value.text, 320),
+    text: sanitizeText(value.text, CARD_TEXT_LIMIT),
     durationSeconds,
     safe: value.safe !== false,
   };
@@ -312,7 +313,7 @@ function sanitizeCard(value) {
 
 function getCardDurationSeconds(card) {
   return Number.isFinite(card?.durationSeconds)
-    ? Math.max(0, Math.min(120, Math.floor(card.durationSeconds)))
+    ? Math.max(0, Math.min(CARD_DURATION_LIMIT, Math.floor(card.durationSeconds)))
     : 0;
 }
 
@@ -332,7 +333,7 @@ function getTimerRemainingSeconds(timer, now = Date.now()) {
   if (!timer || typeof timer !== 'object' || Array.isArray(timer)) return 0;
 
   const durationSeconds = Number.isFinite(timer.durationSeconds)
-    ? Math.max(0, Math.min(120, Math.floor(timer.durationSeconds)))
+    ? Math.max(0, Math.min(CARD_DURATION_LIMIT, Math.floor(timer.durationSeconds)))
     : 0;
   const remainingSeconds = Number.isFinite(timer.remainingSeconds)
     ? Math.max(0, Math.min(durationSeconds, Math.ceil(timer.remainingSeconds)))
@@ -352,13 +353,13 @@ function sanitizeTimer(value, card = null) {
     return fallback;
   }
 
-  const cardId = typeof value.cardId === 'string' ? sanitizeId(value.cardId, 'card') : fallback.cardId;
+  const cardId = typeof value.cardId === 'string' ? sanitizeId(value.cardId, 'card', CARD_ID_LIMIT) : fallback.cardId;
   if (card?.id && cardId !== card.id) {
     return fallback;
   }
 
   const durationSeconds = Number.isFinite(value.durationSeconds)
-    ? Math.max(0, Math.min(120, Math.floor(value.durationSeconds)))
+    ? Math.max(0, Math.min(CARD_DURATION_LIMIT, Math.floor(value.durationSeconds)))
     : fallback.durationSeconds;
   const remainingSeconds = Number.isFinite(value.remainingSeconds)
     ? Math.max(0, Math.min(durationSeconds, Math.ceil(value.remainingSeconds)))

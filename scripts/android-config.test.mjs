@@ -79,8 +79,8 @@ test('Android release is minimized and never commits signing secrets', async () 
   const ignoreRules = await readProjectFile('.gitignore');
   const packageJson = JSON.parse(await readProjectFile('package.json'));
 
-  assert.match(buildGradle, /versionCode 21/);
-  assert.match(buildGradle, /versionName "1\.2\.5"/);
+  assert.ok(Number(buildGradle.match(/versionCode (\d+)/)?.[1]) >= 22);
+  assert.equal(buildGradle.match(/versionName "([^"]+)"/)?.[1], packageJson.version);
   assert.match(buildGradle, /minifyEnabled true/);
   assert.match(buildGradle, /shrinkResources true/);
   assert.match(gradleWrapper, /gradle-8\.14\.5-bin\.zip/);
