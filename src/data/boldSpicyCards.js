@@ -2329,6 +2329,46 @@ export const boldSpicyCards = [
     "safe": true
   },
   {
+    "id": "bold-pikans-v2-never-292",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "rendeltem erotikus játékot",
+    "safe": true
+  },
+  {
+    "id": "bold-pikans-v2-never-293",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "kerültem a szemkontaktust a pénztárossal óvszervásárlás közben",
+    "safe": true
+  },
+  {
+    "id": "bold-pikans-v2-never-294",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "kértem vissza szakítás után erotikus kelléket",
+    "safe": true
+  },
+  {
+    "id": "bold-pikans-v2-never-295",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "csináltam Spotyn dugós playlistet",
+    "safe": true
+  },
+  {
+    "id": "bold-pikans-v2-never-296",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "felejtettem el az exem születésnapját",
+    "safe": true
+  },
+  {
     "id": "bold-pikans-v2-duel-001",
     "mode": "bold",
     "kind": "duel",

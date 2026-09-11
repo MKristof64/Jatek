@@ -1251,6 +1251,56 @@ export const hardcoreCards = [
     "sortOrder": 125
   },
   {
+    "id": "hardcore-v1-never-126",
+    "mode": "hardcore",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "fingottam akkorát, ami megszakított egy beszélgetést",
+    "durationSeconds": 0,
+    "category": "Hardcore",
+    "sortOrder": 126
+  },
+  {
+    "id": "hardcore-v1-never-127",
+    "mode": "hardcore",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "mostam le magamról más ember hányását",
+    "durationSeconds": 0,
+    "category": "Hardcore",
+    "sortOrder": 127
+  },
+  {
+    "id": "hardcore-v1-never-128",
+    "mode": "hardcore",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "haraptam bele műanyag gyümölcsbe",
+    "durationSeconds": 0,
+    "category": "Hardcore",
+    "sortOrder": 128
+  },
+  {
+    "id": "hardcore-v1-never-129",
+    "mode": "hardcore",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "követtem el csendháborítást, amihez rendőrök is kijöttek",
+    "durationSeconds": 0,
+    "category": "Hardcore",
+    "sortOrder": 129
+  },
+  {
+    "id": "hardcore-v1-never-130",
+    "mode": "hardcore",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "tiltattam ki magam kaszinóból",
+    "durationSeconds": 0,
+    "category": "Hardcore",
+    "sortOrder": 130
+  },
+  {
     "id": "hardcore-v1-duel-001",
     "mode": "hardcore",
     "kind": "duel",

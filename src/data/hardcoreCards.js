@@ -1001,6 +1001,46 @@ export const hardcoreCards = [
     "safe": true
   },
   {
+    "id": "hardcore-v1-never-126",
+    "mode": "hardcore",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "fingottam akkorát, ami megszakított egy beszélgetést",
+    "safe": true
+  },
+  {
+    "id": "hardcore-v1-never-127",
+    "mode": "hardcore",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "mostam le magamról más ember hányását",
+    "safe": true
+  },
+  {
+    "id": "hardcore-v1-never-128",
+    "mode": "hardcore",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "haraptam bele műanyag gyümölcsbe",
+    "safe": true
+  },
+  {
+    "id": "hardcore-v1-never-129",
+    "mode": "hardcore",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "követtem el csendháborítást, amihez rendőrök is kijöttek",
+    "safe": true
+  },
+  {
+    "id": "hardcore-v1-never-130",
+    "mode": "hardcore",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "tiltattam ki magam kaszinóból",
+    "safe": true
+  },
+  {
     "id": "hardcore-v1-duel-001",
     "mode": "hardcore",
     "kind": "duel",

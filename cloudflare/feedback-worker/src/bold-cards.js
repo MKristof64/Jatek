@@ -2911,6 +2911,56 @@ export const boldCards = [
     "sortOrder": 291
   },
   {
+    "id": "bold-pikans-v2-never-292",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "rendeltem erotikus játékot",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 292
+  },
+  {
+    "id": "bold-pikans-v2-never-293",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "kerültem a szemkontaktust a pénztárossal óvszervásárlás közben",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 293
+  },
+  {
+    "id": "bold-pikans-v2-never-294",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "kértem vissza szakítás után erotikus kelléket",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 294
+  },
+  {
+    "id": "bold-pikans-v2-never-295",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "csináltam Spotyn dugós playlistet",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 295
+  },
+  {
+    "id": "bold-pikans-v2-never-296",
+    "mode": "bold",
+    "kind": "never",
+    "title": "Én még sosem...",
+    "text": "felejtettem el az exem születésnapját",
+    "durationSeconds": 0,
+    "category": "Pikáns",
+    "sortOrder": 296
+  },
+  {
     "id": "bold-pikans-v2-duel-001",
     "mode": "bold",
     "kind": "duel",
