@@ -1,4 +1,4 @@
-import { Moon, RefreshCw, RotateCcw, Save, UsersRound } from 'lucide-react';
+import { ChevronRight, Gamepad2, Moon, RefreshCw, RotateCcw, Save, UsersRound } from 'lucide-react';
 import { useState } from 'react';
 import Header from '../components/Header.jsx';
 import LandscapeRatioPicker from '../components/LandscapeRatioPicker.jsx';
@@ -10,6 +10,7 @@ export default function SettingsPage({
   onToggle,
   onLandscapeRatioChange,
   onClearData,
+  onChooseGame,
   onBack,
 }) {
   const [notice, setNotice] = useState('');
@@ -92,6 +93,20 @@ export default function SettingsPage({
               Minden adat törlése
             </PrimaryButton>
           </div>
+
+          <button
+            type="button"
+            onClick={onChooseGame}
+            className="flex min-h-20 w-full touch-manipulation items-center gap-3 rounded-3xl border border-amber-200/25 bg-gradient-to-br from-amber-300/15 via-orange-400/10 to-rose-400/15 p-4 text-left shadow-card transition hover:brightness-110 active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-200"
+          >
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-amber-300/15 text-amber-200">
+              <Gamepad2 aria-hidden="true" className="h-6 w-6" />
+            </span>
+            <span className="min-w-0 flex-1 text-base font-black leading-6 text-white">
+              Másik játék választása
+            </span>
+            <ChevronRight aria-hidden="true" className="h-5 w-5 shrink-0 text-amber-200" />
+          </button>
         </div>
       </section>
     </>

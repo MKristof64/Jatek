@@ -45,6 +45,7 @@ import {
   shufflePlayerIndexes,
 } from './lib/gameEngine.js';
 import GamePage from './pages/GamePage.jsx';
+import GameSelectPage from './pages/GameSelectPage.jsx';
 import HomePage from './pages/HomePage.jsx';
 import ModeSelectPage from './pages/ModeSelectPage.jsx';
 import PlayersPage from './pages/PlayersPage.jsx';
@@ -129,6 +130,7 @@ const pages = {
   modes: 'modes',
   game: 'game',
   settings: 'settings',
+  gameSelect: 'game-select',
   savedGames: 'saved-games',
 };
 
@@ -2096,6 +2098,11 @@ export default function App() {
         return;
       }
 
+      if (page === pages.gameSelect) {
+        setPage(pages.settings);
+        return;
+      }
+
       if (
         page === pages.players ||
         page === pages.settings ||
@@ -2218,7 +2225,17 @@ export default function App() {
           onToggle={toggleSetting}
           onLandscapeRatioChange={changeLandscapeRatio}
           onClearData={() => setPendingConfirmation('clear-data')}
+          onChooseGame={() => setPage(pages.gameSelect)}
           onBack={() => setPage(pages.home)}
+        />
+      ) : null}
+
+      {page === pages.gameSelect ? (
+        <GameSelectPage
+          onOpenGame={(gameId) => {
+            if (gameId === 'drinking') setPage(pages.home);
+          }}
+          onBack={() => setPage(pages.settings)}
         />
       ) : null}
 
