@@ -3,6 +3,189 @@
   container: app-canvas / size;
 }
 
+.home-hero-card {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  flex-direction: column;
+  border: 1px solid #ffffff26;
+  border-radius: 1.5rem;
+  background: #290017;
+  box-shadow: none;
+}
+
+.home-hero-content {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.home-logo-tile {
+  width: 4.5rem;
+  height: 4.5rem;
+  flex-shrink: 0;
+  margin: 0;
+  border-radius: 1.25rem;
+}
+
+.home-logo-tile svg {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.home-hero-copy {
+  min-width: 0;
+}
+
+.home-hero-kicker {
+  margin: 0;
+  color: #ffe8b3;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.home-hero-title {
+  margin: 0.5rem 0 0;
+  color: #ffffff;
+  font-size: 2.75rem;
+  line-height: 1.08;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.home-player-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 1.5rem 0 0;
+  color: #ffe8b3;
+}
+
+.home-player-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+}
+
+.home-stat-number {
+  font-size: 1.75rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.home-stat-label {
+  margin: 0;
+  color: #ecc9d7;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.theme-light .home-hero-card {
+  border-color: #74233e33;
+  background: #fff4f7;
+}
+
+.theme-light .home-hero-kicker,
+.theme-light .home-player-summary {
+  color: #8a2548;
+}
+
+.theme-light .home-hero-title {
+  color: #2d1020;
+}
+
+.theme-light .home-stat-label {
+  color: #70334c;
+}
+
+@media (min-width: 390px) {
+  .home-hero-kicker {
+    font-size: 1.75rem;
+  }
+
+  .home-hero-title {
+    font-size: 3.25rem;
+  }
+}
+
+@media (orientation: landscape) and (min-width: 560px) {
+  .home-hero-content {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.75rem;
+  }
+}
+
+@media (orientation: landscape) and (min-width: 840px) and (min-height: 500px) {
+  .home-logo-tile {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 1.5rem;
+  }
+
+  .home-logo-tile svg {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .home-hero-kicker {
+    font-size: 2rem;
+  }
+
+  .home-hero-title {
+    font-size: 4rem;
+  }
+}
+
+@media (max-height: 500px) {
+  .home-hero-content {
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .home-logo-tile {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .home-logo-tile svg {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .home-hero-kicker {
+    font-size: 1.25rem;
+  }
+
+  .home-hero-title {
+    margin-top: 0.4rem;
+    font-size: 2.25rem;
+  }
+
+  .home-player-summary {
+    margin-top: 1rem;
+  }
+
+  .home-stat-number {
+    font-size: 1.5rem;
+  }
+
+  .home-stat-label {
+    font-size: 1rem;
+  }
+}
+
 @media (orientation: landscape) {
   .app-landscape-layout .phone-frame--immersive {
     height: min(var(--app-viewport-height, 100dvh), calc(var(--app-viewport-width, 100vw) / var(--app-landscape-ratio))) !important;
