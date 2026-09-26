@@ -12,7 +12,9 @@
   border: 1px solid #ffffff26;
   border-radius: 1.5rem;
   background: #290017;
-  box-shadow: none;
+  box-shadow:
+    0 16px 36px rgba(20, 0, 14, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .home-hero-content {
@@ -92,6 +94,9 @@
 .theme-light .home-hero-card {
   border-color: #74233e33;
   background: #fff4f7;
+  box-shadow:
+    0 12px 28px rgba(116, 35, 62, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .theme-light .home-hero-kicker,
