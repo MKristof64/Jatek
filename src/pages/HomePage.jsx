@@ -6,7 +6,7 @@ import {
   Settings,
   Sparkles,
   UserPlus,
-  Users,
+  UserRound,
 } from 'lucide-react';
 import PrimaryButton from '../components/PrimaryButton.jsx';
 import { isNativeUpdateBusy } from '../lib/nativeUpdateState.js';
@@ -96,9 +96,18 @@ export default function HomePage({
               </p>
               <h1 className="home-hero-title">Az ivós játék</h1>
               <p className="home-player-summary">
-                <Users aria-hidden="true" className="home-player-icon" />
-                <span className="home-stat-number">{playersCount}</span>
-                <span className="home-stat-label">játékos</span>
+                <span
+                  aria-hidden="true"
+                  className={`home-player-icons${playersCount > 8 ? ' home-player-icons--crowd' : ''}`}
+                >
+                  {Array.from({ length: Math.max(2, playersCount) }, (_, index) => (
+                    <UserRound key={index} className="home-player-icon" />
+                  ))}
+                </span>
+                <span className="home-player-count">
+                  <span className="home-stat-number">{playersCount}</span>
+                  <span className="home-stat-label">játékos</span>
+                </span>
               </p>
             </div>
           </div>
