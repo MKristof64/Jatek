@@ -7,7 +7,7 @@ const productionCsp = [
   "style-src 'self'",
   "img-src 'self' data: blob:",
   "font-src 'self'",
-  "connect-src 'self' https://api.github.com https://0.peerjs.com wss://0.peerjs.com https://*.workers.dev https://*.pages.dev",
+  "connect-src 'self' https://api.github.com https://0.peerjs.com wss://0.peerjs.com https://*.workers.dev https://*.pages.dev https://darkroom.kristof-madarasz159.chatgpt.site",
   "media-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",

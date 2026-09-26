@@ -4,6 +4,18 @@ Mobil-first React + Vite partyjáték webes és natív Android-kiadással.
 Egy telefonon és legfeljebb 15 résztvevős, PeerJS-alapú online szobában is
 használható.
 
+Az **1.3.0** kiadástól a Beállítások → Másik játék választása menüből a
+**Darkroom** is megnyitható. A teljes Ország, Város felület az APK része,
+26 témával, körönként 7 véletlen témával, hatjegyű online szobakóddal és
+házigazdai pontjavítással. A közös szobákhoz internetkapcsolat szükséges.
+Az ivós játék adatai és a Darkroom szobája elkülönülnek; játékváltáskor az
+aktív szobából csak megerősítés után lehet kilépni.
+
+A Darkroom szoba-API-ja: `https://darkroom.kristof-madarasz159.chatgpt.site/api/game`.
+A meghívók a webes alkalmazás `?jatek=darkroom&szoba=123456` útvonalát használják,
+és soha nem tartalmaznak játékostokent. Helyi Darkroom-szerverhez a
+`VITE_DARKROOM_API_ORIGIN` fejlesztői környezeti változó adható meg.
+
 ## Letöltés
 
 A legfrissebb aláírt Android APK:

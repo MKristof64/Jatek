@@ -40,7 +40,12 @@ function validateDownloadUrl(value) {
   if (
     url.protocol !== 'https:' ||
     url.hostname !== 'github.com' ||
-    !releaseDownloadPath.test(url.pathname)
+    !releaseDownloadPath.test(url.pathname) ||
+    url.username ||
+    url.password ||
+    url.port ||
+    url.search ||
+    url.hash
   ) {
     throw new Error('A kiadás letöltési címe nem megbízható.');
   }

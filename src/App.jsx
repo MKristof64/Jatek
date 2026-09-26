@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { App as CapacitorApp } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
 import { Settings } from 'lucide-react';
@@ -46,12 +46,16 @@ import {
 } from './lib/gameEngine.js';
 import GamePage from './pages/GamePage.jsx';
 import GameSelectPage from './pages/GameSelectPage.jsx';
+import GameLoadBoundary from './components/GameLoadBoundary.jsx';
+import { gameLocation, initialGameFromSearch } from './lib/gameNavigation.js';
 import HomePage from './pages/HomePage.jsx';
 import ModeSelectPage from './pages/ModeSelectPage.jsx';
 import PlayersPage from './pages/PlayersPage.jsx';
 import RoomPage from './pages/RoomPage.jsx';
 import SavedGamesPage from './pages/SavedGamesPage.jsx';
 import SettingsPage from './pages/SettingsPage.jsx';
+
+const DarkroomPage = lazy(() => import('./darkroom/DarkroomPage.jsx'));
 
 const storageKeys = {
   players: 'enmegsosem.players',
@@ -131,6 +135,7 @@ const pages = {
   game: 'game',
   settings: 'settings',
   gameSelect: 'game-select',
+  darkroom: 'darkroom',
   savedGames: 'saved-games',
 };
 
@@ -541,7 +546,7 @@ function playFeedback() {
 }
 
 export default function App() {
-  const [page, setPage] = useState(pages.home);
+  const [page, setPage] = useState(() => initialGameFromSearch(window.location.search) === 'darkroom' ? pages.darkroom : pages.home);
   const [players, setPlayers] = useState(loadPlayers);
   const [settings, setSettings] = useState(loadSettings);
   const [selectedMode, setSelectedMode] = useState(loadSelectedMode);
@@ -570,6 +575,23 @@ export default function App() {
   const persistCurrentGameRef = useRef(null);
   const gameHistoryGuardRef = useRef(false);
   const gameWasBackgroundedRef = useRef(false);
+  const darkroomRef = useRef(null);
+
+  const chooseGame = (gameId) => {
+    window.history.replaceState(window.history.state, '', gameLocation(window.location.href, gameId));
+    setPage(gameId === 'darkroom' ? pages.darkroom : gameId === 'drinking' ? pages.home : pages.gameSelect);
+  };
+
+  useEffect(() => {
+    if (page !== pages.darkroom || Capacitor.isNativePlatform()) return undefined;
+    window.history.pushState({ darkroomGuard: true }, '', window.location.href);
+    const handleBack = () => {
+      window.history.pushState({ darkroomGuard: true }, '', window.location.href);
+      if (!darkroomRef.current?.handleBack()) chooseGame('chooser');
+    };
+    window.addEventListener('popstate', handleBack);
+    return () => window.removeEventListener('popstate', handleBack);
+  }, [page]);
 
   useEffect(() => {
     if (!isDevMotionBuild) return undefined;
@@ -617,9 +639,9 @@ export default function App() {
       if (document.visibilityState === 'hidden') return;
 
       window.clearTimeout(retryTimer);
-      void lockSelectedOrientation(settings.landscapeRatio);
+      void lockSelectedOrientation(page === pages.darkroom ? null : settings.landscapeRatio);
       retryTimer = window.setTimeout(
-        () => void lockSelectedOrientation(settings.landscapeRatio),
+        () => void lockSelectedOrientation(page === pages.darkroom ? null : settings.landscapeRatio),
         250,
       );
     };
@@ -644,7 +666,7 @@ export default function App() {
       document.removeEventListener('visibilitychange', enforcePreferredOrientation);
       window.screen?.orientation?.removeEventListener?.('change', enforcePreferredOrientation);
     };
-  }, [settings.landscapeRatio]);
+  }, [page, settings.landscapeRatio]);
 
   useEffect(() => {
     let viewportFrame = 0;
@@ -772,7 +794,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (room && game.card && currentRoomPlayerId && page !== pages.game) {
+    if (room && game.card && currentRoomPlayerId && [pages.home, pages.players, pages.room, pages.modes].includes(page)) {
       setPage(pages.game);
     }
   }, [currentRoomPlayerId, game.card, page, room]);
@@ -1120,9 +1142,12 @@ export default function App() {
 
   const attachGuestConnection = (connection) => {
     guestConnectionRef.current = connection;
-    connection.on('data', handleGuestMessage);
+    const active = () => guestConnectionRef.current === connection && peerModeRef.current === 'guest';
+    connection.on('data', (message) => {
+      if (active()) handleGuestMessage(message);
+    });
     connection.on('close', () => {
-      if (peerModeRef.current === 'guest') {
+      if (active()) {
         setOnlineStatus({
           mode: 'guest',
           state: 'disconnected',
@@ -1131,6 +1156,7 @@ export default function App() {
       }
     });
     connection.on('error', () => {
+      if (!active()) return;
       setOnlineStatus({
         mode: 'guest',
         state: 'error',
@@ -1175,7 +1201,10 @@ export default function App() {
   };
 
   const handleHostConnection = (connection) => {
+    const hostPeer = peerRef.current;
+    const active = () => peerModeRef.current === 'host' && peerRef.current === hostPeer;
     const removeDisconnectedParticipant = () => {
+      if (!active()) return;
       const participantId = connection.partyrushPlayerId;
       if (!participantId) return;
 
@@ -1185,6 +1214,7 @@ export default function App() {
     };
 
     connection.on('data', (message) => {
+      if (!active()) return;
       if (!message || typeof message !== 'object') return;
 
       if (message.type === onlineMessageTypes.joinRoom) {
@@ -1451,6 +1481,10 @@ export default function App() {
         if (settled) return;
         settled = true;
         window.clearTimeout(timeoutId);
+        if (peerRef.current !== peer) {
+          resolve(error ?? 'A csatlakozás megszakadt.');
+          return;
+        }
         if (error) {
           clearPeerConnections();
           setOnlineStatus({
@@ -1499,6 +1533,7 @@ export default function App() {
         });
 
         connection.on('data', (message) => {
+          if (guestConnectionRef.current !== connection || peerModeRef.current !== 'guest') return;
           if (message?.type === onlineMessageTypes.joinAccepted) {
             applySharedState(message.state, message.playerId ?? playerId);
             setOnlineStatus({
@@ -1768,6 +1803,11 @@ export default function App() {
   const clearData = () => {
     setPendingConfirmation(null);
     Object.values(storageKeys).forEach((key) => removeStoredKey(key));
+    try {
+      Object.keys(sessionStorage).filter((key) => key.startsWith('partyrush.darkroom.')).forEach((key) => sessionStorage.removeItem(key));
+    } catch {
+      // Browser storage may be unavailable; in-memory data is still reset.
+    }
     clearStoredRoomState();
     clearPeerConnections();
     setOnlineStatus(defaultOnlineStatus);
@@ -2078,6 +2118,10 @@ export default function App() {
     let listenerDisposed = false;
 
     void CapacitorApp.addListener('backButton', () => {
+      if (page === pages.darkroom) {
+        if (!darkroomRef.current?.handleBack()) chooseGame('chooser');
+        return;
+      }
       if (pendingConfirmation) {
         cancelPendingConfirmation();
         return;
@@ -2134,6 +2178,13 @@ export default function App() {
 
   return (
     <>
+    {page === pages.darkroom ? (
+      <GameLoadBoundary onBack={() => chooseGame('chooser')}>
+        <Suspense fallback={<main className="grid min-h-dvh place-items-center bg-[#120b18] text-white" role="status">Darkroom betöltése…</main>}>
+          <DarkroomPage ref={darkroomRef} onChooseGame={() => chooseGame('chooser')} />
+        </Suspense>
+      </GameLoadBoundary>
+    ) : (
     <Layout
       darkMode={settings.darkMode}
       gameMode={page === pages.game}
@@ -2233,7 +2284,9 @@ export default function App() {
       {page === pages.gameSelect ? (
         <GameSelectPage
           onOpenGame={(gameId) => {
-            if (gameId === 'drinking') setPage(pages.home);
+            if (gameId === 'darkroom' && room) {
+              setPendingConfirmation('switch-darkroom');
+            } else if (gameId === 'drinking' || gameId === 'darkroom') chooseGame(gameId);
           }}
           onBack={() => setPage(pages.settings)}
         />
@@ -2249,6 +2302,16 @@ export default function App() {
         />
       ) : null}
       </div>
+
+      {pendingConfirmation === 'switch-darkroom' ? (
+        <ConfirmDialog
+          title="Átlépsz a Darkroomba?"
+          description={isRoomHost ? 'A jelenlegi ivós szobát ezzel lezárod minden játékosnak.' : 'Ezzel kilépsz a jelenlegi ivós szobából.'}
+          confirmLabel="Átlépek"
+          onCancel={cancelPendingConfirmation}
+          onConfirm={() => { leaveRoomNow(); chooseGame('darkroom'); }}
+        />
+      ) : null}
 
       {pendingConfirmation === 'finish-room' ? (
         <ConfirmDialog
@@ -2314,6 +2377,7 @@ export default function App() {
         />
       ) : null}
     </Layout>
+    )}
     {introState ? <AppIntro leaving={introState === 'leaving'} /> : null}
     </>
   );

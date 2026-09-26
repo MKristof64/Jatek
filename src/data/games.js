@@ -10,7 +10,7 @@ export const gameOptions = [
     id: 'darkroom',
     name: 'Darkroom',
     description: 'Ország, Város',
-    available: false,
+    available: true,
     accent: 'from-rose-400 via-fuchsia-400 to-violet-400',
   },
 ];

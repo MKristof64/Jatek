@@ -95,3 +95,16 @@ test('latest release parser rejects an unverified or foreign APK', () => {
     ),
   );
 });
+
+test('APK download addresses reject extra credentials, ports, query and fragments', () => {
+  for (const url of [
+    'https://user:secret@github.com/MKristof64/Jatek/releases/download/v1.2.0/Az-ivos-jatek.apk',
+    'https://github.com:444/MKristof64/Jatek/releases/download/v1.2.0/Az-ivos-jatek.apk',
+    'https://github.com/MKristof64/Jatek/releases/download/v1.2.0/Az-ivos-jatek.apk?token=secret',
+    'https://github.com/MKristof64/Jatek/releases/download/v1.2.0/Az-ivos-jatek.apk#other',
+  ]) {
+    const payload = releasePayload();
+    payload.assets[0].browser_download_url = url;
+    assert.throws(() => parseLatestAppRelease(payload, '1.1.2'));
+  }
+});
