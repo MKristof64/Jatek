@@ -11,10 +11,14 @@
   flex-direction: column;
   border: 1px solid #ffffff26;
   border-radius: 1.5rem;
-  background: #290017;
+  background:
+    linear-gradient(135deg, rgba(255, 221, 206, 0.08), transparent 45%),
+    linear-gradient(145deg, #400020, #290017 58%, #38001e);
   box-shadow:
+    0 3px 10px rgba(12, 0, 9, 0.28),
     0 16px 36px rgba(20, 0, 14, 0.42),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    inset 0 1px 0 rgba(255, 221, 206, 0.18),
+    inset 0 -1px 0 rgba(12, 0, 9, 0.3);
 }
 
 .home-hero-content {
@@ -35,6 +39,11 @@
   flex-shrink: 0;
   margin: 0;
   border-radius: 1.25rem;
+  box-shadow:
+    0 3px 8px rgba(20, 0, 14, 0.24),
+    0 10px 24px rgba(244, 63, 94, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 0 rgba(142, 18, 57, 0.24);
 }
 
 .home-logo-tile svg {
@@ -93,10 +102,12 @@
 
 .theme-light .home-hero-card {
   border-color: #74233e33;
-  background: #fff4f7;
+  background: linear-gradient(145deg, #fffaf8, #fff0f4 65%, #ffe5ee);
   box-shadow:
+    0 3px 8px rgba(116, 35, 62, 0.08),
     0 12px 28px rgba(116, 35, 62, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(116, 35, 62, 0.08);
 }
 
 .theme-light .home-hero-kicker,
