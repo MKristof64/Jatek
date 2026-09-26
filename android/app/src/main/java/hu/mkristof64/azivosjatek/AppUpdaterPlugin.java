@@ -1,23 +1,28 @@
 package hu.mkristof64.azivosjatek;
 
-import android.app.DownloadManager;
-import android.content.ContentResolver;
-import android.content.ContentValues;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
-import android.provider.MediaStore;
-import androidx.annotation.RequiresApi;
+import android.provider.Settings;
+import androidx.activity.result.ActivityResult;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.pm.PackageInfoCompat;
+import androidx.lifecycle.Lifecycle;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
+import com.getcapacitor.annotation.ActivityCallback;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -41,8 +47,6 @@ import java.util.regex.Pattern;
 public class AppUpdaterPlugin extends Plugin {
 
     private static final String APK_NAME = "Az-ivos-jatek.apk";
-    private static final String APK_MIME_TYPE = "application/vnd.android.package-archive";
-    private static final String DOWNLOADS_SUBDIRECTORY = "Az ivós játék";
     private static final long MAX_APK_BYTES = 100L * 1024L * 1024L;
     private static final Pattern SHA_256_PATTERN = Pattern.compile("^[a-fA-F0-9]{64}$");
     private static final Pattern VERSION_PATTERN = Pattern.compile("^\\d+\\.\\d+\\.\\d+$");
@@ -52,9 +56,36 @@ public class AppUpdaterPlugin extends Plugin {
 
     private final ExecutorService downloadExecutor = Executors.newSingleThreadExecutor();
     private final AtomicBoolean downloadInProgress = new AtomicBoolean(false);
+    private BroadcastReceiver installStateReceiver;
+
+    @Override
+    public void load() {
+        installStateReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Intent confirmation = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                    ? intent.getParcelableExtra(Intent.EXTRA_INTENT, Intent.class)
+                    : getLegacyConfirmation(intent);
+                handleInstallState(confirmation);
+            }
+        };
+        ContextCompat.registerReceiver(
+            getContext(), installStateReceiver,
+            new IntentFilter(AppInstallResultReceiver.ACTION_STATE_CHANGED),
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        );
+    }
 
     @PluginMethod
-    public void downloadAndPrepare(PluginCall call) {
+    public void getInstallState(PluginCall call) {
+        getBridge().executeOnMainThread(() -> {
+            handleInstallState(null);
+            call.resolve(readInstallState());
+        });
+    }
+
+    @PluginMethod
+    public void downloadAndInstall(PluginCall call) {
         String downloadUrl = call.getString("url");
         String expectedSha256 = call.getString("sha256");
         String expectedVersion = call.getString("version");
@@ -75,15 +106,71 @@ public class AppUpdaterPlugin extends Plugin {
             return;
         }
 
-        String normalizedSha256 = expectedSha256.toLowerCase(Locale.ROOT);
+        getBridge().executeOnMainThread(() -> {
+            try {
+                SharedPreferences preferences = AppInstallResultReceiver.preferences(getContext());
+                String status = preferences.getString("status", "idle");
+                int sessionId = preferences.getInt("sessionId", -1);
+                if (
+                    ("installing".equals(status) || "pending-confirmation".equals(status)) &&
+                    getContext().getPackageManager().getPackageInstaller().getSessionInfo(sessionId) != null
+                ) {
+                    downloadInProgress.set(false);
+                    call.reject("A telepítés már folyamatban van.", "UPDATE_IN_PROGRESS");
+                    return;
+                }
+                if (
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+                    !getContext().getPackageManager().canRequestPackageInstalls()
+                ) {
+                    JSObject state = new JSObject();
+                    state.put("status", "permission-required");
+                    state.put("version", expectedVersion);
+                    notifyListeners("installState", state);
+                    Intent permission = new Intent(
+                        Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,
+                        Uri.parse("package:" + getContext().getPackageName())
+                    );
+                    startActivityForResult(call, permission, "installPermissionReturned");
+                    return;
+                }
+                beginVerifiedInstall(call);
+            } catch (Exception error) {
+                downloadInProgress.set(false);
+                call.reject("A telepítési engedély ablaka nem nyitható meg.", "INSTALLER_UNAVAILABLE", error);
+            }
+        });
+    }
+
+    @ActivityCallback
+    private void installPermissionReturned(PluginCall call, ActivityResult result) {
+        if (call == null) {
+            downloadInProgress.set(false);
+            return;
+        }
+        if (
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+            !getContext().getPackageManager().canRequestPackageInstalls()
+        ) {
+            downloadInProgress.set(false);
+            call.reject("Az appból történő telepítés nincs engedélyezve.", "INSTALL_PERMISSION_DENIED");
+            return;
+        }
+        beginVerifiedInstall(call);
+    }
+
+    private void beginVerifiedInstall(PluginCall call) {
+        String downloadUrl = call.getString("url");
+        String normalizedSha256 = call.getString("sha256").toLowerCase(Locale.ROOT);
+        String expectedVersion = call.getString("version");
         downloadExecutor.execute(() -> {
             File apkFile = null;
             try {
                 apkFile = downloadApk(downloadUrl, normalizedSha256);
                 PackageInfo packageInfo = validateDownloadedApk(apkFile, expectedVersion);
-                exportVerifiedApk(apkFile, packageInfo);
+                stageVerifiedInstall(apkFile, packageInfo);
                 deleteQuietly(apkFile);
-                getBridge().executeOnMainThread(() -> openSystemDownloads(call, packageInfo));
+                getBridge().executeOnMainThread(() -> call.resolve(readInstallState()));
             } catch (UpdateException error) {
                 deleteQuietly(apkFile);
                 rejectOnMainThread(call, error.getMessage(), error.code, error);
@@ -332,101 +419,46 @@ public class AppUpdaterPlugin extends Plugin {
         }
     }
 
-    private void exportVerifiedApk(File apkFile, PackageInfo packageInfo) throws UpdateException {
-        String exportedName = "Az-ivos-jatek-" + packageInfo.versionName + ".apk";
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            exportToMediaStore(apkFile, exportedName);
-            return;
-        }
-        exportToLegacyDownloads(apkFile, exportedName);
-    }
-
-    @RequiresApi(Build.VERSION_CODES.Q)
-    private void exportToMediaStore(File apkFile, String exportedName) throws UpdateException {
-        ContentResolver resolver = getContext().getContentResolver();
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.MediaColumns.DISPLAY_NAME, exportedName);
-        values.put(MediaStore.MediaColumns.MIME_TYPE, APK_MIME_TYPE);
-        values.put(
-            MediaStore.MediaColumns.RELATIVE_PATH,
-            Environment.DIRECTORY_DOWNLOADS + "/" + DOWNLOADS_SUBDIRECTORY
-        );
-        values.put(MediaStore.MediaColumns.IS_PENDING, 1);
-
-        Uri downloadUri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
-        if (downloadUri == null) {
-            throw new UpdateException(
-                "A frissítés nem menthető a Letöltések közé.",
-                "EXPORT_FAILED"
-            );
-        }
-
-        try (OutputStream output = resolver.openOutputStream(downloadUri, "w")) {
-            if (output == null) throw new IOException("The Downloads output stream is unavailable.");
-            copyFile(apkFile, output);
-        } catch (Exception error) {
-            resolver.delete(downloadUri, null, null);
-            throw new UpdateException(
-                "A frissítés nem menthető a Letöltések közé.",
-                "EXPORT_FAILED",
-                error
-            );
-        }
-
+    private void stageVerifiedInstall(File apkFile, PackageInfo packageInfo) throws UpdateException {
+        PackageInstaller installer = getContext().getPackageManager().getPackageInstaller();
+        int sessionId = -1;
         try {
-            ContentValues completed = new ContentValues();
-            completed.put(MediaStore.MediaColumns.IS_PENDING, 0);
-            if (resolver.update(downloadUri, completed, null, null) != 1) {
-                throw new IOException("The verified download could not be published.");
+            PackageInstaller.SessionParams params = new PackageInstaller.SessionParams(
+                PackageInstaller.SessionParams.MODE_FULL_INSTALL
+            );
+            params.setAppPackageName(getContext().getPackageName());
+            params.setSize(apkFile.length());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                params.setRequireUserAction(PackageInstaller.SessionParams.USER_ACTION_REQUIRED);
+            }
+            sessionId = installer.createSession(params);
+            try (PackageInstaller.Session session = installer.openSession(sessionId)) {
+                try (OutputStream output = session.openWrite("base.apk", 0, apkFile.length())) {
+                    copyFile(apkFile, output);
+                    session.fsync(output);
+                }
+                String nonce = UUID.randomUUID().toString();
+                boolean saved = AppInstallResultReceiver.preferences(getContext()).edit().clear()
+                    .putInt("sessionId", sessionId)
+                    .putString("nonce", nonce)
+                    .putString("version", packageInfo.versionName)
+                    .putString("status", "installing")
+                    .commit();
+                if (!saved) throw new IOException("Installation state could not be saved.");
+                Intent callback = new Intent(getContext(), AppInstallResultReceiver.class)
+                    .setAction(AppInstallResultReceiver.ACTION_INSTALL_RESULT)
+                    .putExtra(AppInstallResultReceiver.EXTRA_NONCE, nonce);
+                int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) flags |= PendingIntent.FLAG_MUTABLE;
+                PendingIntent result = PendingIntent.getBroadcast(getContext(), sessionId, callback, flags);
+                session.commit(result.getIntentSender());
             }
         } catch (Exception error) {
-            resolver.delete(downloadUri, null, null);
-            throw new UpdateException(
-                "A frissítés nem menthető a Letöltések közé.",
-                "EXPORT_FAILED",
-                error
-            );
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    private void exportToLegacyDownloads(File apkFile, String exportedName)
-        throws UpdateException {
-        File downloadsDirectory = getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
-        if (downloadsDirectory == null || (!downloadsDirectory.exists() && !downloadsDirectory.mkdirs())) {
-            throw new UpdateException(
-                "A frissítés nem menthető a Letöltések közé.",
-                "EXPORT_FAILED"
-            );
-        }
-
-        File exportedFile = new File(downloadsDirectory, exportedName);
-        deleteQuietly(exportedFile);
-        try (FileOutputStream output = new FileOutputStream(exportedFile)) {
-            copyFile(apkFile, output);
-            output.getFD().sync();
-
-            DownloadManager downloadManager = (DownloadManager) getContext().getSystemService(
-                android.content.Context.DOWNLOAD_SERVICE
-            );
-            if (downloadManager == null) throw new IOException("Downloads is unavailable.");
-
-            downloadManager.addCompletedDownload(
-                exportedName,
-                "Ellenőrzött Az ivós játék frissítés",
-                false,
-                APK_MIME_TYPE,
-                exportedFile.getAbsolutePath(),
-                exportedFile.length(),
-                true
-            );
-        } catch (Exception error) {
-            deleteQuietly(exportedFile);
-            throw new UpdateException(
-                "A frissítés nem menthető a Letöltések közé.",
-                "EXPORT_FAILED",
-                error
-            );
+            if (sessionId >= 0) {
+                try { installer.abandonSession(sessionId); } catch (Exception ignored) { }
+                AppInstallResultReceiver.preferences(getContext()).edit().clear().apply();
+            }
+            throw new UpdateException("A rendszertelepítő nem indítható el.", "INSTALLER_UNAVAILABLE", error);
         }
     }
 
@@ -441,22 +473,65 @@ public class AppUpdaterPlugin extends Plugin {
         }
     }
 
-    private void openSystemDownloads(PluginCall call, PackageInfo packageInfo) {
-        try {
-            Intent intent = new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS);
-            getActivity().startActivity(intent);
-            JSObject result = new JSObject();
-            result.put("status", "downloadsOpened");
-            result.put("version", packageInfo.versionName);
-            result.put("versionCode", PackageInfoCompat.getLongVersionCode(packageInfo));
-            call.resolve(result);
-        } catch (Exception error) {
-            call.reject(
-                "Az Android Letöltések felülete nem nyitható meg.",
-                "DOWNLOADS_UNAVAILABLE",
-                error
-            );
+    private JSObject readInstallState() {
+        SharedPreferences preferences = AppInstallResultReceiver.preferences(getContext());
+        String status = preferences.getString("status", "idle");
+        int sessionId = preferences.getInt("sessionId", -1);
+        if (
+            ("installing".equals(status) || "pending-confirmation".equals(status)) &&
+            sessionId >= 0 && !downloadInProgress.get() &&
+            getContext().getPackageManager().getPackageInstaller().getSessionInfo(sessionId) == null
+        ) {
+            try {
+                PackageInfo installed = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
+                status = installed.versionName.equals(preferences.getString("version", null)) ? "installed" : "cancelled";
+                preferences.edit().putString("status", status).remove("confirmation").apply();
+            } catch (PackageManager.NameNotFoundException ignored) { }
         }
+        JSObject state = new JSObject();
+        state.put("status", status);
+        state.put("version", preferences.getString("version", null));
+        state.put("message", preferences.getString("message", null));
+        return state;
+    }
+
+    @SuppressWarnings("deprecation")
+    private Intent getLegacyConfirmation(Intent intent) {
+        return intent.getParcelableExtra(Intent.EXTRA_INTENT);
+    }
+
+    private void handleInstallState(Intent confirmation) {
+        SharedPreferences preferences = AppInstallResultReceiver.preferences(getContext());
+        String status = preferences.getString("status", "idle");
+        if (
+            "pending-confirmation".equals(status) &&
+            getActivity().getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)
+        ) {
+            try {
+                if (confirmation == null) {
+                    String saved = preferences.getString("confirmation", null);
+                    if (saved == null) throw new IOException("Installation confirmation is missing.");
+                    confirmation = Intent.parseUri(saved, Intent.URI_INTENT_SCHEME);
+                }
+                getActivity().startActivity(confirmation);
+                preferences.edit().putString("status", "installing").remove("confirmation").apply();
+            } catch (Exception error) {
+                int sessionId = preferences.getInt("sessionId", -1);
+                if (sessionId >= 0) {
+                    try { getContext().getPackageManager().getPackageInstaller().abandonSession(sessionId); }
+                    catch (Exception ignored) { }
+                }
+                preferences.edit().putString("status", "error")
+                    .remove("confirmation")
+                    .putString("message", "Az Android telepítési ablaka nem nyitható meg.").apply();
+            }
+        }
+        notifyListeners("installState", readInstallState());
+    }
+
+    @Override
+    protected void handleOnResume() {
+        getActivity().getWindow().getDecorView().post(() -> handleInstallState(null));
     }
 
     private void notifyProgress(int percent, long downloadedBytes, long totalBytes) {
@@ -532,6 +607,10 @@ public class AppUpdaterPlugin extends Plugin {
 
     @Override
     protected void handleOnDestroy() {
+        if (installStateReceiver != null) {
+            getContext().unregisterReceiver(installStateReceiver);
+            installStateReceiver = null;
+        }
         downloadExecutor.shutdownNow();
         super.handleOnDestroy();
     }

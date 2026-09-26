@@ -49,9 +49,17 @@ feltölthető AAB itt készül el:
 
 A natív frissítő az alkalmazáson belül tölti le a hitelesített, verziózott GitHub
 APK-t egy elkülönített gyorsítótárba. A fájl SHA-256 lenyomatát, csomagnevét,
-verzióját és kiadói aláírását is ellenőrzi, majd az Android Letöltések mappájába
-menti. A felhasználó innen indítja el a telepítést; az app nem kap önálló
-csomagtelepítési jogosultságot. Böngészőt vagy GitHub-oldalt nem nyit meg.
+verzióját és kiadói aláírását is ellenőrzi, majd a `PackageInstaller` API-val
+közvetlenül az Android telepítési jóváhagyását nyitja meg. Nem nyit böngészőt,
+GitHub-oldalt vagy Letöltések felületet, és nem exportálja a telepítőt közös
+tárhelyre. Az Android 8 vagy újabb rendszereken az első alkalommal engedélyezni
+kell az appból történő telepítést. A rendszer jóváhagyása kötelező, nincs csendes
+telepítés vagy biztonsági ellenőrzés megkerülése. Megszakítás után a frissítés
+újraindítható, háttérbe lépés után a jóváhagyás az appba visszatéréskor folytatódik.
+
+Az 1.2.8 vagy korábbi natív appok még a régi frissítőt tartalmazzák. Az 1.2.9-es
+átállási kiadást egyszer a régi telepítési útvonalon kell feltenni; a későbbi
+kiadások már az új appon belüli folyamatot használják.
 
 Az Android Studio projekt frissítése és megnyitása:
 

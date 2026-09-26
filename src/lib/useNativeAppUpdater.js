@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { App as CapacitorApp } from '@capacitor/app';
 import { Capacitor, registerPlugin } from '@capacitor/core';
 import { fetchLatestAppRelease } from './appRelease.js';
+import { applyNativeInstallState, isNativeUpdateBusy } from './nativeUpdateState.js';
 
 const NativeAppUpdater = registerPlugin('AppUpdater');
 
@@ -21,8 +22,8 @@ const errorMessages = {
   VERSION_MISMATCH: 'A letöltött telepítő verziója nem egyezik a kiadással.',
   SIGNATURE_MISMATCH: 'A telepítő kiadói aláírása nem egyezik az alkalmazáséval.',
   VERSION_NOT_NEWER: 'A letöltött kiadás nem újabb a telepített változatnál.',
-  EXPORT_FAILED: 'A frissítés nem menthető a rendszer Letöltések mappájába.',
-  DOWNLOADS_UNAVAILABLE: 'Az Android Letöltések felülete nem nyitható meg ezen a készüléken.',
+  INSTALL_PERMISSION_DENIED: 'Az appból történő telepítés nincs engedélyezve. A frissítés újra elindítható.',
+  INSTALLER_UNAVAILABLE: 'Az Android rendszertelepítője nem indítható el ezen a készüléken.',
   UPDATE_IN_PROGRESS: 'A frissítés letöltése már folyamatban van.',
 };
 
@@ -42,7 +43,7 @@ export default function useNativeAppUpdater() {
 
   const installUpdate = useCallback(async () => {
     const release = stateRef.current.release;
-    if (!isNative || !release || installInProgressRef.current) return;
+    if (!isNative || !release || installInProgressRef.current || isNativeUpdateBusy(stateRef.current.status) || stateRef.current.status === 'installed') return;
 
     installInProgressRef.current = true;
     setState((current) => ({
@@ -53,18 +54,13 @@ export default function useNativeAppUpdater() {
     }));
 
     try {
-      const result = await NativeAppUpdater.downloadAndPrepare({
+      const result = await NativeAppUpdater.downloadAndInstall({
         url: release.url,
         sha256: release.sha256,
         version: release.version,
       });
 
-      setState((current) => ({
-        ...current,
-        status: result?.status === 'downloadsOpened' ? 'downloads-opened' : 'ready',
-        progress: 100,
-        message: 'A frissítés ellenőrizve. A Letöltésekben koppints az APK-ra a telepítéshez.',
-      }));
+      setState((current) => applyNativeInstallState(current, result));
     } catch (error) {
       setState((current) => ({
         ...current,
@@ -81,30 +77,43 @@ export default function useNativeAppUpdater() {
 
     let disposed = false;
     let progressHandle;
+    let installStateHandle;
     let appStateHandle;
     let resumeTimer = 0;
     let checkTimer = 0;
+    let checkSequence = 0;
 
     const checkForUpdate = async () => {
-      setState((current) => ({ ...current, status: 'checking', message: '' }));
+      if (installInProgressRef.current) return;
+      const sequence = ++checkSequence;
 
       try {
+        const installState = await NativeAppUpdater.getInstallState();
+        if (disposed || sequence !== checkSequence || installInProgressRef.current) return;
+        const activeState = applyNativeInstallState(stateRef.current, installState);
+        if (isNativeUpdateBusy(activeState.status)) {
+          setState(activeState);
+          return;
+        }
+        setState((current) => current.release ? current : { ...current, status: 'checking' });
         const appInfo = await CapacitorApp.getInfo();
         const release = await fetchLatestAppRelease(appInfo.version);
-        if (disposed) return;
+        if (disposed || sequence !== checkSequence || installInProgressRef.current) return;
 
-        setState(
+        setState((current) => isNativeUpdateBusy(current.status) ? current : (
           release
-            ? {
+            ? applyNativeInstallState({
                 status: 'available',
                 release,
                 progress: 0,
                 message: `Elérhető az ${release.version} verzió.`,
-              }
-            : initialState,
-        );
+              }, installState)
+            : initialState
+        ));
       } catch {
-        if (!disposed) setState(initialState);
+        if (!disposed && sequence === checkSequence) {
+          setState((current) => current.release ? current : initialState);
+        }
       }
     };
 
@@ -124,13 +133,17 @@ export default function useNativeAppUpdater() {
       else progressHandle = handle;
     });
 
-    void CapacitorApp.addListener('appStateChange', ({ isActive }) => {
-      if (!isActive || disposed) return;
+    void NativeAppUpdater.addListener('installState', (result) => {
+      if (!disposed) setState((current) => applyNativeInstallState(current, result));
+    }).then((handle) => {
+      if (disposed) void handle.remove();
+      else installStateHandle = handle;
+    });
 
-      if (stateRef.current.status === 'downloads-opened') {
-        window.clearTimeout(resumeTimer);
-        resumeTimer = window.setTimeout(() => void checkForUpdate(), 500);
-      }
+    void CapacitorApp.addListener('appStateChange', ({ isActive }) => {
+      if (!isActive || disposed || installInProgressRef.current) return;
+      window.clearTimeout(resumeTimer);
+      resumeTimer = window.setTimeout(() => void checkForUpdate(), 500);
     }).then((handle) => {
       if (disposed) void handle.remove();
       else appStateHandle = handle;
@@ -143,6 +156,7 @@ export default function useNativeAppUpdater() {
       window.clearTimeout(checkTimer);
       window.clearTimeout(resumeTimer);
       void progressHandle?.remove();
+      void installStateHandle?.remove();
       void appStateHandle?.remove();
     };
   }, [installUpdate, isNative]);

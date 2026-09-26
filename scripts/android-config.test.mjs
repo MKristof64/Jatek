@@ -30,7 +30,8 @@ test('Android manifest permits controlled rotation and blocks cleartext traffic'
   assert.match(manifest, /android:dataExtractionRules="@xml\/data_extraction_rules"/);
   assert.match(manifest, /android:fullBackupContent="@xml\/backup_rules"/);
   assert.match(manifest, /android:name="android\.permission\.INTERNET"/);
-  assert.doesNotMatch(manifest, /android\.permission\.REQUEST_INSTALL_PACKAGES/);
+  assert.match(manifest, /android\.permission\.REQUEST_INSTALL_PACKAGES/);
+  assert.match(manifest, /android:name="\.AppInstallResultReceiver"\s+android:exported="false"/);
   assert.doesNotMatch(manifest, /androidx\.core\.content\.FileProvider/);
   assert.doesNotMatch(manifest, /android:resource="@xml\/file_paths"/);
 });
@@ -48,29 +49,51 @@ test('Android activity uses edge-to-edge immersive system bars', async () => {
   assert.match(activity, /registerPlugin\(AppUpdaterPlugin\.class\)/);
 });
 
-test('Android updater verifies releases and hands them to system Downloads without install access', async () => {
+test('Android updater stages verified self-updates directly in the system installer', async () => {
   const updater = await readProjectFile(
     'android/app/src/main/java/hu/mkristof64/azivosjatek/AppUpdaterPlugin.java',
   );
   assert.match(updater, /github\.com/);
   assert.match(updater, /APK_DOWNLOAD_PATH/);
   assert.match(updater, /Az-ivos-jatek\\\\\.apk/);
-  assert.match(updater, /downloadAndPrepare/);
+  assert.match(updater, /downloadAndInstall/);
   assert.match(updater, /MessageDigest\.getInstance\("SHA-256"\)/);
   assert.match(updater, /validateDownloadedApk/);
   assert.match(updater, /getSignerDigests/);
   assert.match(updater, /PackageInfoCompat\.getLongVersionCode/);
-  assert.match(updater, /MediaStore\.Downloads\.EXTERNAL_CONTENT_URI/);
-  assert.match(updater, /MediaStore\.MediaColumns\.IS_PENDING/);
-  assert.match(updater, /addCompletedDownload/);
-  assert.match(updater, /DownloadManager\.ACTION_VIEW_DOWNLOADS/);
+  assert.match(updater, /PackageInstaller\.SessionParams/);
+  assert.match(updater, /setAppPackageName\(getContext\(\)\.getPackageName\(\)\)/);
+  assert.match(updater, /USER_ACTION_REQUIRED/);
+  assert.match(updater, /session\.fsync\(output\)/);
+  assert.match(updater, /session\.commit\(result\.getIntentSender\(\)\)/);
+  assert.match(updater, /PendingIntent\.FLAG_MUTABLE/);
+  assert.match(updater, /new Intent\(getContext\(\), AppInstallResultReceiver\.class\)/);
+  assert.match(updater, /canRequestPackageInstalls/);
+  assert.match(updater, /ACTION_MANAGE_UNKNOWN_APP_SOURCES/);
+  assert.match(updater, /@ActivityCallback/);
+  assert.match(updater, /installPermissionReturned/);
+  assert.match(updater, /Lifecycle\.State\.RESUMED/);
+  assert.match(updater, /abandonSession/);
+  assert.match(updater, /RECEIVER_NOT_EXPORTED/);
+  assert.doesNotMatch(updater, /DownloadManager|MediaStore|DIRECTORY_DOWNLOADS|openSystemDownloads/);
   assert.match(updater, /release-assets\.githubusercontent\.com/);
   assert.doesNotMatch(updater, /ACTION_INSTALL_PACKAGE/);
-  assert.doesNotMatch(updater, /ACTION_MANAGE_UNKNOWN_APP_SOURCES/);
   assert.doesNotMatch(updater, /FileProvider/);
-  assert.doesNotMatch(updater, /canRequestPackageInstalls/);
   assert.doesNotMatch(updater, /Intent\.ACTION_VIEW/);
   assert.doesNotMatch(updater, /Intent\.CATEGORY_BROWSABLE/);
+});
+
+test('installation callbacks are private and bound to the active session and nonce', async () => {
+  const receiver = await readProjectFile('android/app/src/main/java/hu/mkristof64/azivosjatek/AppInstallResultReceiver.java');
+  assert.match(receiver, /ACTION_INSTALL_RESULT\.equals\(intent\.getAction\(\)\)/);
+  assert.match(receiver, /isExpectedResult/);
+  assert.match(receiver, /sessionId == expectedSessionId/);
+  assert.match(receiver, /expectedNonce\.equals\(nonce\)/);
+  assert.match(receiver, /Context\.MODE_PRIVATE/);
+  assert.match(receiver, /STATUS_PENDING_USER_ACTION/);
+  assert.match(receiver, /STATUS_FAILURE_ABORTED/);
+  assert.match(receiver, /setPackage\(context\.getPackageName\(\)\)/);
+  assert.doesNotMatch(receiver, /startActivity|ACTION_VIEW|DOWNLOADS/);
 });
 
 test('Android release is minimized and never commits signing secrets', async () => {
